@@ -37,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _logout() async {
     await _storage.deleteAll();
-    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
 
   Future<void> _confirmLogout() async {

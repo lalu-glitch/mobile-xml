@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../auth/login.dart';
+import '../auth/send_otp.dart';
+import '../auth/verify_otp.dart';
 import '../main_page.dart';
 import '../views/analytics_page.dart';
 import '../views/detail_page.dart';
@@ -24,4 +26,6 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/shops': (context) => authGuardWrapper(const ShopsPage()),
   '/analytics': (context) => authGuardWrapper(const AnalyticsPage()),
   '/detail': (context) => authGuardWrapper(DetailPage()),
+  '/sendOtp': (context) => (SendOtpPage()),
+  '/verifyOtp': (context) => (VerifyOtpPage()),
 };

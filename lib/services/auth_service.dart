@@ -108,19 +108,63 @@ class AuthService {
     }
   }
 
-  Future<Map<String, dynamic>> sendOtp(String username) async {
+  Future<Map<String, dynamic>> sendOtp(String username, String nomor) async {
     try {
       final response = await _dio.post(
         "$baseUrl/send-otp",
-        data: {"username": username},
+        data: {"username": username, "nomor": nomor},
+      );
+
+      // ✅ Kalau sukses, balikin semua response.data
+      if (response.statusCode == 200) {
+        return {
+          "success": true,
+          "data": response.data, // simpan full response dari server
+          "message":
+              response.data["message"] ??
+              "Request Otp berhasil, cek Whatsapp untuk lihat kode OTP.",
+        };
+      }
+
+      // kalau status != 200
+      return {
+        "success": false,
+        "data": response.data,
+        "message": response.data["message"] ?? "Terjadi kesalahan",
+      };
+    } on DioException catch (e) {
+      // tangkap error dari server
+      if (e.response != null && e.response?.data != null) {
+        return {
+          "success": false,
+          "data": e.response?.data, // kirim semua isi error backend
+          "message": e.response?.data['message'] ?? e.response?.data.toString(),
+        };
+      }
+      return {
+        "success": false,
+        "message": e.message ?? "Terjadi kesalahan server",
+      };
+    } catch (e) {
+      return {"success": false, "message": e.toString()};
+    }
+  }
+
+  Future<Map<String, dynamic>> verifyOtp(String username, String otp) async {
+    try {
+      final response = await _dio.post(
+        "$baseUrl/verify-otp",
+        data: {"username": username, "otp": otp},
       );
 
       if (response.statusCode == 200 && response.data["accessToken"] != null) {
+        // simpan ke secure storage
         final jsonString = jsonEncode(response.data);
         await storage.write(key: "userData", value: jsonString);
-        return {"success": true, "message": "Login berhasil"};
+
+        return {"success": true, "message": "Verifikasi OTP berhasil"};
       }
-      return {"success": false, "message": "Username ada yang salah"};
+      return {"success": false, "message": "Kode OTP salah"};
     } on DioException catch (e) {
       String errorMessage = "Terjadi kesalahan server";
       if (e.response != null && e.response?.data != null) {
