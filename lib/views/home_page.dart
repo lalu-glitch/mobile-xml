@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     final iconVM = Provider.of<IconsViewModel>(context);
 
     return Scaffold(
-      backgroundColor: Colors.orange[50],
+      // backgroundColor: Colors.orange[50],
       appBar: AppBar(
         title: Text(balanceVM.userBalance?.namauser ?? '-'),
         backgroundColor: Colors.orange,

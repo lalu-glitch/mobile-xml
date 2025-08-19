@@ -8,7 +8,7 @@ class AnalyticsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[50],
+      // backgroundColor: Colors.orange[50],
       appBar: AppBar(
         title: const Text('Analytics'),
         backgroundColor: Colors.orange,

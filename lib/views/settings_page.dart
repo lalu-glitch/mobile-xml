@@ -124,7 +124,7 @@ class _SettingsPageState extends State<SettingsPage> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.orange[50],
+      // backgroundColor: Colors.orange[50],
       appBar: AppBar(
         title: const Text('Pengaturan'),
         backgroundColor: Colors.orange,
