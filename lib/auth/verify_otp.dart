@@ -109,6 +109,13 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                             ),
                     ),
                   ),
+                  TextButton(
+                    onPressed: () {
+                      // Balik ke halaman SendOtpPage
+                      Navigator.pushReplacementNamed(context, '/sendOtp');
+                    },
+                    child: const Text("Kirim ulang OTP"),
+                  ),
                 ],
               ),
             ),
