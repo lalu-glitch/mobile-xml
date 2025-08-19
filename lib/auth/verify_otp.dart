@@ -12,7 +12,6 @@ class VerifyOtpPage extends StatefulWidget {
 class _VerifyOtpPageState extends State<VerifyOtpPage> {
   final _otpCtrl = TextEditingController();
   final _authService = AuthService();
-
   bool _loading = false;
 
   Future<void> _doVerify(String username) async {
@@ -26,9 +25,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
     setState(() => _loading = false);
 
     if (result["success"]) {
-      // ✅ Jika sukses, pindah ke HomePage
       Navigator.pushReplacementNamed(context, '/');
-      ;
     } else {
       showErrorDialog(context, result["message"]);
     }
@@ -36,65 +33,106 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ Ambil username dari arguments
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final username = args["username"];
-    final nomor = args["nomor"];
+
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[100],
       body: Center(
         child: SingleChildScrollView(
           child: Card(
-            elevation: 8,
-            margin: const EdgeInsets.symmetric(horizontal: 24),
+            color: Colors.white, // background color
+            elevation: 1,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(10),
             ),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(24),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.verified, size: 60, color: Colors.green),
-                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.green.withOpacity(0.2),
+                    ),
+                    child: const Icon(
+                      Icons.verified,
+                      size: 64,
+                      color: Colors.green,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   const Text(
                     "Verifikasi OTP",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     "Kode OTP dikirim ke $username",
                     style: const TextStyle(fontSize: 14, color: Colors.black54),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 20),
+                  // TextField OTP modern
                   TextField(
                     controller: _otpCtrl,
                     keyboardType: TextInputType.number,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w500,
+                    ),
                     decoration: InputDecoration(
                       labelText: "Kode OTP",
-                      prefixIcon: const Icon(Icons.sms),
+                      labelStyle: TextStyle(
+                        color: Colors.green.shade700,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      prefixIcon: Icon(Icons.sms, color: Colors.green.shade700),
+                      filled: true,
+                      fillColor: Colors.green.shade50,
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18,
+                        horizontal: 20,
+                      ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          color: Colors.green.shade400,
+                          width: 2,
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 28),
+                  // Tombol Verifikasi
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: _loading ? null : () => _doVerify(username),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         backgroundColor: Colors.green,
+                        elevation: 1,
                       ),
                       child: _loading
                           ? const SizedBox(
-                              width: 20,
-                              height: 20,
+                              width: 24,
+                              height: 24,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
                                 color: Colors.white,
@@ -103,18 +141,22 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                           : const Text(
                               "Verifikasi",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
                             ),
                     ),
                   ),
+                  const SizedBox(height: 12),
                   TextButton(
                     onPressed: () {
-                      // Balik ke halaman SendOtpPage
                       Navigator.pushReplacementNamed(context, '/sendOtp');
                     },
-                    child: const Text("Kirim ulang OTP"),
+                    child: const Text(
+                      "Kirim ulang OTP",
+                      style: TextStyle(color: Colors.green),
+                    ),
                   ),
                 ],
               ),

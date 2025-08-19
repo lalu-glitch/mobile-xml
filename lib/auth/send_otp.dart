@@ -28,13 +28,11 @@ class _SendOtpPageState extends State<SendOtpPage> {
 
     setState(() => _loading = true);
 
-    // ✅ kirim username & nomor ke service
     final result = await _authService.sendOtp(username, nomor);
 
     setState(() => _loading = false);
 
     if (result["success"]) {
-      // ✅ kirim username + nomor ke VerifyOtpPage
       Navigator.pushReplacementNamed(
         context,
         '/verifyOtp',
@@ -56,10 +54,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                 onPressed: () => Navigator.of(context).pop(false),
                 child: const Text('Tidak'),
               ),
-              TextButton(
-                onPressed: () => exit(0), // keluar aplikasi
-                child: const Text('Ya'),
-              ),
+              TextButton(onPressed: () => exit(0), child: const Text('Ya')),
             ],
           ),
         ) ??
@@ -68,73 +63,101 @@ class _SendOtpPageState extends State<SendOtpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[100],
         body: Center(
           child: SingleChildScrollView(
             child: Card(
-              elevation: 8,
-              margin: const EdgeInsets.symmetric(horizontal: 24),
+              elevation: 1,
+              color: Colors.white, // background color
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(10),
               ),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(18),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.lock, size: 60, color: Colors.orange),
-                    const SizedBox(height: 16),
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.orange.withOpacity(0.2),
+                      ),
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: 256,
+                        height: 256,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
                     const Text(
                       "Request OTP",
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 26,
                         fontWeight: FontWeight.bold,
+                        color: Colors.orange,
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    // Username field
+                    const SizedBox(height: 24),
+                    // Username
                     TextField(
                       controller: _usernameCtrl,
                       decoration: InputDecoration(
                         labelText: "Username",
-                        prefixIcon: const Icon(Icons.person),
+                        prefixIcon: const Icon(
+                          Icons.person,
+                          color: Colors.orange,
+                        ),
+                        filled: true,
+                        fillColor: Colors.orange.withOpacity(0.1),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: BorderSide.none,
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // Nomor field
+                    // Nomor WhatsApp
                     TextField(
                       controller: _nomorCtrl,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         labelText: "Nomor WhatsApp",
-                        prefixIcon: const Icon(Icons.phone),
+                        prefixIcon: const Icon(
+                          Icons.phone,
+                          color: Colors.orange,
+                        ),
+                        filled: true,
+                        fillColor: Colors.orange.withOpacity(0.1),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: BorderSide.none,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 28),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: _loading ? null : _doOtp,
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           backgroundColor: Colors.orange,
+                          elevation: 1,
                         ),
                         child: _loading
                             ? const SizedBox(
-                                width: 20,
-                                height: 20,
+                                width: 24,
+                                height: 24,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
                                   color: Colors.white,
@@ -143,7 +166,8 @@ class _SendOtpPageState extends State<SendOtpPage> {
                             : const Text(
                                 "Request OTP",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.white,
                                 ),
                               ),
