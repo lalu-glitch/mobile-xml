@@ -32,7 +32,13 @@ class RiwayatTransaksiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Riwayat Transaksi"), centerTitle: true),
+      appBar: AppBar(
+        title: Text('History', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.orangeAccent[700],
+        iconTheme: const IconThemeData(
+          color: Colors.white, // 🔹 arrow (leading/back) jadi putih
+        ),
+      ),
       body: ListView.builder(
         padding: const EdgeInsets.all(12),
         itemCount: riwayat.length,

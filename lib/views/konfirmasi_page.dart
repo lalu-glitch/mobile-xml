@@ -32,12 +32,14 @@ class KonfirmasiPembayaranPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(),
-        title: const Text(
-          "KONFIRMASI PEMBAYARAN",
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          'Konfirmasi Pembayaran',
+          style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
+        backgroundColor: Colors.orangeAccent[700],
+        iconTheme: const IconThemeData(
+          color: Colors.white, // 🔹 arrow (leading/back) jadi putih
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -125,9 +127,9 @@ class KonfirmasiPembayaranPage extends StatelessWidget {
                     children: [
                       Text(formatCurrency(saldo)),
                       const SizedBox(width: 8),
-                      const Icon(
+                      Icon(
                         Icons.radio_button_checked,
-                        color: Colors.orange,
+                        color: Colors.orangeAccent[700],
                       ),
                     ],
                   ),
@@ -141,7 +143,7 @@ class KonfirmasiPembayaranPage extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
+                  backgroundColor: Colors.orangeAccent[700],
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

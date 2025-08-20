@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:xmlapp/views/riwayat_page.dart';
+import 'package:animated_check/animated_check.dart';
 
-class TransaksiSuksesPage extends StatelessWidget {
+class TransaksiSuksesPage extends StatefulWidget {
   final double sisaSaldo;
   const TransaksiSuksesPage({super.key, required this.sisaSaldo});
+
+  @override
+  State<TransaksiSuksesPage> createState() => _TransaksiSuksesPageState();
+}
+
+class _TransaksiSuksesPageState extends State<TransaksiSuksesPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   String formatCurrency(double value) {
     final format = NumberFormat.currency(
@@ -13,6 +23,26 @@ class TransaksiSuksesPage extends StatelessWidget {
       decimalDigits: 0,
     );
     return format.format(value);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    _animation = Tween<double>(
+      begin: 0,
+      end: 2,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -25,7 +55,26 @@ class TransaksiSuksesPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.check_circle, size: 100, color: Colors.white),
+              SizedBox(
+                height: 120,
+                width: 120,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withOpacity(
+                      0.9,
+                    ), // lingkaran transparan putih
+                  ),
+                  child: Center(
+                    child: AnimatedCheck(
+                      progress: _animation,
+                      size: 80, // lebih kecil biar ada space di lingkaran
+                      color: Colors.green,
+                    ),
+                  ),
+                ),
+              ),
+
               const SizedBox(height: 16),
               const Text(
                 "Transaksi Sukses",
@@ -35,11 +84,10 @@ class TransaksiSuksesPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 16),
-              Text(
-                "Terima kasih telah menjadi mitra terpercaya kami, saldo Anda tersisa ${formatCurrency(sisaSaldo)}",
+              const Text(
+                "Terima kasih telah menjadi mitra terpercaya kami.",
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white),
               ),
               const SizedBox(height: 32),
               ElevatedButton(
@@ -55,7 +103,6 @@ class TransaksiSuksesPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // Navigasi ke halaman sukses
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => RiwayatTransaksiPage()),

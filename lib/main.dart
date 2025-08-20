@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'routes/app_route.dart';
 import 'viewmodels/balance_viewmodel.dart';
 import 'viewmodels/icon_viewmodel.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,9 @@ class XmlApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "XML App",
-      theme: ThemeData(primarySwatch: Colors.orange),
+      theme: ThemeData(
+        textTheme: GoogleFonts.interTextTheme(), // 🔹 Ganti ke Inter
+      ),
       initialRoute: '/', // Start dari login
       routes: appRoutes, // Panggil route dari file terpisah
     );

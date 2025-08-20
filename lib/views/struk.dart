@@ -16,7 +16,13 @@ class StrukPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: const Text("Struk Pembayaran"), centerTitle: true),
+      appBar: AppBar(
+        title: Text('Struk', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.orangeAccent[700],
+        iconTheme: const IconThemeData(
+          color: Colors.white, // 🔹 arrow (leading/back) jadi putih
+        ),
+      ),
       body: Column(
         children: [
           // konten struk
@@ -103,8 +109,11 @@ class StrukPage extends StatelessWidget {
                         onLayout: (format) => _generatePdf(transaksi),
                       );
                     },
-                    icon: const Icon(Icons.print),
-                    label: const Text("Print"),
+                    icon: const Icon(Icons.print, color: Colors.white),
+                    label: const Text(
+                      "Print",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -125,8 +134,11 @@ class StrukPage extends StatelessWidget {
                       );
                       await Share.shareXFiles([xfile]);
                     },
-                    icon: const Icon(Icons.share),
-                    label: const Text("Share"),
+                    icon: const Icon(Icons.share, color: Colors.white),
+                    label: const Text(
+                      "Share",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ],
@@ -171,7 +183,7 @@ class StrukPage extends StatelessWidget {
                 ),
                 pw.Center(
                   child: pw.Text(
-                    "Jl. Raya Kebumen No.123",
+                    "Jl. Raya Cilacap No.123",
                     style: pw.TextStyle(font: pw.Font.courier(), fontSize: 12),
                   ),
                 ),

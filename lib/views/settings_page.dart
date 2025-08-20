@@ -126,8 +126,8 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       // backgroundColor: Colors.orange[50],
       appBar: AppBar(
-        title: const Text('Pengaturan'),
-        backgroundColor: Colors.orange,
+        title: Text('Pengaturan', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.orangeAccent[700],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -157,7 +157,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               color: Colors.white,
               margin: const EdgeInsets.only(bottom: 4),
-              elevation: 0,
               child: ListTile(
                 title: Text(
                   key,
@@ -220,7 +219,6 @@ class _SettingsPageState extends State<SettingsPage> {
               borderRadius: BorderRadius.circular(12),
             ),
             margin: const EdgeInsets.only(bottom: 12),
-            elevation: 0,
             child: const ListTile(
               leading: Icon(Icons.person, color: Colors.orange),
               title: Text("Profil"),
@@ -236,7 +234,6 @@ class _SettingsPageState extends State<SettingsPage> {
               borderRadius: BorderRadius.circular(12),
             ),
             margin: const EdgeInsets.only(bottom: 12),
-            elevation: 0,
             child: const ListTile(
               leading: Icon(Icons.settings, color: Colors.orange),
               title: Text("Pengaturan Aplikasi"),
@@ -253,7 +250,6 @@ class _SettingsPageState extends State<SettingsPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            elevation: 0,
             child: ListTile(
               leading: const Icon(Icons.logout, color: Colors.redAccent),
               title: const Text(

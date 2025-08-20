@@ -49,8 +49,11 @@ class _DetailPageState extends State<DetailPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(iconItem.filename),
-        backgroundColor: Colors.orange,
+        title: Text(iconItem.filename, style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.orangeAccent[700],
+        iconTheme: const IconThemeData(
+          color: Colors.white, // 🔹 arrow (leading/back) jadi putih
+        ),
       ),
       body: Column(
         children: [
@@ -89,9 +92,9 @@ class _DetailPageState extends State<DetailPage>
           // Tabbar
           TabBar(
             controller: _tabController,
-            labelColor: Colors.orange,
+            labelColor: Colors.orangeAccent[700],
             unselectedLabelColor: Colors.grey,
-            indicatorColor: Colors.orange,
+            indicatorColor: Colors.orangeAccent[700],
             tabs: const [
               Tab(text: "PULSA"),
               Tab(text: "PAKET DATA"),
@@ -125,10 +128,12 @@ class _DetailPageState extends State<DetailPage>
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: isSelected ? Colors.orange : Colors.white,
+                          color: isSelected
+                              ? Colors.orangeAccent[700]
+                              : Colors.white,
                           border: Border.all(
                             color: isSelected
-                                ? Colors.orange
+                                ? Colors.deepOrange
                                 : Colors.grey.shade300,
                           ),
                         ),
@@ -167,7 +172,7 @@ class _DetailPageState extends State<DetailPage>
       // Bottom Total
       bottomNavigationBar: selectedPulsaId != null
           ? Container(
-              color: Colors.orange,
+              color: Colors.orangeAccent[700],
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -183,7 +188,7 @@ class _DetailPageState extends State<DetailPage>
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      foregroundColor: Colors.orange,
+                      foregroundColor: Colors.orangeAccent[700],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -210,6 +215,7 @@ class _DetailPageState extends State<DetailPage>
                       pulsaList.firstWhere(
                         (p) => p["id"] == selectedPulsaId,
                       )["label"],
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],

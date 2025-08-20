@@ -10,8 +10,8 @@ class ShopsPage extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Colors.orange[50],
       appBar: AppBar(
-        title: const Text('Shops'),
-        backgroundColor: Colors.orange,
+        title: Text('Shops', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.orangeAccent[700],
       ),
       body: const Center(
         child: Text("This is Shops Page", style: TextStyle(fontSize: 20)),

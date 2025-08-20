@@ -43,7 +43,8 @@ dependencies:
   logger: ^2.6.1
   printing: ^5.12.0
   share_plus: ^10.0.2
-
+  google_fonts: ^6.2.1
+  animated_check:
 flutter_native_splash:
   color: "#ffffff"
   image: assets/images/logo.png

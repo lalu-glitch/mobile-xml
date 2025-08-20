@@ -10,8 +10,8 @@ class AnalyticsPage extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Colors.orange[50],
       appBar: AppBar(
-        title: const Text('Analytics'),
-        backgroundColor: Colors.orange,
+        title: Text('Analytics', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.orangeAccent[700],
       ),
       body: const Center(
         child: Text("This is Analytics Page", style: TextStyle(fontSize: 20)),

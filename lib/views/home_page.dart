@@ -18,6 +18,10 @@ class _HomePageState extends State<HomePage> {
       final iconVM = Provider.of<IconsViewModel>(context, listen: false);
       balanceVM.fetchBalance();
       iconVM.fetchIcons();
+      // buat promo
+      Future.delayed(const Duration(seconds: 1), () {
+        PromoPopup.show(context, "assets/images/promo.jpg");
+      });
     });
   }
 
@@ -27,39 +31,73 @@ class _HomePageState extends State<HomePage> {
     final iconVM = Provider.of<IconsViewModel>(context);
 
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16.0), // jarak atas tambahan
-          child: RefreshIndicator(
-            onRefresh: () async {
-              await Future.wait([
-                balanceVM.fetchBalance(),
-                iconVM.fetchIcons(),
-              ]);
-            },
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildHeader(balanceVM),
-                  const SizedBox(height: 24),
-                  _buildPromoSection(),
-                  const SizedBox(height: 24),
-                  iconVM.isLoading
-                      ? _buildShimmerIcons()
-                      : iconVM.error != null
-                      ? Center(child: Text('Gagal memuat icon'))
-                      : _buildIconCategories(iconVM),
-                  const SizedBox(height: 24),
-                  _buildTokenSection(),
-                ],
+      body: Stack(
+        children: [
+          // Background orange
+          Container(color: Colors.orangeAccent[700]),
+          // Background image di pojok kiri atas
+          Positioned(
+            top: 35,
+            left: 0,
+            child: Image.asset(
+              'assets/images/bg-header.png',
+              width: 300, // sesuaikan ukuran
+              height: 300,
+              fit: BoxFit.cover,
+            ),
+          ),
+          // Konten utama
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  await Future.wait([
+                    balanceVM.fetchBalance(),
+                    iconVM.fetchIcons(),
+                  ]);
+                },
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+
+                        child: _buildHeader(balanceVM),
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Bagian promo ke bawah dengan background putih
+                      Container(
+                        decoration: BoxDecoration(color: Colors.grey[100]),
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildPromoSection(),
+                            const SizedBox(height: 24),
+                            iconVM.isLoading
+                                ? _buildShimmerIcons()
+                                : iconVM.error != null
+                                ? Center(child: Text('Gagal memuat icon'))
+                                : _buildIconCategories(iconVM),
+                            const SizedBox(height: 24),
+                            _buildPromoSectionMiddle(),
+                            const SizedBox(height: 24),
+                            _buildTokenSection(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -76,27 +114,50 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Halo, ${vm.userBalance?.namauser ?? '-'}",
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  const Text(
+                    "Halo, ",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal, // normal untuk 'Halo,'
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    vm.userBalance?.namauser ?? '-',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold, // bold untuk nama user
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.notifications_none,
-                  color: Colors.orange.shade400,
-                ),
-                onPressed: () {
-                  // aksi notifikasi
-                },
+
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.notifications_none, color: Colors.white),
+                    onPressed: () {
+                      // aksi notifikasi
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.headset_mic, color: Colors.white),
+                    onPressed: () {
+                      // aksi notifikasi
+                    },
+                  ),
+                ],
               ),
             ],
           ),
         ),
 
         // Card
+        const SizedBox(height: 10),
+
         Card(
           elevation: 1,
           shape: RoundedRectangleBorder(
@@ -116,12 +177,12 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
                                 "Saldo Anda",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black54,
                                 ),
                               ),
                             ],
@@ -131,9 +192,9 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text(
                                 "Poin: ${vm.userBalance?.poin ?? 0}",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.orange,
+                                  color: Colors.orangeAccent[700],
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -150,28 +211,44 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 16),
                       // Buttons
+                      const Divider(
+                        color: Colors.grey, // warna garis
+                        thickness: 1, // ketebalan garis
+                      ),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
+                              backgroundColor: Colors.orangeAccent[700],
                               padding: const EdgeInsets.symmetric(
-                                vertical: 12,
+                                vertical: 10,
                                 horizontal: 24,
                               ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            child: const Text('Deposit Saldo'),
+                            child: const Text(
+                              'Deposit Saldo',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                           TextButton(
                             onPressed: () {},
-                            child: const Text('History Transaksi'),
+                            child: const Text(
+                              'History Transaksi',
+                              style: const TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -213,7 +290,7 @@ class _HomePageState extends State<HomePage> {
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
+                          backgroundColor: Colors.orangeAccent[700],
                           padding: const EdgeInsets.symmetric(
                             vertical: 12,
                             horizontal: 24,
@@ -323,6 +400,64 @@ class _HomePageState extends State<HomePage> {
     ],
   );
 
+  Widget _buildPromoSectionMiddle() => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'PASTI PROMO 2',
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: 12),
+      SizedBox(
+        height: 160, // lebih rendah biar landscape
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 4,
+          itemBuilder: (context, i) => Container(
+            width: 260, // lebih lebar dari sebelumnya
+            margin: const EdgeInsets.only(right: 5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              // borderRadius: BorderRadius.circular(16),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/promo${i + 1}.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Promo Murah Merdeka ${i + 1}",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+
   Widget _buildIconCategories(IconsViewModel iconVM) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -409,7 +544,7 @@ class _HomePageState extends State<HomePage> {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       const Text(
-        'Token Listrik, PDAM, dan Tagihan Lainnya',
+        'Tagihan Lainnya',
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
       const SizedBox(height: 12),
@@ -417,7 +552,7 @@ class _HomePageState extends State<HomePage> {
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
+          crossAxisCount: 3,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
         ),
@@ -476,5 +611,41 @@ class _HomePageState extends State<HomePage> {
       }
     }
     return 'Rp ${buffer.toString().split('').reversed.join()},-';
+  }
+}
+
+class PromoPopup {
+  static void show(BuildContext context, String imagePath) {
+    showDialog(
+      context: context,
+      barrierDismissible: true, // tap luar untuk close
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          insetPadding: const EdgeInsets.all(24),
+          child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.asset(imagePath, fit: BoxFit.cover),
+              ),
+              // Tombol close di pojok kanan atas
+              Positioned(
+                top: 8,
+                right: 8,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
