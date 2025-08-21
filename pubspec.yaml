@@ -45,6 +45,9 @@ dependencies:
   share_plus: ^10.0.2
   google_fonts: ^6.2.1
   animated_check:
+  device_info_plus:
+
+
 flutter_native_splash:
   color: "#ffffff"
   image: assets/images/logo.png

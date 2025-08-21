@@ -260,9 +260,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // sisanya sama seperti versi elegant sebelumnya
-  // _buildPromoSection, _buildIconCategories, _buildTokenSection, _buildShimmerIcons
-
   Widget _buildBalanceCard(BalanceViewModel vm) {
     return Card(
       elevation: 1,
@@ -433,7 +430,9 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/promo${i + 1}.jpg'),
+                        image: AssetImage(
+                          'assets/images/promo_bwh${i + 1}.jpg',
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -556,7 +555,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
         ),
-        itemCount: 8,
+        itemCount: 6,
         itemBuilder: (_, __) => Container(
           decoration: BoxDecoration(
             color: Colors.white,

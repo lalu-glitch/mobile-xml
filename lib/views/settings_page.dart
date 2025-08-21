@@ -1,7 +1,9 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -13,11 +15,24 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final _storage = const FlutterSecureStorage();
   Map<String, String> _allStorage = {};
+  String? _deviceID; // simpan di state
 
   @override
   void initState() {
     super.initState();
     _loadAllStorage();
+    _loadDeviceId();
+  }
+
+  Future<void> _loadDeviceId() async {
+    final deviceInfo = DeviceInfoPlugin();
+    final androidInfo = await deviceInfo.androidInfo;
+
+    if (mounted) {
+      setState(() {
+        _deviceID = androidInfo.id;
+      });
+    }
   }
 
   Future<void> _loadAllStorage() async {
@@ -179,15 +194,6 @@ class _SettingsPageState extends State<SettingsPage> {
             );
           }).toList(),
 
-          const Divider(height: 32, thickness: 1),
-
-          // 🟢 Section khusus info JWT Expired
-          const Text(
-            "Info Token",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          const SizedBox(height: 8),
-
           if (accessInfo != null)
             Card(
               shape: RoundedRectangleBorder(
@@ -209,6 +215,36 @@ class _SettingsPageState extends State<SettingsPage> {
                 subtitle: Text(accessInfo),
               ),
             ),
+          Card(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            margin: const EdgeInsets.only(bottom: 12),
+            child: ListTile(
+              leading: const Icon(Icons.smartphone, color: Colors.orange),
+              title: const Text("Device ID"),
+              subtitle: Text(_deviceID ?? "Loading..."),
+              trailing: const Icon(
+                Icons.copy,
+                size: 18,
+                color: Colors.grey,
+              ), // ganti icon biar jelas
+              onTap: () {
+                if (_deviceID != null) {
+                  Clipboard.setData(ClipboardData(text: _deviceID!));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "Device ID disalin ke clipboard : ${_deviceID}",
+                      ),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
 
           const Divider(height: 32, thickness: 1),
 
