@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../auth/login.dart';
 import '../auth/send_otp.dart';
 import '../auth/verify_otp.dart';
 import '../main_page.dart';
@@ -20,8 +19,6 @@ final Map<String, WidgetBuilder> appRoutes = {
     const MainPage(),
   ), // kalau kamu pisah main page seperti sebelumnya
   '/homepage': (context) => authGuardWrapper(HomePage()),
-  '/login': (context) =>
-      const LoginPage(), // halaman publik, gak pakai AuthGuard
   '/settings': (context) => authGuardWrapper(const SettingsPage()),
   '/shops': (context) => authGuardWrapper(const ShopsPage()),
   '/analytics': (context) => authGuardWrapper(const AnalyticsPage()),

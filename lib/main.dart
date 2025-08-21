@@ -33,7 +33,7 @@ class XmlApp extends StatelessWidget {
     return MaterialApp(
       title: "XML App",
       theme: ThemeData(
-        textTheme: GoogleFonts.interTextTheme(), // 🔹 Ganti ke Inter
+        textTheme: GoogleFonts.varelaRoundTextTheme(), // 🔹 Ganti ke Inter
       ),
       initialRoute: '/', // Start dari login
       routes: appRoutes, // Panggil route dari file terpisah

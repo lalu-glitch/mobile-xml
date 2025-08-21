@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import '../config/app_config.dart';
 
 class AuthService {
@@ -9,16 +9,18 @@ class AuthService {
   final Dio _dio = Dio();
   final FlutterSecureStorage storage = const FlutterSecureStorage();
 
+  // Basic Auth Credentials
+  static const String _basicUser = "xmlapp";
+  static const String _basicPass = "apkxml";
+  static final String _basicAuthHeader =
+      "Basic ${base64Encode(utf8.encode("$_basicUser:$_basicPass"))}";
+
   AuthService() {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           final token = await getAccessToken();
-
-          /// rewfresh token terus
-          // await _refreshToken();
           if (token != null && token.isNotEmpty) {
-            // options.headers["x-access-token"] = token;
             options.headers["Authorization"] = "Bearer $token";
           }
           return handler.next(options);
@@ -29,9 +31,7 @@ class AuthService {
             if (refreshed) {
               final token = await getAccessToken();
               if (token != null && token.isNotEmpty) {
-                // e.requestOptions.headers["x-access-token"] = token;
                 e.requestOptions.headers["Authorization"] = "Bearer $token";
-
                 try {
                   final cloneReq = await _dio.fetch(e.requestOptions);
                   return handler.resolve(cloneReq);
@@ -47,23 +47,30 @@ class AuthService {
     );
   }
 
-  /// expose supaya bisa dipakai di ApiService
   Dio get dio => _dio;
 
-  /// Ambil accessToken, cek expired
+  /// Ambil Device ID unik
+  Future<String> _loadDeviceId() async {
+    try {
+      final deviceInfo = DeviceInfoPlugin();
+      final androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.id ?? "unknown-device"; // fallback
+    } catch (_) {
+      return "unknown-device";
+    }
+  }
+
+  /// Ambil Access Token
   Future<String?> getAccessToken() async {
     final jsonString = await storage.read(key: "userData");
     if (jsonString == null) return null;
 
     try {
       final Map<String, dynamic> userData = jsonDecode(jsonString);
-      final accessToken = userData['accessToken'] as String?;
+      final accessToken = userData["accessToken"] as String?;
       if (accessToken == null || accessToken.isEmpty) return null;
 
-      if (_isTokenExpired(accessToken)) {
-        return null; // sudah expired
-      }
-      return accessToken;
+      return _isTokenExpired(accessToken) ? null : accessToken;
     } catch (_) {
       return null;
     }
@@ -72,179 +79,141 @@ class AuthService {
   /// Cek apakah token expired
   bool _isTokenExpired(String token) {
     try {
-      final parts = token.split('.');
+      final parts = token.split(".");
       if (parts.length != 3) return true;
 
       final payload = _decodeBase64(parts[1]);
-      final payloadMap = jsonDecode(payload);
-      if (payloadMap is! Map<String, dynamic>) return true;
-
-      final exp = payloadMap['exp'];
+      final payloadMap = jsonDecode(payload) as Map<String, dynamic>;
+      final exp = payloadMap["exp"];
       if (exp == null) return true;
 
-      final expiryDate = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
+      final expiryDate = DateTime.fromMillisecondsSinceEpoch(
+        (exp as int) * 1000,
+      );
       return DateTime.now().isAfter(expiryDate);
     } catch (_) {
-      return true; // anggap expired kalau gagal decode
+      return true;
     }
   }
 
   String _decodeBase64(String str) {
-    String output = str.replaceAll('-', '+').replaceAll('_', '/');
+    var output = str.replaceAll("-", "+").replaceAll("_", "/");
     switch (output.length % 4) {
-      case 0:
-        break;
       case 2:
-        output += '==';
+        output += "==";
         break;
       case 3:
-        output += '=';
+        output += "=";
         break;
-      default:
-        throw Exception('Invalid base64url string!');
     }
     return utf8.decode(base64Url.decode(output));
   }
 
+  /// Cek login status
   Future<bool> isLoggedIn() async {
-    final jsonString = await storage.read(key: "userData");
-    if (jsonString == null) return false;
-
-    try {
-      final Map<String, dynamic> userData = jsonDecode(jsonString);
-      final accessToken = userData['accessToken'] as String?;
-      if (accessToken == null || accessToken.isEmpty) return false;
-
-      return !_isTokenExpired(accessToken);
-    } catch (_) {
-      return false;
-    }
+    final token = await getAccessToken();
+    return token != null;
   }
 
-  Future<bool> register(String username, String email, String password) async {
+  /// Kirim OTP dengan Basic Auth
+  Future<Map<String, dynamic>> sendOtp(
+    String kodeReseller,
+    String nomor,
+  ) async {
     try {
-      final response = await _dio.post(
-        "$baseUrl/auth/signup",
-        data: {
-          "username": username,
-          "email": email,
-          "password": password,
-          "roles": ["user"], // role default
-        },
-      );
-      return response.statusCode == 200;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  Future<Map<String, dynamic>> login(String username, String password) async {
-    try {
-      final response = await _dio.post(
-        "$baseUrl/auth/signin",
-        data: {"username": username, "password": password},
-      );
-
-      if (response.statusCode == 200 && response.data["accessToken"] != null) {
-        final jsonString = jsonEncode(response.data);
-        await storage.write(key: "userData", value: jsonString);
-        return {"success": true, "message": "Login berhasil"};
-      }
-      return {"success": false, "message": "Username atau password salah"};
-    } on DioException catch (e) {
-      String errorMessage = "Terjadi kesalahan server";
-      if (e.response != null && e.response?.data != null) {
-        if (e.response?.data is Map && e.response?.data['message'] != null) {
-          errorMessage = e.response?.data['message'];
-        } else if (e.response?.data is String) {
-          errorMessage = e.response?.data;
-        }
-      }
-      return {"success": false, "message": errorMessage};
-    } catch (_) {
-      return {"success": false, "message": "Terjadi kesalahan tidak terduga"};
-    }
-  }
-
-  Future<Map<String, dynamic>> sendOtp(String username, String nomor) async {
-    try {
+      final deviceId = await _loadDeviceId();
       final response = await _dio.post(
         "$baseUrl/send-otp",
-        data: {"username": username, "nomor": nomor},
+        data: {
+          "kode_reseller": kodeReseller,
+          "nomor": nomor,
+          "deviceID": deviceId,
+        },
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthHeader,
+            "Content-Type": "application/json",
+          },
+        ),
       );
 
-      // ✅ Kalau sukses, balikin semua response.data
-      if (response.statusCode == 200) {
-        return {
-          "success": true,
-          "data": response.data, // simpan full response dari server
-          "message":
-              response.data["message"] ??
-              "Request Otp berhasil, cek Whatsapp untuk lihat kode OTP.",
-        };
-      }
-
-      // kalau status != 200
+      final isSuccess = response.statusCode == 200;
       return {
-        "success": false,
+        "success": isSuccess,
         "data": response.data,
-        "message": response.data["message"] ?? "Terjadi kesalahan",
+        "message":
+            response.data["message"] ??
+            (isSuccess
+                ? "Request OTP berhasil, cek WhatsApp."
+                : "Gagal kirim OTP (${response.data["message"]})"),
       };
     } on DioException catch (e) {
-      // tangkap error dari server
-      if (e.response != null && e.response?.data != null) {
-        return {
-          "success": false,
-          "data": e.response?.data, // kirim semua isi error backend
-          "message": e.response?.data['message'] ?? e.response?.data.toString(),
-        };
-      }
+      // tetap coba baca message dari server kalau ada
+      final serverMsg = (e.response?.data is Map)
+          ? e.response?.data["message"]
+          : e.response?.data?.toString();
       return {
         "success": false,
-        "message": e.message ?? "Terjadi kesalahan server",
+        "message":
+            serverMsg ??
+            "Error dari server (${e.response?.statusCode ?? 'unknown'})",
       };
     } catch (e) {
       return {"success": false, "message": e.toString()};
     }
   }
 
-  Future<Map<String, dynamic>> verifyOtp(String username, String otp) async {
+  /// Verifikasi OTP
+  Future<Map<String, dynamic>> verifyOtp(
+    String kodeReseller,
+    String otp,
+  ) async {
     try {
       final response = await _dio.post(
         "$baseUrl/verify-otp",
-        data: {"username": username, "otp": otp},
+        data: {"kode_reseller": kodeReseller, "otp": otp},
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthHeader,
+            "Content-Type": "application/json",
+          },
+        ),
       );
 
-      if (response.statusCode == 200 && response.data["accessToken"] != null) {
-        // simpan ke secure storage
-        // final jsonString = jsonEncode(response.data);
-        // await storage.write(key: "userData", value: jsonString);
+      final isSuccess = response.statusCode == 200;
 
-        final data = response.data;
-        final accessToken = data["accessToken"];
-        final refreshToken = data["refreshToken"];
-        // Simpan dengan wrapper userData
+      // kalau sukses dan token ada → simpan
+      if (isSuccess && response.data["accessToken"] != null) {
         final jsonString = jsonEncode({
-          "accessToken": accessToken,
-          "refreshToken": refreshToken,
+          "accessToken": response.data["accessToken"],
+          "refreshToken": response.data["refreshToken"],
         });
-
         await storage.write(key: "userData", value: jsonString);
-        return {"success": true, "message": "Verifikasi OTP berhasil"};
+        return {
+          "success": true,
+          "message": response.data["message"] ?? "Verifikasi OTP berhasil",
+        };
       }
-      return {"success": false, "message": "Kode OTP salah"};
+
+      // kalau gagal tapi server kasih message, tetap kirim ke UI
+      return {
+        "success": false,
+        "message":
+            response.data["message"] ??
+            "Kode OTP salah (${response.statusCode})",
+      };
     } on DioException catch (e) {
-      String errorMessage = "Terjadi kesalahan server";
-      if (e.response != null && e.response?.data != null) {
-        if (e.response?.data is Map && e.response?.data['message'] != null) {
-          errorMessage = e.response?.data['message'];
-        } else if (e.response?.data is String) {
-          errorMessage = e.response?.data;
-        }
-      }
-      return {"success": false, "message": errorMessage};
-    } catch (_) {
-      return {"success": false, "message": "Terjadi kesalahan tidak terduga"};
+      final serverMsg = (e.response?.data is Map)
+          ? e.response?.data["message"]
+          : e.response?.data?.toString();
+      return {
+        "success": false,
+        "message":
+            serverMsg ??
+            "Error dari server (${e.response?.statusCode ?? 'unknown'})",
+      };
+    } catch (e) {
+      return {"success": false, "message": e.toString()};
     }
   }
 
@@ -252,13 +221,14 @@ class AuthService {
     await storage.deleteAll();
   }
 
+  /// Refresh token
   Future<bool> _refreshToken() async {
     final jsonString = await storage.read(key: "userData");
     if (jsonString == null) return false;
 
     try {
-      final Map<String, dynamic> userData = jsonDecode(jsonString);
-      final refreshToken = userData['refreshToken'] as String?;
+      final userData = jsonDecode(jsonString) as Map<String, dynamic>;
+      final refreshToken = userData["refreshToken"] as String?;
       if (refreshToken == null) return false;
 
       final response = await _dio.post(
@@ -267,8 +237,8 @@ class AuthService {
       );
 
       if (response.statusCode == 200 && response.data["accessToken"] != null) {
-        userData['accessToken'] = response.data["accessToken"];
-        userData['refreshToken'] = response.data["refreshToken"];
+        userData["accessToken"] = response.data["accessToken"];
+        userData["refreshToken"] = response.data["refreshToken"];
         await storage.write(key: "userData", value: jsonEncode(userData));
         return true;
       }
