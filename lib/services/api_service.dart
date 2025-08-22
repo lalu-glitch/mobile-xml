@@ -9,25 +9,15 @@ import 'package:logger/logger.dart';
 
 class ApiService {
   final authService = AuthService();
+  final logger = Logger();
 
   /// Ambil saldo user
   Future<UserBalance> fetchUserBalance() async {
     try {
       final response = await authService.dio.get(
-        "${AppConfig.baseUrlApp}/user_dummy",
+        "${AppConfig.baseUrlAuth}/get_user",
       );
-      final logger = Logger();
-
-      logger.t("Trace log");
-
-      logger.d("Debug log");
-
-      logger.i("Info log");
-
-      logger.w("Warning log");
-
-      // logger.e("Error log", error: 'Test Error');
-
+      //  parameter langsung lempar dari bearer token, ada kode_reseller di payloadnya
       if (response.statusCode == 200) {
         return UserBalance.fromJson(response.data);
       } else {
