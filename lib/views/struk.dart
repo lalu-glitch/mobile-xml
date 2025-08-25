@@ -38,7 +38,7 @@ class StrukPage extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        "=== KONTER PULSA HAIYU ===",
+                        "=== KONTER PULSA ABC ===",
                         style: const TextStyle(
                           fontFamily: "monospace",
                           fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ class StrukPage extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        "Jl. Raya Kebumen No.123",
+                        "Jl. Raya Cilacap No.123",
                         style: const TextStyle(
                           fontFamily: "monospace",
                           fontSize: 12,

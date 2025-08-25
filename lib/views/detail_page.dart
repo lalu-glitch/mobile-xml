@@ -1,8 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/icon_data.dart';
-import '../viewmodels/icon_viewmodel.dart';
-
-import '../services/auth_guard.dart';
+import '../viewmodels/provider_viewmodel.dart';
 import 'konfirmasi_page.dart';
 
 class DetailPage extends StatefulWidget {
@@ -12,35 +12,48 @@ class DetailPage extends StatefulWidget {
   State<DetailPage> createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  String selectedNomor = "085643085743";
-  String? selectedPulsaId;
+class _DetailPageState extends State<DetailPage> {
+  final TextEditingController _nomorController = TextEditingController();
+  Timer? _debounce;
+  String? selectedProductCode;
   double selectedPrice = 0;
-
-  final List<Map<String, dynamic>> pulsaList = [
-    {"id": "H05", "label": "INDOSAT REGULER 5K", "price": 6500},
-    {"id": "H10", "label": "INDOSAT REGULER 10K", "price": 10500},
-    {"id": "H12", "label": "INDOSAT REGULER 12K", "price": 12200},
-    {"id": "H20", "label": "INDOSAT REGULER 20K", "price": 20600},
-    {"id": "H25", "label": "INDOSAT REGULER 25K", "price": 25300},
-    {"id": "H40", "label": "INDOSAT REGULER 40K", "price": 40400},
-    {"id": "H50", "label": "INDOSAT REGULER 50K", "price": 50100},
-    {"id": "H100", "label": "INDOSAT REGULER 100K", "price": 100500},
-  ];
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _nomorController.text = "";
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ProviderViewModel>(context, listen: false).clearProviders();
+    });
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _debounce?.cancel();
+    _nomorController.dispose();
     super.dispose();
+  }
+
+  Future<void> _fetchProvider(String value) async {
+    if (value.length > 6) {
+      final iconItem = ModalRoute.of(context)!.settings.arguments as IconItem;
+      final providerVM = Provider.of<ProviderViewModel>(context, listen: false);
+      await providerVM.fetchProviders(iconItem.filename, value);
+    }
+  }
+
+  void _onNomorChanged(String value) {
+    final providerVM = Provider.of<ProviderViewModel>(context, listen: false);
+    providerVM.clearProviders();
+
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+
+    if (value.length > 6) {
+      _debounce = Timer(const Duration(milliseconds: 800), () {
+        _fetchProvider(value);
+      });
+    }
   }
 
   @override
@@ -49,177 +62,238 @@ class _DetailPageState extends State<DetailPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(iconItem.filename, style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.orangeAccent[700],
-        iconTheme: const IconThemeData(
-          color: Colors.white, // 🔹 arrow (leading/back) jadi putih
+        title: Text(
+          iconItem.filename,
+          style: const TextStyle(color: Colors.white),
         ),
+        backgroundColor: Colors.orangeAccent[700],
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
         children: [
           // Input Nomor
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text("Nomor Tujuan"),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: TextEditingController(text: selectedNomor),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          suffixIcon: const Icon(Icons.contact_page),
-                        ),
-                      ),
+                TextField(
+                  controller: _nomorController,
+                  onChanged: _onNomorChanged,
+                  onSubmitted: _fetchProvider,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    const SizedBox(width: 8),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text("CEK NOMOR"),
-                    ),
-                  ],
+                    hintText: "0812 1111 2222",
+                    suffixIcon: const Icon(Icons.contact_page),
+                  ),
                 ),
               ],
             ),
           ),
 
-          // Tabbar
-          TabBar(
-            controller: _tabController,
-            labelColor: Colors.orangeAccent[700],
-            unselectedLabelColor: Colors.grey,
-            indicatorColor: Colors.orangeAccent[700],
-            tabs: const [
-              Tab(text: "PULSA"),
-              Tab(text: "PAKET DATA"),
-            ],
-          ),
-
-          // Isi Tab
+          // LIST PROVIDER DENGAN ACCORDION
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                // Tab Pulsa
-                ListView.builder(
-                  itemCount: pulsaList.length,
-                  itemBuilder: (context, index) {
-                    final pulsa = pulsaList[index];
-                    final bool isSelected = selectedPulsaId == pulsa["id"];
+            child: Consumer<ProviderViewModel>(
+              builder: (context, vm, child) {
+                if (vm.isLoading)
+                  return const Center(child: CircularProgressIndicator());
+                if (vm.error != null) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      "${vm.error}",
+                      style: TextStyle(color: Colors.red[400]),
+                    ),
+                  );
+                }
+                if (vm.providers.isEmpty) {
+                  return const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text("Input Nomor Tujuan"),
+                  );
+                }
 
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedPulsaId = pulsa["id"];
-                          selectedPrice = pulsa["price"].toDouble();
-                        });
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
+                return ListView.builder(
+                  itemCount: vm.providers.length,
+                  itemBuilder: (context, index) {
+                    final provider = vm.providers[index];
+                    final List produkList = provider.produk;
+
+                    return Card(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      child: ExpansionTile(
+                        title: Text(
+                          provider.namaProvider,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: isSelected
-                              ? Colors.orangeAccent[700]
-                              : Colors.white,
-                          border: Border.all(
-                            color: isSelected
-                                ? Colors.deepOrange
-                                : Colors.grey.shade300,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              pulsa["label"],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: isSelected ? Colors.white : Colors.black,
+                        children: [
+                          ...produkList.map((produk) {
+                            final bool isSelected =
+                                selectedProductCode == produk.kodeProduk;
+                            final bool isGangguan = produk.gangguan == 1;
+
+                            return GestureDetector(
+                              onTap: isGangguan
+                                  ? null
+                                  : () {
+                                      setState(() {
+                                        selectedProductCode = produk.kodeProduk;
+                                        selectedPrice = produk.hargaJual
+                                            .toDouble();
+                                      });
+                                    },
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 6,
+                                ),
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: isGangguan
+                                      ? Colors.grey.shade200
+                                      : isSelected
+                                      ? Colors.orangeAccent[700]
+                                      : Colors.white,
+                                  border: Border.all(
+                                    color: isGangguan
+                                        ? Colors.red
+                                        : isSelected
+                                        ? Colors.deepOrange
+                                        : Colors.grey.shade300,
+                                    width: isGangguan ? 2 : 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          if (isGangguan)
+                                            Row(
+                                              children: const [
+                                                Icon(
+                                                  Icons.cancel,
+                                                  color: Colors.red,
+                                                  size: 14,
+                                                ),
+                                                SizedBox(width: 4),
+                                                Text(
+                                                  "Gangguan",
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          Text(
+                                            produk.namaProduk,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: isGangguan
+                                                  ? Colors.red
+                                                  : isSelected
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Text(
+                                      "Rp ${produk.hargaJual}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: isGangguan
+                                            ? Colors.red
+                                            : isSelected
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Text(
-                              pulsa["price"].toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: isSelected ? Colors.white : Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
+                            );
+                          }).toList(),
+                        ],
                       ),
                     );
                   },
-                ),
-
-                // Tab Paket Data (kosong dulu)
-                const Center(child: Text("Paket Data belum tersedia")),
-              ],
+                );
+              },
             ),
           ),
         ],
       ),
+      bottomNavigationBar: selectedProductCode != null
+          ? Consumer<ProviderViewModel>(
+              builder: (context, vm, child) {
+                final selectedProduk = vm.providers
+                    .expand((p) => p.produk)
+                    .firstWhere((p) => p.kodeProduk == selectedProductCode);
 
-      // Bottom Total
-      bottomNavigationBar: selectedPulsaId != null
-          ? Container(
-              color: Colors.orangeAccent[700],
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Total Rp ${selectedPrice.toStringAsFixed(0)}",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                return Container(
+                  color: Colors.orangeAccent[700],
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.orangeAccent[700],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Total Rp ${selectedPrice.toStringAsFixed(0)}",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      final selectedPulsa = pulsaList.firstWhere(
-                        (p) => p["id"] == selectedPulsaId,
-                      );
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => KonfirmasiPembayaranPage(
-                            nomorTujuan: selectedNomor,
-                            kodeProduk: selectedPulsa["id"],
-                            namaProduk: selectedPulsa["label"],
-                            total: selectedPulsa["price"].toDouble(),
-                            saldo: 100000000,
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.orangeAccent[700],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                      );
-                    },
-                    child: Text(
-                      pulsaList.firstWhere(
-                        (p) => p["id"] == selectedPulsaId,
-                      )["label"],
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => KonfirmasiPembayaranPage(
+                                nomorTujuan: _nomorController.text,
+                                kodeProduk: selectedProduk.kodeProduk,
+                                namaProduk: selectedProduk.namaProduk,
+                                total: selectedProduk.hargaJual.toDouble(),
+                                saldo: 100000000,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Selanjutnya",
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             )
           : null,
     );

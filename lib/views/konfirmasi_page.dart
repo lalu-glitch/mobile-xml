@@ -32,113 +32,90 @@ class KonfirmasiPembayaranPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Konfirmasi Pembayaran',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.orangeAccent[700],
-        iconTheme: const IconThemeData(
-          color: Colors.white, // 🔹 arrow (leading/back) jadi putih
-        ),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Info atas
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            // Info Produk
+            Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
                   children: [
-                    const Text(
-                      "Nomor Tujuan",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    Text(
-                      nomorTujuan,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-
-                    const SizedBox(height: 12),
-                    const Text(
-                      "Kode Produk",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    Text(
-                      kodeProduk,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-
-                    const SizedBox(height: 12),
-                    const Text(
-                      "Nama Produk",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    Text(
-                      namaProduk,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Text(
+                    _infoRow("Nomor Tujuan", nomorTujuan),
+                    const Divider(height: 24),
+                    _infoRow("Kode Produk", kodeProduk),
+                    const Divider(height: 24),
+                    _infoRow("Nama Produk", namaProduk),
+                    const Divider(height: 24),
+                    _infoRow(
                       "Total Pembayaran",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    Text(
                       formatCurrency(total),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      isTotal: true,
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
             const SizedBox(height: 24),
 
             // Metode Pembayaran
-            const Text(
-              "METODE PEMBAYARAN",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "METODE PEMBAYARAN",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
             ),
             const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "SALDO",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  Row(
-                    children: [
-                      Text(formatCurrency(saldo)),
-                      const SizedBox(width: 8),
-                      Icon(
-                        Icons.radio_button_checked,
-                        color: Colors.orangeAccent[700],
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "SALDO",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          formatCurrency(saldo),
+                          style: const TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(width: 8),
+                        Icon(
+                          Icons.radio_button_checked,
+                          color: Colors.orangeAccent[700],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             const Spacer(),
 
-            // Tombol
+            // Tombol Bayar
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -146,11 +123,12 @@ class KonfirmasiPembayaranPage extends StatelessWidget {
                   backgroundColor: Colors.orangeAccent[700],
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(16),
                   ),
+                  elevation: 5,
+                  shadowColor: Colors.orangeAccent.shade100,
                 ),
                 onPressed: () {
-                  // Navigasi ke halaman sukses
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -172,6 +150,30 @@ class KonfirmasiPembayaranPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  // Helper widget untuk row info
+  Widget _infoRow(String label, String value, {bool isTotal = false}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.grey[600],
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
+            fontSize: isTotal ? 16 : 14,
+            color: isTotal ? Colors.orangeAccent[700] : Colors.black,
+          ),
+        ),
+      ],
     );
   }
 }
