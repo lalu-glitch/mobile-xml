@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'views/home_page.dart';
 import 'views/shops_page.dart';
 import 'views/analytics_page.dart';
 import 'views/settings_page.dart';
-import 'viewmodels/balance_viewmodel.dart';
-import 'viewmodels/icon_viewmodel.dart';
-import 'services/auth_service.dart'; // Tambahkan import service auth
+// Tambahkan import service auth
 import 'services/auth_guard.dart';
 
 class MainPage extends StatefulWidget {

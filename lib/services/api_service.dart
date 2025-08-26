@@ -1,7 +1,4 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_launcher_icons/logger.dart';
 import '../config/app_config.dart';
 import '../models/provider.dart';
 import '../models/user_balance.dart';

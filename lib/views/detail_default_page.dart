@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/icon_data.dart';
-import '../viewmodels/icon_viewmodel.dart';
 
-import '../services/auth_guard.dart';
 import 'konfirmasi_page.dart';
 
 class DetailPage extends StatefulWidget {

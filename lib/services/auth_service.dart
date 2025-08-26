@@ -5,7 +5,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import '../config/app_config.dart';
 
 class AuthService {
-  static final String baseUrl = "${AppConfig.baseUrlAuth}";
+  static final String baseUrl = AppConfig.baseUrlAuth;
   final Dio _dio = Dio();
   final FlutterSecureStorage storage = const FlutterSecureStorage();
 

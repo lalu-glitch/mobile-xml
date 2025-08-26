@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../services/auth_guard.dart';
 
 class AnalyticsPage extends StatelessWidget {
   const AnalyticsPage({super.key});

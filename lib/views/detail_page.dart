@@ -100,8 +100,9 @@ class _DetailPageState extends State<DetailPage> {
           Expanded(
             child: Consumer<ProviderViewModel>(
               builder: (context, vm, child) {
-                if (vm.isLoading)
+                if (vm.isLoading) {
                   return const Center(child: CircularProgressIndicator());
+                }
                 if (vm.error != null) {
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -228,7 +229,7 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
                             );
-                          }).toList(),
+                          }),
                         ],
                       ),
                     );

@@ -192,7 +192,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             );
-          }).toList(),
+          }),
 
           if (accessInfo != null)
             Card(
@@ -236,7 +236,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        "Device ID disalin ke clipboard : ${_deviceID}",
+                        "Device ID disalin ke clipboard : $_deviceID",
                       ),
                       duration: const Duration(seconds: 2),
                     ),

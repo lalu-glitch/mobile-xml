@@ -5,6 +5,8 @@ import '../viewmodels/balance_viewmodel.dart';
 import '../viewmodels/icon_viewmodel.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -234,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             child: const Text(
                               'Deposit Saldo',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -244,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {},
                             child: const Text(
                               'History Transaksi',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.black87,
                                 fontWeight: FontWeight.bold,
                               ),
