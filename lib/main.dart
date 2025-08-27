@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'routes/app_route.dart';
+import 'services/api_service.dart';
 import 'viewmodels/balance_viewmodel.dart';
 import 'viewmodels/icon_viewmodel.dart';
 import 'viewmodels/provider_viewmodel.dart';
+import 'viewmodels/transaksi_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -37,6 +39,9 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (_) => BalanceViewModel()),
           ChangeNotifierProvider(create: (_) => IconsViewModel()),
           ChangeNotifierProvider(create: (_) => ProviderViewModel()),
+          ChangeNotifierProvider(
+            create: (_) => TransaksiViewModel(service: ApiService()),
+          ),
         ],
         child: const XmlApp(),
       ),

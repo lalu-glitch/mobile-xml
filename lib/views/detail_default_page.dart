@@ -3,14 +3,14 @@ import '../models/icon_data.dart';
 
 import 'konfirmasi_page.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+class DetailRegulerPage extends StatefulWidget {
+  const DetailRegulerPage({super.key});
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
+  State<DetailRegulerPage> createState() => _DetailRegulerPageState();
 }
 
-class _DetailPageState extends State<DetailPage>
+class _DetailRegulerPageState extends State<DetailRegulerPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -204,7 +204,6 @@ class _DetailPageState extends State<DetailPage>
                             kodeProduk: selectedPulsa["id"],
                             namaProduk: selectedPulsa["label"],
                             total: selectedPulsa["price"].toDouble(),
-                            saldo: 100000000,
                           ),
                         ),
                       );

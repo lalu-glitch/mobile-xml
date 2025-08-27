@@ -4,7 +4,7 @@ import '../auth/send_otp.dart';
 import '../auth/verify_otp.dart';
 import '../main_page.dart';
 import '../views/analytics_page.dart';
-import '../views/detail_page.dart';
+import '../views/detail_noprefix_page.dart';
 import '../views/home_page.dart';
 import '../views/settings_page.dart';
 import '../views/shops_page.dart';
@@ -22,7 +22,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/settings': (context) => authGuardWrapper(const SettingsPage()),
   '/shops': (context) => authGuardWrapper(const ShopsPage()),
   '/analytics': (context) => authGuardWrapper(const AnalyticsPage()),
-  '/detail': (context) => authGuardWrapper(DetailPage()),
+  '/detailNoPrefix': (context) => authGuardWrapper(DetailNoPrefixPage()),
   '/sendOtp': (context) => (SendOtpPage()),
   '/verifyOtp': (context) => (VerifyOtpPage()),
 };

@@ -1,18 +1,20 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../models/icon_data.dart';
+import '../utils/currency.dart';
 import '../viewmodels/provider_viewmodel.dart';
 import 'konfirmasi_page.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+class DetailNoPrefixPage extends StatefulWidget {
+  const DetailNoPrefixPage({super.key});
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
+  State<DetailNoPrefixPage> createState() => _DetailNoPrefixPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
   final TextEditingController _nomorController = TextEditingController();
   Timer? _debounce;
   String? selectedProductCode;
@@ -61,6 +63,7 @@ class _DetailPageState extends State<DetailPage> {
     final iconItem = ModalRoute.of(context)!.settings.arguments as IconItem;
 
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text(
           iconItem.filename,
@@ -84,6 +87,7 @@ class _DetailPageState extends State<DetailPage> {
                   onChanged: _onNomorChanged,
                   onSubmitted: _fetchProvider,
                   keyboardType: TextInputType.phone,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -215,7 +219,7 @@ class _DetailPageState extends State<DetailPage> {
                                       ),
                                     ),
                                     Text(
-                                      "Rp ${produk.hargaJual}",
+                                      "${CurrencyUtil.formatCurrency(produk.hargaJual)}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: isGangguan
@@ -245,7 +249,10 @@ class _DetailPageState extends State<DetailPage> {
               builder: (context, vm, child) {
                 final selectedProduk = vm.providers
                     .expand((p) => p.produk)
-                    .firstWhere((p) => p.kodeProduk == selectedProductCode);
+                    .where((p) => p.kodeProduk == selectedProductCode)
+                    .firstOrNull;
+
+                if (selectedProduk == null) return SizedBox.shrink();
 
                 return Container(
                   color: Colors.orangeAccent[700],
@@ -257,7 +264,7 @@ class _DetailPageState extends State<DetailPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Total Rp ${selectedPrice.toStringAsFixed(0)}",
+                        "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -281,7 +288,6 @@ class _DetailPageState extends State<DetailPage> {
                                 kodeProduk: selectedProduk.kodeProduk,
                                 namaProduk: selectedProduk.namaProduk,
                                 total: selectedProduk.hargaJual.toDouble(),
-                                saldo: 100000000,
                               ),
                             ),
                           );

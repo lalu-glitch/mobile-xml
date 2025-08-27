@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../utils/shimmer.dart';
 import '../viewmodels/balance_viewmodel.dart';
 import '../viewmodels/icon_viewmodel.dart';
+import '../utils/currency.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -207,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(height: 8),
                       // Saldo besar
                       Text(
-                        _formatCurrency(vm.userBalance?.saldo ?? 0),
+                        CurrencyUtil.formatCurrency(vm.userBalance?.saldo ?? 0),
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -321,7 +322,7 @@ class _HomePageState extends State<HomePage> {
       ),
       const SizedBox(height: 4),
       Text(
-        _formatCurrency(saldo),
+        CurrencyUtil.formatCurrency(saldo as double),
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
     ],
@@ -487,7 +488,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      '/detail',
+                      '/detailNoPrefix',
                       arguments: iconItem,
                     );
                   },
@@ -598,21 +599,6 @@ class _HomePageState extends State<HomePage> {
       ],
     ),
   );
-
-  String _formatCurrency(int n) {
-    final s = n.toString();
-    final buffer = StringBuffer();
-    int count = 0;
-    for (int i = s.length - 1; i >= 0; i--) {
-      buffer.write(s[i]);
-      count++;
-      if (count == 3 && i != 0) {
-        buffer.write('.');
-        count = 0;
-      }
-    }
-    return 'Rp ${buffer.toString().split('').reversed.join()},-';
-  }
 }
 
 class PromoPopup {

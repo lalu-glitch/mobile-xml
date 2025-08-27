@@ -4,8 +4,7 @@ import 'package:xmlapp/views/riwayat_page.dart';
 import 'package:animated_check/animated_check.dart';
 
 class TransaksiSuksesPage extends StatefulWidget {
-  final double sisaSaldo;
-  const TransaksiSuksesPage({super.key, required this.sisaSaldo});
+  const TransaksiSuksesPage();
 
   @override
   State<TransaksiSuksesPage> createState() => _TransaksiSuksesPageState();
@@ -15,15 +14,6 @@ class _TransaksiSuksesPageState extends State<TransaksiSuksesPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-
-  String formatCurrency(double value) {
-    final format = NumberFormat.currency(
-      locale: "id_ID",
-      symbol: "Rp ",
-      decimalDigits: 0,
-    );
-    return format.format(value);
-  }
 
   @override
   void initState() {
