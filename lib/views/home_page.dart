@@ -486,9 +486,14 @@ class _HomePageState extends State<HomePage> {
                 final iconItem = entry.value[i];
                 return GestureDetector(
                   onTap: () {
+                    ///sementara di hardcode dulu kali yaaa
+                    final routeName = (i == 0 || i == 1 || i == 3)
+                        ? '/detailNoPrefix'
+                        : '/detailPrefix';
+
                     Navigator.pushNamed(
                       context,
-                      '/detailPrefix',
+                      routeName,
                       arguments: iconItem,
                     );
                   },

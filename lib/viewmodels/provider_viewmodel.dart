@@ -44,6 +44,37 @@ class ProviderViewModel extends ChangeNotifier {
     }
   }
 
+  Future<Map<String, dynamic>> fetchProvidersPrefix(
+    String category,
+    String tujuan,
+  ) async {
+    print("DEBUG: fetchProviders($category, $tujuan) called");
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final result = await _apiService.fetchProvidersPrefix(category, tujuan);
+
+      if (result["success"] == true) {
+        _providers = result["data"] ?? [];
+        _error = null;
+      } else {
+        _providers = [];
+        _error = result["message"];
+      }
+
+      return result;
+    } catch (e, stack) {
+      _error = e.toString();
+      print("DEBUG: Error in fetchProviders() -> $_error");
+      print("DEBUG: Stacktrace -> $stack");
+      return {"success": false, "data": null, "message": _error};
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   void clearProviders() {
     _providers = [];
     _error = null;

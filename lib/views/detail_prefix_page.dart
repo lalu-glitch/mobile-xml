@@ -41,7 +41,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
     if (value.length > 6) {
       final iconItem = ModalRoute.of(context)!.settings.arguments as IconItem;
       final providerVM = Provider.of<ProviderViewModel>(context, listen: false);
-      await providerVM.fetchProviders(iconItem.filename, value);
+      await providerVM.fetchProvidersPrefix(iconItem.filename, value);
     }
   }
 

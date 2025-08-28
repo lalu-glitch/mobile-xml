@@ -117,6 +117,53 @@ class ApiService {
     }
   }
 
+  Future<Map<String, dynamic>> fetchProvidersPrefix(
+    String category,
+    String tujuan,
+  ) async {
+    try {
+      final response = await authService.dio.post(
+        "${AppConfig.baseUrlAuth}/oto/all_produk_prefix/$category",
+        data: {"tujuan": tujuan},
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = Map<String, dynamic>.from(response.data);
+        if (jsonData['data'] is List) {
+          final providers = (jsonData['data'] as List)
+              .map(
+                (item) =>
+                    ProviderData.fromJson(Map<String, dynamic>.from(item)),
+              )
+              .toList();
+
+          return {
+            "success": true,
+            "data": providers,
+            "message": jsonData["message"] ?? "Data provider berhasil dimuat.",
+          };
+        } else {
+          return {
+            "success": false,
+            "data": null,
+            "message": "Format data tidak sesuai.",
+          };
+        }
+      } else {
+        return {
+          "success": false,
+          "data": null,
+          "message": "Gagal memuat provider. Status: ${response.statusCode}",
+        };
+      }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? e.response?.data["message"] ?? "Terjadi kesalahan pada server."
+          : e.message;
+      return {"success": false, "data": null, "message": apiMessage};
+    }
+  }
+
   /// Proses transaksi
   Future<Map<String, dynamic>> prosesTransaksi(
     String tujuan,
