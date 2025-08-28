@@ -53,7 +53,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
               keyboardType: TextInputType.phone,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
-                hintText: "0812xxxxxxx",
+                hintText: "Input Nomor Tujuan",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

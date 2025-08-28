@@ -39,6 +39,8 @@ class AuthService {
                   return handler.reject(err as DioException);
                 }
               }
+            } else {
+              await logout();
             }
           }
           return handler.next(e);
@@ -65,15 +67,28 @@ class AuthService {
     final jsonString = await storage.read(key: "userData");
     if (jsonString == null) return null;
 
-    try {
-      final Map<String, dynamic> userData = jsonDecode(jsonString);
-      final accessToken = userData["accessToken"] as String?;
-      if (accessToken == null || accessToken.isEmpty) return null;
+    final userData = jsonDecode(jsonString) as Map<String, dynamic>;
+    String? accessToken = userData["accessToken"];
+    String? refreshToken = userData["refreshToken"];
 
-      return _isTokenExpired(accessToken) ? null : accessToken;
-    } catch (_) {
-      return null;
+    if (accessToken == null || refreshToken == null) return null;
+
+    // Kalau accessToken expired → refresh dulu
+    if (_isTokenExpired(accessToken)) {
+      final refreshed = await _refreshToken();
+      if (refreshed) {
+        final updated = await storage.read(key: "userData");
+        if (updated != null) {
+          final newData = jsonDecode(updated) as Map<String, dynamic>;
+          return newData["accessToken"];
+        }
+      } else {
+        await logout();
+        return null;
+      }
     }
+
+    return accessToken;
   }
 
   /// Cek apakah token expired
@@ -148,15 +163,12 @@ class AuthService {
                 : "Gagal kirim OTP (${response.data["message"]})"),
       };
     } on DioException catch (e) {
-      // tetap coba baca message dari server kalau ada
       final serverMsg = (e.response?.data is Map)
           ? e.response?.data["message"]
           : e.response?.data?.toString();
       return {
         "success": false,
-        "message":
-            serverMsg ??
-            "Error dari server (${e.response?.statusCode ?? 'unknown'})",
+        "message": serverMsg ?? "Error dari server (${e.response?.statusCode})",
       };
     } catch (e) {
       return {"success": false, "message": e.toString()};
@@ -182,8 +194,9 @@ class AuthService {
 
       final isSuccess = response.statusCode == 200;
 
-      // kalau sukses dan token ada → simpan
-      if (isSuccess && response.data["accessToken"] != null) {
+      if (isSuccess &&
+          response.data["accessToken"] != null &&
+          response.data["refreshToken"] != null) {
         final jsonString = jsonEncode({
           "accessToken": response.data["accessToken"],
           "refreshToken": response.data["refreshToken"],
@@ -195,7 +208,6 @@ class AuthService {
         };
       }
 
-      // kalau gagal tapi server kasih message, tetap kirim ke UI
       return {
         "success": false,
         "message":
@@ -208,9 +220,7 @@ class AuthService {
           : e.response?.data?.toString();
       return {
         "success": false,
-        "message":
-            serverMsg ??
-            "Error dari server (${e.response?.statusCode ?? 'unknown'})",
+        "message": serverMsg ?? "Error dari server (${e.response?.statusCode})",
       };
     } catch (e) {
       return {"success": false, "message": e.toString()};
@@ -236,7 +246,9 @@ class AuthService {
         data: {"refreshToken": refreshToken},
       );
 
-      if (response.statusCode == 200 && response.data["accessToken"] != null) {
+      if (response.statusCode == 200 &&
+          response.data["accessToken"] != null &&
+          response.data["refreshToken"] != null) {
         userData["accessToken"] = response.data["accessToken"];
         userData["refreshToken"] = response.data["refreshToken"];
         await storage.write(key: "userData", value: jsonEncode(userData));

@@ -116,7 +116,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
         const Icon(Icons.error, color: Colors.red, size: 64),
         const SizedBox(height: 16),
         Text(
-          message,
+          "Gangguan transaksi, Ulangi beberapa saat lagi.",
           style: const TextStyle(color: Colors.red, fontSize: 16),
           textAlign: TextAlign.center,
         ),

@@ -41,7 +41,7 @@ class TransaksiViewModel extends ChangeNotifier {
         if (transaksiResponse?.kodeInbox != null) {
           // cek status transaksi sekali
           // kasih delay 1 detik sebelum cek status
-          await Future.delayed(const Duration(seconds: 1));
+          await Future.delayed(const Duration(seconds: 3));
           await cekStatusTransaksi();
         } else {
           isLoading = false;
