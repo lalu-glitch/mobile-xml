@@ -6,17 +6,12 @@ import '../viewmodels/balance_viewmodel.dart';
 import 'transaksi_proses_page.dart';
 
 class KonfirmasiPembayaranPage extends StatefulWidget {
-  final String nomorTujuan;
-  final String kodeProduk;
-  final String namaProduk;
-  final double total;
-
   const KonfirmasiPembayaranPage({
     super.key,
-    required this.nomorTujuan,
-    required this.kodeProduk,
-    required this.namaProduk,
-    required this.total,
+    required String tujuan,
+    required String kode_produk,
+    required String namaProduk,
+    required int total,
   });
 
   @override
@@ -25,7 +20,23 @@ class KonfirmasiPembayaranPage extends StatefulWidget {
 }
 
 class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
+  late String tujuan;
+  late String kode_produk;
+  late String namaProduk;
+  late double total;
+
   String _selectedMethod = "SALDO"; // Default pilihan
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    tujuan = args['tujuan'];
+    kode_produk = args['kode_produk'];
+    namaProduk = args['namaProduk'];
+    total = args['total'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +70,15 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    _infoRow("Nomor Tujuan", widget.nomorTujuan),
+                    _infoRow("Nomor Tujuan", tujuan),
                     const Divider(height: 24),
-                    _infoRow("Kode Produk", widget.kodeProduk),
+                    _infoRow("Kode Produk", kode_produk),
                     const Divider(height: 24),
-                    _infoRow("Nama Produk", widget.namaProduk),
+                    _infoRow("Nama Produk", namaProduk),
                     const Divider(height: 24),
                     _infoRow(
                       "Total Pembayaran",
-                      CurrencyUtil.formatCurrency(widget.total),
+                      CurrencyUtil.formatCurrency(total),
                       isTotal: true,
                     ),
                   ],
@@ -165,20 +176,20 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                   shadowColor: Colors.orangeAccent.shade100,
                 ),
                 onPressed: () {
-                  if (_selectedMethod == "SALDO" && widget.total > saldo) {
+                  if (_selectedMethod == "SALDO" && total > saldo) {
                     showErrorDialog(
                       context,
                       "Saldo tidak mencukupi untuk melakukan transaksi ini",
                     );
                   } else {
-                    Navigator.push(
+                    Navigator.pushNamedAndRemoveUntil(
                       context,
-                      MaterialPageRoute(
-                        builder: (_) => TransaksiProsesPage(
-                          nomorTujuan: widget.nomorTujuan,
-                          kodeProduk: widget.kodeProduk,
-                        ),
-                      ),
+                      '/transaksiProses',
+                      (route) => false,
+                      arguments: {
+                        'tujuan': tujuan, // ✔ Sama dengan yang dibaca
+                        'kode_produk': kode_produk, // ✔ Sama dengan yang dibaca
+                      },
                     );
                   }
                 },
@@ -201,21 +212,32 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   /// Widget helper untuk row informasi produk
   Widget _infoRow(String label, String value, {bool isTotal = false}) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontWeight: FontWeight.w500,
+        Expanded(
+          flex: 4,
+          child: Text(
+            label,
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
-        Text(
-          value,
-          style: TextStyle(
-            fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
-            fontSize: isTotal ? 16 : 14,
-            color: isTotal ? Colors.orangeAccent[700] : Colors.black,
+        const SizedBox(width: 8),
+        Expanded(
+          flex: 6,
+          child: Text(
+            value,
+            textAlign: TextAlign.right,
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2, // Maksimal 2 baris, ubah jika mau multi-line
+            style: TextStyle(
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
+              fontSize: isTotal ? 16 : 14,
+              color: isTotal ? Colors.orangeAccent[700] : Colors.black,
+            ),
           ),
         ),
       ],

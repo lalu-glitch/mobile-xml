@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:logger/logger.dart';
 import '../models/transaksi_response.dart';
 import '../models/status_transaksi.dart';
 import '../services/api_service.dart';
@@ -12,32 +13,35 @@ class TransaksiViewModel extends ChangeNotifier {
   TransaksiResponse? transaksiResponse;
   StatusTransaksi? statusTransaksi;
   Timer? _debounce;
+  final logger = Logger();
 
   TransaksiViewModel({ApiService? service})
     : apiService = service ?? ApiService();
 
   /// Proses transaksi dengan delay debounce
-  void prosesTransaksiDebounce(String nomor, String kodeProduk) {
+  void prosesTransaksiDebounce(String nomor, String kode_produk) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
     _debounce = Timer(const Duration(milliseconds: 800), () {
-      prosesTransaksi(nomor, kodeProduk);
+      prosesTransaksi(nomor, kode_produk);
     });
   }
 
   /// Proses transaksi satu kali
-  Future<void> prosesTransaksi(String nomor, String kodeProduk) async {
+  Future<void> prosesTransaksi(String nomor, String kode_produk) async {
     isLoading = true;
     error = null;
     notifyListeners();
 
     try {
-      final result = await apiService.prosesTransaksi(nomor, kodeProduk);
+      final result = await apiService.prosesTransaksi(nomor, kode_produk);
 
       if (result["success"] == true && result["data"] != null) {
         transaksiResponse = result["data"] as TransaksiResponse;
         if (transaksiResponse?.kodeInbox != null) {
           // cek status transaksi sekali
+          // kasih delay 1 detik sebelum cek status
+          await Future.delayed(const Duration(seconds: 1));
           await cekStatusTransaksi();
         } else {
           isLoading = false;
@@ -57,7 +61,10 @@ class TransaksiViewModel extends ChangeNotifier {
   }
 
   /// Cek status transaksi sekali
-  Future<void> cekStatusTransaksi() async {
+  Future<void> cekStatusTransaksi({
+    int retryCount = 0,
+    int maxRetry = 10,
+  }) async {
     final kodeInbox = transaksiResponse?.kodeInbox;
     if (kodeInbox == null) {
       error = "Kode Inbox tidak ditemukan. Transaksi belum dimulai.";
@@ -69,17 +76,43 @@ class TransaksiViewModel extends ChangeNotifier {
     try {
       final result = await apiService.getStatusByInbox(kodeInbox);
 
-      // Periksa apakah ada nested "data"
-      final dataMap = result['data'] ?? result;
+      if (result['success'] == true) {
+        final data = result['data'];
+        if (data is StatusTransaksi) {
+          statusTransaksi = data;
+        } else if (data is Map<String, dynamic>) {
+          statusTransaksi = StatusTransaksi.fromJson(data);
+        } else {
+          throw Exception("Format data tidak dikenali");
+        }
 
-      statusTransaksi = StatusTransaksi.fromJson(dataMap);
-      isLoading = false;
-      notifyListeners();
+        // Jika status_trx masih 1 atau 2, coba lagi setelah 1 detik
+        if (statusTransaksi?.statusTrx == 1 ||
+            statusTransaksi?.statusTrx == 2) {
+          if (retryCount < maxRetry) {
+            await Future.delayed(const Duration(seconds: 1));
+            await cekStatusTransaksi(
+              retryCount: retryCount + 1,
+              maxRetry: maxRetry,
+            );
+            return;
+          } else {
+            error =
+                "Status masih ${statusTransaksi?.keterangan} setelah $maxRetry percobaan";
+          }
+        }
+
+        error = null; // sukses dan status final
+      } else {
+        error =
+            result['message']?.toString() ?? "Gagal mengambil status transaksi";
+      }
     } catch (e) {
       error = "Gagal mengambil status transaksi: $e";
-      isLoading = false;
-      notifyListeners();
     }
+
+    isLoading = false;
+    notifyListeners();
   }
 
   @override

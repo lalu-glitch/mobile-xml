@@ -119,13 +119,13 @@ class ApiService {
 
   /// Proses transaksi
   Future<Map<String, dynamic>> prosesTransaksi(
-    String nomorTujuan,
-    String kodeProduk,
+    String tujuan,
+    String kode_produk,
   ) async {
     try {
       final response = await authService.dio.post(
         "${AppConfig.baseUrlAuth}/transaksi",
-        data: {"tujuan": nomorTujuan, "kode_produk": kodeProduk},
+        data: {"tujuan": tujuan, "kode_produk": kode_produk},
       );
 
       if (response.statusCode == 200) {

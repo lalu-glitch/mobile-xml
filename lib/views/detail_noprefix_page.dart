@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../models/icon_data.dart';
 import '../utils/currency.dart';
 import '../viewmodels/provider_viewmodel.dart';
-import 'konfirmasi_page.dart';
 
 class DetailNoPrefixPage extends StatefulWidget {
   const DetailNoPrefixPage({super.key});
@@ -15,47 +12,21 @@ class DetailNoPrefixPage extends StatefulWidget {
 }
 
 class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
-  final TextEditingController _nomorController = TextEditingController();
-  Timer? _debounce;
   String? selectedProductCode;
   double selectedPrice = 0;
+  dynamic selectedProduk; // TAMBAH: Simpan data produk yang dipilih
 
   @override
   void initState() {
     super.initState();
-    _nomorController.text = "";
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProviderViewModel>(context, listen: false).clearProviders();
-    });
-  }
-
-  @override
-  void dispose() {
-    _debounce?.cancel();
-    _nomorController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _fetchProvider(String value) async {
-    if (value.length > 6) {
       final iconItem = ModalRoute.of(context)!.settings.arguments as IconItem;
-      final providerVM = Provider.of<ProviderViewModel>(context, listen: false);
-      await providerVM.fetchProviders(iconItem.filename, value);
-    }
-  }
-
-  void _onNomorChanged(String value) {
-    final providerVM = Provider.of<ProviderViewModel>(context, listen: false);
-    providerVM.clearProviders();
-
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
-
-    if (value.length > 6) {
-      _debounce = Timer(const Duration(milliseconds: 800), () {
-        _fetchProvider(value);
-      });
-    }
+      Provider.of<ProviderViewModel>(
+        context,
+        listen: false,
+      ).fetchProviders(iconItem.filename, "");
+    });
   }
 
   @override
@@ -72,154 +43,98 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
         backgroundColor: Colors.orangeAccent[700],
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Column(
-        children: [
-          // Input Nomor
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Nomor Tujuan"),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: _nomorController,
-                  onChanged: _onNomorChanged,
-                  onSubmitted: _fetchProvider,
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    hintText: "0812 1111 2222",
-                    suffixIcon: const Icon(Icons.contact_page),
+      body: Consumer<ProviderViewModel>(
+        builder: (context, vm, child) {
+          if (vm.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (vm.error != null) {
+            return Center(
+              child: Text(vm.error!, style: const TextStyle(color: Colors.red)),
+            );
+          }
+          if (vm.providers.isEmpty) {
+            return const Center(child: Text("Data tidak tersedia"));
+          }
+
+          return ListView.builder(
+            itemCount: vm.providers.length,
+            itemBuilder: (context, index) {
+              final provider = vm.providers[index];
+              final List produkList = provider.produk;
+
+              return Card(
+                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                child: ExpansionTile(
+                  title: Text(
+                    provider.namaProvider,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
-            ),
-          ),
+                  children: [
+                    ...produkList.map((produk) {
+                      final bool isSelected =
+                          selectedProductCode == produk.kode_produk;
+                      final bool isGangguan = produk.gangguan == 1;
 
-          // LIST PROVIDER DENGAN ACCORDION
-          Expanded(
-            child: Consumer<ProviderViewModel>(
-              builder: (context, vm, child) {
-                if (vm.isLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (vm.error != null) {
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      "${vm.error}",
-                      style: TextStyle(color: Colors.red[400]),
-                    ),
-                  );
-                }
-                if (vm.providers.isEmpty) {
-                  return const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text("Input Nomor Tujuan"),
-                  );
-                }
-
-                return ListView.builder(
-                  itemCount: vm.providers.length,
-                  itemBuilder: (context, index) {
-                    final provider = vm.providers[index];
-                    final List produkList = provider.produk;
-
-                    return Card(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      child: ExpansionTile(
-                        title: Text(
-                          provider.namaProvider,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        children: [
-                          ...produkList.map((produk) {
-                            final bool isSelected =
-                                selectedProductCode == produk.kodeProduk;
-                            final bool isGangguan = produk.gangguan == 1;
-
-                            return GestureDetector(
-                              onTap: isGangguan
-                                  ? null
-                                  : () {
-                                      setState(() {
-                                        selectedProductCode = produk.kodeProduk;
-                                        selectedPrice = produk.hargaJual
-                                            .toDouble();
-                                      });
-                                    },
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 6,
-                                ),
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: isGangguan
-                                      ? Colors.grey.shade200
-                                      : isSelected
-                                      ? Colors.orangeAccent[700]
-                                      : Colors.white,
-                                  border: Border.all(
-                                    color: isGangguan
-                                        ? Colors.red
-                                        : isSelected
-                                        ? Colors.deepOrange
-                                        : Colors.grey.shade300,
-                                    width: isGangguan ? 2 : 1,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                      return GestureDetector(
+                        onTap: isGangguan
+                            ? null
+                            : () {
+                                setState(() {
+                                  selectedProductCode = produk.kode_produk;
+                                  selectedPrice = produk.hargaJual.toDouble();
+                                  selectedProduk = produk;
+                                });
+                              },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: isGangguan
+                                ? Colors.grey.shade200
+                                : isSelected
+                                ? Colors.orangeAccent[700]
+                                : Colors.white,
+                            border: Border.all(
+                              color: isGangguan
+                                  ? Colors.red
+                                  : isSelected
+                                  ? Colors.deepOrange
+                                  : Colors.grey.shade300,
+                              width: isGangguan ? 2 : 1,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Flexible(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                    if (isGangguan)
+                                      const Row(
                                         children: [
-                                          if (isGangguan)
-                                            Row(
-                                              children: const [
-                                                Icon(
-                                                  Icons.cancel,
-                                                  color: Colors.red,
-                                                  size: 14,
-                                                ),
-                                                SizedBox(width: 4),
-                                                Text(
-                                                  "Gangguan",
-                                                  style: TextStyle(
-                                                    color: Colors.red,
-                                                    fontSize: 12,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                          Icon(
+                                            Icons.cancel,
+                                            color: Colors.red,
+                                            size: 14,
+                                          ),
+                                          SizedBox(width: 4),
                                           Text(
-                                            produk.namaProduk,
+                                            "Gangguan",
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: isGangguan
-                                                  ? Colors.red
-                                                  : isSelected
-                                                  ? Colors.white
-                                                  : Colors.black,
+                                              color: Colors.red,
+                                              fontSize: 12,
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
                                     Text(
-                                      "${CurrencyUtil.formatCurrency(produk.hargaJual)}",
+                                      produk.namaProduk,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: isGangguan
@@ -232,75 +147,70 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                   ],
                                 ),
                               ),
-                            );
-                          }),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: selectedProductCode != null
-          ? Consumer<ProviderViewModel>(
-              builder: (context, vm, child) {
-                final selectedProduk = vm.providers
-                    .expand((p) => p.produk)
-                    .where((p) => p.kodeProduk == selectedProductCode)
-                    .firstOrNull;
-
-                if (selectedProduk == null) return SizedBox.shrink();
-
-                return Container(
-                  color: Colors.orangeAccent[700],
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.orangeAccent[700],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                              Text(
+                                CurrencyUtil.formatCurrency(produk.hargaJual),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: isGangguan
+                                      ? Colors.red
+                                      : isSelected
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => KonfirmasiPembayaranPage(
-                                nomorTujuan: _nomorController.text,
-                                kodeProduk: selectedProduk.kodeProduk,
-                                namaProduk: selectedProduk.namaProduk,
-                                total: selectedProduk.hargaJual.toDouble(),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "Selanjutnya",
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
+                      );
+                    }),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+      bottomNavigationBar: selectedProductCode != null
+          ? Container(
+              color: Colors.orangeAccent[700],
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
-                );
-              },
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.orangeAccent[700],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/inputNomorTujuan',
+                        arguments: {
+                          'kode_produk': selectedProduk.kode_produk,
+                          'namaProduk': selectedProduk.namaProduk,
+                          'total': selectedProduk.hargaJual.toDouble(),
+                        },
+                      );
+                    },
+                    child: const Text(
+                      "Selanjutnya",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             )
           : null,
     );

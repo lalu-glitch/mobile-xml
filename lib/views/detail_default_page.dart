@@ -200,8 +200,8 @@ class _DetailRegulerPageState extends State<DetailRegulerPage>
                         context,
                         MaterialPageRoute(
                           builder: (_) => KonfirmasiPembayaranPage(
-                            nomorTujuan: selectedNomor,
-                            kodeProduk: selectedPulsa["id"],
+                            tujuan: selectedNomor,
+                            kode_produk: selectedPulsa["id"],
                             namaProduk: selectedPulsa["label"],
                             total: selectedPulsa["price"].toDouble(),
                           ),

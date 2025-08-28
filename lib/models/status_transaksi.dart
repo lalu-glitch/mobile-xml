@@ -1,9 +1,14 @@
 class StatusTransaksi {
   final int kode;
   final String tujuan;
-  final int statusTrx; // Ubah jadi int biar gampang mapping
+  final int statusTrx;
   final String sn;
   final String outbox;
+  final String kodeProduk;
+  final DateTime tglEntri;
+  final DateTime lastUpdate;
+  final String harga;
+  final String komisi;
 
   StatusTransaksi({
     required this.kode,
@@ -11,15 +16,31 @@ class StatusTransaksi {
     required this.statusTrx,
     required this.sn,
     required this.outbox,
+    required this.kodeProduk,
+    required this.tglEntri,
+    required this.lastUpdate,
+    required this.harga,
+    required this.komisi,
   });
 
   factory StatusTransaksi.fromJson(Map<String, dynamic> json) {
     return StatusTransaksi(
-      kode: json['kode'] ?? 0,
-      tujuan: json['tujuan'] ?? '',
+      kode: json['kode'] is int
+          ? json['kode']
+          : int.tryParse(json['kode']?.toString() ?? '') ?? 0,
+      tujuan: json['tujuan']?.toString() ?? '',
       statusTrx: int.tryParse(json['status_trx']?.toString() ?? '') ?? 0,
-      sn: json['SN'] ?? '',
-      outbox: json['outbox'] ?? '',
+      sn: json['SN']?.toString() ?? '',
+      outbox: json['outbox']?.toString() ?? '',
+      kodeProduk: json['kode_produk']?.toString() ?? '',
+      tglEntri:
+          DateTime.tryParse(json['tgl_entri']?.toString() ?? '') ??
+          DateTime.now(),
+      lastUpdate:
+          DateTime.tryParse(json['last_update']?.toString() ?? '') ??
+          DateTime.now(),
+      harga: json['harga']?.toString() ?? '0',
+      komisi: json['komisi']?.toString() ?? '0',
     );
   }
 

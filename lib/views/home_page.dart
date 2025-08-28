@@ -488,7 +488,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      '/detailNoPrefix',
+                      '/detailPrefix',
                       arguments: iconItem,
                     );
                   },

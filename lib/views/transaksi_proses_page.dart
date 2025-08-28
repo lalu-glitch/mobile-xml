@@ -1,33 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/transaksi_viewmodel.dart';
+import 'transaksi_detail_page.dart';
+import 'package:logger/logger.dart';
 
 class TransaksiProsesPage extends StatefulWidget {
-  final String nomorTujuan;
-  final String kodeProduk;
-
   const TransaksiProsesPage({
     super.key,
-    required this.nomorTujuan,
-    required this.kodeProduk,
-  });
+    required String kode_produk,
+    required String tujuan,
+  }); // kosong, karena pakai pushNamed
 
   @override
   State<TransaksiProsesPage> createState() => _TransaksiProsesPageState();
 }
 
 class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
+  late String tujuan;
+  late String kode_produk;
+  bool _isInit = false;
+
+  final logger = Logger();
+
   @override
-  void initState() {
-    super.initState();
-    Future.microtask(() {
-      if (mounted) {
-        context.read<TransaksiViewModel>().prosesTransaksi(
-          widget.nomorTujuan,
-          widget.kodeProduk,
-        );
-      }
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInit) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      tujuan = args['tujuan'];
+      kode_produk = args['kode_produk'];
+      _isInit = true;
+
+      // langsung panggil proses transaksi
+      Future.microtask(() {
+        if (mounted) {
+          context.read<TransaksiViewModel>().prosesTransaksi(
+            tujuan,
+            kode_produk,
+          );
+        }
+      });
+    }
   }
 
   @override
@@ -37,8 +51,12 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Proses Transaksi"),
-        backgroundColor: Colors.orangeAccent,
+        title: const Text(
+          "Proses Transaksi",
+          style: TextStyle(color: Colors.white),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.orangeAccent[700],
       ),
       body: Center(
         child: Padding(
@@ -58,8 +76,11 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   /// Widget ketika transaksi pertama kali dikirim, menunggu response awal
   Widget _waitingResponseWidget(TransaksiViewModel vm) => Column(
     mainAxisAlignment: MainAxisAlignment.center,
-    children: const [
-      CircularProgressIndicator(color: Colors.orangeAccent, strokeWidth: 5),
+    children: [
+      CircularProgressIndicator(
+        color: Colors.orangeAccent[700],
+        strokeWidth: 5,
+      ),
       SizedBox(height: 16),
       Text(
         "Mengirim Permintaan...",
@@ -72,8 +93,11 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   /// Widget loading (proses API ongoing)
   Widget _loadingWidget() => Column(
     mainAxisAlignment: MainAxisAlignment.center,
-    children: const [
-      CircularProgressIndicator(color: Colors.orangeAccent, strokeWidth: 5),
+    children: [
+      CircularProgressIndicator(
+        color: Colors.orangeAccent[700],
+        strokeWidth: 5,
+      ),
       SizedBox(height: 16),
       Text(
         "Memproses...",
@@ -83,31 +107,33 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   );
 
   /// Widget ketika error
-  Widget _errorWidget(String message) => Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      const Icon(Icons.error, color: Colors.red, size: 64),
-      const SizedBox(height: 16),
-      Text(
-        message,
-        style: const TextStyle(color: Colors.red, fontSize: 16),
-        textAlign: TextAlign.center,
-      ),
-      const SizedBox(height: 20),
-      ElevatedButton(
-        onPressed: () {
-          context.read<TransaksiViewModel>().prosesTransaksi(
-            widget.nomorTujuan,
-            widget.kodeProduk,
-          );
-        },
-        child: const Text("Coba Lagi"),
-      ),
-    ],
-  );
+  Widget _errorWidget(String message) {
+    logger.d("resultresult: $message");
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(Icons.error, color: Colors.red, size: 64),
+        const SizedBox(height: 16),
+        Text(
+          message,
+          style: const TextStyle(color: Colors.red, fontSize: 16),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          },
+          child: const Text("Kembali ke Home"),
+        ),
+      ],
+    );
+  }
 
   Widget _statusWidget(TransaksiViewModel vm) {
     final status = vm.statusTransaksi;
+    // logger.d("resultresult: $vm");
 
     if (status?.isSukses ?? false) {
       // Jika SUKSES
@@ -119,26 +145,33 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           Text(
             status!.keterangan,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 30,
               fontWeight: FontWeight.bold,
               color: Colors.green,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
+          Text(
+            status?.outbox ?? "Silahkan Lihat Detail",
+            style: const TextStyle(fontSize: 14, color: Colors.black),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Selesai"),
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/transaksiDetail',
+                (route) => false,
+                arguments: status,
+              );
+            },
+            child: const Text("Lihat Detail"),
           ),
         ],
       );
-    } else if (status?.statusTrx == 40 ||
-        status?.statusTrx == 43 ||
-        status?.statusTrx == 47 ||
-        status?.statusTrx == 50 ||
-        status?.statusTrx == 52 ||
-        status?.statusTrx == 53 ||
-        status?.statusTrx == 55) {
+    } else if ([40, 43, 47, 50, 52, 53, 55].contains(status?.statusTrx)) {
       // Jika GAGAL
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -155,9 +188,22 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
+          Text(
+            status?.outbox ?? "Silahkan Lihat Detail",
+            style: const TextStyle(fontSize: 14, color: Colors.black),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Tutup"),
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/transaksiDetail',
+                (route) => false,
+                arguments: status,
+              );
+            },
+            child: const Text("Lihat Detail"),
           ),
         ],
       );
@@ -166,8 +212,8 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(
-            color: Colors.orangeAccent,
+          CircularProgressIndicator(
+            color: Colors.orangeAccent[700],
             strokeWidth: 5,
           ),
           const SizedBox(height: 16),
@@ -175,13 +221,6 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
             status?.keterangan ?? "Menunggu Konfirmasi...",
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton.icon(
-            onPressed: () =>
-                context.read<TransaksiViewModel>().cekStatusTransaksi(),
-            icon: const Icon(Icons.refresh),
-            label: const Text("Perbarui Status"),
           ),
         ],
       );

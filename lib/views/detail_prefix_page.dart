@@ -1,18 +1,20 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../models/icon_data.dart';
+import '../utils/currency.dart';
 import '../viewmodels/provider_viewmodel.dart';
 import 'konfirmasi_page.dart';
 
-class DetailRegulerPage extends StatefulWidget {
-  const DetailRegulerPage({super.key});
+class DetailPrefixPage extends StatefulWidget {
+  const DetailPrefixPage({super.key});
 
   @override
-  State<DetailRegulerPage> createState() => _DetailRegulerPageState();
+  State<DetailPrefixPage> createState() => _DetailPrefixPageState();
 }
 
-class _DetailRegulerPageState extends State<DetailRegulerPage> {
+class _DetailPrefixPageState extends State<DetailPrefixPage> {
   final TextEditingController _nomorController = TextEditingController();
   Timer? _debounce;
   String? selectedProductCode;
@@ -61,6 +63,7 @@ class _DetailRegulerPageState extends State<DetailRegulerPage> {
     final iconItem = ModalRoute.of(context)!.settings.arguments as IconItem;
 
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text(
           iconItem.filename,
@@ -84,6 +87,7 @@ class _DetailRegulerPageState extends State<DetailRegulerPage> {
                   onChanged: _onNomorChanged,
                   onSubmitted: _fetchProvider,
                   keyboardType: TextInputType.phone,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -138,7 +142,7 @@ class _DetailRegulerPageState extends State<DetailRegulerPage> {
                         children: [
                           ...produkList.map((produk) {
                             final bool isSelected =
-                                selectedProductCode == produk.kodeProduk;
+                                selectedProductCode == produk.kode_produk;
                             final bool isGangguan = produk.gangguan == 1;
 
                             return GestureDetector(
@@ -146,7 +150,8 @@ class _DetailRegulerPageState extends State<DetailRegulerPage> {
                                   ? null
                                   : () {
                                       setState(() {
-                                        selectedProductCode = produk.kodeProduk;
+                                        selectedProductCode =
+                                            produk.kode_produk;
                                         selectedPrice = produk.hargaJual
                                             .toDouble();
                                       });
@@ -215,7 +220,7 @@ class _DetailRegulerPageState extends State<DetailRegulerPage> {
                                       ),
                                     ),
                                     Text(
-                                      "Rp ${produk.hargaJual}",
+                                      "${CurrencyUtil.formatCurrency(produk.hargaJual)}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: isGangguan
@@ -245,7 +250,10 @@ class _DetailRegulerPageState extends State<DetailRegulerPage> {
               builder: (context, vm, child) {
                 final selectedProduk = vm.providers
                     .expand((p) => p.produk)
-                    .firstWhere((p) => p.kodeProduk == selectedProductCode);
+                    .where((p) => p.kode_produk == selectedProductCode)
+                    .firstOrNull;
+
+                if (selectedProduk == null) return SizedBox.shrink();
 
                 return Container(
                   color: Colors.orangeAccent[700],
@@ -257,7 +265,7 @@ class _DetailRegulerPageState extends State<DetailRegulerPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Total Rp ${selectedPrice.toStringAsFixed(0)}",
+                        "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -273,16 +281,15 @@ class _DetailRegulerPageState extends State<DetailRegulerPage> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushNamed(
                             context,
-                            MaterialPageRoute(
-                              builder: (_) => KonfirmasiPembayaranPage(
-                                nomorTujuan: _nomorController.text,
-                                kodeProduk: selectedProduk.kodeProduk,
-                                namaProduk: selectedProduk.namaProduk,
-                                total: selectedProduk.hargaJual.toDouble(),
-                              ),
-                            ),
+                            '/konfirmasiPembayaran',
+                            arguments: {
+                              'tujuan': _nomorController.text,
+                              'kode_produk': selectedProduk.kode_produk,
+                              'namaProduk': selectedProduk.namaProduk,
+                              'total': selectedProduk.hargaJual.toDouble(),
+                            },
                           );
                         },
                         child: Text(
