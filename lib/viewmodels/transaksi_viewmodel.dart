@@ -19,22 +19,34 @@ class TransaksiViewModel extends ChangeNotifier {
     : apiService = service ?? ApiService();
 
   /// Proses transaksi dengan delay debounce
-  void prosesTransaksiDebounce(String nomor, String kode_produk) {
+  void prosesTransaksiDebounce(
+    String nomor,
+    String kode_produk,
+    String kode_dompet,
+  ) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
     _debounce = Timer(const Duration(milliseconds: 800), () {
-      prosesTransaksi(nomor, kode_produk);
+      prosesTransaksi(nomor, kode_produk, kode_dompet);
     });
   }
 
   /// Proses transaksi satu kali
-  Future<void> prosesTransaksi(String nomor, String kode_produk) async {
+  Future<void> prosesTransaksi(
+    String nomor,
+    String kode_produk,
+    String kode_dompet,
+  ) async {
     isLoading = true;
     error = null;
     notifyListeners();
 
     try {
-      final result = await apiService.prosesTransaksi(nomor, kode_produk);
+      final result = await apiService.prosesTransaksi(
+        nomor,
+        kode_produk,
+        kode_dompet,
+      );
 
       if (result["success"] == true && result["data"] != null) {
         transaksiResponse = result["data"] as TransaksiResponse;

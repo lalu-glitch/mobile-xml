@@ -24,8 +24,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   late String namaProduk;
   late double total;
 
-  String _selectedMethod = "SALDO"; // Default pilihan
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -34,18 +32,33 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
     tujuan = args['tujuan'];
     kode_produk = args['kode_produk'];
     namaProduk = args['namaProduk'];
-    total = args['total'];
+    total = (args['total'] as num).toDouble(); // <- aman untuk int/double
   }
 
+  String _selectedMethod = "SALDO"; // Default pilihan
   @override
   Widget build(BuildContext context) {
     final balanceVM = Provider.of<BalanceViewModel>(context);
     final saldo = balanceVM.userBalance?.saldo ?? 0;
-
+    final eWallet = balanceVM.userBalance?.ewallet;
     final methods = [
-      {"label": "SALDO", "secondary": CurrencyUtil.formatCurrency(saldo)},
-      {"label": "SPEEDCASH", "secondary": null},
-      {"label": "NOBU", "secondary": null},
+      // generate dari eWallet list
+      {
+        "label": "SALDO",
+        "secondary": CurrencyUtil.formatCurrency(saldo),
+        "ewallet": "",
+      },
+
+      if (eWallet != null)
+        for (var ew in eWallet)
+          {
+            "label": "${ew.nama}",
+            "secondary": CurrencyUtil.formatCurrency(ew.saldoEwallet),
+            "ewallet": ew.kodeDompet,
+          },
+
+      // static tambahan
+      {"label": "NOBU", "secondary": null, "ewallet": ""},
     ];
 
     return Scaffold(
@@ -98,7 +111,8 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
             Column(
               children: methods.map((method) {
-                final isSelected = _selectedMethod == method["label"];
+                final isSelected =
+                    _selectedMethod == (method["label"] as String? ?? '');
 
                 return Card(
                   elevation: 2,
@@ -109,7 +123,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                     borderRadius: BorderRadius.circular(12),
                     onTap: () {
                       setState(() {
-                        _selectedMethod = method["label"]!;
+                        _selectedMethod = (method["label"] as String? ?? '');
                       });
                     },
                     child: Padding(
@@ -121,7 +135,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            method["label"]!,
+                            (method["label"] as String? ?? ''),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -134,7 +148,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 8),
                                   child: Text(
-                                    method["secondary"]!,
+                                    (method["secondary"] as String? ?? ''),
                                     textAlign: TextAlign.right,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w500,
@@ -175,10 +189,28 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                   shadowColor: Colors.orangeAccent.shade100,
                 ),
                 onPressed: () {
-                  if (_selectedMethod == "SALDO" && total > saldo) {
+                  if (_selectedMethod == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Pilih metode pembayaran dulu"),
+                      ),
+                    );
+                    return;
+                  }
+                  final selected = methods.firstWhere(
+                    (m) => m["label"] == _selectedMethod,
+                    orElse: () => {},
+                  );
+
+                  final sec = selected["secondary"];
+                  final selectedSaldo = (sec is String)
+                      ? CurrencyUtil.parseCurrency(sec)
+                      : 0;
+
+                  if (total > selectedSaldo) {
                     showErrorDialog(
                       context,
-                      "Saldo tidak mencukupi untuk melakukan transaksi ini",
+                      "Saldo ${_selectedMethod ?? ''} tidak mencukupi untuk melakukan transaksi ini",
                     );
                   } else {
                     Navigator.pushNamedAndRemoveUntil(
@@ -188,6 +220,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                       arguments: {
                         'tujuan': tujuan, // ✔ Sama dengan yang dibaca
                         'kode_produk': kode_produk, // ✔ Sama dengan yang dibaca
+                        'kode_dompet': selected?["ewallet"],
                       },
                     );
                   }

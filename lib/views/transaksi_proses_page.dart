@@ -18,6 +18,7 @@ class TransaksiProsesPage extends StatefulWidget {
 class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   late String tujuan;
   late String kode_produk;
+  late String kode_dompet;
   bool _isInit = false;
 
   final logger = Logger();
@@ -30,6 +31,11 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       tujuan = args['tujuan'];
       kode_produk = args['kode_produk'];
+      if (args['kode_dompet'] != null) {
+        kode_dompet = args['kode_dompet'] as String;
+      } else {
+        kode_dompet = "";
+      }
       _isInit = true;
 
       // langsung panggil proses transaksi
@@ -38,6 +44,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           context.read<TransaksiViewModel>().prosesTransaksi(
             tujuan,
             kode_produk,
+            kode_dompet,
           );
         }
       });
@@ -221,6 +228,18 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
             status?.keterangan ?? "Menunggu Konfirmasi...",
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             textAlign: TextAlign.center,
+          ),
+          Text(
+            "Transaksi mungkin memakan waktu lama, Cek history transaksi.",
+            style: const TextStyle(color: Colors.black, fontSize: 14),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+            },
+            child: const Text("Ke Menu Utama"),
           ),
         ],
       );

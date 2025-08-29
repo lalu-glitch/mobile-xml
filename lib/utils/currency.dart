@@ -9,4 +9,10 @@ class CurrencyUtil {
     );
     return format.format(value ?? 0);
   }
+
+  static int parseCurrency(String value) {
+    // Hapus semua selain angka
+    final numericString = value.replaceAll(RegExp(r'[^0-9]'), '');
+    return int.tryParse(numericString) ?? 0;
+  }
 }
