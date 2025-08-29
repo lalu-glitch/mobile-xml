@@ -43,7 +43,7 @@ Future<void> main() async {
           ChangeNotifierProvider(
             create: (_) => TransaksiViewModel(service: ApiService()),
           ),
-          ChangeNotifierProvider(create: (_) => HistoryViewModel()),
+          ChangeNotifierProvider(create: (_) => RiwayatTransaksiViewModel()),
         ],
         child: const XmlApp(),
       ),

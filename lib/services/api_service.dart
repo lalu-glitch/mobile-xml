@@ -232,7 +232,7 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> fetchHistory({
+  Future<RiwayatTransaksiResponse?> fetchHistory({
     int page = 1,
     int limit = 5,
   }) async {
@@ -246,39 +246,15 @@ class ApiService {
         final Map<String, dynamic> data = Map<String, dynamic>.from(
           response.data,
         );
-
-        final List<dynamic> rawItems = data["data"] ?? [];
-
-        final List<Transaksi> items = rawItems
-            .map((e) => Transaksi.fromJson(Map<String, dynamic>.from(e)))
-            .toList();
-
-        return {
-          "success": true,
-          "data": {
-            "total": data["total"] ?? 0,
-            "total_pages": data["total_pages"] ?? 1,
-            "current_page": data["current_page"] ?? page,
-            "perPage": data["perPage"] ?? limit,
-            "items": items,
-          },
-          "message": "Berhasil mendapatkan riwayat transaksi",
-        };
-      } else {
-        return {
-          "success": false,
-          "data": null,
-          "message":
-              "Gagal mendapatkan riwayat. Status: ${response.statusCode}",
-        };
+        return RiwayatTransaksiResponse.fromJson(data);
       }
+      return null;
     } on DioException catch (e) {
-      final apiMessage = e.response?.data is Map
-          ? e.response?.data["message"] ?? "Terjadi kesalahan server"
-          : e.message;
-      return {"success": false, "data": null, "message": apiMessage};
+      print("Dio Error: ${e.response?.data ?? e.message}");
+      return null;
     } catch (e) {
-      return {"success": false, "data": null, "message": e.toString()};
+      print("Other Error: $e");
+      return null;
     }
   }
 }

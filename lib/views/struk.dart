@@ -8,18 +8,19 @@ import 'package:share_plus/share_plus.dart';
 import '../models/transaksi_riwayat.dart';
 
 class StrukPage extends StatelessWidget {
-  final Transaksi transaksi;
+  final RiwayatTransaksi transaksi;
 
   const StrukPage({super.key, required this.transaksi});
 
   @override
   Widget build(BuildContext context) {
-    final isSukses = transaksi.status.toLowerCase() == "sukses";
+    // misal status 20 = sukses, selain itu gagal
+    final isSukses = transaksi.status == 20;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Struk', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Colors.orangeAccent[700],
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
@@ -50,13 +51,12 @@ class StrukPage extends StatelessWidget {
                     ),
                   ),
                   const Divider(),
-                  _line("ID TRX", transaksi.id),
-                  _line("Tanggal", transaksi.tanggal),
-                  _line("Status", transaksi.status),
+                  _line("KODE", transaksi.kode),
+                  _line("Tanggal", transaksi.tglEntri.toString()),
+                  _line("Status", isSukses ? "Sukses" : "Gagal"),
                   const Divider(),
-                  _line("Produk", transaksi.produk),
-                  _line("Nomor", transaksi.nomor),
-                  _line("Harga", "Rp ${transaksi.total}"),
+                  _line("Nomor", transaksi.tujuan),
+                  _line("Harga", "Rp ${transaksi.harga.toStringAsFixed(0)}"),
                   const Divider(),
                   Center(
                     child: Text(
@@ -114,7 +114,7 @@ class StrukPage extends StatelessWidget {
                       final xfile = XFile.fromData(
                         pdfBytes,
                         mimeType: "application/pdf",
-                        name: "struk_${transaksi.id}.pdf",
+                        name: "struk_${transaksi.kode}.pdf",
                       );
                       await Share.shareXFiles([xfile]);
                     },
@@ -143,9 +143,9 @@ class StrukPage extends StatelessWidget {
     );
   }
 
-  Future<Uint8List> _generatePdf(Transaksi trx) async {
+  Future<Uint8List> _generatePdf(RiwayatTransaksi trx) async {
     final pdf = pw.Document();
-    final isSukses = trx.status.toLowerCase() == "sukses";
+    final isSukses = trx.status == 20;
 
     pdf.addPage(
       pw.Page(
@@ -171,13 +171,12 @@ class StrukPage extends StatelessWidget {
                   ),
                 ),
                 pw.Divider(),
-                _pdfLine("ID TRX", trx.id),
-                _pdfLine("Tanggal", trx.tanggal),
-                _pdfLine("Status", trx.status),
+                _pdfLine("ID TRX", trx.kode),
+                _pdfLine("Tanggal", trx.tglEntri.toString()),
+                _pdfLine("Status", isSukses ? "Sukses" : "Gagal"),
                 pw.Divider(),
-                _pdfLine("Produk", trx.produk),
-                _pdfLine("Nomor", trx.nomor),
-                _pdfLine("Harga", "Rp ${trx.total}"),
+                _pdfLine("Nomor", trx.tujuan),
+                _pdfLine("Harga", "Rp ${trx.harga.toStringAsFixed(0)}"),
                 pw.Divider(),
                 pw.Center(
                   child: pw.Text(
