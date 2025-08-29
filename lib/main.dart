@@ -7,6 +7,7 @@ import 'services/api_service.dart';
 import 'viewmodels/balance_viewmodel.dart';
 import 'viewmodels/icon_viewmodel.dart';
 import 'viewmodels/provider_viewmodel.dart';
+import 'viewmodels/riwayat_viewmodel.dart';
 import 'viewmodels/transaksi_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -42,6 +43,7 @@ Future<void> main() async {
           ChangeNotifierProvider(
             create: (_) => TransaksiViewModel(service: ApiService()),
           ),
+          ChangeNotifierProvider(create: (_) => HistoryViewModel()),
         ],
         child: const XmlApp(),
       ),
@@ -61,7 +63,7 @@ class XmlApp extends StatelessWidget {
         SentryNavigatorObserver(), // <-- Auto-tracking navigasi
       ],
       initialRoute: '/',
-      routes: appRoutes,
+      routes: appRoutes, // untuk halaman statis
     );
   }
 }

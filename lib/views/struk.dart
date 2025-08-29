@@ -1,99 +1,85 @@
+// struk_page.dart
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:printing/printing.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:pdf/pdf.dart';
 import 'package:share_plus/share_plus.dart';
+import '../models/transaksi_riwayat.dart';
 
 class StrukPage extends StatelessWidget {
-  final Map<String, dynamic> transaksi;
+  final Transaksi transaksi;
 
   const StrukPage({super.key, required this.transaksi});
 
   @override
   Widget build(BuildContext context) {
-    final isSukses = transaksi["status"] == "Sukses";
+    final isSukses = transaksi.status.toLowerCase() == "sukses";
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Struk', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.orangeAccent[700],
-        iconTheme: const IconThemeData(
-          color: Colors.white, // 🔹 arrow (leading/back) jadi putih
-        ),
+        title: const Text('Struk', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.orangeAccent,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
         children: [
-          // konten struk
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Text(
-                        "=== KONTER PULSA ABC ===",
-                        style: const TextStyle(
-                          fontFamily: "monospace",
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      "=== KONTER PULSA HAIYU ===",
+                      style: const TextStyle(
+                        fontFamily: "monospace",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
                     ),
-                    Center(
-                      child: Text(
-                        "Jl. Raya Cilacap No.123",
-                        style: const TextStyle(
-                          fontFamily: "monospace",
-                          fontSize: 12,
-                        ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Jl. Raya Cilacap No.123",
+                      style: const TextStyle(
+                        fontFamily: "monospace",
+                        fontSize: 12,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const Divider(),
-                    _line("ID TRX", transaksi["id"] ?? "INV123456"),
-                    _line("Tanggal", transaksi["tanggal"] ?? "-"),
-                    _line("Status", transaksi["status"] ?? "-"),
-                    const Divider(),
-                    _line("Produk", transaksi["produk"] ?? "-"),
-                    _line("Nomor", transaksi["nomor"] ?? "-"),
-                    _line("Harga", "Rp ${transaksi["total"] ?? 0}"),
-                    const Divider(),
-                    Center(
-                      child: Text(
-                        isSukses ? "TRANSAKSI BERHASIL" : "TRANSAKSI GAGAL",
-                        style: TextStyle(
-                          fontFamily: "monospace",
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: isSukses ? Colors.black : Colors.red,
-                        ),
+                  ),
+                  const Divider(),
+                  _line("ID TRX", transaksi.id),
+                  _line("Tanggal", transaksi.tanggal),
+                  _line("Status", transaksi.status),
+                  const Divider(),
+                  _line("Produk", transaksi.produk),
+                  _line("Nomor", transaksi.nomor),
+                  _line("Harga", "Rp ${transaksi.total}"),
+                  const Divider(),
+                  Center(
+                    child: Text(
+                      isSukses ? "TRANSAKSI BERHASIL" : "TRANSAKSI GAGAL",
+                      style: TextStyle(
+                        fontFamily: "monospace",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: isSukses ? Colors.black : Colors.red,
                       ),
                     ),
-                    const Divider(),
-                    const SizedBox(height: 32),
-                    Center(
-                      child: Text(
-                        "--- TERIMA KASIH ---",
-                        style: const TextStyle(
-                          fontFamily: "monospace",
-                          fontSize: 14,
-                        ),
-                      ),
+                  ),
+                  const Divider(),
+                  const Center(
+                    child: Text(
+                      "--- TERIMA KASIH ---",
+                      style: TextStyle(fontFamily: "monospace", fontSize: 14),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-
-          // tombol print & share
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -125,12 +111,10 @@ class StrukPage extends StatelessWidget {
                     ),
                     onPressed: () async {
                       final pdfBytes = await _generatePdf(transaksi);
-
-                      // langsung share sebagai file PDF
                       final xfile = XFile.fromData(
                         pdfBytes,
                         mimeType: "application/pdf",
-                        name: "struk_${transaksi["id"] ?? "trx"}.pdf",
+                        name: "struk_${transaksi.id}.pdf",
                       );
                       await Share.shareXFiles([xfile]);
                     },
@@ -159,14 +143,13 @@ class StrukPage extends StatelessWidget {
     );
   }
 
-  /// Generate PDF struk
-  Future<Uint8List> _generatePdf(Map<String, dynamic> trx) async {
+  Future<Uint8List> _generatePdf(Transaksi trx) async {
     final pdf = pw.Document();
-    final isSukses = trx["status"] == "Sukses";
+    final isSukses = trx.status.toLowerCase() == "sukses";
 
     pdf.addPage(
       pw.Page(
-        build: (pw.Context context) {
+        build: (context) {
           return pw.Center(
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -187,15 +170,14 @@ class StrukPage extends StatelessWidget {
                     style: pw.TextStyle(font: pw.Font.courier(), fontSize: 12),
                   ),
                 ),
-                pw.SizedBox(height: 8),
                 pw.Divider(),
-                _pdfLine("ID TRX", trx["id"] ?? "INV123456"),
-                _pdfLine("Tanggal", trx["tanggal"] ?? "-"),
-                _pdfLine("Status", trx["status"] ?? "-"),
+                _pdfLine("ID TRX", trx.id),
+                _pdfLine("Tanggal", trx.tanggal),
+                _pdfLine("Status", trx.status),
                 pw.Divider(),
-                _pdfLine("Produk", trx["produk"] ?? "-"),
-                _pdfLine("Nomor", trx["nomor"] ?? "-"),
-                _pdfLine("Harga", "Rp ${trx["total"] ?? 0}"),
+                _pdfLine("Produk", trx.produk),
+                _pdfLine("Nomor", trx.nomor),
+                _pdfLine("Harga", "Rp ${trx.total}"),
                 pw.Divider(),
                 pw.Center(
                   child: pw.Text(
@@ -209,7 +191,6 @@ class StrukPage extends StatelessWidget {
                   ),
                 ),
                 pw.Divider(),
-                pw.SizedBox(height: 32),
                 pw.Center(
                   child: pw.Text(
                     "--- TERIMA KASIH ---",

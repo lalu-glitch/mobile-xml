@@ -9,6 +9,7 @@ import '../views/detail_noprefix_page.dart';
 import '../views/detail_prefix_page.dart';
 import '../views/home_page.dart';
 import '../views/konfirmasi_page.dart';
+import '../views/riwayat_page.dart';
 import '../views/settings_page.dart';
 import '../views/shops_page.dart';
 import '../services/auth_guard.dart';
@@ -31,6 +32,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/analytics': (context) => authGuardWrapper(const AnalyticsPage()),
   '/detailPrefix': (context) => authGuardWrapper(DetailPrefixPage()),
   '/detailNoPrefix': (context) => authGuardWrapper(DetailNoPrefixPage()),
+  '/riwayatTransaksi': (context) => authGuardWrapper(RiwayatTransaksiPage()),
   '/inputNomorTujuan': (context) => authGuardWrapper(
     InputNomorTujuanPage(kode_produk: '', namaProduk: '', total: ''),
   ),

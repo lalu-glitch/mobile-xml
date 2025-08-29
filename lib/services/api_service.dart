@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import '../config/app_config.dart';
 import '../models/provider.dart';
 import '../models/status_transaksi.dart';
+import '../models/transaksi_riwayat.dart';
 import '../models/transaksi_response.dart';
 import '../models/user_balance.dart';
 import '../models/icon_data.dart';
@@ -219,6 +220,56 @@ class ApiService {
           "success": false,
           "data": null,
           "message": "Gagal mendapatkan status. Status: ${response.statusCode}",
+        };
+      }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? e.response?.data["message"] ?? "Terjadi kesalahan server"
+          : e.message;
+      return {"success": false, "data": null, "message": apiMessage};
+    } catch (e) {
+      return {"success": false, "data": null, "message": e.toString()};
+    }
+  }
+
+  Future<Map<String, dynamic>> fetchHistory({
+    int page = 1,
+    int limit = 5,
+  }) async {
+    try {
+      final response = await authService.dio.get(
+        "${AppConfig.baseUrlAuth}/history_transaksi",
+        queryParameters: {"page": page, "limit": limit},
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = Map<String, dynamic>.from(
+          response.data,
+        );
+
+        final List<dynamic> rawItems = data["data"] ?? [];
+
+        final List<Transaksi> items = rawItems
+            .map((e) => Transaksi.fromJson(Map<String, dynamic>.from(e)))
+            .toList();
+
+        return {
+          "success": true,
+          "data": {
+            "total": data["total"] ?? 0,
+            "total_pages": data["total_pages"] ?? 1,
+            "current_page": data["current_page"] ?? page,
+            "perPage": data["perPage"] ?? limit,
+            "items": items,
+          },
+          "message": "Berhasil mendapatkan riwayat transaksi",
+        };
+      } else {
+        return {
+          "success": false,
+          "data": null,
+          "message":
+              "Gagal mendapatkan riwayat. Status: ${response.statusCode}",
         };
       }
     } on DioException catch (e) {

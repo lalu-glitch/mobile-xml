@@ -244,7 +244,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/riwayatTransaksi');
+                            },
                             child: const Text(
                               'History Transaksi',
                               style: TextStyle(
