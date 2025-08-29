@@ -257,4 +257,35 @@ class ApiService {
       return null;
     }
   }
+
+  Future<Map<String, dynamic>> historyDetail(String kodeKode) async {
+    try {
+      final response = await authService.dio.post(
+        "${AppConfig.baseUrlAuth}/trx_by_kode/$kodeKode",
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = Map<String, dynamic>.from(response.data);
+        return {
+          "success": true,
+          "data": StatusTransaksi.fromJson(jsonData),
+          "message": "Berhasil mendapatkan detail history transaksi",
+        };
+      } else {
+        return {
+          "success": false,
+          "data": null,
+          "message":
+              "Gagal mendapatkan detail history. Status: ${response.statusCode}",
+        };
+      }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? e.response?.data["message"] ?? "Terjadi kesalahan server"
+          : e.message;
+      return {"success": false, "data": null, "message": apiMessage};
+    } catch (e) {
+      return {"success": false, "data": null, "message": e.toString()};
+    }
+  }
 }

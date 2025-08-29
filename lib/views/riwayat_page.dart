@@ -5,6 +5,7 @@ import '../viewmodels/riwayat_viewmodel.dart';
 import '../models/transaksi_riwayat.dart';
 import '../services/api_service.dart';
 import '../services/auth_service.dart';
+import 'riwayat_detail.dart';
 import 'struk.dart';
 
 class RiwayatTransaksiPage extends StatelessWidget {
@@ -82,17 +83,17 @@ class RiwayatTransaksiPage extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
-                          vertical: 6,
+                          vertical: 1,
                         ),
                         child: Card(
-                          elevation: 3,
+                          elevation: 2,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: ListTile(
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 16,
-                              vertical: 12,
+                              vertical: 6,
                             ),
                             leading: Icon(
                               _statusIcon(t),
@@ -138,11 +139,10 @@ class RiwayatTransaksiPage extends StatelessWidget {
                               ),
                             ),
                             onTap: () {
-                              Navigator.push(
+                              Navigator.pushNamed(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (_) => StrukPage(transaksi: t),
-                                ),
+                                '/detailRiwayatTransaksi',
+                                arguments: {'kode': t.kode},
                               );
                             },
                           ),
@@ -155,35 +155,42 @@ class RiwayatTransaksiPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 12,
-                      horizontal: 24,
+                      horizontal: 16,
                     ),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                    child: SizedBox(
+                      width: double.infinity, // full width
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          backgroundColor: Colors.orangeAccent[700],
                         ),
-                        backgroundColor: Colors.orangeAccent[700],
+                        onPressed: vm.isLoading
+                            ? null
+                            : () => vm.loadNextPage(),
+                        child: vm.isLoading
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Text(
+                                "Lainnya",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
-                      onPressed: vm.isLoading ? null : () => vm.loadNextPage(),
-                      child: vm.isLoading
-                          ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
-                              ),
-                            )
-                          : const Text(
-                              "Load More",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                     ),
                   ),
+                const SizedBox(height: 10),
               ],
             );
           },

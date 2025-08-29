@@ -9,10 +9,12 @@ import '../views/detail_noprefix_page.dart';
 import '../views/detail_prefix_page.dart';
 import '../views/home_page.dart';
 import '../views/konfirmasi_page.dart';
+import '../views/riwayat_detail.dart';
 import '../views/riwayat_page.dart';
 import '../views/settings_page.dart';
 import '../views/shops_page.dart';
 import '../services/auth_guard.dart';
+import '../views/struk.dart';
 import '../views/transaksi_detail_page.dart';
 import '../views/transaksi_proses_page.dart'; // Pastikan import AuthGuard
 
@@ -33,6 +35,9 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/detailPrefix': (context) => authGuardWrapper(DetailPrefixPage()),
   '/detailNoPrefix': (context) => authGuardWrapper(DetailNoPrefixPage()),
   '/riwayatTransaksi': (context) => authGuardWrapper(RiwayatTransaksiPage()),
+  '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
+  '/detailRiwayatTransaksi': (context) =>
+      authGuardWrapper(DetailRiwayatPage(kode: '')),
   '/inputNomorTujuan': (context) => authGuardWrapper(
     InputNomorTujuanPage(kode_produk: '', namaProduk: '', total: ''),
   ),

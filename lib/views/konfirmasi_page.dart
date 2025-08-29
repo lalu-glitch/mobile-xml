@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../utils/currency.dart';
 import '../utils/error_dialog.dart';
 import '../viewmodels/balance_viewmodel.dart';
-import 'transaksi_proses_page.dart';
 
 class KonfirmasiPembayaranPage extends StatefulWidget {
   const KonfirmasiPembayaranPage({
