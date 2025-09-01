@@ -1,12 +1,16 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:device_info_plus/device_info_plus.dart';
+import 'package:logger/logger.dart';
 import '../config/app_config.dart';
+import 'package:android_id/android_id.dart';
 
-class AuthService {
-  static final String baseUrl = AppConfig.baseUrlAuth;
+class AuthService extends ChangeNotifier {
+  static final String baseUrl = AppConfig.baseUrlApp;
   final Dio _dio = Dio();
+  final Dio _refreshDio = Dio(); // <-- DIO khusus refresh token
+
   final FlutterSecureStorage storage = const FlutterSecureStorage();
 
   // Basic Auth Credentials
@@ -50,13 +54,13 @@ class AuthService {
   }
 
   Dio get dio => _dio;
+  final logger = Logger();
 
-  /// Ambil Device ID unik
   Future<String> _loadDeviceId() async {
     try {
-      final deviceInfo = DeviceInfoPlugin();
-      final androidInfo = await deviceInfo.androidInfo;
-      return androidInfo.id ?? "unknown-device"; // fallback
+      const androidIdPlugin = AndroidId();
+      final androidId = await androidIdPlugin.getId();
+      return androidId ?? "unknown-android-id";
     } catch (_) {
       return "unknown-device";
     }
@@ -82,10 +86,9 @@ class AuthService {
           final newData = jsonDecode(updated) as Map<String, dynamic>;
           return newData["accessToken"];
         }
-      } else {
-        await logout();
-        return null;
       }
+      await logout();
+      return null;
     }
 
     return accessToken;
@@ -241,20 +244,31 @@ class AuthService {
       final refreshToken = userData["refreshToken"] as String?;
       if (refreshToken == null) return false;
 
-      final response = await _dio.post(
+      // Gunakan dio khusus refresh biar gak keintercept
+      final response = await _refreshDio.post(
         "$baseUrl/refresh-token",
         data: {"refreshToken": refreshToken},
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthHeader,
+            "Content-Type": "application/json",
+          },
+        ),
       );
 
-      if (response.statusCode == 200 &&
-          response.data["accessToken"] != null &&
-          response.data["refreshToken"] != null) {
-        userData["accessToken"] = response.data["accessToken"];
-        userData["refreshToken"] = response.data["refreshToken"];
+      final newAccess = response.data["accessToken"];
+
+      if (newAccess != null) {
+        userData["accessToken"] = newAccess;
+        // Hanya update refreshToken jika ada
+        // if (newRefresh != null) userData["refreshToken"] = newRefresh;
+
         await storage.write(key: "userData", value: jsonEncode(userData));
+        notifyListeners(); // biar UI refresh
+
         return true;
       }
-    } catch (_) {
+    } catch (e) {
       return false;
     }
     return false;

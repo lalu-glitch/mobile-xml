@@ -21,7 +21,7 @@ class ApiService {
   Future<UserBalance> fetchUserBalance() async {
     try {
       final response = await authService.dio.get(
-        "${AppConfig.baseUrlAuth}/get_user",
+        "${AppConfig.baseUrlApp}/get_user",
       );
 
       if (response.statusCode == 200) {
@@ -77,7 +77,7 @@ class ApiService {
   ) async {
     try {
       final response = await authService.dio.post(
-        "${AppConfig.baseUrlAuth}/oto/all_produk/$category",
+        "${AppConfig.baseUrlApp}/oto/all_produk/$category",
         data: {"tujuan": tujuan},
       );
 
@@ -124,7 +124,7 @@ class ApiService {
   ) async {
     try {
       final response = await authService.dio.post(
-        "${AppConfig.baseUrlAuth}/oto/all_produk_prefix/$category",
+        "${AppConfig.baseUrlApp}/oto/all_produk_prefix/$category",
         data: {"tujuan": tujuan},
       );
 
@@ -173,7 +173,7 @@ class ApiService {
   ) async {
     try {
       final response = await authService.dio.post(
-        "${AppConfig.baseUrlAuth}/transaksi",
+        "${AppConfig.baseUrlApp}/transaksi",
         data: {
           "tujuan": tujuan,
           "kode_produk": kode_produk,
@@ -210,7 +210,7 @@ class ApiService {
   Future<Map<String, dynamic>> getStatusByInbox(int kodeInbox) async {
     try {
       final response = await authService.dio.post(
-        "${AppConfig.baseUrlAuth}/trx_by_inbox/$kodeInbox",
+        "${AppConfig.baseUrlApp}/trx_by_inbox/$kodeInbox",
       );
 
       if (response.statusCode == 200) {
@@ -243,7 +243,7 @@ class ApiService {
   }) async {
     try {
       final response = await authService.dio.get(
-        "${AppConfig.baseUrlAuth}/history_transaksi",
+        "${AppConfig.baseUrlApp}/history_transaksi",
         queryParameters: {"page": page, "limit": limit},
       );
 
@@ -266,7 +266,7 @@ class ApiService {
   Future<Map<String, dynamic>> historyDetail(String kodeKode) async {
     try {
       final response = await authService.dio.post(
-        "${AppConfig.baseUrlAuth}/trx_by_kode/$kodeKode",
+        "${AppConfig.baseUrlApp}/trx_by_kode/$kodeKode",
       );
 
       if (response.statusCode == 200) {

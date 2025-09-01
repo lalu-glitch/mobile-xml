@@ -1,9 +1,11 @@
-import 'package:device_info_plus/device_info_plus.dart';
+import 'package:android_id/android_id.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
+import '../services/auth_service.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -16,6 +18,8 @@ class _SettingsPageState extends State<SettingsPage> {
   final _storage = const FlutterSecureStorage();
   Map<String, String> _allStorage = {};
   String? _deviceID; // simpan di state
+  final logger = Logger();
+  final _authService = AuthService();
 
   @override
   void initState() {
@@ -24,15 +28,17 @@ class _SettingsPageState extends State<SettingsPage> {
     _loadDeviceId();
   }
 
-  Future<void> _loadDeviceId() async {
-    final deviceInfo = DeviceInfoPlugin();
-    final androidInfo = await deviceInfo.androidInfo;
-
+  Future<String> _loadDeviceId() async {
+    // final deviceInfo = DeviceInfoPlugin();
+    // final androidInfo = await deviceInfo.androidInfo;
+    const androidIdPlugin = AndroidId();
+    final androidId = await androidIdPlugin.getId();
     if (mounted) {
       setState(() {
-        _deviceID = androidInfo.id;
+        _deviceID = androidId;
       });
     }
+    return androidId ?? "unknown-android-id";
   }
 
   Future<void> _loadAllStorage() async {
@@ -117,7 +123,6 @@ class _SettingsPageState extends State<SettingsPage> {
     // Ambil access + refresh token dari userData
     String? accessInfo;
     String? refreshToken;
-    String? refreshInfo;
 
     if (_allStorage.containsKey("userData")) {
       try {
@@ -130,7 +135,6 @@ class _SettingsPageState extends State<SettingsPage> {
           }
           if (refreshToken is String) {
             // refreshToken biasanya bukan JWT, jadi hanya tampilkan raw
-            refreshInfo = getExpiredInfoFromJwt(refreshToken) ?? refreshToken;
           }
         }
       } catch (e) {

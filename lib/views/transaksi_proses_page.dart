@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../utils/error_dialog.dart';
 import '../viewmodels/transaksi_viewmodel.dart';
 import 'transaksi_detail_page.dart';
 import 'package:logger/logger.dart';
@@ -114,16 +115,31 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   );
 
   /// Widget ketika error
-  Widget _errorWidget(String message) {
-    logger.d("resultresult: $message");
+  bool _dialogShown = false;
 
+  Widget _errorWidget(String message) {
+    // logger.d("resultresult: $message");
+
+    if (!_dialogShown) {
+      _dialogShown = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showErrorDialog(
+          context,
+          (message != null && message.isNotEmpty)
+              ? message
+              : "Gangguan transaksi, Ulangi beberapa saat lagi.",
+        );
+      });
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Icon(Icons.error, color: Colors.red, size: 64),
         const SizedBox(height: 16),
         Text(
-          "Gangguan transaksi, Ulangi beberapa saat lagi.",
+          (message != null && message.isNotEmpty)
+              ? message!
+              : "Gangguan transaksi, Ulangi beberapa saat lagi.",
           style: const TextStyle(color: Colors.red, fontSize: 16),
           textAlign: TextAlign.center,
         ),

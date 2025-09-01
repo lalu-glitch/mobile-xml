@@ -38,7 +38,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   }
 
   Future<void> _fetchProvider(String value) async {
-    if (value.length > 6) {
+    if (value.length >= 4) {
       final iconItem = ModalRoute.of(context)!.settings.arguments as IconItem;
       final providerVM = Provider.of<ProviderViewModel>(context, listen: false);
       await providerVM.fetchProvidersPrefix(iconItem.filename, value);
@@ -51,7 +51,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
 
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
-    if (value.length > 6) {
+    if (value.length >= 4) {
       _debounce = Timer(const Duration(milliseconds: 800), () {
         _fetchProvider(value);
       });

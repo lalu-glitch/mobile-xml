@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../utils/currency.dart';
 import '../utils/error_dialog.dart';
@@ -23,6 +24,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   late String kode_produk;
   late String namaProduk;
   late double total;
+  final logger = Logger();
 
   @override
   void didChangeDependencies() {
@@ -46,6 +48,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
       {
         "label": "SALDO",
         "secondary": CurrencyUtil.formatCurrency(saldo),
+        "secondaryVal": saldo,
         "ewallet": "",
       },
 
@@ -54,11 +57,17 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
           {
             "label": "${ew.nama}",
             "secondary": CurrencyUtil.formatCurrency(ew.saldoEwallet),
+            "secondaryVal": ew.saldoEwallet,
             "ewallet": ew.kodeDompet,
           },
 
       // static tambahan
-      {"label": "NOBU", "secondary": null, "ewallet": ""},
+      {
+        "label": "NOBU",
+        "secondary": null,
+        "secondaryVal": double.infinity, // supaya selalu cukup,
+        "ewallet": "",
+      },
     ];
 
     return Scaffold(
@@ -202,16 +211,25 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                     orElse: () => {},
                   );
 
-                  final sec = selected["secondary"];
-                  final selectedSaldo = (sec is String)
-                      ? CurrencyUtil.parseCurrency(sec)
-                      : 0;
+                  final sec = selected["secondaryVal"];
+                  final selectedSaldo =
+                      (selected["secondaryVal"] as num?)?.toDouble() ?? 0;
+
+                  // logger.d("total: $total");
+                  // logger.d("selectedSaldo: $selectedSaldo");
 
                   if (total > selectedSaldo) {
-                    showErrorDialog(
-                      context,
-                      "Saldo ${_selectedMethod ?? ''} tidak mencukupi untuk melakukan transaksi ini",
-                    );
+                    if (selectedSaldo <= 0) {
+                      showErrorDialog(
+                        context,
+                        "Saldo ${_selectedMethod ?? ''} minus, hubungi CS / admin untuk bisa transaksi.",
+                      );
+                    } else {
+                      showErrorDialog(
+                        context,
+                        "Saldo ${_selectedMethod ?? ''} tidak mencukupi untuk melakukan transaksi ini",
+                      );
+                    }
                   } else {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
