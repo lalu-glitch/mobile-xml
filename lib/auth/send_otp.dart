@@ -64,8 +64,6 @@ class _SendOtpPageState extends State<SendOtpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(

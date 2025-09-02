@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
-import '../services/auth_service.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -20,7 +19,6 @@ class _SettingsPageState extends State<SettingsPage> {
   Map<String, String> _allStorage = {};
   String? _deviceID; // simpan di state
   final logger = Logger();
-  final _authService = AuthService();
 
   @override
   void initState() {

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
@@ -212,7 +214,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                     orElse: () => {},
                   );
 
-                  final sec = selected["secondaryVal"];
                   final selectedSaldo =
                       (selected["secondaryVal"] as num?)?.toDouble() ?? 0;
 

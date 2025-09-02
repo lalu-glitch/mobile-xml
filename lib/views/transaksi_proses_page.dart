@@ -1,9 +1,10 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../utils/error_dialog.dart';
 import '../viewmodels/transaksi_viewmodel.dart';
-import 'transaksi_detail_page.dart';
 import 'package:logger/logger.dart';
 
 class TransaksiProsesPage extends StatefulWidget {
