@@ -216,10 +216,10 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons
                                       .account_balance_wallet, // ikon uang dompet
-                                  color: Colors.teal,
+                                  color: Colors.orangeAccent[700],
                                   size: 28,
                                 ),
                                 const SizedBox(width: 8),
@@ -227,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Saldo XML",
+                                      "Stok XML",
                                       style: TextStyle(
                                         fontSize: 14.sp,
                                         color: Colors.black54,
@@ -381,19 +381,28 @@ class _HomePageState extends State<HomePage> {
 
                         Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.orangeAccent[700],
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                          child: const Text(
-                            "Jangan biarin saldo kamu kosong! Yuk, topup sekarang!",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight:
-                                  FontWeight.bold, // bold untuk nama user
-                            ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.report,
+                                color: Colors.white,
+                                size: 14.sp,
+                              ),
+                              const Text(
+                                " Jangan biarin saldo kamu kosong! Yuk, topup sekarang!",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                  fontWeight:
+                                      FontWeight.bold, // bold untuk nama user
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -405,22 +414,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildWallet(vm) => Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.account_balance_wallet, // ikon uang dompet
-            color: Colors.teal,
-            size: 28,
-          ),
-          const SizedBox(width: 8),
+  Widget _buildWallet(vm) {
+    final hasEwallet = vm.userBalance?.ewallet.isNotEmpty ?? false;
 
-          // cek kondisi ewallet
-          if (vm.userBalance?.ewallet.isNotEmpty ?? false)
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Bagian kiri (ikon + saldo)
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.account_balance_wallet,
+              color: Colors.blue,
+              size: 28,
+            ),
+            const SizedBox(width: 8),
+
+            // Informasi saldo
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -428,62 +440,69 @@ class _HomePageState extends State<HomePage> {
                   "Saldo Speedcash",
                   style: TextStyle(fontSize: 14.sp, color: Colors.black54),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: vm.userBalance!.ewallet.map<Widget>((ew) {
-                    return Text(
-                      CurrencyUtil.formatCurrency(ew.saldoEwallet),
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
-            )
-          else
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Saldo Speedcash",
-                  style: TextStyle(fontSize: 14.sp, color: Colors.black54),
-                ),
-                Text(
-                  "Belum terhubung",
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
+                if (hasEwallet)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: vm.userBalance!.ewallet.map<Widget>((ew) {
+                      return Text(
+                        CurrencyUtil.formatCurrency(ew.saldoEwallet),
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }).toList(),
+                  )
+                else
+                  Text(
+                    "Belum terhubung",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
               ],
             ),
-        ],
-      ),
+          ],
+        ),
 
-      // Tombol kanan
-      ElevatedButton.icon(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.teal,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+        // Tombol kanan
+        ElevatedButton.icon(
+          onPressed: () {
+            if (hasEwallet) {
+              // kalau sudah ada ewallet → ke halaman deposit
+              Navigator.pushNamed(context, '/depositPage');
+            } else {
+              // kalau belum ada ewallet → ke halaman aktifkan ewallet
+              Navigator.pushNamed(context, '/aktifkanEwalletPage');
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        ),
-        icon: const Icon(Icons.check, size: 20, color: Colors.white),
-        label: Text(
-          "Aktifkan",
-          style: TextStyle(
+          icon: Icon(
+            hasEwallet
+                ? Icons.account_balance_wallet
+                : Icons.add_circle_outline,
+            size: 20,
             color: Colors.white,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.bold,
+          ),
+          label: Text(
+            hasEwallet ? "Deposit" : "Aktifkan",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 
   Widget _buildPromoSection() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
