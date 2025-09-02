@@ -7,6 +7,9 @@ import '../views/analytics_page.dart';
 import '../views/detail_input_tujuan.dart';
 import '../views/detail_noprefix_page.dart';
 import '../views/detail_prefix_page.dart';
+import '../views/ewallet/ewallet_binding.dart';
+import '../views/ewallet/ewallet_deposit.dart';
+import '../views/ewallet/ewallet_register.dart';
 import '../views/home_page.dart';
 import '../views/konfirmasi_page.dart';
 import '../views/riwayat_detail.dart';
@@ -52,5 +55,11 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/transaksiProses': (context) =>
       authGuardWrapper(TransaksiProsesPage(tujuan: '', kode_produk: '')),
   '/transaksiDetail': (context) =>
-      authGuardWrapper(const DetailTransaksiPage()), // format sama
+      authGuardWrapper(const DetailTransaksiPage()),
+  '/ewalletBindingPage': (context) =>
+      authGuardWrapper(const EwalletBindingPage()),
+  '/ewalletRegisterPage': (context) =>
+      authGuardWrapper(const EwalletRegisterPage()),
+  '/ewalletDepositPage': (context) =>
+      authGuardWrapper(const EwalletDepositPage()),
 };

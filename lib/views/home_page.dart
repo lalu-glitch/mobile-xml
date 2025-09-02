@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const SizedBox(height: 90),
+                                const SizedBox(height: 120),
                                 _buildPromoSection(),
                                 const SizedBox(height: 24),
                                 iconVM.isLoading
@@ -180,7 +180,7 @@ class _HomePageState extends State<HomePage> {
         ),
 
         // Card
-        const SizedBox(height: 100),
+        const SizedBox(height: 50),
       ],
     );
   }
@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                                   Text(
                                     "Stok XML",
                                     style: TextStyle(
-                                      fontSize: 14.sp,
+                                      fontSize: 13.sp,
                                       color: Colors.black54,
                                     ),
                                   ),
@@ -280,7 +280,7 @@ class _HomePageState extends State<HomePage> {
                                       vm.userBalance?.saldo ?? 0,
                                     ),
                                     style: TextStyle(
-                                      fontSize: 16.sp,
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -299,12 +299,12 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               padding: EdgeInsets.symmetric(
-                                horizontal: 16,
+                                horizontal: 14,
                                 vertical: 8,
                               ),
                             ),
                             icon: Icon(
-                              Icons.add,
+                              Icons.add_box,
                               size: 24,
                               color: Colors.white,
                             ),
@@ -327,7 +327,7 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 12,
-                              vertical: 6,
+                              vertical: 4,
                             ),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey, width: 1),
@@ -345,8 +345,14 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const SizedBox(width: 8),
-                                    Text("${vm.userBalance?.poin ?? 0} "),
-                                    Text("Komisi"),
+                                    Text(
+                                      "${vm.userBalance?.poin ?? 0} ",
+                                      style: TextStyle(fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "Komisi",
+                                      style: TextStyle(fontSize: 12.sp),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -355,7 +361,7 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 12,
-                              vertical: 6,
+                              vertical: 4,
                             ),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey, width: 1),
@@ -370,8 +376,14 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const SizedBox(width: 8),
-                                    Text("${vm.userBalance?.poin ?? 0} "),
-                                    Text("Poin"),
+                                    Text(
+                                      "${vm.userBalance?.poin ?? 0} ",
+                                      style: TextStyle(fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      "Poin",
+                                      style: TextStyle(fontSize: 12.sp),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -398,10 +410,12 @@ class _HomePageState extends State<HomePage> {
                                 12,
                               ), // biar ada efek ripple bulat
                               child: Row(
-                                children: const [
+                                children: [
                                   Icon(Icons.history, color: Colors.orange),
-                                  SizedBox(height: 4),
-                                  Text("Riwayat"),
+                                  Text(
+                                    " Riwayat",
+                                    style: TextStyle(fontSize: 12.sp),
+                                  ),
                                 ],
                               ),
                             ),
@@ -445,7 +459,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildWallet(vm) {
-    final hasEwallet = vm.userBalance?.ewallet.isNotEmpty ?? false;
+    // final hasEwallet = vm.userBalance?.ewallet.isNotEmpty ?? false;
+
+    ///ngetes doank
+    final hasEwallet = false;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -468,7 +485,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Text(
                   "Saldo Speedcash",
-                  style: TextStyle(fontSize: 14.sp, color: Colors.black54),
+                  style: TextStyle(fontSize: 13.sp, color: Colors.black54),
                 ),
                 if (hasEwallet)
                   Column(
@@ -485,9 +502,9 @@ class _HomePageState extends State<HomePage> {
                   )
                 else
                   Text(
-                    "Belum terhubung",
+                    "Tidak terhubung",
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -501,10 +518,10 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             if (hasEwallet) {
               // kalau sudah ada ewallet → ke halaman deposit
-              Navigator.pushNamed(context, '/depositPage');
+              Navigator.pushNamed(context, '/ewalletDepositPage');
             } else {
               // kalau belum ada ewallet → ke halaman aktifkan ewallet
-              Navigator.pushNamed(context, '/aktifkanEwalletPage');
+              Navigator.pushNamed(context, '/ewalletBindingPage');
             }
           },
           style: ElevatedButton.styleFrom(
@@ -512,17 +529,15 @@ class _HomePageState extends State<HomePage> {
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30)),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           ),
           icon: Icon(
-            hasEwallet
-                ? Icons.account_balance_wallet
-                : Icons.add_circle_outline,
+            hasEwallet ? Icons.add_box : Icons.link_rounded,
             size: 20,
             color: Colors.white,
           ),
           label: Text(
-            hasEwallet ? "Deposit" : "Aktifkan",
+            hasEwallet ? "Deposit" : "Hubungkan",
             style: TextStyle(
               color: Colors.white,
               fontSize: 12.sp,
