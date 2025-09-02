@@ -1,6 +1,7 @@
 // struk_page.dart
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
@@ -22,7 +23,6 @@ class StrukPage extends StatelessWidget {
     final StatusTransaksi trx = args['transaksi'] as StatusTransaksi;
     final balanceVM = Provider.of<BalanceViewModel>(context, listen: false);
     final String namaUser = balanceVM.userBalance?.namauser ?? "KONTER PULSA";
-    final bool isSukses = trx.statusTrx == 20;
 
     return Scaffold(
       appBar: AppBar(
@@ -41,10 +41,10 @@ class StrukPage extends StatelessWidget {
                   Center(
                     child: Text(
                       "=== $namaUser ===", // dinamis dari state
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "monospace",
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                       ),
                     ),
                   ),
@@ -64,13 +64,16 @@ class StrukPage extends StatelessWidget {
                   _line("OUTBOX", ''),
                   Text(
                     trx.outbox,
-                    style: TextStyle(fontFamily: "monospace", fontSize: 14),
+                    style: TextStyle(fontFamily: "monospace", fontSize: 14.sp),
                   ),
                   const Divider(),
-                  const Center(
+                  Center(
                     child: Text(
                       "--- TERIMA KASIH ---",
-                      style: TextStyle(fontFamily: "monospace", fontSize: 14),
+                      style: TextStyle(
+                        fontFamily: "monospace",
+                        fontSize: 14.sp,
+                      ),
                     ),
                   ),
                 ],
@@ -79,46 +82,78 @@ class StrukPage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                // Row untuk Print & Share
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                        onPressed: () async {
+                          await Printing.layoutPdf(
+                            onLayout: (format) => _generatePdf(trx, namaUser),
+                          );
+                        },
+                        icon: const Icon(Icons.print, color: Colors.white),
+                        label: const Text(
+                          "Print",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
-                    onPressed: () async {
-                      await Printing.layoutPdf(
-                        onLayout: (format) => _generatePdf(trx, namaUser),
-                      );
-                    },
-                    icon: const Icon(Icons.print, color: Colors.white),
-                    label: const Text(
-                      "Print",
-                      style: TextStyle(color: Colors.white),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                        onPressed: () async {
+                          final pdfBytes = await _generatePdf(trx, namaUser);
+                          final xfile = XFile.fromData(
+                            pdfBytes,
+                            mimeType: "application/pdf",
+                            name: "struk_${trx.kode}.pdf",
+                          );
+                          await Share.shareXFiles([xfile]);
+                        },
+                        icon: const Icon(Icons.share, color: Colors.white),
+                        label: const Text(
+                          "Share",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 16),
+
+                // Tombol Selesai full width di bawah
+                ElevatedButton(
+                  onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/',
+                    (route) => false,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orangeAccent[700],
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    onPressed: () async {
-                      final pdfBytes = await _generatePdf(trx, namaUser);
-                      final xfile = XFile.fromData(
-                        pdfBytes,
-                        mimeType: "application/pdf",
-                        name: "struk_${trx.kode}.pdf",
-                      );
-                      await Share.shareXFiles([xfile]);
-                    },
-                    icon: const Icon(Icons.share, color: Colors.white),
-                    label: const Text(
-                      "Share",
-                      style: TextStyle(color: Colors.white),
+                  child: Text(
+                    "Selesai",
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -164,7 +199,6 @@ class StrukPage extends StatelessWidget {
 
   Future<Uint8List> _generatePdf(StatusTransaksi trx, String namaUser) async {
     final pdf = pw.Document();
-    final isSukses = trx.statusTrx == 20;
 
     pdf.addPage(
       pw.Page(
@@ -187,7 +221,7 @@ class StrukPage extends StatelessWidget {
                     "=== $namaUser ===", // dinamis sesuai state
                     style: pw.TextStyle(
                       font: pw.Font.courier(),
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: pw.FontWeight.bold,
                     ),
                     textAlign: pw.TextAlign.center,
@@ -223,7 +257,7 @@ class StrukPage extends StatelessWidget {
                 pw.SizedBox(height: 2),
                 pw.Text(
                   trx.outbox,
-                  style: pw.TextStyle(font: pw.Font.courier(), fontSize: 12),
+                  style: pw.TextStyle(font: pw.Font.courier(), fontSize: 12.sp),
                   textAlign: pw.TextAlign.left,
                   softWrap: true,
                 ),
@@ -237,7 +271,7 @@ class StrukPage extends StatelessWidget {
                     "--- TERIMA KASIH ---",
                     style: pw.TextStyle(
                       font: pw.Font.courier(),
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: pw.FontWeight.bold,
                     ),
                   ),
@@ -266,14 +300,14 @@ class StrukPage extends StatelessWidget {
               style: pw.TextStyle(
                 font: pw.Font.courier(),
                 fontWeight: pw.FontWeight.bold,
-                fontSize: 12,
+                fontSize: 12.sp,
               ),
             ),
           ),
           pw.Expanded(
             child: pw.Text(
               ": ${value ?? '-'}",
-              style: pw.TextStyle(font: pw.Font.courier(), fontSize: 12),
+              style: pw.TextStyle(font: pw.Font.courier(), fontSize: 12.sp),
               softWrap: true,
             ),
           ),

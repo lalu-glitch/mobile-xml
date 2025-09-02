@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../utils/shimmer.dart';
 import '../viewmodels/balance_viewmodel.dart';
@@ -119,18 +120,18 @@ class _HomePageState extends State<HomePage> {
             children: [
               Row(
                 children: [
-                  const Text(
+                  Text(
                     "Halo, ",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.normal, // normal untuk 'Halo,'
                       color: Colors.white,
                     ),
                   ),
                   Text(
                     vm.userBalance?.namauser ?? '-',
-                    style: const TextStyle(
-                      fontSize: 20,
+                    style: TextStyle(
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.bold, // bold untuk nama user
                       color: Colors.white,
                     ),
@@ -187,17 +188,17 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
+                                Text(
                                   "Saldo Anda",
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 14.sp,
                                     color: Colors.black54,
                                   ),
                                 ),
                                 Text(
                                   "Poin: ${vm.userBalance?.poin ?? 0}",
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                     color: Colors.orangeAccent[700],
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -210,8 +211,8 @@ class _HomePageState extends State<HomePage> {
                               CurrencyUtil.formatCurrency(
                                 vm.userBalance?.saldo ?? 0,
                               ),
-                              style: const TextStyle(
-                                fontSize: 24,
+                              style: TextStyle(
+                                fontSize: 24.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -281,16 +282,16 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Text(
                             ew.nama,
-                            style: const TextStyle(
-                              fontSize: 14,
+                            style: TextStyle(
+                              fontSize: 14.sp,
                               color: Colors.black54,
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             CurrencyUtil.formatCurrency(ew.saldoEwallet),
-                            style: const TextStyle(
-                              fontSize: 24,
+                            style: TextStyle(
+                              fontSize: 24.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -403,12 +404,12 @@ class _HomePageState extends State<HomePage> {
     children: [
       Text(
         'Saldo Anda',
-        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+        style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
       ),
       const SizedBox(height: 4),
       Text(
         CurrencyUtil.formatCurrency(saldo as double),
-        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
       ),
     ],
   );
@@ -416,11 +417,14 @@ class _HomePageState extends State<HomePage> {
   Widget _buildPoin(int poin) => Column(
     crossAxisAlignment: CrossAxisAlignment.end,
     children: [
-      Text('Poin', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+      Text(
+        'Poin',
+        style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
+      ),
       const SizedBox(height: 4),
       Text(
         poin.toString(),
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
       ),
     ],
   );
@@ -428,9 +432,9 @@ class _HomePageState extends State<HomePage> {
   Widget _buildPromoSection() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Text(
+      Text(
         'PASTI PROMO',
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
       ),
       const SizedBox(height: 12),
       SizedBox(
@@ -471,9 +475,9 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     "Promo Murah Merdeka ${i + 1}",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                     ),
                   ),
                 ),
@@ -488,9 +492,9 @@ class _HomePageState extends State<HomePage> {
   Widget _buildPromoSectionMiddle() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Text(
+      Text(
         'PASTI PROMO 2',
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
       ),
       const SizedBox(height: 12),
       SizedBox(
@@ -531,9 +535,9 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     "Promo Murah Merdeka ${i + 1}",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                     ),
                   ),
                 ),
@@ -554,7 +558,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Text(
               entry.key.toUpperCase(),
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             GridView.builder(
@@ -613,12 +617,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(height: 6),
-                      Text(
-                        iconItem.filename,
-                        style: const TextStyle(fontSize: 12),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
+                      Expanded(
+                        child: Text(
+                          iconItem.filename,
+                          style: TextStyle(fontSize: 12.sp),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ],
                   ),
@@ -635,9 +641,9 @@ class _HomePageState extends State<HomePage> {
   Widget _buildTokenSection() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Text(
+      Text(
         'Tagihan Lainnya',
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
       ),
       const SizedBox(height: 12),
       GridView.builder(

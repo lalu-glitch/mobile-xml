@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../models/status_transaksi.dart';
 import 'package:intl/intl.dart';
 
@@ -57,7 +58,7 @@ class DetailTransaksiPage extends StatelessWidget {
             Text(
               isSuccess ? "Transaksi Berhasil!" : "Transaksi Gagal!",
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 24.sp,
                 fontWeight: FontWeight.bold,
                 color: isSuccess ? Colors.green : Colors.red,
               ),
@@ -96,9 +97,9 @@ class DetailTransaksiPage extends StatelessWidget {
                     const Divider(height: 10),
                     Text(
                       "Outbox",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -134,10 +135,39 @@ class DetailTransaksiPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Selesai",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16), // Jarak antar tombol
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orangeAccent[700],
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      elevation: 5,
+                      shadowColor: Colors.orangeAccent.shade100,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/struk',
+                        arguments: {'transaksi': status},
+                      );
+                    },
+                    child: Text(
+                      "Cetak Struk",
+                      style: TextStyle(
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),

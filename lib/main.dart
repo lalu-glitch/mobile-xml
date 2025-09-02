@@ -11,6 +11,7 @@ import 'viewmodels/riwayat_viewmodel.dart';
 import 'viewmodels/transaksi_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> main() async {
   // Pastikan binding yang sesuai untuk Sentry
@@ -45,7 +46,16 @@ Future<void> main() async {
           ),
           ChangeNotifierProvider(create: (_) => RiwayatTransaksiViewModel()),
         ],
-        child: const XmlApp(),
+        child: ScreenUtilInit(
+          designSize: const Size(
+            390,
+            844,
+          ), // ukuran desain referensi (misal iPhone 12)
+          minTextAdapt: true,
+          builder: (context, child) {
+            return const XmlApp();
+          },
+        ),
       ),
     ),
   );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xmlapp/views/riwayat_page.dart';
 
 class TransaksiGagalPage extends StatelessWidget {
@@ -27,11 +28,11 @@ class TransaksiGagalPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 "Transaksi Gagal",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 22,
+                  fontSize: 22.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),

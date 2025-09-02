@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../models/icon_data.dart';
 import '../utils/currency.dart';
@@ -189,7 +190,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                         children: [
                                           if (isGangguan)
                                             Row(
-                                              children: const [
+                                              children: [
                                                 Icon(
                                                   Icons.cancel,
                                                   color: Colors.red,
@@ -200,7 +201,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                                   "Gangguan",
                                                   style: TextStyle(
                                                     color: Colors.red,
-                                                    fontSize: 12,
+                                                    fontSize: 12.sp,
                                                   ),
                                                 ),
                                               ],
@@ -266,10 +267,10 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                     children: [
                       Text(
                         "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
                       ElevatedButton(

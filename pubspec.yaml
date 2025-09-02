@@ -49,6 +49,7 @@ dependencies:
   sentry_flutter: ^9.6.0
   fluttertoast:
   android_id: ^0.3.6
+  flutter_screenutil: ^5.9.3
 
 
 flutter_native_splash:

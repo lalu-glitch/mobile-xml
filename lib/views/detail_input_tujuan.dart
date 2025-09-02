@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xmlapp/utils/currency.dart';
 
 import '../utils/error_dialog.dart';
 
@@ -40,11 +42,32 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Produk: ${namaProduk}",
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // === Info Produk ===
+                Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        _infoRow("Nama Produk", namaProduk),
+                        const Divider(height: 24),
+                        _infoRow(
+                          "Total Pembayaran",
+                          CurrencyUtil.formatCurrency(total),
+                          isTotal: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Text("Total: ${total}"),
             const SizedBox(height: 20),
             const Text("Masukkan Nomor Tujuan"),
             const SizedBox(height: 8),
@@ -95,6 +118,40 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _infoRow(String label, String value, {bool isTotal = false}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 4,
+          child: Text(
+            label,
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          flex: 6,
+          child: Text(
+            value,
+            textAlign: TextAlign.right,
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2, // Maksimal 2 baris, ubah jika mau multi-line
+            style: TextStyle(
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
+              fontSize: isTotal ? 16.sp : 14.sp,
+              color: isTotal ? Colors.orangeAccent[700] : Colors.black,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

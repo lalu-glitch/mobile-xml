@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../utils/currency.dart';
@@ -109,11 +110,11 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             const SizedBox(height: 24),
 
             // === Metode Pembayaran ===
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "METODE PEMBAYARAN",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
               ),
             ),
             const SizedBox(height: 12),
@@ -145,9 +146,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                         children: [
                           Text(
                             (method["label"] as String? ?? ''),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 16.sp,
                             ),
                           ),
                           Row(
@@ -243,10 +244,10 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                     );
                   }
                 },
-                child: const Text(
+                child: Text(
                   "SELANJUTNYA",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -285,7 +286,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             maxLines: 2, // Maksimal 2 baris, ubah jika mau multi-line
             style: TextStyle(
               fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
-              fontSize: isTotal ? 16 : 14,
+              fontSize: isTotal ? 16.sp : 14.sp,
               color: isTotal ? Colors.orangeAccent[700] : Colors.black,
             ),
           ),

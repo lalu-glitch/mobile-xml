@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../services/auth_service.dart';
 import '../utils/error_dialog.dart';
 
@@ -66,10 +67,10 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text(
+                  Text(
                     "Verifikasi OTP",
                     style: TextStyle(
-                      fontSize: 26,
+                      fontSize: 26.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.green,
                     ),
@@ -77,15 +78,15 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   const SizedBox(height: 8),
                   Text(
                     "Kode OTP dikirim ke $username",
-                    style: const TextStyle(fontSize: 14, color: Colors.black54),
+                    style: TextStyle(fontSize: 14.sp, color: Colors.black54),
                   ),
                   const SizedBox(height: 20),
                   // TextField OTP modern
                   TextField(
                     controller: _otpCtrl,
                     keyboardType: TextInputType.number,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: 16.sp,
                       color: Colors.black87,
                       fontWeight: FontWeight.w500,
                     ),
@@ -138,10 +139,10 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                                 color: Colors.white,
                               ),
                             )
-                          : const Text(
+                          : Text(
                               "Verifikasi",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../models/icon_data.dart';
 
 import 'konfirmasi_page.dart';
@@ -177,10 +178,10 @@ class _DetailRegulerPageState extends State<DetailRegulerPage>
                 children: [
                   Text(
                     "Total Rp ${selectedPrice.toStringAsFixed(0)}",
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                     ),
                   ),
                   ElevatedButton(

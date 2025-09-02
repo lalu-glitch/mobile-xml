@@ -1,5 +1,6 @@
 import 'package:android_id/android_id.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
@@ -183,7 +184,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 subtitle: Text(
                   displayValue,
-                  style: TextStyle(color: Colors.grey[700], fontSize: 14),
+                  style: TextStyle(color: Colors.grey[700], fontSize: 14.sp),
                 ),
                 trailing: IconButton(
                   icon: const Icon(

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../services/auth_service.dart';
 import '../utils/error_dialog.dart';
 
@@ -96,10 +97,10 @@ class _SendOtpPageState extends State<SendOtpPage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
+                    Text(
                       "Request OTP",
                       style: TextStyle(
-                        fontSize: 26,
+                        fontSize: 26.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.orange,
                       ),
@@ -163,10 +164,10 @@ class _SendOtpPageState extends State<SendOtpPage> {
                                   color: Colors.white,
                                 ),
                               )
-                            : const Text(
+                            : Text(
                                 "Request OTP",
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,
                                 ),

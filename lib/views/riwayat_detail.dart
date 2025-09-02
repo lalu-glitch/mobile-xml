@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:xmlapp/services/api_service.dart';
 import 'package:flutter/services.dart'; // Untuk Clipboard
@@ -117,10 +118,10 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
                           arguments: {'transaksi': status},
                         );
                       },
-                      child: const Text(
+                      child: Text(
                         "Cetak Struk",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
