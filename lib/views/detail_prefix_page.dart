@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, unnecessary_string_interpolations
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -64,36 +66,55 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Stack(
+                    clipBehavior: Clip.none,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // === Header ===
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: _buildHeader(balanceVM),
+                          ),
 
-                        child: _buildHeader(balanceVM),
+                          const SizedBox(
+                            height: 100,
+                          ), // kasih space supaya card muat di overlay
+                          // === Bagian bawah (container putih) ===
+                          Container(
+                            decoration: BoxDecoration(color: Colors.grey[100]),
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 90),
+                                _buildPromoSection(),
+                                const SizedBox(height: 24),
+                                iconVM.isLoading
+                                    ? _buildShimmerIcons()
+                                    : iconVM.error != null
+                                    ? const Center(
+                                        child: Text('Gagal memuat icon'),
+                                      )
+                                    : _buildIconCategories(iconVM),
+                                const SizedBox(height: 24),
+                                _buildPromoSectionMiddle(),
+                                const SizedBox(height: 24),
+                                _buildTokenSection(),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 20),
 
-                      // Bagian promo ke bawah dengan background putih
-                      Container(
-                        decoration: BoxDecoration(color: Colors.grey[100]),
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildPromoSection(),
-                            const SizedBox(height: 24),
-                            iconVM.isLoading
-                                ? _buildShimmerIcons()
-                                : iconVM.error != null
-                                ? Center(child: Text('Gagal memuat icon'))
-                                : _buildIconCategories(iconVM),
-                            const SizedBox(height: 24),
-                            _buildPromoSectionMiddle(),
-                            const SizedBox(height: 24),
-                            _buildTokenSection(),
-                          ],
-                        ),
+                      // === Overlay Card ===
+                      Positioned(
+                        top:
+                            80, // atur biar card nempel di antara header & container
+                        left: 16,
+                        right: 16,
+                        child: _buildHeaderCard(balanceVM),
                       ),
                     ],
                   ),
@@ -106,8 +127,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Modern header
-  // Modern header with Halo outside and Poin at top-right
   Widget _buildHeader(BalanceViewModel vm) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,194 +179,311 @@ class _HomePageState extends State<HomePage> {
         ),
 
         // Card
-        const SizedBox(height: 10),
+        const SizedBox(height: 100),
+      ],
+    );
+  }
 
-        SizedBox(
-          height: 195, // tinggi card
-          child: PageView(
-            controller: PageController(viewportFraction: 0.9),
-            children: [
-              // === Card 1: Saldo utama ===
-              Card(
-                elevation: 1,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 24,
-                  ),
-                  child: vm.isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+  // Modern header with Halo outside and Poin at top-right
+  Widget _buildHeaderCard(BalanceViewModel vm) {
+    return SizedBox(
+      height: 280, // tinggi card
+      child: PageView(
+        controller: PageController(viewportFraction: 1),
+        children: [
+          // === Card 1: Saldo utama ===
+          Card(
+            elevation: 1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              child: vm.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Top row: Saldo speedcash
+                        _buildWallet(vm),
+
+                        const SizedBox(height: 10),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Top row: Saldo & Poin kecil
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
-                                  "Saldo Anda",
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    color: Colors.black54,
-                                  ),
+                                const Icon(
+                                  Icons
+                                      .account_balance_wallet, // ikon uang dompet
+                                  color: Colors.teal,
+                                  size: 28,
                                 ),
-                                Text(
-                                  "Poin: ${vm.userBalance?.poin ?? 0}",
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    color: Colors.orangeAccent[700],
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                const SizedBox(width: 8),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Saldo XML",
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                    Text(
+                                      CurrencyUtil.formatCurrency(
+                                        vm.userBalance?.saldo ?? 0,
+                                      ),
+                                      style: TextStyle(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
-                            // Saldo besar
-                            Text(
-                              CurrencyUtil.formatCurrency(
-                                vm.userBalance?.saldo ?? 0,
-                              ),
-                              style: TextStyle(
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const Divider(),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orangeAccent[700],
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 10,
-                                      horizontal: 24,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'Deposit Saldo',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+
+                            ElevatedButton.icon(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.orangeAccent[700],
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30),
                                   ),
                                 ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/riwayatTransaksi',
-                                    );
-                                  },
-                                  child: const Text(
-                                    'History Transaksi',
-                                    style: TextStyle(
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 8,
                                 ),
-                              ],
+                              ),
+                              icon: Icon(
+                                Icons.add,
+                                size: 24,
+                                color: Colors.white,
+                              ),
+                              label: Text(
+                                "Isi Stok",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                ),
-              ),
+                        const SizedBox(height: 10),
 
-              // === Card 2: Saldo eWallet ===
-              if (vm.userBalance?.ewallet.isNotEmpty ?? false)
-                ...vm.userBalance!.ewallet.map(
-                  (ew) => Card(
-                    elevation: 1,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 24,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ew.nama,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.black54,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            CurrencyUtil.formatCurrency(ew.saldoEwallet),
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Divider(),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.orangeAccent[700],
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 24,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                child: const Text(
-                                  'Deposit Saldo',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
                               ),
-                              TextButton(
-                                onPressed: () {
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Row(
+                                mainAxisSize:
+                                    MainAxisSize.min, // biar ukurannya pas
+                                children: [
+                                  const Icon(
+                                    Icons.attach_money,
+                                    color: Colors.green,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(width: 8),
+                                      Text("${vm.userBalance?.poin ?? 0} "),
+                                      Text("Komisi"),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Row(
+                                mainAxisSize:
+                                    MainAxisSize.min, // biar ukurannya pas
+                                children: [
+                                  const Icon(Icons.star, color: Colors.orange),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(width: 8),
+                                      Text("${vm.userBalance?.poin ?? 0} "),
+                                      Text("Poin"),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: InkWell(
+                                onTap: () {
                                   Navigator.pushNamed(
                                     context,
                                     '/riwayatTransaksi',
                                   );
                                 },
-                                child: const Text(
-                                  'History Transaksi',
-                                  style: TextStyle(
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                borderRadius: BorderRadius.circular(
+                                  12,
+                                ), // biar ada efek ripple bulat
+                                child: Row(
+                                  children: const [
+                                    Icon(Icons.history, color: Colors.orange),
+                                    SizedBox(height: 4),
+                                    Text("Riwayat"),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.orangeAccent[700],
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                        ],
-                      ),
+                          child: const Text(
+                            "Jangan biarin saldo kamu kosong! Yuk, topup sekarang!",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight:
+                                  FontWeight.bold, // bold untuk nama user
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
+
+  Widget _buildWallet(vm) => Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.account_balance_wallet, // ikon uang dompet
+            color: Colors.teal,
+            size: 28,
+          ),
+          const SizedBox(width: 8),
+
+          // cek kondisi ewallet
+          if (vm.userBalance?.ewallet.isNotEmpty ?? false)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Saldo Speedcash",
+                  style: TextStyle(fontSize: 14.sp, color: Colors.black54),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: vm.userBalance!.ewallet.map<Widget>((ew) {
+                    return Text(
+                      CurrencyUtil.formatCurrency(ew.saldoEwallet),
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            )
+          else
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Saldo Speedcash",
+                  style: TextStyle(fontSize: 14.sp, color: Colors.black54),
+                ),
+                Text(
+                  "Belum terhubung",
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
+
+      // Tombol kanan
+      ElevatedButton.icon(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.teal,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        ),
+        icon: const Icon(Icons.check, size: 20, color: Colors.white),
+        label: Text(
+          "Aktifkan",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ],
+  );
 
   Widget _buildPromoSection() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
