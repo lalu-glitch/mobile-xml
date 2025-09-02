@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import '../utils/shimmer.dart';
 import '../viewmodels/balance_viewmodel.dart';
 import '../viewmodels/icon_viewmodel.dart';
@@ -186,231 +187,260 @@ class _HomePageState extends State<HomePage> {
 
   // Modern header with Halo outside and Poin at top-right
   Widget _buildHeaderCard(BalanceViewModel vm) {
-    return SizedBox(
-      height: 280, // tinggi card
-      child: PageView(
-        controller: PageController(viewportFraction: 1),
-        children: [
-          // === Card 1: Saldo utama ===
-          Card(
-            elevation: 1,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              child: vm.isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : Column(
+    return Column(
+      children: [
+        Card(
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: vm.isLoading
+                ? Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Top row: Saldo speedcash
-                        _buildWallet(vm),
-
-                        const SizedBox(height: 10),
-
+                        Container(
+                          width: 150,
+                          height: 20,
+                          margin: const EdgeInsets.only(bottom: 12),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(
+                              8,
+                            ), // <-- radius 8
+                          ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 100,
+                          margin: const EdgeInsets.only(bottom: 12),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(
+                              12,
+                            ), // <-- radius 12
+                          ),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons
-                                      .account_balance_wallet, // ikon uang dompet
-                                  color: Colors.orangeAccent[700],
-                                  size: 28,
+                          children: List.generate(3, (index) {
+                            return Container(
+                              width: 80,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(
+                                  10,
+                                ), // <-- radius 10
+                              ),
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Top row: Saldo speedcash
+                      _buildWallet(vm),
+
+                      const SizedBox(height: 10),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons
+                                    .account_balance_wallet, // ikon uang dompet
+                                color: Colors.orangeAccent[700],
+                                size: 28,
+                              ),
+                              const SizedBox(width: 8),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Stok XML",
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                  Text(
+                                    CurrencyUtil.formatCurrency(
+                                      vm.userBalance?.saldo ?? 0,
+                                    ),
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+
+                          ElevatedButton.icon(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.orangeAccent[700],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30),
                                 ),
-                                const SizedBox(width: 8),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                            ),
+                            icon: Icon(
+                              Icons.add,
+                              size: 24,
+                              color: Colors.white,
+                            ),
+                            label: Text(
+                              "Isi Stok",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Row(
+                              mainAxisSize:
+                                  MainAxisSize.min, // biar ukurannya pas
+                              children: [
+                                const Icon(
+                                  Icons.attach_money,
+                                  color: Colors.green,
+                                ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "Stok XML",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        color: Colors.black54,
-                                      ),
-                                    ),
-                                    Text(
-                                      CurrencyUtil.formatCurrency(
-                                        vm.userBalance?.saldo ?? 0,
-                                      ),
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    const SizedBox(width: 8),
+                                    Text("${vm.userBalance?.poin ?? 0} "),
+                                    Text("Komisi"),
                                   ],
                                 ),
                               ],
                             ),
-
-                            ElevatedButton.icon(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.orangeAccent[700],
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 8,
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.add,
-                                size: 24,
-                                color: Colors.white,
-                              ),
-                              label: Text(
-                                "Isi Stok",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Row(
-                                mainAxisSize:
-                                    MainAxisSize.min, // biar ukurannya pas
-                                children: [
-                                  const Icon(
-                                    Icons.attach_money,
-                                    color: Colors.green,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(width: 8),
-                                      Text("${vm.userBalance?.poin ?? 0} "),
-                                      Text("Komisi"),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                              borderRadius: BorderRadius.circular(30),
                             ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Row(
-                                mainAxisSize:
-                                    MainAxisSize.min, // biar ukurannya pas
-                                children: [
-                                  const Icon(Icons.star, color: Colors.orange),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(width: 8),
-                                      Text("${vm.userBalance?.poin ?? 0} "),
-                                      Text("Poin"),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/riwayatTransaksi',
-                                  );
-                                },
-                                borderRadius: BorderRadius.circular(
-                                  12,
-                                ), // biar ada efek ripple bulat
-                                child: Row(
-                                  children: const [
-                                    Icon(Icons.history, color: Colors.orange),
-                                    SizedBox(height: 4),
-                                    Text("Riwayat"),
+                            child: Row(
+                              mainAxisSize:
+                                  MainAxisSize.min, // biar ukurannya pas
+                              children: [
+                                const Icon(Icons.star, color: Colors.orange),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(width: 8),
+                                    Text("${vm.userBalance?.poin ?? 0} "),
+                                    Text("Poin"),
                                   ],
                                 ),
+                              ],
+                            ),
+                          ),
+
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/riwayatTransaksi',
+                                );
+                              },
+                              borderRadius: BorderRadius.circular(
+                                12,
+                              ), // biar ada efek ripple bulat
+                              child: Row(
+                                children: const [
+                                  Icon(Icons.history, color: Colors.orange),
+                                  SizedBox(height: 4),
+                                  Text("Riwayat"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.orangeAccent[700],
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.report,
+                              color: Colors.white,
+                              size: 14.sp,
+                            ),
+                            const Text(
+                              " Jangan biarin saldo kamu kosong! Yuk, topup sekarang!",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontWeight:
+                                    FontWeight.bold, // bold untuk nama user
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
-
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.orangeAccent[700],
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.report,
-                                color: Colors.white,
-                                size: 14.sp,
-                              ),
-                              const Text(
-                                " Jangan biarin saldo kamu kosong! Yuk, topup sekarang!",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 11,
-                                  fontWeight:
-                                      FontWeight.bold, // bold untuk nama user
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-            ),
+                      ),
+                    ],
+                  ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
