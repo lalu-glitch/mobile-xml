@@ -50,6 +50,7 @@ dependencies:
   fluttertoast:
   android_id: ^0.3.6
   flutter_screenutil: ^5.9.3
+  app_links: ^3.4.0
 
 
 flutter_native_splash:

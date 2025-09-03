@@ -23,9 +23,20 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
             />
+             <!-- Launcher (icon app) -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <!-- Deeplink xmlapp:// -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                
+                <!-- Bisa pakai host per route atau pathPattern wildcard -->
+                <data android:scheme="xmlapp" android:host="*" android:pathPattern=".*" />
             </intent-filter>
         </activity>
 

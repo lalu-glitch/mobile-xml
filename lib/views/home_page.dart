@@ -322,7 +322,7 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(height: 10),
 
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -341,10 +341,10 @@ class _HomePageState extends State<HomePage> {
                                   Icons.attach_money,
                                   color: Colors.green,
                                 ),
-                                Column(
+                                Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(width: 8),
+                                    const SizedBox(width: 4),
                                     Text(
                                       "${vm.userBalance?.poin ?? 0} ",
                                       style: TextStyle(fontSize: 12.sp),
@@ -372,10 +372,10 @@ class _HomePageState extends State<HomePage> {
                                   MainAxisSize.min, // biar ukurannya pas
                               children: [
                                 const Icon(Icons.star, color: Colors.orange),
-                                Column(
+                                Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(width: 8),
+                                    const SizedBox(width: 4),
                                     Text(
                                       "${vm.userBalance?.poin ?? 0} ",
                                       style: TextStyle(fontSize: 12.sp),
@@ -392,8 +392,8 @@ class _HomePageState extends State<HomePage> {
 
                           Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 6,
+                              horizontal: 12,
+                              vertical: 4,
                             ),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey, width: 1),
@@ -558,7 +558,7 @@ class _HomePageState extends State<HomePage> {
       ),
       const SizedBox(height: 12),
       SizedBox(
-        height: 200,
+        height: 220,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: 4,
@@ -567,19 +567,20 @@ class _HomePageState extends State<HomePage> {
             margin: EdgeInsets.only(right: 12),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 4,
-                  offset: Offset(0, 2),
+                  color: Colors.black.withOpacity(0.1), // lebih halus
+                  blurRadius: 6, // lembut, menyebar
+                  spreadRadius: 1, // tipis ke luar
+                  offset: Offset(0, 3), // bayangan ke bawah
                 ),
               ],
             ),
             child: Column(
               children: [
                 Container(
-                  height: 140,
+                  height: 160,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(16),
@@ -590,14 +591,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Promo Murah Merdeka ${i + 1}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14.sp,
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Promo Murah Murah Murah Murah Murah Murah Merdeka ${i + 1}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14.sp),
+                      maxLines: 2, // batas baris
+                      overflow: TextOverflow.ellipsis, // kasih ...
+                      softWrap: false, // biar ga pindah baris
                     ),
                   ),
                 ),
@@ -653,12 +656,12 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Promo Murah Merdeka ${i + 1}",
+                    "Promo Murah Murah Murah Murah Murah Murah Merdeka ${i + 1}",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14.sp,
-                    ),
+                    style: TextStyle(fontSize: 14.sp),
+                    maxLines: 1, // batas baris
+                    overflow: TextOverflow.ellipsis, // kasih ...
+                    softWrap: false, // biar ga pindah baris
                   ),
                 ),
               ],
