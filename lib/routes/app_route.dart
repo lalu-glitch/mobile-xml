@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../auth/send_otp.dart';
 import '../auth/verify_otp.dart';
 import '../main_page.dart';
+import '../utils/webview.dart';
 import '../views/analytics_page.dart';
 import '../views/detail_input_tujuan.dart';
 import '../views/detail_noprefix_page.dart';
@@ -62,4 +63,6 @@ final Map<String, WidgetBuilder> appRoutes = {
       authGuardWrapper(SpeedcashRegisterPage()),
   '/speedcashDepositPage': (context) =>
       authGuardWrapper(const SpeedcashDepositPage()),
+
+  '/webView': (context) => authGuardWrapper(WebviewPage(url: '', title: '')),
 };

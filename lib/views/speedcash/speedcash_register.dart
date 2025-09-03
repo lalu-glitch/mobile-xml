@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/error_dialog.dart';
 import '../../services/speedcash_api_service.dart';
-import '../../viewmodels/speedcash/speedcash_register_viewmodel.dart';
+import '../../viewmodels/speedcash/speedcash_viewmodel.dart';
 import '../../services/auth_service.dart';
 import 'package:logger/logger.dart';
 
@@ -19,15 +19,15 @@ class SpeedcashRegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Inject ViewModel
     return ChangeNotifierProvider(
-      create: (_) => SpeedcashRegisterVM(
+      create: (_) => SpeedcashVM(
         apiService: SpeedcashApiService(
           authService: AuthService(),
           logger: Logger(),
         ),
       ),
-      child: Consumer<SpeedcashRegisterVM>(
+      child: Consumer<SpeedcashVM>(
         builder: (context, vm, _) {
-          Future<void> _register() async {
+          Future<void> _speedcashRegister() async {
             final nama = _namaCtrl.text.trim();
             final phone = _phoneCtrl.text.trim();
             final email = _emailCtrl.text.trim();
@@ -40,7 +40,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
               return;
             }
 
-            final result = await vm.register(
+            final result = await vm.speedcashRegister(
               nama: nama,
               phone: phone,
               email: email,
@@ -165,7 +165,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: vm.isLoading ? null : _register,
+                            onPressed: vm.isLoading ? null : _speedcashRegister,
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(

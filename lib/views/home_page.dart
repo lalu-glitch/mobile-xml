@@ -290,7 +290,16 @@ class _HomePageState extends State<HomePage> {
                           ),
 
                           ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/webView',
+                                arguments: {
+                                  'url': 'https://youtube.com',
+                                  'title': 'Registrasi Speedcash',
+                                },
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.orangeAccent[700],
                               shape: RoundedRectangleBorder(
