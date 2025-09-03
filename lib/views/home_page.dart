@@ -459,10 +459,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildWallet(vm) {
-    // final hasEwallet = vm.userBalance?.ewallet.isNotEmpty ?? false;
+    // final hasSpeedcash = vm.userBalance?.Speedcash.isNotEmpty ?? false;
 
     ///ngetes doank
-    final hasEwallet = false;
+    final hasSpeedcash = false;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -487,12 +487,12 @@ class _HomePageState extends State<HomePage> {
                   "Saldo Speedcash",
                   style: TextStyle(fontSize: 13.sp, color: Colors.black54),
                 ),
-                if (hasEwallet)
+                if (hasSpeedcash)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: vm.userBalance!.ewallet.map<Widget>((ew) {
+                    children: vm.userBalance!.Speedcash.map<Widget>((ew) {
                       return Text(
-                        CurrencyUtil.formatCurrency(ew.saldoEwallet),
+                        CurrencyUtil.formatCurrency(ew.saldoSpeedcash),
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
@@ -516,12 +516,12 @@ class _HomePageState extends State<HomePage> {
         // Tombol kanan
         ElevatedButton.icon(
           onPressed: () {
-            if (hasEwallet) {
-              // kalau sudah ada ewallet → ke halaman deposit
-              Navigator.pushNamed(context, '/ewalletDepositPage');
+            if (hasSpeedcash) {
+              // kalau sudah ada Speedcash → ke halaman deposit
+              Navigator.pushNamed(context, '/speedcashDepositPage');
             } else {
-              // kalau belum ada ewallet → ke halaman aktifkan ewallet
-              Navigator.pushNamed(context, '/ewalletBindingPage');
+              // kalau belum ada Speedcash → ke halaman aktifkan Speedcash
+              Navigator.pushNamed(context, '/speedcashBindingPage');
             }
           },
           style: ElevatedButton.styleFrom(
@@ -532,12 +532,12 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           ),
           icon: Icon(
-            hasEwallet ? Icons.add_box : Icons.link_rounded,
+            hasSpeedcash ? Icons.add_box : Icons.link_rounded,
             size: 20,
             color: Colors.white,
           ),
           label: Text(
-            hasEwallet ? "Deposit" : "Hubungkan",
+            hasSpeedcash ? "Deposit" : "Hubungkan",
             style: TextStyle(
               color: Colors.white,
               fontSize: 12.sp,

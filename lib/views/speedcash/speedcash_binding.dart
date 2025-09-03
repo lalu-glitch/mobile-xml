@@ -3,20 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/error_dialog.dart';
 
-class EwalletBindingPage extends StatefulWidget {
-  const EwalletBindingPage({super.key});
+class SpeedcashBindingPage extends StatefulWidget {
+  const SpeedcashBindingPage({super.key});
 
   @override
-  State<EwalletBindingPage> createState() => _EwalletBindingPageState();
+  State<SpeedcashBindingPage> createState() => _SpeedcashBindingPageState();
 }
 
-class _EwalletBindingPageState extends State<EwalletBindingPage> {
+class _SpeedcashBindingPageState extends State<SpeedcashBindingPage> {
   final _phoneCtrl = TextEditingController();
   final _merchantIdCtrl = TextEditingController();
 
   bool _loading = false;
 
-  Future<void> _bindEwallet() async {
+  Future<void> _bindSpeedcash() async {
     final phone = _phoneCtrl.text.trim();
     final merchantId = _merchantIdCtrl.text.trim();
 
@@ -57,7 +57,7 @@ class _EwalletBindingPageState extends State<EwalletBindingPage> {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: const Text(
-          'Ewallet Binding',
+          'Speedcash Binding',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.orangeAccent[700],
@@ -124,7 +124,7 @@ class _EwalletBindingPageState extends State<EwalletBindingPage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: _loading ? null : _bindEwallet,
+                      onPressed: _loading ? null : _bindSpeedcash,
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
@@ -143,7 +143,7 @@ class _EwalletBindingPageState extends State<EwalletBindingPage> {
                               ),
                             )
                           : Text(
-                              "Bind Ewallet",
+                              "Bind Speedcash",
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
@@ -155,7 +155,7 @@ class _EwalletBindingPageState extends State<EwalletBindingPage> {
                   const SizedBox(height: 12),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/ewalletRegisterPage');
+                      Navigator.pushNamed(context, '/speedcashRegisterPage');
                     },
                     child: Text(
                       "Belum punya akun ? Buat di sini.",

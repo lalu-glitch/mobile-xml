@@ -186,11 +186,20 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 trailing: IconButton(
                   icon: const Icon(
-                    Icons.delete,
+                    Icons.copy,
                     color: Colors.redAccent,
                     size: 22,
                   ),
-                  onPressed: () => _deleteKey(key),
+                  // onPressed: () => _deleteKey(key),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: displayValue!));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("clipboard : $displayValue"),
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                  },
                   tooltip: 'Hapus $key',
                 ),
               ),
