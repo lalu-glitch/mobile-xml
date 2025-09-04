@@ -475,10 +475,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildWallet(vm) {
-    // final hasSpeedcash = vm.userBalance?.Speedcash.isNotEmpty ?? false;
+    final hasSpeedcash = vm.userBalance?.ewallet.isNotEmpty ?? false;
 
     ///ngetes doank
-    final hasSpeedcash = false;
+    // final hasSpeedcash = false;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

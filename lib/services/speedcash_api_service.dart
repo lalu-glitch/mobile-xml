@@ -20,15 +20,20 @@ class SpeedcashApiService {
     try {
       final response = await authService.dio.post(
         "${AppConfig.baseUrlApp}/speedcash/create_account",
-        data: {"name": nama, "phone": phone, "email": email},
+        data: {"nama": nama, "phone": phone, "email": email},
       );
 
       if (response.statusCode == 200) {
         final jsonData = Map<String, dynamic>.from(response.data);
+
+        final parsed = SpeedcashResponse.fromJson(jsonData);
+
         return {
-          "success": true,
-          "data": SpeedcashResponse.fromJson(jsonData),
-          "message": jsonData["responseMessage"] ?? "Berhasil daftar speedcash",
+          "success": parsed.success,
+          "data": parsed,
+          "message": parsed.success
+              ? "Berhasil daftar speedcash"
+              : "Gagal daftar speedcash",
         };
       } else {
         return {
@@ -39,8 +44,7 @@ class SpeedcashApiService {
       }
     } on DioException catch (e) {
       final apiMessage = e.response?.data is Map
-          ? e.response?.data["message"]["responseMessage"] ??
-                "Terjadi kesalahan server"
+          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
           : e.message;
       return {"success": false, "data": null, "message": apiMessage};
     } catch (e) {
@@ -60,11 +64,15 @@ class SpeedcashApiService {
 
       if (response.statusCode == 200) {
         final jsonData = Map<String, dynamic>.from(response.data);
+
+        final parsed = SpeedcashResponse.fromJson(jsonData);
+
         return {
-          "success": true,
-          "data": SpeedcashResponse.fromJson(jsonData),
-          "message":
-              jsonData["responseMessage"] ?? "Berhasil binding Speedcash",
+          "success": parsed.success,
+          "data": parsed,
+          "message": parsed.success
+              ? "Berhasil binding Speedcash"
+              : "Gagal binding Speedcash",
         };
       } else {
         return {
@@ -75,8 +83,7 @@ class SpeedcashApiService {
       }
     } on DioException catch (e) {
       final apiMessage = e.response?.data is Map
-          ? e.response?.data["message"]["responseMessage"] ??
-                "Terjadi kesalahan server"
+          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
           : e.message;
       return {"success": false, "data": null, "message": apiMessage};
     } catch (e) {

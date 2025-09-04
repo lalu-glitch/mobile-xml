@@ -111,7 +111,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                     TextField(
                       controller: _usernameCtrl,
                       decoration: InputDecoration(
-                        labelText: "Username",
+                        labelText: "Kode Agen",
                         prefixIcon: const Icon(
                           Icons.person,
                           color: Colors.orange,

@@ -14,10 +14,8 @@ class SpeedcashRegisterPage extends StatelessWidget {
   final _namaCtrl = TextEditingController();
   final _phoneCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    // Inject ViewModel
     return ChangeNotifierProvider(
       create: (_) => SpeedcashVM(
         apiService: SpeedcashApiService(
@@ -40,34 +38,22 @@ class SpeedcashRegisterPage extends StatelessWidget {
               return;
             }
 
-            final result = await vm.speedcashRegister(
-              nama: nama,
-              phone: phone,
-              email: email,
-            );
+            await vm.speedcashRegister(nama: nama, phone: phone, email: email);
 
-            if (result['success']) {
-              final data = result['data'];
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Success'),
-                  content: Text(
-                    'Berhasil daftar.\nRedirect URL: ${data.redirectUrl ?? "-"}',
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('OK'),
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              showErrorDialog(
+            // log full result
+            Logger().d("Result register: $vm.response");
+
+            if (vm.response != null && vm.response!.redirectUrl != null) {
+              Navigator.pushNamed(
                 context,
-                result['message'] ?? 'Terjadi kesalahan',
+                '/webView',
+                arguments: {
+                  'url': vm.response!.redirectUrl!,
+                  'title': 'Registrasi Speedcash',
+                },
               );
+            } else if (vm.error != null) {
+              showErrorDialog(context, vm.error!);
             }
           }
 

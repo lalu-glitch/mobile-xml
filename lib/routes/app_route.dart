@@ -58,7 +58,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/transaksiDetail': (context) =>
       authGuardWrapper(const DetailTransaksiPage()),
   '/speedcashBindingPage': (context) =>
-      authGuardWrapper(const SpeedcashBindingPage()),
+      authGuardWrapper(SpeedcashBindingPage()),
   '/speedcashRegisterPage': (context) =>
       authGuardWrapper(SpeedcashRegisterPage()),
   '/speedcashDepositPage': (context) =>
