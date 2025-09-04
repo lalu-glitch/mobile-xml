@@ -100,7 +100,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      "Request OTP",
+                      "Login",
                       style: TextStyle(
                         fontSize: 26.sp,
                         fontWeight: FontWeight.bold,
