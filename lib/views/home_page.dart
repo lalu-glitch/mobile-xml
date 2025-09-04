@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import '../utils/cs_bottom_sheet.dart';
 import '../utils/shimmer.dart';
 import '../viewmodels/balance_viewmodel.dart';
 import '../viewmodels/icon_viewmodel.dart';
@@ -178,6 +179,7 @@ class _HomePageState extends State<HomePage> {
                     icon: Icon(Icons.headset_mic, color: Colors.white),
                     onPressed: () {
                       // aksi notifikasi
+                      showCSBottomSheet(context, "Hubungi CS");
                     },
                   ),
                 ],
