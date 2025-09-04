@@ -99,6 +99,13 @@ class _HomePageState extends State<HomePage> {
                                         child: Text('Gagal memuat icon'),
                                       )
                                     : _buildIconCategories(iconVM),
+                                iconVM.isLoading
+                                    ? _buildShimmerIcons()
+                                    : iconVM.error != null
+                                    ? const Center(
+                                        child: Text('Gagal memuat icon'),
+                                      )
+                                    : _buildIconCategories(iconVM),
                                 const SizedBox(height: 24),
                                 _buildPromoSectionMiddle(),
                                 const SizedBox(height: 24),
@@ -558,68 +565,151 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildPromoSection() => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        'PASTI PROMO',
-        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(height: 12),
-      SizedBox(
-        height: 220,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 4,
-          itemBuilder: (context, i) => Container(
-            width: 160,
-            margin: EdgeInsets.only(right: 12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1), // lebih halus
-                  blurRadius: 6, // lembut, menyebar
-                  spreadRadius: 1, // tipis ke luar
-                  offset: Offset(0, 3), // bayangan ke bawah
+  Widget _buildPromoSection() {
+    return SizedBox(
+      height: 280, // total tinggi section
+      child: Stack(
+        children: [
+          // 👉 Background gradient besar
+          Positioned.fill(
+            child: Container(
+              margin: const EdgeInsets.only(
+                right: 40,
+              ), // lebih lebar dari slider
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.bottomLeft,
+                  radius: 1.2,
+                  colors: [Colors.orangeAccent, Colors.grey.shade100],
+                  stops: const [0.0, 1.0],
                 ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Container(
-                  height: 160,
+
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  bottomLeft: Radius.circular(24),
+                ),
+              ),
+
+              // 👉 tambahin child di atas background
+              child: Align(
+                alignment: Alignment
+                    .bottomLeft, // atau Alignment.centerLeft kalau mau di kiri
+                child: Container(
+                  width: 200,
+                  height: 300,
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(16),
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/promo${i + 1}.jpg'),
+                    image: const DecorationImage(
+                      image: AssetImage("assets/images/bg-promo.png"),
                       fit: BoxFit.cover,
                     ),
+                    borderRadius: BorderRadius.circular(24),
                   ),
                 ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Promo Murah Murah Murah Murah Murah Murah Merdeka ${i + 1}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14.sp),
-                      maxLines: 2, // batas baris
-                      overflow: TextOverflow.ellipsis, // kasih ...
-                      softWrap: false, // biar ga pindah baris
-                    ),
+              ),
+            ),
+          ),
+
+          // 👉 Konten ditaruh center
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // biar tinggi ikut isi
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 220,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 5,
+                    itemBuilder: (context, i) {
+                      if (i == 0) {
+                        // SLIDE PERTAMA -> teks promosi
+                        return Container(
+                          width: 160,
+                          margin: const EdgeInsets.only(right: 12),
+                          padding: const EdgeInsets.all(12),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Text(
+                              //   "PASTI PROMO\n",
+                              //   style: TextStyle(
+                              //     fontSize: 20.sp,
+                              //     fontWeight: FontWeight.bold,
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
+                              // Text(
+                              //   "Cuma ada di sini,\nBuruan cek promo nya!",
+                              //   style: TextStyle(
+                              //     fontSize: 12.sp,
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        );
+                      }
+
+                      // SLIDE PROMO BERGAMBAR
+                      return Container(
+                        width: 160,
+                        margin: const EdgeInsets.only(right: 12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 6,
+                              spreadRadius: 1,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 160,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(16),
+                                ),
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/promo$i.jpg',
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Promo Murah Merdeka Merdeka Merdeka $i",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 14.sp),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
             ),
           ),
-        ),
+        ],
       ),
-    ],
-  );
+    );
+  }
 
   Widget _buildPromoSectionMiddle() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -685,6 +775,8 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: iconVM.iconsByCategory.entries.map((entry) {
+        final doubledList = [...entry.value, ...entry.value];
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -693,75 +785,98 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                childAspectRatio: 0.85,
-              ),
-              itemCount: entry.value.length,
-              itemBuilder: (context, i) {
-                final iconItem = entry.value[i];
-                return GestureDetector(
-                  onTap: () {
-                    ///sementara di hardcode dulu kali yaaa
-                    final routeName = (i == 0 || i == 1 || i == 3)
-                        ? '/detailNoPrefix'
-                        : '/detailPrefix';
-
-                    Navigator.pushNamed(
-                      context,
-                      routeName,
-                      arguments: iconItem,
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.orange.shade200,
-                            width: 1.5,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 2,
-                              offset: Offset(0, 1),
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            iconItem.url,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) =>
-                                Icon(Icons.apps, color: Colors.orange.shade200),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Expanded(
-                        child: Text(
-                          iconItem.filename,
-                          style: TextStyle(fontSize: 12.sp),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white, // background putih 1 blok
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 2,
+                    offset: Offset(0, 1),
                   ),
-                );
-              },
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+
+              child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 0.85,
+                ),
+                // itemCount: entry.value.length,
+                ///test icon banyakan
+                itemCount: doubledList.length,
+
+                itemBuilder: (context, i) {
+                  // final iconItem = entry.value[i];
+                  ///test icon banyakan
+                  final iconItem = doubledList[i];
+
+                  return GestureDetector(
+                    onTap: () {
+                      ///sementara di hardcode dulu kali yaaa
+                      final routeName = (i == 0 || i == 1 || i == 3)
+                          ? '/detailNoPrefix'
+                          : '/detailPrefix';
+
+                      Navigator.pushNamed(
+                        context,
+                        routeName,
+                        arguments: iconItem,
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: Colors.orange.shade200,
+                              width: 1.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 2,
+                                offset: Offset(0, 1),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              iconItem.url,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Icon(
+                                Icons.apps,
+                                color: Colors.orange.shade200,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Expanded(
+                          child: Text(
+                            iconItem.filename,
+                            style: TextStyle(fontSize: 12.sp),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 24),
           ],
