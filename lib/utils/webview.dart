@@ -65,6 +65,16 @@ class _WebviewPageState extends State<WebviewPage> {
         ),
         backgroundColor: Colors.orangeAccent[700],
         iconTheme: const IconThemeData(color: Colors.white),
+        leading: IconButton(
+          icon: const Icon(Icons.close), // ikon X
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/', // ganti ke route homepage
+              (route) => false, // hapus semua route sebelumnya
+            );
+          },
+        ),
       ),
       body: Stack(
         children: [
