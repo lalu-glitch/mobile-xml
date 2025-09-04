@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../auth/lupa_kode_agen.dart';
 import '../auth/send_otp.dart';
 import '../auth/verify_otp.dart';
 import '../main_page.dart';
@@ -31,6 +32,7 @@ final Map<String, WidgetBuilder> appRoutes = {
     const MainPage(),
   ), // kalau kamu pisah main page seperti sebelumnya
   '/sendOtp': (context) => (SendOtpPage()),
+  '/lupaKodeAgen': (context) => (LupaKodeAgenPage()),
   '/verifyOtp': (context) => (VerifyOtpPage()),
   '/homepage': (context) => authGuardWrapper(HomePage()),
   '/settings': (context) => authGuardWrapper(const SettingsPage()),

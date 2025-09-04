@@ -15,10 +15,12 @@ import 'viewmodels/transaksi_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   // Pastikan binding yang sesuai untuk Sentry
   SentryWidgetsFlutterBinding.ensureInitialized();
 
@@ -31,8 +33,7 @@ Future<void> main() async {
   // Inisialisasi Sentry
   await SentryFlutter.init(
     (options) {
-      options.dsn =
-          'https://caa991a372d49f2d8dde12c4f6e9ac85@o4509902367096832.ingest.de.sentry.io/4509902501183568';
+      options.dsn = '${dotenv.env['BASIC_USER']}';
       options.sendDefaultPii = true;
       options.tracesSampleRate = 0.01;
 

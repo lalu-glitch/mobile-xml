@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 import '../config/app_config.dart';
 import 'package:android_id/android_id.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthService extends ChangeNotifier {
   static final String baseUrl = AppConfig.baseUrlApp;
@@ -14,11 +15,16 @@ class AuthService extends ChangeNotifier {
   final FlutterSecureStorage storage = const FlutterSecureStorage();
 
   // Basic Auth Credentials
-  static const String _basicUser = "xmlapp";
-  static const String _basicPass = "apkxml";
-  static final String _basicAuthHeader =
-      "Basic ${base64Encode(utf8.encode("$_basicUser:$_basicPass"))}";
+  // static const String _basicUser = "xmlapp";
+  // static const String _basicPass = "apkxml";
+  // static final String _basicAuthHeader =
+  //     "Basic ${base64Encode(utf8.encode("$_basicUser:$_basicPass"))}";
 
+  final String _basicAuthHeader =
+      "Basic " +
+      base64Encode(
+        utf8.encode("${dotenv.env['BASIC_USER']}:${dotenv.env['BASIC_PASS']}"),
+      );
   AuthService() {
     _dio.interceptors.add(
       InterceptorsWrapper(
@@ -216,6 +222,42 @@ class AuthService extends ChangeNotifier {
         "message":
             response.data["message"] ??
             "Kode OTP salah (${response.statusCode})",
+      };
+    } on DioException catch (e) {
+      final serverMsg = (e.response?.data is Map)
+          ? e.response?.data["message"]
+          : e.response?.data?.toString();
+      return {
+        "success": false,
+        "message": serverMsg ?? "Error dari server (${e.response?.statusCode})",
+      };
+    } catch (e) {
+      return {"success": false, "message": e.toString()};
+    }
+  }
+
+  Future<Map<String, dynamic>> requestKodeAgen(String nomor) async {
+    try {
+      final response = await _dio.post(
+        "$baseUrl/lupa_agen",
+        data: {"nomor": nomor},
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthHeader,
+            "Content-Type": "application/json",
+          },
+        ),
+      );
+
+      final isSuccess = response.statusCode == 200;
+      return {
+        "success": isSuccess,
+        "data": response.data,
+        "message":
+            response.data["message"] ??
+            (isSuccess
+                ? "Permintaan kode agen berhasil, cek WhatsApp."
+                : "Gagal kirim permintaan (${response.data["message"]})"),
       };
     } on DioException catch (e) {
       final serverMsg = (e.response?.data is Map)
