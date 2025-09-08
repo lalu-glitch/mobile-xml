@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../utils/cs_bottom_sheet.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 
 class Header extends StatelessWidget {
@@ -52,7 +53,7 @@ class Header extends StatelessWidget {
                     icon: Icon(Icons.headset_mic, color: Colors.white),
                     onPressed: () {
                       // aksi notifikasi
-                      // showCSBottomSheet(context, "Hubungi CS");
+                      showCSBottomSheet(context, "Hubungi CS");
                     },
                   ),
                 ],

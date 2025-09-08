@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../services/auth_service.dart';
 import '../utils/cs_bottom_sheet.dart';
 import '../utils/error_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SendOtpPage extends StatefulWidget {
   const SendOtpPage({super.key});
@@ -16,12 +15,16 @@ class SendOtpPage extends StatefulWidget {
 }
 
 class _SendOtpPageState extends State<SendOtpPage> {
+  // Controllers & Services
   final _usernameCtrl = TextEditingController();
   final _nomorCtrl = TextEditingController();
   final _authService = AuthService();
 
+  // State
   bool _loading = false;
 
+  // Methods
+  /// Kirim request OTP ke server
   Future<void> _doOtp() async {
     final username = _usernameCtrl.text.trim();
     final nomor = _nomorCtrl.text.trim();
@@ -36,7 +39,6 @@ class _SendOtpPageState extends State<SendOtpPage> {
     final result = await _authService.sendOtp(username, nomor);
 
     setState(() => _loading = false);
-
     if (result["success"]) {
       Navigator.pushReplacementNamed(
         context,
@@ -48,6 +50,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
     }
   }
 
+  /// Konfirmasi sebelum keluar aplikasi
   Future<bool> _onWillPop() async {
     return await showDialog(
           context: context,
@@ -66,6 +69,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
         false;
   }
 
+  // UI
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -76,7 +80,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
           child: SingleChildScrollView(
             child: Card(
               elevation: 1,
-              color: Colors.white, // background color
+              color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -86,6 +90,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // Logo
                     Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -98,7 +103,10 @@ class _SendOtpPageState extends State<SendOtpPage> {
                         fit: BoxFit.contain,
                       ),
                     ),
+
                     const SizedBox(height: 20),
+
+                    // Title
                     Text(
                       "Login",
                       style: TextStyle(
@@ -107,7 +115,9 @@ class _SendOtpPageState extends State<SendOtpPage> {
                         color: Colors.orange,
                       ),
                     ),
+
                     const SizedBox(height: 24),
+
                     // Username
                     TextField(
                       controller: _usernameCtrl,
@@ -125,7 +135,9 @@ class _SendOtpPageState extends State<SendOtpPage> {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 16),
+
                     // Nomor WhatsApp
                     TextField(
                       controller: _nomorCtrl,
@@ -144,7 +156,10 @@ class _SendOtpPageState extends State<SendOtpPage> {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 28),
+
+                    // Tombol request OTP
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -176,8 +191,10 @@ class _SendOtpPageState extends State<SendOtpPage> {
                               ),
                       ),
                     ),
+
                     const SizedBox(height: 8),
 
+                    // Extra actions
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

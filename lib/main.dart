@@ -33,7 +33,7 @@ Future<void> main() async {
   // Inisialisasi Sentry
   await SentryFlutter.init(
     (options) {
-      options.dsn = '${dotenv.env['BASIC_USER']}';
+      options.dsn = '${dotenv.env['SENTRY_LINK']}';
       options.sendDefaultPii = true;
       options.tracesSampleRate = 0.01;
 

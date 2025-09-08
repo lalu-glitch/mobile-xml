@@ -11,18 +11,26 @@ class VerifyOtpPage extends StatefulWidget {
 }
 
 class _VerifyOtpPageState extends State<VerifyOtpPage> {
+  // Controllers & Services
   final _otpCtrl = TextEditingController();
   final _authService = AuthService();
+
+  //state
   bool _loading = false;
 
-  Future<void> _doVerify(String username) async {
+  // Methods
+  /// Kirim request verifikasi OTP ke server
+  Future<void> _doVerify(String kodeReseller) async {
     if (_otpCtrl.text.trim().isEmpty) {
       showErrorDialog(context, "OTP tidak boleh kosong");
       return;
     }
 
     setState(() => _loading = true);
-    final result = await _authService.verifyOtp(username, _otpCtrl.text.trim());
+    final result = await _authService.verifyOtp(
+      kodeReseller,
+      _otpCtrl.text.trim(),
+    );
     setState(() => _loading = false);
 
     if (result["success"]) {
@@ -36,6 +44,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
     final username = args["username"];
 
     return Scaffold(
