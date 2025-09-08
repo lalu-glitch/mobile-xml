@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import '../models/provider.dart';
+import '../models/provider_kartu.dart';
 import '../services/api_service.dart';
 
 class ProviderViewModel extends ChangeNotifier {
   final ApiService _apiService = ApiService();
 
-  List<ProviderData> _providers = [];
+  List<ProviderKartu> _providers = [];
   bool _isLoading = false;
   String? _error;
 
-  List<ProviderData> get providers => _providers;
+  List<ProviderKartu> get providers => _providers;
   bool get isLoading => _isLoading;
   String? get error => _error;
 

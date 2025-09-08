@@ -9,7 +9,7 @@ import 'routes/app_route.dart';
 import 'services/api_service.dart';
 import 'viewmodels/balance_viewmodel.dart';
 import 'viewmodels/icon_viewmodel.dart';
-import 'viewmodels/provider_viewmodel.dart';
+import 'viewmodels/provider_kartu_viewmodel.dart';
 import 'viewmodels/riwayat_viewmodel.dart';
 import 'viewmodels/transaksi_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';

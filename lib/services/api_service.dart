@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import '../config/app_config.dart';
-import '../models/provider.dart';
+import '../models/provider_kartu.dart';
 import '../models/status_transaksi.dart';
 import '../models/transaksi_riwayat.dart';
 import '../models/transaksi_response.dart';
@@ -87,7 +87,7 @@ class ApiService {
           final providers = (jsonData['data'] as List)
               .map(
                 (item) =>
-                    ProviderData.fromJson(Map<String, dynamic>.from(item)),
+                    ProviderKartu.fromJson(Map<String, dynamic>.from(item)),
               )
               .toList();
 
@@ -134,7 +134,7 @@ class ApiService {
           final providers = (jsonData['data'] as List)
               .map(
                 (item) =>
-                    ProviderData.fromJson(Map<String, dynamic>.from(item)),
+                    ProviderKartu.fromJson(Map<String, dynamic>.from(item)),
               )
               .toList();
 
