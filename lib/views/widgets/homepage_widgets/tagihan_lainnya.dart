@@ -43,6 +43,5 @@ class TagihanLainnya extends StatelessWidget {
         ),
       ],
     );
-    ;
   }
 }

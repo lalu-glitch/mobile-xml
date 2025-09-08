@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:xmlapp/viewmodels/balance_viewmodel.dart';
 
 class PromoSectionAlt extends StatelessWidget {
   const PromoSectionAlt({super.key});

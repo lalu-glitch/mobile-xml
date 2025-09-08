@@ -121,6 +121,5 @@ class LayananSection extends StatelessWidget {
         );
       }).toList(),
     );
-    ;
   }
 }

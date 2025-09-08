@@ -1,15 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
+
 import 'package:xmlapp/views/widgets/homepage_widgets/header_card.dart';
-import '../utils/cs_bottom_sheet.dart';
 import '../utils/shimmer.dart';
 import '../viewmodels/balance_viewmodel.dart';
 import '../viewmodels/icon_viewmodel.dart';
-import '../utils/currency.dart';
 import 'promo_popup.dart';
 import 'widgets/homepage_widgets/header.dart';
 import 'widgets/homepage_widgets/layanan_section.dart';

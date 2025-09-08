@@ -99,6 +99,5 @@ class SpeedCashWalletHeader extends StatelessWidget {
         ),
       ],
     );
-    ;
   }
 }
