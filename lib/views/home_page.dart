@@ -9,6 +9,7 @@ import '../utils/shimmer.dart';
 import '../viewmodels/balance_viewmodel.dart';
 import '../viewmodels/icon_viewmodel.dart';
 import '../utils/currency.dart';
+import 'promo_popup.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -944,40 +945,4 @@ class _HomePageState extends State<HomePage> {
       ],
     ),
   );
-}
-
-class PromoPopup {
-  static void show(BuildContext context, String imagePath) {
-    showDialog(
-      context: context,
-      barrierDismissible: true, // tap luar untuk close
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          insetPadding: const EdgeInsets.all(24),
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(imagePath, fit: BoxFit.cover),
-              ),
-              // Tombol close di pojok kanan atas
-              Positioned(
-                top: 8,
-                right: 8,
-                child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 }

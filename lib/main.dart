@@ -54,7 +54,7 @@ Future<void> main() async {
         ],
         child: ScreenUtilInit(
           designSize: const Size(
-            390,
+            500,
             844,
           ), // ukuran desain referensi (misal iPhone 12)
           minTextAdapt: true,
