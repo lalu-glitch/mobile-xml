@@ -47,10 +47,10 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (_) => BalanceViewModel()),
           ChangeNotifierProvider(create: (_) => IconsViewModel()),
           ChangeNotifierProvider(create: (_) => ProviderViewModel()),
+          ChangeNotifierProvider(create: (_) => RiwayatTransaksiViewModel()),
           ChangeNotifierProvider(
             create: (_) => TransaksiViewModel(service: ApiService()),
           ),
-          ChangeNotifierProvider(create: (_) => RiwayatTransaksiViewModel()),
         ],
         child: ScreenUtilInit(
           designSize: const Size(

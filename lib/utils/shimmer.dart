@@ -28,4 +28,24 @@ class ShimmerBox extends StatelessWidget {
       ),
     );
   }
+
+  static buildShimmerIcons() => GridView.builder(
+    shrinkWrap: true,
+    physics: NeverScrollableScrollPhysics(),
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 4,
+      mainAxisSpacing: 12,
+      crossAxisSpacing: 12,
+    ),
+    itemCount: 8,
+    itemBuilder: (_, __) => Column(
+      children: [
+        Expanded(
+          child: ShimmerBox(width: double.infinity, height: 60, radius: 12),
+        ),
+        const SizedBox(height: 6),
+        ShimmerBox(width: 40, height: 10, radius: 4),
+      ],
+    ),
+  );
 }
