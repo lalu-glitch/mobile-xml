@@ -29,14 +29,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final _kodeReferralCtrl = TextEditingController();
 
   void doRegister() async {
-    final namaUsaha = _namaUsahaCtrl.text.trim();
-    final namaPemilik = _namaPemilikCtrl.text.trim();
-    final noWA = _noWACtrl.text.trim();
-    final alamat = _alamatCtrl.text.trim();
-    final provinsi = _provinsiCtrl.text.trim();
-    final kabupaten = _kabupatenCtrl.text.trim();
-    final kecamatan = _kecamatanCtrl.text.trim();
-    final kodeReferral = _kodeReferralCtrl.text.trim();
+    final namaUsaha = getTrimmed(_namaUsahaCtrl);
+    final namaPemilik = getTrimmed(_namaPemilikCtrl);
+    final noWA = getTrimmed(_noWACtrl);
+    final alamat = getTrimmed(_alamatCtrl);
+    final provinsi = getTrimmed(_provinsiCtrl);
+    final kabupaten = getTrimmed(_kabupatenCtrl);
+    final kecamatan = getTrimmed(_kecamatanCtrl);
+    final kodeReferral = getTrimmed(_kodeReferralCtrl);
 
     if (namaUsaha.isEmpty ||
         namaPemilik.isEmpty ||
@@ -51,28 +51,41 @@ class _RegisterPageState extends State<RegisterPage> {
 
     setState(() => _loading = true);
 
-    final result = await _authService.onRegisterUser(
-      namaUsaha,
-      namaPemilik,
-      noWA,
-      alamat,
-      provinsi,
-      kabupaten,
-      kecamatan,
-      kodeReferral.isEmpty ? 'DAFTAR' : kodeReferral,
-    );
+    try {
+      final result = await _authService.onRegisterUser(
+        namaUsaha,
+        namaPemilik,
+        noWA,
+        alamat,
+        provinsi,
+        kabupaten,
+        kecamatan,
+        kodeReferral.isEmpty ? 'DAFTAR' : kodeReferral,
+      );
+
+      if (!mounted) return;
+      if (result["success"]) {
+        print("RESULT REGISTER : $result");
+        Navigator.pushReplacementNamed(
+          context,
+          '/verifyOtp',
+          arguments: {
+            "kode_reseller": result["data"]["data"]["kode_reseller"],
+            "type": result["data"]["data"]["type"],
+            "nomor": result["data"]["data"]["nomor"],
+          },
+        );
+      } else {
+        showErrorDialog(context, result["message"] ?? "Terjadi kesalahan");
+      }
+    } catch (e) {
+      if (!mounted) return;
+      showErrorDialog(context, "Terjadi kesalahan register: $e");
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
 
     setState(() => _loading = false);
-
-    if (result["success"]) {
-      Navigator.pushReplacementNamed(
-        context,
-        '/verifyOtp',
-        arguments: {"kode_reseller": result["kode_reseller"]},
-      );
-    } else {
-      showErrorDialog(context, result["message"]);
-    }
   }
 
   @override
@@ -102,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.orange.withOpacity(0.2),
+                          color: Colors.orange.withAlpha(25),
                         ),
                         child: Image.asset(
                           'assets/images/logo.png',
@@ -134,7 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.orange,
                           ),
                           filled: true,
-                          fillColor: Colors.orange.withOpacity(0.1),
+                          fillColor: Colors.orange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -153,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.orange,
                           ),
                           filled: true,
-                          fillColor: Colors.orange.withOpacity(0.1),
+                          fillColor: Colors.orange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -171,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.orange,
                           ),
                           filled: true,
-                          fillColor: Colors.orange.withOpacity(0.1),
+                          fillColor: Colors.orange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -189,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.orange,
                           ),
                           filled: true,
-                          fillColor: Colors.orange.withOpacity(0.1),
+                          fillColor: Colors.orange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -203,7 +216,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: InputDecoration(
                           labelText: "Provinsi",
                           filled: true,
-                          fillColor: Colors.orange.withOpacity(0.1),
+                          fillColor: Colors.orange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -217,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: InputDecoration(
                           labelText: "Kabupaten",
                           filled: true,
-                          fillColor: Colors.orange.withOpacity(0.1),
+                          fillColor: Colors.orange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -231,7 +244,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: InputDecoration(
                           labelText: "Kecamatan",
                           filled: true,
-                          fillColor: Colors.orange.withOpacity(0.1),
+                          fillColor: Colors.orange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -249,7 +262,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.orange,
                           ),
                           filled: true,
-                          fillColor: Colors.orange.withOpacity(0.1),
+                          fillColor: Colors.orange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -299,5 +312,18 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _namaUsahaCtrl.dispose();
+    _namaPemilikCtrl.dispose();
+    _noWACtrl.dispose();
+    _alamatCtrl.dispose();
+    _provinsiCtrl.dispose();
+    _kabupatenCtrl.dispose();
+    _kecamatanCtrl.dispose();
+    _kodeReferralCtrl.dispose();
+    super.dispose();
   }
 }

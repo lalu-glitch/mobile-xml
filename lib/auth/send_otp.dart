@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, deprecated_member_use
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,11 +38,17 @@ class _SendOtpPageState extends State<SendOtpPage> {
 
     setState(() => _loading = false);
 
+    if (!mounted) return;
+
     if (result["success"]) {
       Navigator.pushReplacementNamed(
         context,
         '/verifyOtp',
-        arguments: {"username": username, "nomor": nomor},
+        arguments: {
+          "username": username,
+          "nomor": nomor,
+          "type": result["data"]['data']["type"],
+        },
       );
     } else {
       showErrorDialog(context, result["message"]);
@@ -97,7 +101,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                         Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.orange.withOpacity(0.2),
+                            color: Colors.orange.withAlpha(25),
                           ),
                           child: Image.asset(
                             'assets/images/logo.png',
@@ -131,7 +135,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                               color: Colors.orange,
                             ),
                             filled: true,
-                            fillColor: Colors.orange.withOpacity(0.1),
+                            fillColor: Colors.orange.withAlpha(25),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
@@ -152,7 +156,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                               color: Colors.orange,
                             ),
                             filled: true,
-                            fillColor: Colors.orange.withOpacity(0.1),
+                            fillColor: Colors.orange.withAlpha(25),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,

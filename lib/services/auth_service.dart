@@ -197,7 +197,7 @@ class AuthService extends ChangeNotifier {
     try {
       final deviceId = await _loadDeviceId();
       final response = await _dio.post(
-        "$baseUrl/api/register",
+        "$baseUrl/register",
         data: {
           "nama": nama,
           "pemilik": pemilik,
@@ -245,11 +245,12 @@ class AuthService extends ChangeNotifier {
   Future<Map<String, dynamic>> verifyOtp(
     String kodeReseller,
     String otp,
+    String type,
   ) async {
     try {
       final response = await _dio.post(
         "$baseUrl/verify-otp",
-        data: {"kode_reseller": kodeReseller, "otp": otp},
+        data: {"kode_reseller": kodeReseller, "otp": otp, "type": type},
         options: Options(
           headers: {
             "Authorization": _basicAuthHeader,

@@ -20,7 +20,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
 
   // Methods
   /// Kirim request verifikasi OTP ke server
-  Future<void> _doVerify(String kodeReseller) async {
+  Future<void> _doVerify(String kodeReseller, String type) async {
     if (_otpCtrl.text.trim().isEmpty) {
       showErrorDialog(context, "OTP tidak boleh kosong");
       return;
@@ -30,6 +30,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
     final result = await _authService.verifyOtp(
       kodeReseller,
       _otpCtrl.text.trim(),
+      type,
     );
     setState(() => _loading = false);
 
@@ -46,7 +47,11 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     final username = args["username"];
+    final type = args["type"];
+    final kodeReseller = args["kode_reseller"];
+    final nomor = args["nomor"];
 
+    print("Kode Reseller dan Type : ${kodeReseller.runtimeType} --- $type");
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: Center(
@@ -86,7 +91,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Kode OTP dikirim ke $username",
+                    "Kode OTP dikirim ke $nomor",
                     style: TextStyle(fontSize: 14.sp, color: Colors.black54),
                   ),
                   const SizedBox(height: 20),
@@ -130,7 +135,12 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: _loading ? null : () => _doVerify(username),
+                      onPressed: _loading
+                          ? null
+                          : () => _doVerify(
+                              type == "register" ? kodeReseller : username,
+                              type,
+                            ),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
