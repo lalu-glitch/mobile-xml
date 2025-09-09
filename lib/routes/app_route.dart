@@ -9,6 +9,7 @@ import '../views/analytics_page.dart';
 import '../views/detail_input_tujuan.dart';
 import '../views/detail_noprefix_page.dart';
 import '../views/detail_prefix_page.dart';
+import '../views/register_page.dart';
 import '../views/speedcash/speedcash_binding.dart';
 import '../views/speedcash/speedcash_deposit.dart';
 import '../views/speedcash/speedcash_register.dart';
@@ -34,6 +35,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/sendOtp': (context) => (SendOtpPage()),
   '/lupaKodeAgen': (context) => (LupaKodeAgenPage()),
   '/verifyOtp': (context) => (VerifyOtpPage()),
+  '/registerpage': (context) => (const RegisterPage()),
   '/homepage': (context) => authGuardWrapper(HomePage()),
   '/settings': (context) => authGuardWrapper(const SettingsPage()),
   '/shops': (context) => authGuardWrapper(const ShopsPage()),

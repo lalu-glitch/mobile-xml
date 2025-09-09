@@ -21,17 +21,16 @@ class AuthService extends ChangeNotifier {
   //     "Basic ${base64Encode(utf8.encode("$_basicUser:$_basicPass"))}";
 
   final String _basicAuthHeader =
-      "Basic " +
-      base64Encode(
-        utf8.encode("${dotenv.env['BASIC_USER']}:${dotenv.env['BASIC_PASS']}"),
-      );
+      "Basic ${base64Encode(utf8.encode("${dotenv.env['BASIC_USER']}:${dotenv.env['BASIC_PASS']}"))}";
   AuthService() {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final token = await getAccessToken();
-          if (token != null && token.isNotEmpty) {
-            options.headers["Authorization"] = "Bearer $token";
+          if (!options.headers.containsKey("Authorization")) {
+            final token = await getAccessToken();
+            if (token?.isNotEmpty == true) {
+              options.headers["Authorization"] = "Bearer $token";
+            }
           }
           return handler.next(options);
         },
@@ -151,7 +150,7 @@ class AuthService extends ChangeNotifier {
         data: {
           "kode_reseller": kodeReseller,
           "nomor": nomor,
-          "deviceID": deviceId,
+          "deviceId": deviceId,
         },
         options: Options(
           headers: {
@@ -170,6 +169,64 @@ class AuthService extends ChangeNotifier {
             (isSuccess
                 ? "Request OTP berhasil, cek WhatsApp."
                 : "Gagal kirim OTP (${response.data["message"]})"),
+      };
+    } on DioException catch (e) {
+      final serverMsg = (e.response?.data is Map)
+          ? e.response?.data["message"]
+          : e.response?.data?.toString();
+      return {
+        "success": false,
+        "message": serverMsg ?? "Error dari server (${e.response?.statusCode})",
+      };
+    } catch (e) {
+      return {"success": false, "message": e.toString()};
+    }
+  }
+
+  //Register
+  Future<Map<String, dynamic>> onRegisterUser(
+    String nama,
+    String pemilik,
+    String nomor,
+    String alamat,
+    String provinsi,
+    String kabupaten,
+    String kecamatan,
+    String? referral,
+  ) async {
+    try {
+      final deviceId = await _loadDeviceId();
+      final response = await _dio.post(
+        "$baseUrl/api/register",
+        data: {
+          "nama": nama,
+          "pemilik": pemilik,
+          "nomor": nomor,
+          "alamat": alamat,
+          "provinsi": provinsi,
+          "kabupaten": kabupaten,
+          "kecamatan": kecamatan,
+          "referral": referral,
+          "deviceId": deviceId,
+        },
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthHeader,
+            "Content-Type": "application/json",
+          },
+        ),
+      );
+
+      final isSuccess =
+          response.statusCode == 200 || response.statusCode == 201;
+      return {
+        "success": isSuccess,
+        "data": response.data,
+        "message":
+            response.data["message"] ??
+            (isSuccess
+                ? "Pendaftaran berhasil, silakan cek WhatsApp untuk kode OTP Anda."
+                : "Gagal mendaftar (${response.data["message"]})"),
       };
     } on DioException catch (e) {
       final serverMsg = (e.response?.data is Map)
