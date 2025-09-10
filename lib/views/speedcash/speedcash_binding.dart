@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:logger/logger.dart';
 
-import '../../utils/error_dialog.dart';
-import '../../services/speedcash_api_service.dart';
-import '../../services/auth_service.dart';
+import '../../core/utils/error_dialog.dart';
+import '../../data/services/speedcash_api_service.dart';
+import '../../data/services/auth_service.dart';
 import '../../viewmodels/speedcash/speedcash_viewmodel.dart';
 
 class SpeedcashBindingPage extends StatelessWidget {

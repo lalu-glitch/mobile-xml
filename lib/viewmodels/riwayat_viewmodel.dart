@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/status_transaksi.dart';
-import '../models/transaksi_riwayat.dart';
-import '../services/api_service.dart';
+import '../data/models/status_transaksi.dart';
+import '../data/models/transaksi_riwayat.dart';
+import '../data/services/api_service.dart';
 
 class RiwayatTransaksiViewModel extends ChangeNotifier {
   final ApiService apiService;

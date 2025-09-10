@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../models/status_transaksi.dart';
+import '../data/models/status_transaksi.dart';
 import 'package:intl/intl.dart';
 
 class DetailTransaksiPage extends StatelessWidget {

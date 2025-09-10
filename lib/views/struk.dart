@@ -8,8 +8,9 @@ import 'package:pdf/pdf.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
-import 'package:xmlapp/utils/currency.dart';
-import '../models/status_transaksi.dart';
+
+import '../core/utils/currency.dart';
+import '../data/models/status_transaksi.dart';
 import '../viewmodels/balance_viewmodel.dart';
 
 class StrukPage extends StatefulWidget {

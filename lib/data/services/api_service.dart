@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../config/app_config.dart';
+import '../../core/constant_finals.dart';
 import '../models/provider_kartu.dart';
 import '../models/status_transaksi.dart';
 import '../models/transaksi_riwayat.dart';
@@ -21,7 +21,7 @@ class ApiService {
   Future<UserBalance> fetchUserBalance() async {
     try {
       final response = await authService.dio.get(
-        "${AppConfig.baseUrlApp}/get_user",
+        "${ConstantFinals.baseUrlApp}/get_user",
       );
 
       if (response.statusCode == 200) {
@@ -41,7 +41,7 @@ class ApiService {
   Future<Map<String, List<IconItem>>> fetchIcons() async {
     try {
       final response = await authService.dio.get(
-        "${AppConfig.baseUrlApp}/list-icon",
+        "${ConstantFinals.baseUrlApp}/list-icon",
       );
 
       if (response.statusCode == 200) {
@@ -77,7 +77,7 @@ class ApiService {
   ) async {
     try {
       final response = await authService.dio.post(
-        "${AppConfig.baseUrlApp}/oto/all_produk/$category",
+        "${ConstantFinals.baseUrlApp}/oto/all_produk/$category",
         data: {"tujuan": tujuan},
       );
 
@@ -124,7 +124,7 @@ class ApiService {
   ) async {
     try {
       final response = await authService.dio.post(
-        "${AppConfig.baseUrlApp}/oto/all_produk_prefix/$category",
+        "${ConstantFinals.baseUrlApp}/oto/all_produk_prefix/$category",
         data: {"tujuan": tujuan},
       );
 
@@ -173,7 +173,7 @@ class ApiService {
   ) async {
     try {
       final response = await authService.dio.post(
-        "${AppConfig.baseUrlApp}/transaksi",
+        "${ConstantFinals.baseUrlApp}/transaksi",
         data: {
           "tujuan": tujuan,
           "kode_produk": kode_produk,
@@ -210,7 +210,7 @@ class ApiService {
   Future<Map<String, dynamic>> getStatusByInbox(int kodeInbox) async {
     try {
       final response = await authService.dio.post(
-        "${AppConfig.baseUrlApp}/trx_by_inbox/$kodeInbox",
+        "${ConstantFinals.baseUrlApp}/trx_by_inbox/$kodeInbox",
       );
 
       if (response.statusCode == 200) {
@@ -243,7 +243,7 @@ class ApiService {
   }) async {
     try {
       final response = await authService.dio.get(
-        "${AppConfig.baseUrlApp}/history_transaksi",
+        "${ConstantFinals.baseUrlApp}/history_transaksi",
         queryParameters: {"page": page, "limit": limit},
       );
 
@@ -266,7 +266,7 @@ class ApiService {
   Future<Map<String, dynamic>> historyDetail(String kodeKode) async {
     try {
       final response = await authService.dio.post(
-        "${AppConfig.baseUrlApp}/trx_by_kode/$kodeKode",
+        "${ConstantFinals.baseUrlApp}/trx_by_kode/$kodeKode",
       );
 
       if (response.statusCode == 200) {

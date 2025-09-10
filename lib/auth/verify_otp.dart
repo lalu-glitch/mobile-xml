@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../services/auth_service.dart';
-import '../utils/error_dialog.dart';
+import '../data/services/auth_service.dart';
+import '../core/utils/error_dialog.dart';
 
 class VerifyOtpPage extends StatefulWidget {
   const VerifyOtpPage({super.key});

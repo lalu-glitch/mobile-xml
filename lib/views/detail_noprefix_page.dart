@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../models/icon_data.dart';
-import '../utils/currency.dart';
+import '../data/models/icon_data.dart';
+import '../core/utils/currency.dart';
 import '../viewmodels/provider_kartu_viewmodel.dart';
 
 class DetailNoPrefixPage extends StatefulWidget {

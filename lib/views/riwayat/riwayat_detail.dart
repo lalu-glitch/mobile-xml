@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:xmlapp/services/api_service.dart';
+import 'package:xmlapp/data/services/api_service.dart';
 import 'package:flutter/services.dart'; // Untuk Clipboard
 import 'package:intl/intl.dart';
 
-import '../services/auth_service.dart';
-import '../utils/error_dialog.dart';
-import '../viewmodels/riwayat_viewmodel.dart';
+import '../../data/services/auth_service.dart';
+import '../../core/utils/error_dialog.dart';
+import '../../viewmodels/riwayat_viewmodel.dart';
 
 class DetailRiwayatPage extends StatefulWidget {
   final String kode;

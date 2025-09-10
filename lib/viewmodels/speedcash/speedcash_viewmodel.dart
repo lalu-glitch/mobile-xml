@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../models/speedcash/speedcash_response.dart';
-import '../../services/speedcash_api_service.dart';
+import 'package:xmlapp/data/models/speedcash/speedcash_unbind.dart';
+import '../../data/models/speedcash/speedcash_response.dart';
+import '../../data/services/speedcash_api_service.dart';
 
 class SpeedcashVM extends ChangeNotifier {
   final SpeedcashApiService _apiService;
@@ -10,6 +11,8 @@ class SpeedcashVM extends ChangeNotifier {
 
   bool isLoading = false;
   String? error;
+  // String? _message;
+  // String? get message => _message;
   SpeedcashResponse? response;
 
   /// Register Speedcash

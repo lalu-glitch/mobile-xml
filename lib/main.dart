@@ -3,14 +3,18 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:app_links/app_links.dart';
-import 'routes/app_route.dart';
-import 'services/api_service.dart';
+import 'package:xmlapp/data/services/speedcash_api_service.dart';
+import 'package:xmlapp/viewmodels/speedcash/speedcash_viewmodel.dart';
+import 'core/app_route.dart';
+import 'data/services/api_service.dart';
 import 'viewmodels/balance_viewmodel.dart';
 import 'viewmodels/icon_viewmodel.dart';
 import 'viewmodels/provider_kartu_viewmodel.dart';
 import 'viewmodels/riwayat_viewmodel.dart';
+import 'viewmodels/speedcash/cubit/speedcash_cubit.dart';
 import 'viewmodels/transaksi_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -40,30 +44,70 @@ Future<void> main() async {
       // Tambahan logging untuk debug
       options.debug = kDebugMode;
     },
-    // Jalankan aplikasi setelah Sentry siap
+    //Jalankan aplikasi setelah Sentry siap
     appRunner: () => runApp(
-      MultiProvider(
+      MultiBlocProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => BalanceViewModel()),
-          ChangeNotifierProvider(create: (_) => IconsViewModel()),
-          ChangeNotifierProvider(create: (_) => ProviderViewModel()),
-          ChangeNotifierProvider(create: (_) => RiwayatTransaksiViewModel()),
-          ChangeNotifierProvider(
-            create: (_) => TransaksiViewModel(service: ApiService()),
+          BlocProvider<SpeedcashCubit>(
+            create: (context) => SpeedcashCubit(SpeedcashApiService()),
           ),
         ],
-        child: ScreenUtilInit(
-          designSize: const Size(
-            500,
-            844,
-          ), // ukuran desain referensi (misal iPhone 12)
-          minTextAdapt: true,
-          builder: (context, child) {
-            return const XmlApp();
-          },
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => BalanceViewModel()),
+            ChangeNotifierProvider(create: (_) => IconsViewModel()),
+            ChangeNotifierProvider(create: (_) => ProviderViewModel()),
+            ChangeNotifierProvider(create: (_) => RiwayatTransaksiViewModel()),
+
+            ChangeNotifierProvider(
+              create: (_) => SpeedcashVM(apiService: SpeedcashApiService()),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => TransaksiViewModel(service: ApiService()),
+            ),
+          ],
+          child: ScreenUtilInit(
+            designSize: const Size(
+              500,
+              844,
+            ), // ukuran desain referensi (misal iPhone 12)
+            minTextAdapt: true,
+            builder: (context, child) {
+              return const XmlApp();
+            },
+          ),
         ),
       ),
     ),
+
+    ///Experiment
+    // appRunner: () => runApp(
+    //   MultiProvider(
+    //     providers: [
+    //       ChangeNotifierProvider(create: (_) => BalanceViewModel()),
+    //       ChangeNotifierProvider(create: (_) => IconsViewModel()),
+    //       ChangeNotifierProvider(create: (_) => ProviderViewModel()),
+    //       ChangeNotifierProvider(create: (_) => RiwayatTransaksiViewModel()),
+
+    //       ChangeNotifierProvider(
+    //         create: (_) => SpeedcashVM(apiService: SpeedcashApiService()),
+    //       ),
+    //       ChangeNotifierProvider(
+    //         create: (_) => TransaksiViewModel(service: ApiService()),
+    //       ),
+    //     ],
+    //     child: ScreenUtilInit(
+    //       designSize: const Size(
+    //         500,
+    //         844,
+    //       ), // ukuran desain referensi (misal iPhone 12)
+    //       minTextAdapt: true,
+    //       builder: (context, child) {
+    //         return const XmlApp();
+    //       },
+    //     ),
+    //   ),
+    // ),
   );
 }
 

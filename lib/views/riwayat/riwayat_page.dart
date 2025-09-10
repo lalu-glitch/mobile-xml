@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../viewmodels/riwayat_viewmodel.dart';
-import '../models/transaksi_riwayat.dart';
-import '../services/api_service.dart';
-import '../services/auth_service.dart';
+import '../../viewmodels/riwayat_viewmodel.dart';
+import '../../data/models/transaksi_riwayat.dart';
+import '../../data/services/api_service.dart';
+import '../../data/services/auth_service.dart';
 
 class RiwayatTransaksiPage extends StatelessWidget {
   const RiwayatTransaksiPage({super.key});

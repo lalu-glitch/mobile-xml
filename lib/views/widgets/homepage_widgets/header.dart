@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../utils/cs_bottom_sheet.dart';
+import '../../../core/utils/cs_bottom_sheet.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 
 class Header extends StatelessWidget {
@@ -14,19 +14,25 @@ class Header extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Halo, Nama User
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Halo, ",
+                    DateTime.now().hour < 11
+                        ? 'Selamat Pagi,'
+                        : DateTime.now().hour < 15
+                        ? 'Selamat Siang,'
+                        : DateTime.now().hour < 18
+                        ? 'Selamat Sore,'
+                        : 'Selamat Malam,',
                     style: TextStyle(
                       fontSize: 20.sp,
-                      fontWeight: FontWeight.normal, // normal untuk 'Halo,'
+                      fontWeight: FontWeight.normal,
                       color: Colors.white,
                     ),
                   ),

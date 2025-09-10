@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/icon_data.dart';
-import '../services/api_service.dart';
+import '../data/models/icon_data.dart';
+import '../data/services/api_service.dart';
 
 class IconsViewModel extends ChangeNotifier {
   final ApiService _apiService = ApiService();

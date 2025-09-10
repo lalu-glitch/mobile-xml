@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:xmlapp/views/widgets/homepage_widgets/header_card.dart';
-import '../utils/shimmer.dart';
+import '../core/utils/shimmer.dart';
 import '../viewmodels/balance_viewmodel.dart';
 import '../viewmodels/icon_viewmodel.dart';
-import 'promo_popup.dart';
+import 'widgets/promo_popup.dart';
 import 'widgets/homepage_widgets/header.dart';
 import 'widgets/homepage_widgets/layanan_section.dart';
 import 'widgets/homepage_widgets/promo_section.dart';

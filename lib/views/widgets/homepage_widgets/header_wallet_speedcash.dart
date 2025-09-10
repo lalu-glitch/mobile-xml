@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../utils/currency.dart';
+import '../../../core/constant_finals.dart';
+import '../../../core/utils/currency.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 
 class SpeedCashWalletHeader extends StatelessWidget {
@@ -12,9 +13,6 @@ class SpeedCashWalletHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasSpeedcash = balanceVM.userBalance?.ewallet.isNotEmpty ?? false;
-
-    ///ngetes doank
-    // final hasSpeedcash = false;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

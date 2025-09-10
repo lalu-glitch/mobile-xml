@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
-import '../utils/currency.dart';
-import '../utils/error_dialog.dart';
+import '../core/utils/currency.dart';
+import '../core/utils/error_dialog.dart';
 import '../viewmodels/balance_viewmodel.dart';
 
 class KonfirmasiPembayaranPage extends StatefulWidget {
@@ -63,14 +63,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             "secondaryVal": ew.saldoEwallet,
             "ewallet": ew.kodeDompet,
           },
-
-      // static tambahan
-      {
-        "label": "NOBU",
-        "secondary": null,
-        "secondaryVal": double.infinity, // supaya selalu cukup,
-        "ewallet": "",
-      },
     ];
 
     return Scaffold(

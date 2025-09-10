@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../utils/currency.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import 'header_wallet_speedcash.dart';
+import 'header_wallet_xml.dart';
 
 class HeaderCard extends StatelessWidget {
   const HeaderCard({required this.balanceVM, super.key});
@@ -55,14 +55,18 @@ class HeaderCard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: List.generate(3, (index) {
-                            return Container(
-                              width: 80,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(
-                                  10,
-                                ), // <-- radius 10
+                            return Expanded(
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                ),
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ), // <-- radius 10
+                                ),
                               ),
                             );
                           }),
@@ -74,85 +78,13 @@ class HeaderCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Top row: Saldo speedcash
-                      SpeedCashWalletHeader(balanceVM: balanceVM),
+                      SpeedCashWalletHeader(
+                        balanceVM: balanceVM,
+                      ), // <-- widget speedcash
                       const SizedBox(height: 10),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons
-                                    .account_balance_wallet, // ikon uang dompet
-                                color: Colors.orangeAccent[700],
-                                size: 28,
-                              ),
-                              const SizedBox(width: 8),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Stok XML",
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                  Text(
-                                    CurrencyUtil.formatCurrency(
-                                      balanceVM.userBalance?.saldo ?? 0,
-                                    ),
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                '/webView',
-                                arguments: {
-                                  'url': 'https://youtube.com',
-                                  'title': 'Registrasi Speedcash',
-                                },
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orangeAccent[700],
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(30),
-                                ),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 14,
-                                vertical: 8,
-                              ),
-                            ),
-                            icon: Icon(
-                              Icons.add_box,
-                              size: 24,
-                              color: Colors.white,
-                            ),
-                            label: Text(
-                              "Isi Stok",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      StokXMLHeader(
+                        balanceVM: balanceVM,
+                      ), // <-- widget stok xml
                       const SizedBox(height: 10),
 
                       Row(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../models/icon_data.dart';
+import '../data/models/icon_data.dart';
 
 import 'konfirmasi_page.dart';
 

@@ -3,12 +3,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
-import '../config/app_config.dart';
+import '../../core/constant_finals.dart';
 import 'package:android_id/android_id.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthService extends ChangeNotifier {
-  static final String baseUrl = AppConfig.baseUrlApp;
+  static final String baseUrl = ConstantFinals.baseUrlApp;
   final Dio _dio = Dio();
   final Dio _refreshDio = Dio(); // <-- DIO khusus refresh token
 

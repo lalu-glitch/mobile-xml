@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/provider_kartu.dart';
-import '../services/api_service.dart';
+import '../data/models/provider_kartu.dart';
+import '../data/services/api_service.dart';
 
 class ProviderViewModel extends ChangeNotifier {
   final ApiService _apiService = ApiService();

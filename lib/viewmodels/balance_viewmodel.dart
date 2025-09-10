@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/user_balance.dart';
-import '../services/api_service.dart';
+import '../data/models/user_balance.dart';
+import '../data/services/api_service.dart';
 
 class BalanceViewModel extends ChangeNotifier {
   final ApiService _apiService = ApiService();
