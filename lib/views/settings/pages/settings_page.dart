@@ -8,9 +8,9 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 
-import '../core/constant_finals.dart';
-import '../core/utils/cs_bottom_sheet.dart';
-import 'speedcash/cubit/speedcash_cubit.dart';
+import '../../../core/constant_finals.dart';
+import '../../../core/utils/cs_bottom_sheet.dart';
+import '../cubit/unbind_speedcash_cubit.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -301,7 +301,7 @@ class _SettingsPageState extends State<SettingsPage> {
               borderRadius: BorderRadius.circular(12),
             ),
             margin: const EdgeInsets.only(bottom: 12),
-            child: BlocListener<SpeedcashCubit, SpeedcashState>(
+            child: BlocListener<UnbindSpeedCashCubit, SpeedcashState>(
               listener: (context, state) {
                 print('state saat ini --> $state');
                 if (state is UnbindSuccess) {
@@ -320,7 +320,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   );
                 }
               },
-              child: BlocBuilder<SpeedcashCubit, SpeedcashState>(
+              child: BlocBuilder<UnbindSpeedCashCubit, SpeedcashState>(
                 builder: (context, state) {
                   print('state saat ini --> $state');
                   final isLoading = state is UnbindLoading;
@@ -351,7 +351,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         ? null
                         : () {
                             showUnbindBottomSheet(context, () {
-                              context.read<SpeedcashCubit>().unbindAccount();
+                              context
+                                  .read<UnbindSpeedCashCubit>()
+                                  .unbindAccount();
                             });
                           },
                   );

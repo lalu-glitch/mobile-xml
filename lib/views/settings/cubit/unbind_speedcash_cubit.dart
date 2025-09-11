@@ -3,12 +3,12 @@ import 'package:meta/meta.dart';
 
 import '../../../data/services/speedcash_api_service.dart';
 
-part 'speedcash_state.dart';
+part 'unbind_speedcash_state.dart';
 
-class SpeedcashCubit extends Cubit<SpeedcashState> {
+class UnbindSpeedCashCubit extends Cubit<SpeedcashState> {
   final SpeedcashApiService apiService;
 
-  SpeedcashCubit(this.apiService) : super(SpeedcashInitial());
+  UnbindSpeedCashCubit(this.apiService) : super(SpeedcashInitial());
 
   Future<void> unbindAccount() async {
     emit(UnbindLoading());

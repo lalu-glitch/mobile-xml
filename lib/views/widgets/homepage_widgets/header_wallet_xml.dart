@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/constant_finals.dart';
 import '../../../core/utils/currency.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 
@@ -28,7 +29,7 @@ class StokXMLHeader extends StatelessWidget {
               children: [
                 Text(
                   "Stok XML",
-                  style: TextStyle(fontSize: 13.sp, color: Colors.black54),
+                  style: TextStyle(fontSize: 13.sp, color: kNeutral90),
                 ),
                 Text(
                   CurrencyUtil.formatCurrency(
@@ -37,6 +38,7 @@ class StokXMLHeader extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
+                    color: kBlack,
                   ),
                 ),
               ],
@@ -62,11 +64,11 @@ class StokXMLHeader extends StatelessWidget {
             ),
             padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           ),
-          icon: Icon(Icons.add_box, size: 24, color: Colors.white),
+          icon: Icon(Icons.add_box, size: 24, color: kWhite),
           label: Text(
             "Isi Stok",
             style: TextStyle(
-              color: Colors.white,
+              color: kWhite,
               fontSize: 12.sp,
               fontWeight: FontWeight.bold,
             ),

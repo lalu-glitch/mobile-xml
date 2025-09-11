@@ -1,4 +1,4 @@
-part of 'speedcash_cubit.dart';
+part of 'unbind_speedcash_cubit.dart';
 
 @immutable
 sealed class SpeedcashState {}

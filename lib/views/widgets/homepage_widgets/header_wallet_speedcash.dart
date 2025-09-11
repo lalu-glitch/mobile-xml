@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/constant_finals.dart';
 import '../../../core/utils/currency.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 
@@ -34,7 +35,7 @@ class SpeedCashWalletHeader extends StatelessWidget {
               children: [
                 Text(
                   "Saldo Speedcash",
-                  style: TextStyle(fontSize: 13.sp, color: Colors.black54),
+                  style: TextStyle(fontSize: 13.sp, color: kNeutral90),
                 ),
                 if (hasSpeedcash)
                   Column(
@@ -55,6 +56,7 @@ class SpeedCashWalletHeader extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
+                      color: kBlack,
                     ),
                   ),
               ],
@@ -83,12 +85,12 @@ class SpeedCashWalletHeader extends StatelessWidget {
           icon: Icon(
             hasSpeedcash ? Icons.add_box : Icons.link_rounded,
             size: 20,
-            color: Colors.white,
+            color: kWhite,
           ),
           label: Text(
             hasSpeedcash ? "Deposit" : "Hubungkan",
             style: TextStyle(
-              color: Colors.white,
+              color: kWhite,
               fontSize: 12.sp,
               fontWeight: FontWeight.bold,
             ),

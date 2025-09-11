@@ -35,7 +35,8 @@ Future<void> main() async {
       options.debug = kDebugMode;
     },
     //Jalankan aplikasi setelah Sentry siap
-    appRunner: () => runApp(AppProviders.build()),
+    appRunner: () =>
+        runApp(AppProviders.build()), // <--- dependency injection disini
   );
 }
 
@@ -116,7 +117,10 @@ class _XmlAppState extends State<XmlApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "XML App",
-      theme: ThemeData(textTheme: GoogleFonts.varelaRoundTextTheme()),
+      theme: ThemeData(
+        textTheme: GoogleFonts.varelaRoundTextTheme(),
+        useMaterial3: true,
+      ),
       navigatorObservers: [SentryNavigatorObserver()],
       navigatorKey: navigatorKey,
       initialRoute: '/',

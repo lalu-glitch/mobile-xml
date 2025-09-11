@@ -3,7 +3,7 @@ import 'core/constant_finals.dart';
 import 'views/home_page.dart';
 import 'views/shops/shops_page.dart';
 import 'views/analytics/analytics_page.dart';
-import 'views/settings_page.dart';
+import 'views/settings/pages/settings_page.dart';
 // Tambahkan import service auth
 import 'data/services/auth_guard.dart';
 

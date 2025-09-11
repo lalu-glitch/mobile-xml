@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../data/services/auth_service.dart';
-import '../core/utils/cs_bottom_sheet.dart';
-import '../core/utils/error_dialog.dart';
+import '../../data/services/auth_service.dart';
+import '../../core/utils/cs_bottom_sheet.dart';
+import '../../core/utils/error_dialog.dart';
 
 class SendOtpPage extends StatefulWidget {
   const SendOtpPage({super.key});

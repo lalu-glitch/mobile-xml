@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:logger/logger.dart';
 
-import '../../core/utils/error_dialog.dart';
-import '../../data/services/speedcash_api_service.dart';
-import '../../data/services/auth_service.dart';
-import '../../viewmodels/speedcash/speedcash_viewmodel.dart';
+import '../../../core/utils/error_dialog.dart';
+import '../../../data/services/speedcash_api_service.dart';
+import '../../../data/services/auth_service.dart';
+import '../../../viewmodels/speedcash/speedcash_viewmodel.dart';
 
 class SpeedcashBindingPage extends StatelessWidget {
   SpeedcashBindingPage({super.key});

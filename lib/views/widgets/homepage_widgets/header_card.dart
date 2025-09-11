@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../core/constant_finals.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import 'header_wallet_speedcash.dart';
 import 'header_wallet_xml.dart';
@@ -35,7 +36,7 @@ class HeaderCard extends StatelessWidget {
                           height: 20,
                           margin: const EdgeInsets.only(bottom: 12),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: kWhite,
                             borderRadius: BorderRadius.circular(
                               8,
                             ), // <-- radius 8
@@ -46,7 +47,7 @@ class HeaderCard extends StatelessWidget {
                           height: 100,
                           margin: const EdgeInsets.only(bottom: 12),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: kWhite,
                             borderRadius: BorderRadius.circular(
                               12,
                             ), // <-- radius 12
@@ -62,7 +63,7 @@ class HeaderCard extends StatelessWidget {
                                 ),
                                 height: 50,
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: kWhite,
                                   borderRadius: BorderRadius.circular(
                                     10,
                                   ), // <-- radius 10
@@ -199,15 +200,11 @@ class HeaderCard extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.report,
-                              color: Colors.white,
-                              size: 14.sp,
-                            ),
+                            Icon(Icons.report, color: kWhite, size: 14.sp),
                             const Text(
                               " Jangan biarin saldo kamu kosong! Yuk, topup sekarang!",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: kWhite,
                                 fontSize: 11,
                                 fontWeight:
                                     FontWeight.bold, // bold untuk nama user
