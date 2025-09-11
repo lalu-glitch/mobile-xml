@@ -67,32 +67,12 @@ class PromoSection extends StatelessWidget {
                     itemCount: 5,
                     itemBuilder: (context, i) {
                       if (i == 0) {
-                        // SLIDE PERTAMA -> teks promosi
+                        // SLIDE PERTAMA -> teks promosi (pop up awal)
                         return Container(
-                          width: 160,
+                          width: 0,
                           margin: const EdgeInsets.only(right: 12),
                           padding: const EdgeInsets.all(12),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Text(
-                              //   "PASTI PROMO\n",
-                              //   style: TextStyle(
-                              //     fontSize: 20.sp,
-                              //     fontWeight: FontWeight.bold,
-                              //     color: Colors.white,
-                              //   ),
-                              // ),
-                              // Text(
-                              //   "Cuma ada di sini,\nBuruan cek promo nya!",
-                              //   style: TextStyle(
-                              //     fontSize: 12.sp,
-                              //     color: Colors.white,
-                              //   ),
-                              // ),
-                            ],
-                          ),
+                          child: SizedBox(),
                         );
                       }
 
@@ -105,7 +85,7 @@ class PromoSection extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withAlpha(10),
                               blurRadius: 6,
                               spreadRadius: 1,
                               offset: const Offset(0, 3),

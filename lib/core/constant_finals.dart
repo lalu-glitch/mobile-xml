@@ -47,7 +47,7 @@ class Screen {
   static final double kSize32 = blockSizeHorizontal * 7.5;
   static final double kSize40 = blockSizeHorizontal * 9.35;
 
-  //new
+  //new size
   static final double kSize44 = blockSizeHorizontal * 10.3;
   static final double kSize48 = blockSizeHorizontal * 11.2;
   static final double kSize50 = blockSizeHorizontal * 11.6;
@@ -58,3 +58,28 @@ class Screen {
   static final double kSize80 = blockSizeHorizontal * 19.0;
   static final double kSize100 = blockSizeHorizontal * 23.5;
 }
+
+//Colors
+
+const Color kGrey = Color(0xFF7A8089);
+const Color kLightGrey = Color(0XFFF0F1F2);
+
+const Color kWhite = Color(0xFFFFFFFF);
+const Color kBlack = Color(0xFF293241);
+
+const Color kNeutral10 = Color(0xFFFFFFFF);
+const Color kNeutral20 = Color(0xFFF6F7F7);
+const Color kNeutral30 = Color(0xFFF0F1F2);
+const Color kNeutral40 = Color(0xFFE5E6E8);
+const Color kNeutral50 = Color(0xFFCCCED1);
+const Color kNeutral60 = Color(0xFFAEB1B7);
+const Color kNeutral70 = Color(0xFF8391A1);
+const Color kNeutral80 = Color(0xFF7A8089);
+const Color kNeutral90 = Color(0xFF5F6570);
+const Color kNeutral100 = Color(0xFF293241);
+
+const Color kOrange = Color(0xFFFB7F54);
+const Color kYellow = Color(0xFFFFAC30);
+const Color kGreen = Color(0xFF4AAF57);
+const Color kGreenComplete = Color(0xFF18C07A);
+const Color kRed = Color(0xFFE65768);

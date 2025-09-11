@@ -60,7 +60,7 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
           }
 
           final status = vm.statusTransaksi!;
-          final bool isSuccess = status.statusTrx == 20;
+          // final bool isSuccess = status.statusTrx == 20;
 
           return Scaffold(
             appBar: AppBar(

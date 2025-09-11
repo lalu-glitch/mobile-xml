@@ -216,12 +216,12 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                     if (selectedSaldo <= 0) {
                       showErrorDialog(
                         context,
-                        "Saldo ${_selectedMethod ?? ''} minus, hubungi CS / admin untuk bisa transaksi.",
+                        "Saldo $_selectedMethod minus, hubungi CS / admin untuk bisa transaksi.",
                       );
                     } else {
                       showErrorDialog(
                         context,
-                        "Saldo ${_selectedMethod ?? ''} tidak mencukupi untuk melakukan transaksi ini",
+                        "Saldo $_selectedMethod tidak mencukupi untuk melakukan transaksi ini",
                       );
                     }
                   } else {
@@ -232,7 +232,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                       arguments: {
                         'tujuan': tujuan, // ✔ Sama dengan yang dibaca
                         'kode_produk': kode_produk, // ✔ Sama dengan yang dibaca
-                        'kode_dompet': selected?["ewallet"],
+                        'kode_dompet': selected["ewallet"],
                       },
                     );
                   }
