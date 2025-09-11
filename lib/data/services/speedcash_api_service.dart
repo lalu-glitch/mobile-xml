@@ -20,7 +20,7 @@ class SpeedcashApiService {
   }) async {
     try {
       final response = await authService.dio.post(
-        "${ConstantFinals.baseUrlApp}/speedcash/create_account",
+        "$baseURL/speedcash/create_account",
         data: {"nama": nama, "phone": phone, "email": email},
       );
 
@@ -59,7 +59,7 @@ class SpeedcashApiService {
   }) async {
     try {
       final response = await authService.dio.post(
-        "${ConstantFinals.baseUrlApp}/speedcash/account_binding",
+        "$baseURL/speedcash/account_binding",
         data: {"phone": phone, "merchantId": merchantId},
       );
 
@@ -92,35 +92,62 @@ class SpeedcashApiService {
     }
   }
 
-  Future<Map<String, dynamic>> speedcashUnbind() async {
+  /// Udah Work
+  // Future<Map<String, dynamic>> speedcashUnbind() async {
+  //   try {
+  //     final response = await authService.dio.post(
+  //       "$baseURL/speedcash/unbind_account",
+  //       // Jika ada body data, tambahkan di sini, e.g., data: {"phone": phone},
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final jsonData = Map<String, dynamic>.from(response.data);
+  //       final parsed = SpeedcashUnbindModel.fromJson(jsonData);
+  //       return {
+  //         "success": parsed.success,
+  //         "data": parsed,
+  //         "message": parsed.success ? parsed.message : "Gagal unbind Speedcash",
+  //       };
+  //     } else {
+  //       return {
+  //         "success": false,
+  //         "data": null,
+  //         "message": "Gagal unbind Speedcash. Status: ${response.statusCode}",
+  //       };
+  //     }
+  //   } on DioException catch (e) {
+  //     final apiMessage = e.response?.data is Map
+  //         ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
+  //         : e.message;
+  //     return {"success": false, "data": null, "message": apiMessage};
+  //   } catch (e) {
+  //     return {"success": false, "data": null, "message": e.toString()};
+  //   }
+  // }
+
+  Future<SpeedcashUnbindModel> speedcashUnbind() async {
     try {
       final response = await authService.dio.post(
-        "${ConstantFinals.baseUrlApp}/speedcash/unbind_account",
-        // Jika ada body data, tambahkan di sini, e.g., data: {"phone": phone},
+        "$baseURL/speedcash/unbind_account",
       );
-
       if (response.statusCode == 200) {
-        final jsonData = Map<String, dynamic>.from(response.data);
-        final parsed = SpeedcashUnbindModel.fromJson(jsonData);
-        return {
-          "success": parsed.success,
-          "data": parsed,
-          "message": parsed.success ? parsed.message : "Gagal unbind Speedcash",
-        };
+        return SpeedcashUnbindModel.fromJson(
+          Map<String, dynamic>.from(response.data),
+        );
       } else {
-        return {
-          "success": false,
-          "data": null,
-          "message": "Gagal unbind Speedcash. Status: ${response.statusCode}",
-        };
+        throw Exception(
+          "Gagal unbind Speedcash. Status: ${response.statusCode}",
+        );
       }
     } on DioException catch (e) {
       final apiMessage = e.response?.data is Map
           ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
           : e.message;
-      return {"success": false, "data": null, "message": apiMessage};
+      logger.e("DioException: $apiMessage");
+      throw Exception(apiMessage);
     } catch (e) {
-      return {"success": false, "data": null, "message": e.toString()};
+      logger.e("Exception: $e");
+      throw Exception(e.toString());
     }
   }
 }

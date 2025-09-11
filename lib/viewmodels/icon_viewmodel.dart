@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/models/icon_data.dart';
+import '../data/models/icon_models/icon_data.dart';
 import '../data/services/api_service.dart';
 
 class IconsViewModel extends ChangeNotifier {

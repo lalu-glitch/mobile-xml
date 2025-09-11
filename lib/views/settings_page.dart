@@ -8,8 +8,10 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:xmlapp/core/utils/cs_bottom_sheet.dart';
 import 'package:xmlapp/viewmodels/speedcash/speedcash_viewmodel.dart';
 
+import '../core/constant_finals.dart';
 import '../viewmodels/speedcash/cubit/speedcash_cubit.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -272,11 +274,11 @@ class _SettingsPageState extends State<SettingsPage> {
               borderRadius: BorderRadius.circular(12),
             ),
             margin: const EdgeInsets.only(bottom: 12),
-            child: const ListTile(
+            child: ListTile(
               leading: Icon(Icons.person, color: Colors.orange),
               title: Text("Profil"),
               subtitle: Text("Lihat dan edit profil"),
-              trailing: Icon(Icons.arrow_forward_ios, size: 18),
+              trailing: Icon(Icons.arrow_forward_ios, size: Screen.kSize18),
             ),
           ),
 
@@ -287,11 +289,11 @@ class _SettingsPageState extends State<SettingsPage> {
               borderRadius: BorderRadius.circular(12),
             ),
             margin: const EdgeInsets.only(bottom: 12),
-            child: const ListTile(
+            child: ListTile(
               leading: Icon(Icons.settings, color: Colors.orange),
               title: Text("Pengaturan Aplikasi"),
               subtitle: Text("Atur preferensi aplikasi"),
-              trailing: Icon(Icons.arrow_forward_ios, size: 18),
+              trailing: Icon(Icons.arrow_forward_ios, size: Screen.kSize18),
             ),
           ),
 
@@ -303,103 +305,62 @@ class _SettingsPageState extends State<SettingsPage> {
             margin: const EdgeInsets.only(bottom: 12),
             child: BlocListener<SpeedcashCubit, SpeedcashState>(
               listener: (context, state) {
-                print("state saat ini -- $state");
                 if (state is UnbindSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(state.message),
-                      duration: const Duration(seconds: 12),
+                      duration: const Duration(seconds: 3),
                     ),
                   );
                 } else if (state is UnbindError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(state.message),
-                      duration: const Duration(seconds: 12),
+                      duration: const Duration(seconds: 3),
                     ),
                   );
                 }
               },
               child: BlocBuilder<SpeedcashCubit, SpeedcashState>(
                 builder: (context, state) {
-                  print("state saat ini -- $state");
                   final isLoading = state is UnbindLoading;
                   return ListTile(
                     leading: const Icon(Icons.wallet, color: Colors.blue),
-                    title: const Text("SpeedCash"),
-                    subtitle: const Text("Unbind SpeedCash"),
+                    title: Text(
+                      "SpeedCash",
+                      style: Styles.kNunitoMedium.copyWith(
+                        color: Colors.black,
+                        fontSize: Screen.kSize18,
+                      ),
+                    ),
+                    subtitle: Text(
+                      "Unbind SpeedCash",
+                      style: Styles.kNunitoRegular.copyWith(
+                        color: Colors.grey[600],
+                        fontSize: Screen.kSize16,
+                      ),
+                    ),
                     trailing: isLoading
                         ? const CircularProgressIndicator()
-                        : const Icon(Icons.arrow_forward_ios, size: 18),
+                        : Icon(
+                            Icons.link,
+                            size: Screen.kSize18,
+                            color: Colors.blue,
+                          ),
                     onTap: isLoading
                         ? null
                         : () {
-                            context.read<SpeedcashCubit>().unbindAccount();
+                            showUnbindBottomSheet(context, () {
+                              context.read<SpeedcashCubit>().unbindAccount();
+                            });
+                            // context.read<SpeedcashCubit>().unbindAccount();
+                            // Navigator.pushReplacementNamed(context, '/');
                           },
                   );
                 },
               ),
             ),
           ),
-
-          ///current
-          // Consumer<SpeedcashVM>(
-          //   builder: (context, viewModel, child) {
-          //     return Card(
-          //       color: Colors.white,
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(12),
-          //       ),
-          //       margin: const EdgeInsets.only(bottom: 12),
-          //       child: InkWell(
-          //         onTap: viewModel.isLoading
-          //             ? null
-          //             : () async {
-          //                 await viewModel.unbindSpeedCash();
-          //                 if (viewModel.response != null) {
-          //                   ScaffoldMessenger.of(context).showSnackBar(
-          //                     SnackBar(
-          //                       content: Text(viewModel.error!),
-          //                       duration: const Duration(seconds: 2),
-          //                     ),
-          //                   );
-          //                 } else if (viewModel.error != null) {
-          //                   ScaffoldMessenger.of(context).showSnackBar(
-          //                     SnackBar(
-          //                       content: Text(viewModel.error!),
-          //                       duration: const Duration(seconds: 2),
-          //                     ),
-          //                   );
-          //                 }
-          //               },
-          //         child: ListTile(
-          //           leading: Icon(Icons.wallet_rounded, color: Colors.blue),
-          //           title: Text(
-          //             "SpeedCash",
-          //             style: TextStyle(
-          //               color: Colors.blue[400],
-          //               fontWeight: FontWeight.bold,
-          //             ),
-          //           ),
-          //           subtitle: Text(
-          //             viewModel.unbindResponse?.message ??
-          //                 viewModel.error ??
-          //                 "Atur preferensi aplikasi",
-          //             style: TextStyle(
-          //               color: viewModel.error != null
-          //                   ? Colors.red
-          //                   : Colors.black,
-          //               fontSize: 14.sp,
-          //             ),
-          //           ),
-          //           trailing: viewModel.isLoading
-          //               ? const CircularProgressIndicator()
-          //               : const Icon(Icons.arrow_forward_ios, size: 18),
-          //         ),
-          //       ),
-          //     );
-          //   },
-          // ),
           const Divider(height: 32, thickness: 1),
 
           // Logout

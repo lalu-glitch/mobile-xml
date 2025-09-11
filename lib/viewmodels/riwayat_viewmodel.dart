@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../data/models/status_transaksi.dart';
-import '../data/models/transaksi_riwayat.dart';
+import '../data/models/transaksi/status_transaksi.dart';
+import '../data/models/transaksi/transaksi_riwayat.dart';
 import '../data/services/api_service.dart';
 
 class RiwayatTransaksiViewModel extends ChangeNotifier {

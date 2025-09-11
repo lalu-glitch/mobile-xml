@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'core/constant_finals.dart';
 import 'views/home_page.dart';
 import 'views/shops/shops_page.dart';
 import 'views/analytics/analytics_page.dart';
@@ -32,6 +33,8 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: Colors.white,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey,
+        selectedLabelStyle: Styles.kNunitoBold,
+        unselectedLabelStyle: Styles.kNunitoRegular,
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() => _selectedIndex = index);

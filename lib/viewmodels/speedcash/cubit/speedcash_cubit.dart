@@ -15,10 +15,10 @@ class SpeedcashCubit extends Cubit<SpeedcashState> {
 
     final result = await apiService.speedcashUnbind();
 
-    if (result["success"] == true) {
-      emit(UnbindSuccess(result["message"] as String));
+    if (result.success == true) {
+      emit(UnbindSuccess(result.message));
     } else {
-      emit(UnbindError(result["message"] as String));
+      emit(UnbindError(result.message));
     }
   }
 }

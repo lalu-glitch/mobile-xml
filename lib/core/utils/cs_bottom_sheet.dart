@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../constant_finals.dart';
+
 Future<void> _launchUrl(String url) async {
   final uri = Uri.parse(url);
   if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
@@ -71,6 +73,85 @@ void showCSBottomSheet(BuildContext context, String title) {
             ),
 
             const SizedBox(height: 12),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      return Container(
+        padding: const EdgeInsets.all(24), // Tambah padding menyeluruh
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment
+              .stretch, // Pastikan anak-anak mengambil lebar penuh
+          children: [
+            Icon(
+              Icons.warning_rounded, // Tambah ikon untuk visualisasi peringatan
+              color: Colors.red,
+              size: Screen.kSize48,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Unbind Akun SpeedCash',
+              style: Styles.kNunitoSemiBold.copyWith(
+                color: Colors.black,
+                fontSize: Screen.kSize20,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Apakah Anda yakin ingin melepas akun SpeedCash Anda?',
+              style: Styles.kNunitoMedium.copyWith(
+                color: Colors.grey,
+                fontSize: Screen.kSize16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                onUnbindPressed();
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    Colors.red[600], // Warna tombol merah yang lebih tegas
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+              child: Text(
+                'Ya, Unbind',
+                style: Styles.kNunitoMedium.copyWith(
+                  color: Colors.white,
+                  fontSize: Screen.kSize16,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Batal',
+                style: Styles.kNunitoMedium.copyWith(
+                  color: Colors.grey,
+                  fontSize: Screen.kSize16,
+                ),
+              ),
+            ),
           ],
         ),
       );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xmlapp/core/constant_finals.dart';
 
 import '../../../core/utils/cs_bottom_sheet.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
@@ -30,18 +30,16 @@ class Header extends StatelessWidget {
                         : DateTime.now().hour < 18
                         ? 'Selamat Sore,'
                         : 'Selamat Malam,',
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.normal,
+                    style: Styles.kNunitoRegular.copyWith(
                       color: Colors.white,
+                      fontSize: Screen.kSize16,
                     ),
                   ),
                   Text(
                     balanceVM.userBalance?.namauser ?? '-',
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold, // bold untuk nama user
+                    style: Styles.kNunitoBold.copyWith(
                       color: Colors.white,
+                      fontSize: Screen.kSize20,
                     ),
                   ),
                 ],

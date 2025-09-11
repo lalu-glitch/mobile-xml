@@ -45,14 +45,18 @@ Future<void> main() async {
       options.debug = kDebugMode;
     },
     //Jalankan aplikasi setelah Sentry siap
+
+    /// Nested Provider & BlocProvider
     appRunner: () => runApp(
       MultiBlocProvider(
+        // <---- bloc provider
         providers: [
           BlocProvider<SpeedcashCubit>(
             create: (context) => SpeedcashCubit(SpeedcashApiService()),
           ),
         ],
         child: MultiProvider(
+          // <---- vanilla provider
           providers: [
             ChangeNotifierProvider(create: (_) => BalanceViewModel()),
             ChangeNotifierProvider(create: (_) => IconsViewModel()),
@@ -80,7 +84,7 @@ Future<void> main() async {
       ),
     ),
 
-    ///Experiment
+    ///Experimental <--- masih menggunakan provider saja
     // appRunner: () => runApp(
     //   MultiProvider(
     //     providers: [

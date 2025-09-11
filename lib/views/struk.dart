@@ -10,7 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 
 import '../core/utils/currency.dart';
-import '../data/models/status_transaksi.dart';
+import '../data/models/transaksi/status_transaksi.dart';
 import '../viewmodels/balance_viewmodel.dart';
 
 class StrukPage extends StatefulWidget {

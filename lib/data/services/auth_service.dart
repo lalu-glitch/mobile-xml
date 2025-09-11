@@ -8,7 +8,7 @@ import 'package:android_id/android_id.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthService extends ChangeNotifier {
-  static final String baseUrl = ConstantFinals.baseUrlApp;
+  static final String baseUrl = baseURL;
   final Dio _dio = Dio();
   final Dio _refreshDio = Dio(); // <-- DIO khusus refresh token
 

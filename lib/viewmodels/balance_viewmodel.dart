@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/models/user_balance.dart';
+import '../data/models/user/user_balance.dart';
 import '../data/services/api_service.dart';
 
 class BalanceViewModel extends ChangeNotifier {

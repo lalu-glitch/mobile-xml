@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
-import '../data/models/transaksi_response.dart';
-import '../data/models/status_transaksi.dart';
+import '../data/models/transaksi/transaksi_response.dart';
+import '../data/models/transaksi/status_transaksi.dart';
 import '../data/services/api_service.dart';
 
 class TransaksiViewModel extends ChangeNotifier {
