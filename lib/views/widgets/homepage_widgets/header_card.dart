@@ -117,7 +117,7 @@ class HeaderCard extends StatelessWidget {
                                       style: TextStyle(fontSize: 12.sp),
                                     ),
                                     Text(
-                                      "Komisi",
+                                      " Komisi",
                                       style: TextStyle(fontSize: 12.sp),
                                     ),
                                   ],
