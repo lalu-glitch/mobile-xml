@@ -15,6 +15,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final _storage = const FlutterSecureStorage();
+  bool isMuncul = false;
 
   @override
   void initState() {
@@ -31,30 +32,6 @@ class _SettingsPageState extends State<SettingsPage> {
   void _showLogoutBottomSheet() {
     verifyLogOut(context, _logout);
   }
-
-  // Future<void> _confirmLogout() async {
-  //   final confirmed = await showDialog<bool>(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: const Text('Konfirmasi Logout'),
-  //       content: const Text('Apakah Anda yakin ingin logout?'),
-  //       actions: [
-  //         TextButton(
-  //           onPressed: () => Navigator.pop(context, false),
-  //           child: const Text('Batal'),
-  //         ),
-  //         TextButton(
-  //           onPressed: () => Navigator.pop(context, true),
-  //           child: const Text('Logout'),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-
-  //   if (confirmed == true) {
-  //     await _logout();
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +54,97 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text("Profil"),
               subtitle: Text("Lihat dan edit profil"),
               trailing: Icon(Icons.arrow_forward_ios, size: Screen.kSize18),
+            ),
+          ),
+
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isMuncul = !isMuncul;
+              });
+            },
+            child: Card(
+              color: kWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              margin: const EdgeInsets.only(bottom: 12),
+              child: ListTile(
+                leading: Icon(
+                  Icons.card_membership_sharp,
+                  color: Colors.orange,
+                ),
+                title: Text("Dompet Aplikasi"),
+                trailing: AnimatedRotation(
+                  turns: isMuncul ? 0.25 : 0,
+                  duration: const Duration(milliseconds: 200),
+                  child: Icon(Icons.arrow_forward_ios, size: Screen.kSize18),
+                ),
+              ),
+            ),
+          ),
+
+          Visibility(
+            visible: isMuncul,
+            child: SizedBox(
+              width: double.infinity,
+              height: 150,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10, // jumlah placeholder
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 250,
+                    margin: const EdgeInsets.only(right: 8, bottom: 12),
+                    decoration: BoxDecoration(
+                      color: kWhite,
+                      boxShadow: [
+                        BoxShadow(
+                          color: kNeutral70.withAlpha(15),
+                          spreadRadius: 1,
+                          blurRadius: 20,
+                          offset: const Offset(1, 2),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      child: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Image.asset('assets/images/logo-speedcash.png'),
+                            Spacer(),
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: kOrange,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                              ),
+                              child: Text(
+                                'Hubungkan',
+                                style: Styles.kNunitoMedium.copyWith(
+                                  color: kWhite,
+                                  fontSize: Screen.kSize16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
 

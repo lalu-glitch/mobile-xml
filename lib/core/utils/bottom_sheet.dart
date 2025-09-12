@@ -166,11 +166,10 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
     ),
     builder: (context) {
       return Container(
-        padding: const EdgeInsets.all(24), // Tambah padding menyeluruh
+        padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment
-              .stretch, // Pastikan anak-anak mengambil lebar penuh
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Icon(
               Icons.do_disturb_on_rounded,
