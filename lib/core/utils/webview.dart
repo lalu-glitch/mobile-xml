@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../../../core/constant_finals.dart';
 
 class WebviewPage extends StatefulWidget {
   final String? url;
@@ -61,10 +62,10 @@ class _WebviewPageState extends State<WebviewPage> {
       appBar: AppBar(
         title: Text(
           title,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.orangeAccent[700],
-        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: kOrange,
+        iconTheme: const IconThemeData(color: kWhite),
         leading: IconButton(
           icon: const Icon(Icons.close), // ikon X
           onPressed: () {

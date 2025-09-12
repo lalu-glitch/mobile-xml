@@ -147,13 +147,11 @@ class _SettingsPageState extends State<SettingsPage> {
     }
 
     return Scaffold(
-      // backgroundColor: Colors.orange[50],
-      appBar: AppBar(
-        title: Text('Pengaturan', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.orangeAccent[700],
-      ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: EdgeInsets.symmetric(
+          vertical: Screen.kSize64,
+          horizontal: Screen.kSize16,
+        ),
         children: [
           // 🔑 Semua key dari storage
           ..._allStorage.entries.map((entry) {
@@ -178,7 +176,7 @@ class _SettingsPageState extends State<SettingsPage> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              color: Colors.white,
+              color: kWhite,
               margin: const EdgeInsets.only(bottom: 4),
               child: ListTile(
                 title: Text(
@@ -216,7 +214,7 @@ class _SettingsPageState extends State<SettingsPage> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              color: Colors.white,
+              color: kWhite,
               margin: const EdgeInsets.only(bottom: 12),
 
               child: ListTile(
@@ -233,7 +231,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
           Card(
-            color: Colors.white,
+            color: kWhite,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -267,7 +265,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
           // Profil
           Card(
-            color: Colors.white,
+            color: kWhite,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -282,7 +280,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
           // Pengaturan
           Card(
-            color: Colors.white,
+            color: kWhite,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -296,7 +294,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
 
           Card(
-            color: Colors.white,
+            color: kWhite,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -365,7 +363,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
           // Logout
           Card(
-            color: Colors.white,
+            color: kWhite,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),

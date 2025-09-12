@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:xmlapp/data/services/api_service.dart';
 import 'package:flutter/services.dart'; // Untuk Clipboard
 import 'package:intl/intl.dart';
 
+import '../../../core/constant_finals.dart';
+import '../../data/services/api_service.dart';
 import '../../data/services/auth_service.dart';
 import '../../core/utils/error_dialog.dart';
 import '../../viewmodels/riwayat_viewmodel.dart';
@@ -66,13 +67,10 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
             appBar: AppBar(
               title: const Text(
                 'Detail Riwayat Transaksi',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
               ),
-              backgroundColor: Colors.orangeAccent[700],
-              iconTheme: const IconThemeData(color: Colors.white),
+              backgroundColor: kOrange,
+              iconTheme: const IconThemeData(color: kWhite),
             ),
             body: Column(
               children: [
@@ -103,7 +101,7 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orangeAccent[700],
+                        backgroundColor: kOrange,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -123,7 +121,7 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: kWhite,
                         ),
                       ),
                     ),

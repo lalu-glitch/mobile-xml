@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../core/constant_finals.dart';
 import '../../data/services/auth_service.dart';
 import '../../core/utils/cs_bottom_sheet.dart';
 import '../../core/utils/error_dialog.dart';
@@ -87,7 +88,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
               children: [
                 Card(
                   elevation: 1,
-                  color: Colors.white,
+                  color: kWhite,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -185,7 +186,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                                     height: 24,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      color: Colors.white,
+                                      color: kWhite,
                                     ),
                                   )
                                 : Text(
@@ -193,7 +194,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                                     style: TextStyle(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w600,
-                                      color: Colors.white,
+                                      color: kWhite,
                                     ),
                                   ),
                           ),
@@ -206,16 +207,13 @@ class _SendOtpPageState extends State<SendOtpPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ElevatedButton.icon(
-                              icon: const Icon(
-                                Icons.lock_reset,
-                                color: Colors.white,
-                              ),
+                              icon: const Icon(Icons.lock_reset, color: kWhite),
                               label: Text(
                                 "Lupa Kode Agen",
                                 style: TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.white,
+                                  color: kWhite,
                                 ),
                               ),
                               style: ElevatedButton.styleFrom(
@@ -235,14 +233,14 @@ class _SendOtpPageState extends State<SendOtpPage> {
                             ElevatedButton.icon(
                               icon: const Icon(
                                 Icons.headset_mic,
-                                color: Colors.white,
+                                color: kWhite,
                               ),
                               label: Text(
                                 "Hubungi CS",
                                 style: TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.white,
+                                  color: kWhite,
                                 ),
                               ),
                               style: ElevatedButton.styleFrom(

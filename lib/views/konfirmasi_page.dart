@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constant_finals.dart';
 import '../core/utils/currency.dart';
 import '../core/utils/error_dialog.dart';
 import '../viewmodels/balance_viewmodel.dart';
@@ -68,9 +69,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: const Text('Konfirmasi', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.orangeAccent[700],
-        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text('Konfirmasi', style: TextStyle(color: kWhite)),
+        backgroundColor: kOrange,
+        iconTheme: const IconThemeData(color: kWhite),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -163,9 +164,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                                 isSelected
                                     ? Icons.check_circle
                                     : Icons.radio_button_unchecked,
-                                color: isSelected
-                                    ? Colors.orangeAccent[700]
-                                    : Colors.grey,
+                                color: isSelected ? kOrange : Colors.grey,
                               ),
                             ],
                           ),
@@ -184,7 +183,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orangeAccent[700],
+                  backgroundColor: kOrange,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -242,7 +241,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: kWhite,
                   ),
                 ),
               ),
@@ -280,7 +279,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             style: TextStyle(
               fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
               fontSize: isTotal ? 16.sp : 14.sp,
-              color: isTotal ? Colors.orangeAccent[700] : Colors.black,
+              color: isTotal ? kOrange : Colors.black,
             ),
           ),
         ),

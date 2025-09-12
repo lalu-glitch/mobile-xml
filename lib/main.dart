@@ -4,12 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
+
 import 'core/app_providers.dart';
 import 'core/route/app_route.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'data/services/location_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -54,7 +57,17 @@ class _XmlAppState extends State<XmlApp> {
   @override
   void initState() {
     super.initState();
+    _initLocationService();
     _initDeepLinks();
+  }
+
+  Future<void> _initLocationService() async {
+    final locationService = LocationService();
+    try {
+      await locationService.getCurrentLocation();
+    } catch (e) {
+      Exception("terdapat kesalahan $e");
+    }
   }
 
   Future<void> _initDeepLinks() async {

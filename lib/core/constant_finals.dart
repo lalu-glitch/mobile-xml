@@ -78,8 +78,8 @@ const Color kNeutral80 = Color(0xFF7A8089);
 const Color kNeutral90 = Color(0xFF5F6570);
 const Color kNeutral100 = Color(0xFF293241);
 
-const Color kOrange = Color(0xFFFB7F54);
+const Color kOrange = Color(0xFFFF6D00);
 const Color kYellow = Color(0xFFFFAC30);
 const Color kGreen = Color(0xFF4AAF57);
 const Color kGreenComplete = Color(0xFF18C07A);
-const Color kRed = Color(0xFFE65768);
+const Color kRed = Color(0xFFE53935);

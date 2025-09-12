@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xmlapp/views/riwayat/riwayat_page.dart';
 
+import '../core/constant_finals.dart';
+
 class TransaksiGagalPage extends StatelessWidget {
   const TransaksiGagalPage({super.key});
 
@@ -21,7 +23,7 @@ class TransaksiGagalPage extends StatelessWidget {
                 width: 120,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.9),
+                  color: kWhite.withOpacity(0.9),
                 ),
                 child: const Center(
                   child: Icon(Icons.close, size: 80, color: Colors.redAccent),
@@ -31,7 +33,7 @@ class TransaksiGagalPage extends StatelessWidget {
               Text(
                 "Transaksi Gagal",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: kWhite,
                   fontSize: 22.sp,
                   fontWeight: FontWeight.bold,
                 ),
@@ -39,12 +41,12 @@ class TransaksiGagalPage extends StatelessWidget {
               const Text(
                 "Silakan coba lagi atau hubungi admin.",
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: kWhite),
               ),
               const SizedBox(height: 32),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
+                  backgroundColor: kWhite,
                   foregroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constant_finals.dart';
 
 import '../data/models/icon_models/icon_data.dart';
 import '../core/utils/currency.dart';
@@ -38,12 +39,9 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text(
-          iconItem.filename,
-          style: const TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.orangeAccent[700],
-        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(iconItem.filename, style: const TextStyle(color: kWhite)),
+        backgroundColor: kOrange,
+        iconTheme: const IconThemeData(color: kWhite),
       ),
       body: Consumer<ProviderViewModel>(
         builder: (context, vm, child) {
@@ -99,8 +97,8 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                             color: isGangguan
                                 ? Colors.grey.shade200
                                 : isSelected
-                                ? Colors.orangeAccent[700]
-                                : Colors.white,
+                                ? kOrange
+                                : kWhite,
                             border: Border.all(
                               color: isGangguan
                                   ? Colors.red
@@ -142,7 +140,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                         color: isGangguan
                                             ? Colors.red
                                             : isSelected
-                                            ? Colors.white
+                                            ? kWhite
                                             : Colors.black,
                                       ),
                                     ),
@@ -156,7 +154,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                   color: isGangguan
                                       ? Colors.red
                                       : isSelected
-                                      ? Colors.white
+                                      ? kWhite
                                       : Colors.black,
                                 ),
                               ),
@@ -174,7 +172,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
       ),
       bottomNavigationBar: selectedProductCode != null
           ? Container(
-              color: Colors.orangeAccent[700],
+              color: kOrange,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -182,15 +180,15 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                   Text(
                     "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: kWhite,
                       fontWeight: FontWeight.bold,
                       fontSize: 16.sp,
                     ),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.orangeAccent[700],
+                      backgroundColor: kWhite,
+                      foregroundColor: kOrange,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),

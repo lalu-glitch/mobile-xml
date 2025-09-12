@@ -8,6 +8,7 @@ import 'package:pdf/pdf.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
+import '../../../core/constant_finals.dart';
 
 import '../core/utils/currency.dart';
 import '../data/models/transaksi/status_transaksi.dart';
@@ -61,9 +62,9 @@ class _StrukPageState extends State<StrukPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Struk', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.orangeAccent[700],
-        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text('Struk', style: TextStyle(color: kWhite)),
+        backgroundColor: kOrange,
+        iconTheme: const IconThemeData(color: kWhite),
       ),
       body: Column(
         children: [
@@ -173,13 +174,10 @@ class _StrukPageState extends State<StrukPage> {
                             onLayout: (format) async => pdfBytes,
                           );
                         },
-                        icon: const Icon(Icons.print, color: Colors.white),
+                        icon: const Icon(Icons.print, color: kWhite),
                         label: Text(
                           "Cetak",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                          ),
+                          style: TextStyle(color: kWhite, fontSize: 16.sp),
                         ),
                       ),
                     ),
@@ -203,13 +201,10 @@ class _StrukPageState extends State<StrukPage> {
                           );
                           await Share.shareXFiles([xfile]);
                         },
-                        icon: const Icon(Icons.share, color: Colors.white),
+                        icon: const Icon(Icons.share, color: kWhite),
                         label: Text(
                           "Share",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                          ),
+                          style: TextStyle(color: kWhite, fontSize: 16.sp),
                         ),
                       ),
                     ),
@@ -223,7 +218,7 @@ class _StrukPageState extends State<StrukPage> {
                     (route) => false,
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orangeAccent[700],
+                    backgroundColor: kOrange,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -234,7 +229,7 @@ class _StrukPageState extends State<StrukPage> {
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: kWhite,
                     ),
                   ),
                 ),

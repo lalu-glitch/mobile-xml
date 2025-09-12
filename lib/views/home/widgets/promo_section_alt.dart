@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/constant_finals.dart';
+
 class PromoSectionAlt extends StatelessWidget {
   const PromoSectionAlt({super.key});
 
@@ -23,7 +25,7 @@ class PromoSectionAlt extends StatelessWidget {
               width: 260, // lebih lebar dari sebelumnya
               margin: const EdgeInsets.only(right: 5),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: kWhite,
                 // borderRadius: BorderRadius.circular(16),
                 boxShadow: const [
                   BoxShadow(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/constant_finals.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 
 class PromoSection extends StatelessWidget {
@@ -81,7 +82,7 @@ class PromoSection extends StatelessWidget {
                         width: 160,
                         margin: const EdgeInsets.only(right: 12),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: kWhite,
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/constant_finals.dart';
 import '../../../core/utils/error_dialog.dart';
 import '../../../data/services/speedcash_api_service.dart';
 import '../../../viewmodels/speedcash/speedcash_viewmodel.dart';
@@ -62,19 +63,16 @@ class SpeedcashRegisterPage extends StatelessWidget {
             appBar: AppBar(
               title: const Text(
                 'Speedcash Register',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
               ),
-              backgroundColor: Colors.orangeAccent[700],
-              iconTheme: const IconThemeData(color: Colors.white),
+              backgroundColor: kOrange,
+              iconTheme: const IconThemeData(color: kWhite),
             ),
             body: Center(
               child: SingleChildScrollView(
                 child: Card(
                   elevation: 1,
-                  color: Colors.white,
+                  color: kWhite,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -166,7 +164,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
                                     height: 24,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      color: Colors.white,
+                                      color: kWhite,
                                     ),
                                   )
                                 : Text(
@@ -174,7 +172,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w600,
-                                      color: Colors.white,
+                                      color: kWhite,
                                     ),
                                   ),
                           ),
@@ -189,7 +187,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
                           },
                           child: Text(
                             "Sudah punya akun ? Binding di sini.",
-                            style: TextStyle(color: Colors.orangeAccent[700]),
+                            style: TextStyle(color: kOrange),
                           ),
                         ),
                       ],

@@ -21,7 +21,7 @@ class HeaderCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          color: Colors.white,
+          color: kWhite,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
             child: balanceVM.isLoading
@@ -91,38 +91,47 @@ class HeaderCard extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: 1),
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Row(
-                              mainAxisSize:
-                                  MainAxisSize.min, // biar ukurannya pas
-                              children: [
-                                const Icon(
-                                  Icons.attach_money,
-                                  color: Colors.green,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/komisiPage');
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 1,
                                 ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      "${balanceVM.userBalance?.poin ?? 0} ",
-                                      style: TextStyle(fontSize: 12.sp),
-                                    ),
-                                    Text(
-                                      " Komisi",
-                                      style: TextStyle(fontSize: 12.sp),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Row(
+                                mainAxisSize:
+                                    MainAxisSize.min, // biar ukurannya pas
+                                children: [
+                                  const Icon(
+                                    Icons.attach_money,
+                                    color: Colors.green,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        "${balanceVM.userBalance?.poin ?? 0} ",
+                                        style: TextStyle(fontSize: 12.sp),
+                                      ),
+                                      Text(
+                                        " Komisi",
+                                        style: TextStyle(fontSize: 12.sp),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           Container(
@@ -195,7 +204,7 @@ class HeaderCard extends StatelessWidget {
                         width: double.infinity,
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: Colors.orangeAccent[700],
+                          color: kOrange,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Row(

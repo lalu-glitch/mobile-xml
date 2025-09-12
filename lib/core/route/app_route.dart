@@ -4,6 +4,7 @@ import '../../views/auth/lupa_kode_agen.dart';
 import '../../views/auth/send_otp.dart';
 import '../../views/auth/verify_otp.dart';
 import '../../main_page.dart';
+import '../../views/komisi/pages/komisi_pages.dart';
 import '../utils/webview.dart';
 import '../../views/analytics/analytics_page.dart';
 import '../../views/detail_input_tujuan.dart';
@@ -12,7 +13,7 @@ import '../../views/detail_prefix_page.dart';
 import '../../views/speedcash/pages/speedcash_binding.dart';
 import '../../views/speedcash/pages/speedcash_deposit.dart';
 import '../../views/speedcash/pages/speedcash_register.dart';
-import '../../views/home_page.dart';
+import '../../views/home/page/home_page.dart';
 import '../../views/konfirmasi_page.dart';
 import '../../views/riwayat/riwayat_detail.dart';
 import '../../views/riwayat/riwayat_page.dart';
@@ -43,6 +44,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/detailNoPrefix': (context) => authGuardWrapper(DetailNoPrefixPage()),
   '/riwayatTransaksi': (context) => authGuardWrapper(RiwayatTransaksiPage()),
   '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
+  '/komisiPage': (context) => authGuardWrapper(KomisiPage()),
   '/detailRiwayatTransaksi': (context) =>
       authGuardWrapper(DetailRiwayatPage(kode: '')),
   '/inputNomorTujuan': (context) => authGuardWrapper(

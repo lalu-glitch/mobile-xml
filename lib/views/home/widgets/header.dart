@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:xmlapp/core/constant_finals.dart';
 
+import '../../../core/constant_finals.dart';
 import '../../../core/utils/cs_bottom_sheet.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 
@@ -31,14 +31,14 @@ class Header extends StatelessWidget {
                         ? 'Selamat Sore,'
                         : 'Selamat Malam,',
                     style: Styles.kNunitoRegular.copyWith(
-                      color: Colors.white,
+                      color: kWhite,
                       fontSize: Screen.kSize16,
                     ),
                   ),
                   Text(
                     balanceVM.userBalance?.namauser ?? '-',
                     style: Styles.kNunitoBold.copyWith(
-                      color: Colors.white,
+                      color: kWhite,
                       fontSize: Screen.kSize20,
                     ),
                   ),
@@ -48,13 +48,13 @@ class Header extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.notifications_none, color: Colors.white),
+                    icon: Icon(Icons.notifications_none, color: kWhite),
                     onPressed: () {
                       // aksi notifikasi
                     },
                   ),
                   IconButton(
-                    icon: Icon(Icons.headset_mic, color: Colors.white),
+                    icon: Icon(Icons.headset_mic, color: kWhite),
                     onPressed: () {
                       // aksi notifikasi
                       showCSBottomSheet(context, "Hubungi CS");

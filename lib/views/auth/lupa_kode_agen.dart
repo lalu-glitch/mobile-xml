@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../core/constant_finals.dart';
 import '../../data/services/auth_service.dart';
 import '../../core/utils/error_dialog.dart';
 
@@ -88,7 +89,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
           child: SingleChildScrollView(
             child: Card(
               elevation: 1,
-              color: Colors.white,
+              color: kWhite,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -160,7 +161,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                                 height: 24,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
-                                  color: Colors.white,
+                                  color: kWhite,
                                 ),
                               )
                             : Text(
@@ -168,7 +169,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                                 style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.white,
+                                  color: kWhite,
                                 ),
                               ),
                       ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/constant_finals.dart';
 import '../../viewmodels/riwayat_viewmodel.dart';
 import '../../data/models/transaksi/transaksi_riwayat.dart';
 import '../../data/services/api_service.dart';
@@ -52,10 +54,10 @@ class RiwayatTransaksiPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text(
             'Riwayat Transaksi',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
           ),
-          backgroundColor: Colors.orangeAccent[700],
-          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: kOrange,
+          iconTheme: const IconThemeData(color: kWhite),
         ),
         body: Consumer<RiwayatTransaksiViewModel>(
           builder: (context, vm, _) {
@@ -164,7 +166,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          backgroundColor: Colors.orangeAccent[700],
+                          backgroundColor: kOrange,
                         ),
                         onPressed: vm.isLoading
                             ? null
@@ -175,7 +177,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                                 height: 20,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
-                                  color: Colors.white,
+                                  color: kWhite,
                                 ),
                               )
                             : Text(
@@ -183,7 +185,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: kWhite,
                                 ),
                               ),
                       ),

@@ -20,7 +20,7 @@ class StokXMLHeader extends StatelessWidget {
           children: [
             Icon(
               Icons.account_balance_wallet, // ikon uang dompet
-              color: Colors.orangeAccent[700],
+              color: kOrange,
               size: 28,
             ),
             const SizedBox(width: 8),
@@ -58,7 +58,7 @@ class StokXMLHeader extends StatelessWidget {
             );
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.orangeAccent[700],
+            backgroundColor: kOrange,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30)),
             ),

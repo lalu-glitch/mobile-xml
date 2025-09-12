@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/constant_finals.dart';
-import 'views/home_page.dart';
+import 'views/home/page/home_page.dart';
 import 'views/shops/shops_page.dart';
 import 'views/analytics/analytics_page.dart';
 import 'views/settings/pages/settings_page.dart';
@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
       body: IndexedStack(index: _selectedIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
+        backgroundColor: kWhite,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey,
         selectedLabelStyle: Styles.kNunitoBold,

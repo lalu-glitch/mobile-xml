@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constant_finals.dart';
 import '../core/utils/error_dialog.dart';
 import '../viewmodels/transaksi_viewmodel.dart';
 import 'package:logger/logger.dart';
@@ -59,14 +60,11 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
     final vm = context.watch<TransaksiViewModel>();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kWhite,
       appBar: AppBar(
-        title: const Text(
-          "Proses Transaksi",
-          style: TextStyle(color: Colors.white),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Colors.orangeAccent[700],
+        title: const Text("Proses Transaksi", style: TextStyle(color: kWhite)),
+        iconTheme: const IconThemeData(color: kWhite),
+        backgroundColor: kOrange,
       ),
       body: Center(
         child: Padding(
@@ -87,10 +85,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   Widget _waitingResponseWidget(TransaksiViewModel vm) => Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      CircularProgressIndicator(
-        color: Colors.orangeAccent[700],
-        strokeWidth: 5,
-      ),
+      CircularProgressIndicator(color: kOrange, strokeWidth: 5),
       SizedBox(height: 16),
       Text(
         "Mengirim Permintaan...",
@@ -104,10 +99,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   Widget _loadingWidget() => Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      CircularProgressIndicator(
-        color: Colors.orangeAccent[700],
-        strokeWidth: 5,
-      ),
+      CircularProgressIndicator(color: kOrange, strokeWidth: 5),
       SizedBox(height: 16),
       Text(
         "Memproses...",
@@ -237,10 +229,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(
-            color: Colors.orangeAccent[700],
-            strokeWidth: 5,
-          ),
+          CircularProgressIndicator(color: kOrange, strokeWidth: 5),
           const SizedBox(height: 16),
           Text(
             status?.keterangan ?? "Menunggu Konfirmasi...",

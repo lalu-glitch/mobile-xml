@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/constant_finals.dart';
 import '../data/models/transaksi/status_transaksi.dart';
 import 'package:intl/intl.dart';
 
@@ -16,14 +17,14 @@ class DetailTransaksiPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.orangeAccent[700],
+        backgroundColor: kOrange,
         title: Text(
           isSuccess ? "Transaksi Sukses!" : "Transaksi Gagal!",
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: kWhite),
         ),
         leading: IconButton(
           icon: const Icon(Icons.close),
-          color: Colors.white,
+          color: kWhite,
           onPressed: () =>
               Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false),
         ),
@@ -50,7 +51,7 @@ class DetailTransaksiPage extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Icon(
                 isSuccess ? Icons.check : Icons.close,
-                color: Colors.white,
+                color: kWhite,
                 size: 50,
               ),
             ),
@@ -140,7 +141,7 @@ class DetailTransaksiPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: kWhite,
                       ),
                     ),
                   ),
@@ -149,7 +150,7 @@ class DetailTransaksiPage extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orangeAccent[700],
+                      backgroundColor: kOrange,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -169,7 +170,7 @@ class DetailTransaksiPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: kWhite,
                       ),
                     ),
                   ),

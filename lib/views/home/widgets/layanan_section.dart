@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/constant_finals.dart';
 import '../../../viewmodels/icon_viewmodel.dart';
 
 class LayananSection extends StatelessWidget {
@@ -25,7 +26,7 @@ class LayananSection extends StatelessWidget {
             const SizedBox(height: 12),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white, // background putih 1 blok
+                color: kWhite, // background putih 1 blok
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
@@ -74,7 +75,7 @@ class LayananSection extends StatelessWidget {
                           width: 60,
                           height: 60,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: kWhite,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: Colors.orange.shade200,

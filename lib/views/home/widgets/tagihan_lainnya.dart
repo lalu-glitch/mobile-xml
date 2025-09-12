@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/constant_finals.dart';
+
 class TagihanLainnya extends StatelessWidget {
   const TagihanLainnya({super.key});
 
@@ -25,7 +27,7 @@ class TagihanLainnya extends StatelessWidget {
           itemCount: 6,
           itemBuilder: (_, __) => Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: kWhite,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: Colors.orange.shade200, width: 1.2),
               boxShadow: [

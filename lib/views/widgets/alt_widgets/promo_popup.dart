@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constant_finals.dart';
+
 class PromoPopup {
   static void show(BuildContext context, String imagePath) {
     showDialog(
@@ -22,7 +24,7 @@ class PromoPopup {
                 top: 8,
                 right: 8,
                 child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
+                  icon: const Icon(Icons.close, color: kWhite),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

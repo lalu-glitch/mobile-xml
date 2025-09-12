@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/constant_finals.dart';
 import 'package:xmlapp/core/utils/currency.dart';
 
 import '../core/utils/error_dialog.dart';
@@ -32,10 +33,10 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
       appBar: AppBar(
         title: const Text(
           "Input Nomor Tujuan",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: kWhite),
         ),
-        backgroundColor: Colors.orangeAccent[700],
-        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: const Color(0xFFFF6D00),
+        iconTheme: const IconThemeData(color: kWhite),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -86,8 +87,8 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orangeAccent[700],
-                foregroundColor: Colors.white,
+                backgroundColor: kOrange,
+                foregroundColor: kWhite,
                 minimumSize: const Size(double.infinity, 48),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -147,7 +148,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
             style: TextStyle(
               fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
               fontSize: isTotal ? 16.sp : 14.sp,
-              color: isTotal ? Colors.orangeAccent[700] : Colors.black,
+              color: isTotal ? kOrange : Colors.black,
             ),
           ),
         ),

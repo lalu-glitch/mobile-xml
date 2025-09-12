@@ -3,16 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:xmlapp/views/widgets/homepage_widgets/header_card.dart';
-import '../core/utils/shimmer.dart';
-import '../viewmodels/balance_viewmodel.dart';
-import '../viewmodels/icon_viewmodel.dart';
-import 'widgets/alt_widgets/promo_popup.dart';
-import 'widgets/homepage_widgets/header.dart';
-import 'widgets/homepage_widgets/layanan_section.dart';
-import 'widgets/homepage_widgets/promo_section.dart';
-import 'widgets/homepage_widgets/promo_section_alt.dart';
-import 'widgets/homepage_widgets/tagihan_lainnya.dart';
+import '../../../core/constant_finals.dart';
+import 'package:xmlapp/views/home/widgets/header_card.dart';
+import '../../../core/utils/shimmer.dart';
+import '../../../viewmodels/balance_viewmodel.dart';
+import '../../../viewmodels/icon_viewmodel.dart';
+import '../../widgets/alt_widgets/promo_popup.dart';
+import '../widgets/header.dart';
+import '../widgets/layanan_section.dart';
+import '../widgets/promo_section.dart';
+import '../widgets/promo_section_alt.dart';
+import '../widgets/tagihan_lainnya.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           // Background orange
-          Container(color: Colors.orangeAccent[700]),
+          Container(color: kOrange),
           // Background image di pojok kiri atas
           Positioned(
             top: 35,

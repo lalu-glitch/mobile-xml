@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../constant_finals.dart';
+
 class ShimmerBox extends StatelessWidget {
   final double width;
   final double height;
@@ -22,7 +24,7 @@ class ShimmerBox extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: kWhite,
           borderRadius: BorderRadius.circular(radius),
         ),
       ),

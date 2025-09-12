@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/constant_finals.dart';
+
 class SpeedcashDepositPage extends StatelessWidget {
   const SpeedcashDepositPage({super.key});
 
@@ -11,10 +13,10 @@ class SpeedcashDepositPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Speedcash Deposit',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.orangeAccent[700],
-        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: kOrange,
+        iconTheme: const IconThemeData(color: kWhite),
       ),
       body: Center(
         child: Text(

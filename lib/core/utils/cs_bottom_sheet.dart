@@ -134,7 +134,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
               child: Text(
                 'Ya, Unbind',
                 style: Styles.kNunitoMedium.copyWith(
-                  color: Colors.white,
+                  color: kWhite,
                   fontSize: Screen.kSize16,
                 ),
               ),
