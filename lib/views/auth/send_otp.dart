@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/constant_finals.dart';
 import '../../data/services/auth_service.dart';
-import '../../core/utils/cs_bottom_sheet.dart';
+import '../../core/utils/bottom_sheet.dart';
 import '../../core/utils/error_dialog.dart';
 
 class SendOtpPage extends StatefulWidget {

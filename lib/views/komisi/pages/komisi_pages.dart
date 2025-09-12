@@ -45,8 +45,7 @@ class KomisiPage extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      kOrange, // Warna tombol merah yang lebih tegas
+                  backgroundColor: kOrange,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

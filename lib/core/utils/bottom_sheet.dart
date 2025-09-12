@@ -96,7 +96,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
           children: [
             Icon(
               Icons.warning_rounded, // Tambah ikon untuk visualisasi peringatan
-              color: Colors.red,
+              color: kRed,
               size: Screen.kSize48,
             ),
             const SizedBox(height: 16),
@@ -124,8 +124,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Colors.red[600], // Warna tombol merah yang lebih tegas
+                backgroundColor: kRed, // Warna tombol merah yang lebih tegas
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -133,6 +132,84 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
               ),
               child: Text(
                 'Ya, Unbind',
+                style: Styles.kNunitoMedium.copyWith(
+                  color: kWhite,
+                  fontSize: Screen.kSize16,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Batal',
+                style: Styles.kNunitoMedium.copyWith(
+                  color: Colors.grey,
+                  fontSize: Screen.kSize16,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      return Container(
+        padding: const EdgeInsets.all(24), // Tambah padding menyeluruh
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment
+              .stretch, // Pastikan anak-anak mengambil lebar penuh
+          children: [
+            Icon(
+              Icons.do_disturb_on_rounded,
+              color: kRed,
+              size: Screen.kSize48,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Keluar',
+              style: Styles.kNunitoSemiBold.copyWith(
+                color: Colors.black,
+                fontSize: Screen.kSize20,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Apakah Anda yakin ingin Keluar dari aplikasi?',
+              style: Styles.kNunitoMedium.copyWith(
+                color: Colors.grey,
+                fontSize: Screen.kSize16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                onConfirm();
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kRed,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+              child: Text(
+                'Ya, Keluar',
                 style: Styles.kNunitoMedium.copyWith(
                   color: kWhite,
                   fontSize: Screen.kSize16,
