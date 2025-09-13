@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:xmlapp/data/services/api_service.dart';
+import 'package:xmlapp/views/settings/cubit/info_akun_cubit.dart';
 
 import '../../../core/constant_finals.dart';
 import '../../../core/utils/bottom_sheet.dart';
@@ -26,6 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final profileUser = Provider.of<BalanceViewModel>(context, listen: false);
       profileUser.fetchBalance();
+      context.read<InfoAkunCubit>().getInfoAkun();
     });
   }
 
@@ -343,6 +346,27 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     onTap: _showLogoutBottomSheet,
                   ),
+                ),
+
+                BlocBuilder<InfoAkunCubit, InfoAkunState>(
+                  builder: (context, state) {
+                    print(state);
+                    if (state is InfoAkunLoading) {
+                      return Text('Loadind...');
+                    }
+                    if (state is InfoAkunSuccess) {
+                      return Column(
+                        children: [
+                          Text(state.data.nama),
+                          Text(state.data.kodeLevel),
+                          Text(state.data.kodeReseller),
+                          Text(state.data.kodeReferral),
+                          Text(state.data.markupReferral),
+                        ],
+                      );
+                    }
+                    return SizedBox();
+                  },
                 ),
               ],
             ),

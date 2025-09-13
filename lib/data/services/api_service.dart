@@ -4,6 +4,7 @@ import '../models/provider_kartu.dart';
 import '../models/transaksi/status_transaksi.dart';
 import '../models/transaksi/transaksi_riwayat.dart';
 import '../models/transaksi/transaksi_response.dart';
+import '../models/user/info_akun.dart';
 import '../models/user/user_balance.dart';
 import '../models/icon_models/icon_data.dart';
 import 'auth_service.dart';
@@ -287,6 +288,30 @@ class ApiService {
       return {"success": false, "data": null, "message": apiMessage};
     } catch (e) {
       return {"success": false, "data": null, "message": e.toString()};
+    }
+  }
+
+  //INFO AKUN
+  Future<InfoAkunModel> infoAkun() async {
+    try {
+      final response = await authService.dio.get("$baseURL/info_akun");
+      print('DATACOK : ${response.data}');
+      if (response.statusCode == 200) {
+        return InfoAkunModel.fromJson(response.data);
+      } else {
+        throw Exception(
+          "Gagal mendapatkan info akun ${response.statusMessage}",
+        );
+      }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
+          : e.message;
+      logger.e("DioException: $apiMessage");
+      throw Exception(apiMessage);
+    } catch (e) {
+      logger.e("Exception: $e");
+      throw Exception(e.toString());
     }
   }
 }

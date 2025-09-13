@@ -10,6 +10,7 @@ import '../viewmodels/balance_viewmodel.dart';
 import '../viewmodels/icon_viewmodel.dart';
 import '../viewmodels/provider_kartu_viewmodel.dart';
 import '../viewmodels/riwayat_viewmodel.dart';
+import '../views/settings/cubit/info_akun_cubit.dart';
 import '../views/settings/cubit/unbind_speedcash_cubit.dart';
 import '../viewmodels/speedcash/speedcash_viewmodel.dart';
 import '../viewmodels/transaksi_viewmodel.dart';
@@ -19,10 +20,9 @@ class AppProviders {
     return MultiBlocProvider(
       providers: [
         BlocProvider<UnbindSpeedCashCubit>(
-          create: (context) => UnbindSpeedCashCubit(
-            SpeedcashApiService(),
-          ), // <-- ketika dinonaktifkan, aplikasi bakal white screen
+          create: (context) => UnbindSpeedCashCubit(SpeedcashApiService()),
         ),
+        BlocProvider(create: (context) => InfoAkunCubit(ApiService())),
       ],
       child: MultiProvider(
         // <---- vanilla provider

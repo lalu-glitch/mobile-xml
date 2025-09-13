@@ -92,7 +92,7 @@ class SpeedcashApiService {
     }
   }
 
-  /// Udah Work
+  /// Udah Work tapi pusing bacanya
   // Future<Map<String, dynamic>> speedcashUnbind() async {
   //   try {
   //     final response = await authService.dio.post(
@@ -125,6 +125,7 @@ class SpeedcashApiService {
   //   }
   // }
 
+  //penggantinya
   Future<SpeedcashUnbindModel> speedcashUnbind() async {
     try {
       final response = await authService.dio.post(
