@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constant_finals.dart';
 import '../../../core/utils/bottom_sheet.dart';
-import '../../../core/utils/error_dialog.dart';
 import '../../../data/models/user/info_akun.dart';
 import '../cubit/unbind_ewallet_cubit.dart';
 
@@ -70,17 +69,28 @@ class WalletCard extends StatelessWidget {
                 // Tombol bind/unbind
                 (binding == 0)
                     ? ElevatedButton(
-                        onPressed: () =>
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: const Text(
-                                  "Ewallet belum dihubungkan",
-                                ),
-                                duration: const Duration(seconds: 3),
-                              ),
-                            ),
+                        onPressed: () {
+                          String routeName;
+                          switch (kodeDompet) {
+                            case 'SP':
+                              routeName = '/speedcashBindingPage';
+                              break;
+                            case 'NB':
+                              routeName = '/'; //<-- menyusul
+                              break;
+                            default:
+                              routeName =
+                                  '/'; // <--- kalo gaada walet bakal dilempar ke homepage (case sementara)
+                          }
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            routeName,
+                            (route) => false,
+                            arguments: {'ewallet': ewallet},
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: kNeutral50,
+                          backgroundColor: kOrange,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
