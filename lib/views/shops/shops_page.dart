@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/constant_finals.dart';
-
 class ShopsPage extends StatelessWidget {
   const ShopsPage({super.key});
 

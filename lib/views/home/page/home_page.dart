@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
       final iconVM = Provider.of<IconsViewModel>(context, listen: false);
       balanceVM.fetchBalance();
       iconVM.fetchIcons();
+
       // buat promo
       Future.delayed(const Duration(seconds: 1), () {
         PromoPopup.show(context, "assets/images/promo.jpg");

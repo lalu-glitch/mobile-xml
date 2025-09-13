@@ -270,7 +270,7 @@ class ApiService {
         final jsonData = Map<String, dynamic>.from(response.data);
         return {
           "success": true,
-          "data": StatusTransaksi.fromJson(jsonData),
+          "data": jsonData,
           "message": "Berhasil mendapatkan detail history transaksi",
         };
       } else {
@@ -295,7 +295,6 @@ class ApiService {
   Future<InfoAkunModel> infoAkun() async {
     try {
       final response = await authService.dio.get("$baseURL/info_akun");
-      print('DATACOK : ${response.data}');
       if (response.statusCode == 200) {
         return InfoAkunModel.fromJson(response.data);
       } else {

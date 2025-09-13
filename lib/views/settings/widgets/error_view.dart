@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import '../../../core/constant_finals.dart';
 
 class ErrorView extends StatelessWidget {
-  final String state;
-  final Future<void> onRetry;
+  final String errorMessage;
+  final Future<void> Function() onRetry;
 
-  const ErrorView({super.key, required this.state, required this.onRetry});
+  const ErrorView({
+    super.key,
+    required this.errorMessage,
+    required this.onRetry,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,8 @@ class ErrorView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 80, color: kRed),
+            // Ikon error untuk visual feedback
+            const Icon(Icons.error_outline, size: 80, color: kRed),
             const SizedBox(height: 16),
             Text(
               "Terjadi kesalahan",
@@ -27,7 +32,7 @@ class ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              state,
+              errorMessage,
               textAlign: TextAlign.center,
               style: Styles.kNunitoRegular.copyWith(
                 fontSize: 16,
@@ -36,9 +41,8 @@ class ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
-              onPressed: () {
-                // trigger reload InfoAkunCubit
-                onRetry;
+              onPressed: () async {
+                await onRetry();
               },
               icon: const Icon(Icons.refresh, color: Colors.white),
               label: Text(

@@ -44,7 +44,7 @@ class Header extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        state.data.nama,
+                        state.data.data.nama,
                         style: Styles.kNunitoRegular.copyWith(
                           color: kWhite,
                           fontSize: Screen.kSize24,
@@ -68,7 +68,7 @@ class Header extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        state.data.kodeReseller,
+                        state.data.data.kodeReferral,
                         style: Styles.kNunitoRegular.copyWith(
                           color: kWhite,
                           fontSize: Screen.kSize18,
@@ -87,7 +87,7 @@ class Header extends StatelessWidget {
                         borderRadius: BorderRadius.circular(100),
                       ),
                       child: Text(
-                        state.data.kodeLevel,
+                        state.data.data.kodeLevel,
                         style: Styles.kNunitoRegular.copyWith(
                           color: kNeutral100,
                           fontSize: Screen.kSize14,

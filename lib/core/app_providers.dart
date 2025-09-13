@@ -11,7 +11,7 @@ import '../viewmodels/icon_viewmodel.dart';
 import '../viewmodels/provider_kartu_viewmodel.dart';
 import '../viewmodels/riwayat_viewmodel.dart';
 import '../views/settings/cubit/info_akun_cubit.dart';
-import '../views/settings/cubit/unbind_speedcash_cubit.dart';
+import '../views/settings/cubit/unbind_ewallet_cubit.dart';
 import '../viewmodels/speedcash/speedcash_viewmodel.dart';
 import '../viewmodels/transaksi_viewmodel.dart';
 
@@ -19,8 +19,8 @@ class AppProviders {
   static Widget build() {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<UnbindSpeedCashCubit>(
-          create: (context) => UnbindSpeedCashCubit(SpeedcashApiService()),
+        BlocProvider(
+          create: (_) => UnbindEwalletCubit(apiService: SpeedcashApiService()),
         ),
         BlocProvider(create: (context) => InfoAkunCubit(ApiService())),
       ],
