@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+
+import '../../../core/constant_finals.dart';
+
+class SettingCard extends StatelessWidget {
+  final String title;
+  final IconData icons;
+  final VoidCallback onTap;
+  const SettingCard({
+    super.key,
+    required this.title,
+    required this.icons,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        color: kWhite,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.only(bottom: 12),
+        child: ListTile(
+          leading: Icon(icons, color: Colors.orange),
+          title: Text(title),
+          trailing: Icon(Icons.arrow_forward_ios, size: Screen.kSize18),
+        ),
+      ),
+    );
+  }
+}
