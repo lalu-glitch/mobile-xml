@@ -92,7 +92,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       SettingCard(
                         title: 'Tukar Poin & Komisi',
                         icons: Icons.local_parking,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, '/komisiPage');
+                        },
                       ),
                       SettingCard(
                         title: 'Riwayat Deposit',

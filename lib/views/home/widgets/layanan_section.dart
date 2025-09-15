@@ -59,10 +59,13 @@ class LayananSection extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       ///sementara di hardcode dulu kali yaaa
-                      final routeName = (i == 0 || i == 1 || i == 3)
+                      final routeName =
+                          (iconItem.flow == 0 ||
+                              iconItem.flow == 1 ||
+                              iconItem.flow == 3)
                           ? '/detailNoPrefix'
                           : '/detailPrefix';
-
+                      print(routeName);
                       Navigator.pushNamed(
                         context,
                         routeName,

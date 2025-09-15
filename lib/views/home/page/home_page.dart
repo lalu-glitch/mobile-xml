@@ -8,7 +8,7 @@ import 'package:xmlapp/views/home/widgets/header_card.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import '../../../viewmodels/icon_viewmodel.dart';
-import '../../widgets/alt_widgets/promo_popup.dart';
+import '../../widgets/promo_popup.dart';
 import '../widgets/header.dart';
 import '../widgets/layanan_section.dart';
 import '../widgets/promo_section.dart';
