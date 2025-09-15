@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constant_finals.dart';
-import 'package:xmlapp/core/utils/currency.dart';
+import 'package:xmlapp/core/helper/currency.dart';
 
-import '../core/utils/error_dialog.dart';
+import '../core/helper/error_dialog.dart';
 
 class InputNomorTujuanPage extends StatefulWidget {
   const InputNomorTujuanPage({

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:logger/logger.dart';
 
 import '../../../core/constant_finals.dart';
-import '../../../core/utils/error_dialog.dart';
+import '../../../core/helper/error_dialog.dart';
 import '../../../data/services/speedcash_api_service.dart';
 import '../../../data/services/auth_service.dart';
 import '../../../viewmodels/speedcash/speedcash_viewmodel.dart';

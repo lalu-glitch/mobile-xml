@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constant_finals.dart';
 
 import '../data/models/icon_models/icon_data.dart';
-import '../core/utils/currency.dart';
+import '../core/helper/currency.dart';
 import '../viewmodels/provider_kartu_viewmodel.dart';
 
 class DetailNoPrefixPage extends StatefulWidget {
