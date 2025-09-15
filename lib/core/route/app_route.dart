@@ -5,6 +5,8 @@ import '../../views/auth/send_otp.dart';
 import '../../views/auth/verify_otp.dart';
 import '../../main_page.dart';
 import '../../views/komisi/pages/komisi_pages.dart';
+import '../../views/multi_sub_kategori_page.dart';
+import '../../views/sub_kategori_page.dart';
 import '../utils/webview.dart';
 import '../../views/analytics/analytics_page.dart';
 import '../../views/input_nomor_tujuan_page.dart';
@@ -42,6 +44,9 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/analytics': (context) => authGuardWrapper(const AnalyticsPage()),
   '/detailPrefix': (context) => authGuardWrapper(DetailPrefixPage()),
   '/detailNoPrefix': (context) => authGuardWrapper(DetailNoPrefixPage()),
+  '/subKategori': (context) => authGuardWrapper(const SubKategoriPage()),
+  '/multiSubKategori': (context) =>
+      authGuardWrapper(const MultiSubKategoriPage()),
   '/riwayatTransaksi': (context) => authGuardWrapper(RiwayatTransaksiPage()),
   '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
   '/komisiPage': (context) => authGuardWrapper(KomisiPage()),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../../../core/helper/dynamic_app_page.dart';
+
 import '../../../viewmodels/icon_viewmodel.dart';
 
 class LayananSection extends StatelessWidget {
@@ -55,21 +57,28 @@ class LayananSection extends StatelessWidget {
                   // final iconItem = entry.value[i];
                   ///test icon banyakan
                   final iconItem = doubledList[i];
-
                   return GestureDetector(
                     onTap: () {
-                      ///sementara di hardcode dulu kali yaaa
-                      final routeName =
-                          (iconItem.flow == 0 ||
-                              iconItem.flow == 1 ||
-                              iconItem.flow == 3)
-                          ? '/detailNoPrefix'
-                          : '/detailPrefix';
-                      print(routeName);
+                      // Ambil sequence berdasarkan flow
+                      final sequence = pageSequences[iconItem.flow] ?? [];
+                      if (sequence.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Invalid flow ID: ${iconItem.flow}'),
+                          ),
+                        );
+                        return;
+                      }
+                      // Navigate ke page pertama dari sequence
                       Navigator.pushNamed(
                         context,
-                        routeName,
-                        arguments: iconItem,
+                        pageRoutes[sequence[0]]!,
+                        arguments: {
+                          'flow': iconItem.flow,
+                          'iconItem': iconItem,
+                          'currentIndex': 0,
+                          'sequence': sequence,
+                        },
                       );
                     },
                     child: Column(

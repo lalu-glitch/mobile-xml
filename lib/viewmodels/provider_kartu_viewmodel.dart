@@ -6,6 +6,7 @@ class ProviderViewModel extends ChangeNotifier {
   final ApiService _apiService = ApiService();
 
   List<ProviderKartu> _providers = [];
+
   bool _isLoading = false;
   String? _error;
 

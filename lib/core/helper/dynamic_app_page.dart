@@ -1,8 +1,15 @@
-enum AppPage { inputNomor, pilihProduk, subKategori, multiSubKategori }
+enum AppPage {
+  prefixFinal,
+  inputNomor,
+  pilihProduk,
+  subKategori,
+  multiSubKategori,
+  inputNomerAwal,
+}
 
 /// Mapping ID ke sequence
 Map<int, List<AppPage>> pageSequences = {
-  1: [AppPage.inputNomor],
+  1: [AppPage.prefixFinal],
   2: [AppPage.pilihProduk, AppPage.inputNomor],
   3: [AppPage.subKategori, AppPage.inputNomor, AppPage.pilihProduk],
   4: [AppPage.subKategori, AppPage.pilihProduk, AppPage.inputNomor],
@@ -12,16 +19,10 @@ Map<int, List<AppPage>> pageSequences = {
   8: [AppPage.inputNomor, AppPage.multiSubKategori, AppPage.pilihProduk],
 };
 
-/// Helper untuk map AppPage ke widget page actual
-  // Widget _getPageWidget(AppPage page) {
-  //   switch (page) {
-  //     case AppPage.inputNomor:
-  //       return InputNomorPage();
-  //     case AppPage.pilihProduk:
-  //       return PilihProdukPage();
-  //     case AppPage.subKategori:
-  //       return SubKategoriPage();
-  //     case AppPage.multiSubKategori:
-  //       return MultiSubKategoriPage();
-  //   }
-  // }
+Map<AppPage, String> pageRoutes = {
+  AppPage.prefixFinal: '/detailPrefix',
+  AppPage.inputNomor: '/inputNomorTujuan',
+  AppPage.pilihProduk: '/detailNoPrefix',
+  AppPage.subKategori: '/subKategori',
+  AppPage.multiSubKategori: '/multiSubKategori',
+};
