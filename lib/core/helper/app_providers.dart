@@ -3,17 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../data/services/api_service.dart';
-import '../data/services/speedcash_api_service.dart';
-import '../main.dart';
-import '../viewmodels/balance_viewmodel.dart';
-import '../viewmodels/icon_viewmodel.dart';
-import '../viewmodels/provider_kartu_viewmodel.dart';
-import '../viewmodels/riwayat_viewmodel.dart';
-import '../views/settings/cubit/info_akun_cubit.dart';
-import '../views/settings/cubit/unbind_ewallet_cubit.dart';
-import '../viewmodels/speedcash/speedcash_viewmodel.dart';
-import '../viewmodels/transaksi_viewmodel.dart';
+import '../../../data/services/api_service.dart';
+import '../../../data/services/speedcash_api_service.dart';
+import '../../../main.dart';
+import '../../../viewmodels/balance_viewmodel.dart';
+import '../../../viewmodels/icon_viewmodel.dart';
+import '../../../viewmodels/provider_kartu_viewmodel.dart';
+import '../../../viewmodels/riwayat_viewmodel.dart';
+import '../../../views/settings/cubit/info_akun_cubit.dart';
+import '../../../views/settings/cubit/unbind_ewallet_cubit.dart';
+import '../../../viewmodels/speedcash/speedcash_viewmodel.dart';
+import '../../../viewmodels/transaksi_viewmodel.dart';
 
 class AppProviders {
   static Widget build() {

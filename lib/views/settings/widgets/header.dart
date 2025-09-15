@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constant_finals.dart';
+import '../../../core/helper/constant_finals.dart';
 import '../cubit/info_akun_cubit.dart';
 
 class Header extends StatelessWidget {

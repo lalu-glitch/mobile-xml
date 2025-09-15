@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/constant_finals.dart';
+import '../../../core/helper/constant_finals.dart';
 
 class SpeedcashDepositPage extends StatelessWidget {
   const SpeedcashDepositPage({super.key});

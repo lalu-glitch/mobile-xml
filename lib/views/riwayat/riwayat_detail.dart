@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart'; // Untuk Clipboard
 import 'package:intl/intl.dart';
 
-import '../../../core/constant_finals.dart';
+import '../../core/helper/constant_finals.dart';
 import '../../data/services/api_service.dart';
 import '../../data/services/auth_service.dart';
-import '../../core/helper/error_dialog.dart';
+import '../../core/utils/error_dialog.dart';
 import '../../viewmodels/riwayat_viewmodel.dart';
 
 class DetailRiwayatPage extends StatefulWidget {

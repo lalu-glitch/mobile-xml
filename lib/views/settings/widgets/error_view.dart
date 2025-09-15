@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constant_finals.dart';
+import '../../../core/helper/constant_finals.dart';
 
 class ErrorView extends StatelessWidget {
   final String errorMessage;

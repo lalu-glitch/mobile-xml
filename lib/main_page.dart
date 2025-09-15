@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'core/constant_finals.dart';
+
+import 'core/helper/constant_finals.dart';
 import 'views/home/page/home_page.dart';
 import 'views/shops/shops_page.dart';
 import 'views/analytics/analytics_page.dart';

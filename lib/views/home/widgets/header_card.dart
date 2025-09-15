@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../core/constant_finals.dart';
+import '../../../core/helper/constant_finals.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import 'header_wallet_speedcash.dart';
 import 'header_wallet_xml.dart';

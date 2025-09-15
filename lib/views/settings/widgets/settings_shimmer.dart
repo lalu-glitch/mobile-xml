@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../core/constant_finals.dart';
+import '../../../core/helper/constant_finals.dart';
 
 class InfoAkunShimmer extends StatelessWidget {
   const InfoAkunShimmer({super.key});

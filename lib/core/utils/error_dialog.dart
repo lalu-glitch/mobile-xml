@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../constant_finals.dart';
+import '../helper/constant_finals.dart';
 
 void showErrorDialog(BuildContext context, String message) {
   showDialog(

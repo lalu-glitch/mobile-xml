@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/constant_finals.dart';
+import '../../core/helper/constant_finals.dart';
 import '../../viewmodels/riwayat_viewmodel.dart';
 import '../../data/models/transaksi/transaksi_riwayat.dart';
 import '../../data/services/api_service.dart';

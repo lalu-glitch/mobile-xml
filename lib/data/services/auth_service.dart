@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
-import '../../core/constant_finals.dart';
+import '../../core/helper/constant_finals.dart';
 import 'package:android_id/android_id.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

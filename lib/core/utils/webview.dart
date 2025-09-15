@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '../../../core/constant_finals.dart';
+
+import '../helper/constant_finals.dart';
 
 class WebviewPage extends StatefulWidget {
   final String? url;

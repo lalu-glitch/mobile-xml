@@ -8,7 +8,7 @@ import 'package:pdf/pdf.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
-import '../../../core/constant_finals.dart';
+import '../core/helper/constant_finals.dart';
 
 import '../core/helper/currency.dart';
 import '../data/models/transaksi/status_transaksi.dart';

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../../core/constant_finals.dart';
+import '../../core/helper/constant_finals.dart';
 import '../models/provider_kartu.dart';
 import '../models/transaksi/status_transaksi.dart';
 import '../models/transaksi/transaksi_riwayat.dart';

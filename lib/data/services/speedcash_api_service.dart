@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../../core/constant_finals.dart';
+import '../../core/helper/constant_finals.dart';
 import '../models/speedcash/speedcash_response.dart';
 import '../models/speedcash/speedcash_unbind.dart';
 import 'auth_service.dart';
@@ -92,40 +92,6 @@ class SpeedcashApiService {
     }
   }
 
-  /// Udah Work tapi pusing bacanya
-  // Future<Map<String, dynamic>> speedcashUnbind() async {
-  //   try {
-  //     final response = await authService.dio.post(
-  //       "$baseURL/speedcash/unbind_account",
-  //       // Jika ada body data, tambahkan di sini, e.g., data: {"phone": phone},
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final jsonData = Map<String, dynamic>.from(response.data);
-  //       final parsed = SpeedcashUnbindModel.fromJson(jsonData);
-  //       return {
-  //         "success": parsed.success,
-  //         "data": parsed,
-  //         "message": parsed.success ? parsed.message : "Gagal unbind Speedcash",
-  //       };
-  //     } else {
-  //       return {
-  //         "success": false,
-  //         "data": null,
-  //         "message": "Gagal unbind Speedcash. Status: ${response.statusCode}",
-  //       };
-  //     }
-  //   } on DioException catch (e) {
-  //     final apiMessage = e.response?.data is Map
-  //         ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
-  //         : e.message;
-  //     return {"success": false, "data": null, "message": apiMessage};
-  //   } catch (e) {
-  //     return {"success": false, "data": null, "message": e.toString()};
-  //   }
-  // }
-
-  //penggantinya
   Future<SpeedcashUnbindModel> speedcashUnbind() async {
     try {
       final response = await authService.dio.post(

@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/constant_finals.dart';
+import '../../../core/helper/constant_finals.dart';
 import 'package:xmlapp/views/home/widgets/header_card.dart';
-import '../../../core/helper/shimmer.dart';
+import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import '../../../viewmodels/icon_viewmodel.dart';
 import '../../widgets/alt_widgets/promo_popup.dart';
