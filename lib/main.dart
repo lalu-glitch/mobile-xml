@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 
-import 'core/helper/params.dart';
 import 'core/utils/app_providers.dart';
 import 'core/route/app_route.dart';
 

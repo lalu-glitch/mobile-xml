@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 
+import '../../../data/models/transaksi/transaksi_helper_model.dart';
 import '../../../viewmodels/icon_viewmodel.dart';
 
 class LayananSection extends StatelessWidget {
@@ -55,8 +56,16 @@ class LayananSection extends StatelessWidget {
 
                 itemBuilder: (context, i) {
                   // final iconItem = entry.value[i];
+
                   ///test icon banyakan
                   final iconItem = doubledList[i];
+
+                  final trx = TransaksiModel(
+                    tujuan: iconItem.filename,
+                    kodeProduk: '',
+                    namaProduk: '',
+                    total: 0,
+                  );
                   return GestureDetector(
                     onTap: () {
                       // Ambil sequence berdasarkan flow
@@ -78,6 +87,7 @@ class LayananSection extends StatelessWidget {
                           'iconItem': iconItem,
                           'currentIndex': 0,
                           'sequence': sequence,
+                          'transaksi': trx,
                         },
                       );
                     },

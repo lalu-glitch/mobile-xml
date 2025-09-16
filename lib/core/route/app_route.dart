@@ -4,6 +4,8 @@ import '../../views/auth/lupa_kode_agen.dart';
 import '../../views/auth/send_otp.dart';
 import '../../views/auth/verify_otp.dart';
 import '../../main_page.dart';
+import '../../views/input_nomor/input_nomer_awal.dart';
+import '../../views/input_nomor/input_nomer_mid.dart';
 import '../../views/komisi/pages/komisi_pages.dart';
 import '../../views/multi_sub_kategori_page.dart';
 import '../../views/sub_kategori_page.dart';
@@ -55,6 +57,8 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/inputNomorTujuan': (context) => authGuardWrapper(
     InputNomorTujuanPage(kode_produk: '', namaProduk: '', total: ''),
   ),
+  '/inputNomorFirst': (context) => AuthGuard(child: InputNomorPage()),
+  '/inputNomorMid': (context) => AuthGuard(child: InputNomorMidPage()),
   '/konfirmasiPembayaran': (context) => authGuardWrapper(
     KonfirmasiPembayaranPage(
       tujuan: '', // placeholder, nanti dikirim via arguments
