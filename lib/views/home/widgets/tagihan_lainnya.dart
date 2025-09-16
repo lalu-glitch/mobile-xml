@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/helper/constant_finals.dart';
 
@@ -13,7 +12,10 @@ class TagihanLainnya extends StatelessWidget {
       children: [
         Text(
           'Tagihan Lainnya',
-          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: Screen.kSize18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 12),
         GridView.builder(

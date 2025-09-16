@@ -3,10 +3,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:provider/provider.dart';
+import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
 import '../core/helper/constant_finals.dart';
 import '../core/helper/dynamic_app_page.dart';
+import '../core/helper/flow_cubit.dart';
 import '../data/models/icon_models/icon_data.dart';
 import '../core/helper/currency.dart';
 import '../viewmodels/provider_kartu_viewmodel.dart';
@@ -44,11 +46,13 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
 
   Future<void> _fetchProvider(String value) async {
     if (value.length >= 4) {
-      final args =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      final iconItem = args['iconItem'] as IconItem; // Extract dari Map
+      // final args =
+      //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      // final iconItem = args['iconItem'] as IconItem; // Extract dari Map
+
+      final transaksi = context.read<TransaksiCubit>().getData();
       final providerVM = Provider.of<ProviderViewModel>(context, listen: false);
-      await providerVM.fetchProvidersPrefix(iconItem.filename, value);
+      await providerVM.fetchProvidersPrefix(transaksi.filename ?? '-', value);
     }
   }
 
@@ -67,13 +71,12 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Ambil arguments sebagai Map
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final iconItem = args['iconItem'] as IconItem; // Extract IconItem
-    final int flow = args['flow'] as int;
-    final int currentIndex = args['currentIndex'] as int;
-    final List<AppPage> sequence = args['sequence'] as List<AppPage>;
+    final flowState = context.watch<FlowCubit>().state!;
+    final flowCubit = context.read<FlowCubit>();
+    final iconItem = flowState.iconItem;
+    final int flow = flowState.flow;
+    final int currentIndex = flowState.currentIndex;
+    final List<AppPage> sequence = flowState.sequence;
 
     // Cek apakah ini page terakhir di sequence
     final bool isLastPage = currentIndex == sequence.length - 1;
@@ -81,21 +84,11 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
     return WillPopScope(
       onWillPop: () async {
         if (currentIndex > 0) {
-          // Navigate ke previous page di sequence
-          Navigator.pushReplacementNamed(
-            context,
-            pageRoutes[sequence[currentIndex - 1]]!,
-            arguments: {
-              'flow': flow,
-              'iconItem': iconItem,
-              'currentIndex': currentIndex - 1,
-              'sequence': sequence,
-              // Pass data lain kalau sudah ada, misal nomorTujuan
-            },
-          );
-          return false; // Cegah pop default
+          flowCubit.previousPage(); // ✅ update Cubit state
+          Navigator.pop(context); // ✅ balik ke page sebelumnya
+          return false;
         }
-        return true; // Pop ke LayananSection jika di page pertama
+        return true;
       },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
@@ -232,7 +225,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                                     "Gangguan",
                                                     style: TextStyle(
                                                       color: Colors.red,
-                                                      fontSize: 12.sp,
+                                                      fontSize: Screen.kSize12,
                                                     ),
                                                   ),
                                                 ],
@@ -301,7 +294,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                           style: TextStyle(
                             color: kWhite,
                             fontWeight: FontWeight.bold,
-                            fontSize: 16.sp,
+                            fontSize: Screen.kSize16,
                           ),
                         ),
                         ElevatedButton(

@@ -2,7 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../core/helper/constant_finals.dart';
 import '../../data/services/auth_service.dart';
 import '../../core/utils/error_dialog.dart';
@@ -115,7 +115,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                     Text(
                       "Lupa Kode Agen",
                       style: TextStyle(
-                        fontSize: 24.sp,
+                        fontSize: Screen.kSize24,
                         fontWeight: FontWeight.bold,
                         color: Colors.orange,
                       ),
@@ -167,7 +167,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                             : Text(
                                 "Kirim Permintaan",
                                 style: TextStyle(
-                                  fontSize: 18.sp,
+                                  fontSize: Screen.kSize18,
                                   fontWeight: FontWeight.w600,
                                   color: kWhite,
                                 ),
@@ -182,7 +182,10 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                       },
                       child: Text(
                         "Kembali ke Request OTP",
-                        style: TextStyle(fontSize: 14.sp, color: Colors.blue),
+                        style: TextStyle(
+                          fontSize: Screen.kSize14,
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
                   ],

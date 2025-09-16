@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../data/models/transaksi/transaksi_helper_model.dart';
+import '../../core/helper/dynamic_app_page.dart';
 
 class InputNomorMidPage extends StatefulWidget {
   const InputNomorMidPage({super.key});
@@ -15,9 +15,13 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Ambil arguments dari Navigator
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final transaksi = args['transaksi'] as TransaksiModel;
+    final sequence = args['sequence'] as List<AppPage>;
+    final currentIndex = args['currentIndex'] as int;
+    final flow = args['flow'];
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -58,17 +62,33 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
                 ),
               ),
               onPressed: () {
-                // Hanya contoh aksi sederhana
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Nomor: ${_nomorController.text}")),
-                );
+                // cek kalau masih ada halaman berikutnya
+                if (currentIndex + 1 < sequence.length) {
+                  final nextPage = sequence[currentIndex + 1];
+
+                  Navigator.pushNamed(
+                    context,
+                    pageRoutes[nextPage]!,
+                    arguments: {
+                      'flow': flow,
+                      'iconItem': args['iconItem'],
+                      'currentIndex': currentIndex + 1,
+                      'sequence': sequence,
+                      'nomor': _nomorController.text, // kirim input nomor
+                    },
+                  );
+                } else {
+                  // sudah halaman terakhir -> lakukan action (misal submit)
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text("Flow selesai")));
+                }
               },
               child: const Text(
                 "Selanjutnya",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            Text('Tujuan: ${transaksi.tujuan}'),
           ],
         ),
       ),

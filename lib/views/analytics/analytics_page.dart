@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+//
+
+import '../../core/helper/constant_finals.dart';
 
 class AnalyticsPage extends StatelessWidget {
   const AnalyticsPage({super.key});
@@ -10,7 +12,7 @@ class AnalyticsPage extends StatelessWidget {
       body: Center(
         child: Text(
           "This is Analytics Page",
-          style: TextStyle(fontSize: 20.sp),
+          style: TextStyle(fontSize: Screen.kSize20),
         ),
       ),
     );

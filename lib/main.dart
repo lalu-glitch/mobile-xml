@@ -1,15 +1,26 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:xmlapp/data/services/api_service.dart';
+import 'package:xmlapp/data/services/speedcash_api_service.dart';
+import 'package:xmlapp/viewmodels/balance_viewmodel.dart';
+import 'package:xmlapp/viewmodels/icon_viewmodel.dart';
+import 'package:xmlapp/viewmodels/provider_kartu_viewmodel.dart';
+import 'package:xmlapp/viewmodels/riwayat_viewmodel.dart';
+import 'package:xmlapp/viewmodels/speedcash/speedcash_viewmodel.dart';
+import 'package:xmlapp/viewmodels/transaksi_viewmodel.dart';
+import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
+import 'package:xmlapp/views/settings/cubit/info_akun_cubit.dart';
+import 'package:xmlapp/views/settings/cubit/unbind_ewallet_cubit.dart';
 
-import 'core/utils/app_providers.dart';
+import 'core/helper/flow_cubit.dart';
 import 'core/route/app_route.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'data/services/location_service.dart';
@@ -18,8 +29,6 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
-  // Pastikan binding yang sesuai untuk Sentry
-  SentryWidgetsFlutterBinding.ensureInitialized();
 
   // Lock orientasi layar
   await SystemChrome.setPreferredOrientations([
@@ -27,20 +36,7 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // Inisialisasi Sentry
-  await SentryFlutter.init(
-    (options) {
-      options.dsn = '${dotenv.env['SENTRY_LINK']}';
-      options.sendDefaultPii = true;
-      options.tracesSampleRate = 0.01;
-
-      // Tambahan logging untuk debug
-      options.debug = kDebugMode;
-    },
-    //Jalankan aplikasi setelah Sentry siap
-    appRunner: () =>
-        runApp(AppProviders.build()), // <--- dependency injection disini
-  );
+  runApp(const XmlApp()); // <-- langsung jalankan app
 }
 
 class XmlApp extends StatefulWidget {
@@ -66,7 +62,7 @@ class _XmlAppState extends State<XmlApp> {
     try {
       await locationService.getCurrentLocation();
     } catch (e) {
-      Exception("terdapat kesalahan $e");
+      debugPrint("Lokasi error: $e");
     }
   }
 
@@ -86,7 +82,6 @@ class _XmlAppState extends State<XmlApp> {
     // Listener kalau app sudah jalan lalu ada deeplink masuk
     _sub = _appLinks.uriLinkStream.listen(
       (uri) {
-        // ignore: unnecessary_null_comparison
         if (uri != null) {
           _navigateFromUri(uri);
         }
@@ -128,16 +123,40 @@ class _XmlAppState extends State<XmlApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "XML App",
-      theme: ThemeData(
-        textTheme: GoogleFonts.varelaRoundTextTheme(),
-        useMaterial3: true,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              UnbindEwalletCubit(apiService: SpeedcashApiService()),
+        ),
+        BlocProvider(create: (context) => InfoAkunCubit(ApiService())),
+        BlocProvider(create: (context) => TransaksiCubit()),
+        BlocProvider(create: (context) => FlowCubit()),
+      ],
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => BalanceViewModel()),
+          ChangeNotifierProvider(create: (_) => IconsViewModel()),
+          ChangeNotifierProvider(create: (_) => ProviderViewModel()),
+          ChangeNotifierProvider(create: (_) => RiwayatTransaksiViewModel()),
+          ChangeNotifierProvider(
+            create: (_) => SpeedcashVM(apiService: SpeedcashApiService()),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => TransaksiViewModel(service: ApiService()),
+          ),
+        ],
+        child: MaterialApp(
+          title: "XML App",
+          theme: ThemeData(
+            textTheme: GoogleFonts.varelaRoundTextTheme(),
+            useMaterial3: true,
+          ),
+          navigatorKey: navigatorKey,
+          initialRoute: '/',
+          routes: appRoutes,
+        ),
       ),
-      navigatorObservers: [SentryNavigatorObserver()],
-      navigatorKey: navigatorKey,
-      initialRoute: '/',
-      routes: appRoutes,
     );
   }
 }

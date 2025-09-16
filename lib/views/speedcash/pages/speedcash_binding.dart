@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:provider/provider.dart';
 import 'package:logger/logger.dart';
 
@@ -153,7 +153,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                                 : Text(
                                     "Bind Speedcash",
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: Screen.kSize18,
                                       fontWeight: FontWeight.w600,
                                       color: kWhite,
                                     ),

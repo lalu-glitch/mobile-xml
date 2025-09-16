@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xmlapp/data/models/transaksi/transaksi_helper_model.dart';
 
-import '../../data/models/transaksi/transaksi_helper_model.dart';
+import '../../core/helper/dynamic_app_page.dart';
+import '../../core/helper/flow_cubit.dart';
+import 'transaksi_cubit.dart';
 
 class InputNomorPage extends StatefulWidget {
   const InputNomorPage({super.key});
@@ -12,11 +16,17 @@ class InputNomorPage extends StatefulWidget {
 
 class _InputNomorPageState extends State<InputNomorPage> {
   final TextEditingController _nomorController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final transaksi = args['transaksi'] as TransaksiModel;
+    // // Ambil arguments dari Navigator
+    // final args =
+    //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    // final sequence = args['sequence'] as List<AppPage>;
+    // final currentIndex = args['currentIndex'] as int;
+    // final flow = args['flow'];
+
+    final flowState = context.watch<FlowCubit>().state;
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -30,58 +40,61 @@ class _InputNomorPageState extends State<InputNomorPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Masukkan Nomor Tujuan"),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _nomorController,
-              keyboardType: TextInputType.phone,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(
-                hintText: "Input Nomor Tujuan",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+        child: BlocBuilder<TransaksiCubit, TransaksiModel>(
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("Masukkan Nomor Tujuan"),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: _nomorController,
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: InputDecoration(
+                    hintText: "Input Nomor Tujuan",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    suffixIcon: const Icon(Icons.contact_page),
+                  ),
                 ),
-                suffixIcon: const Icon(Icons.contact_page),
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFF6D00),
-                foregroundColor: Colors.white,
-                minimumSize: const Size(double.infinity, 48),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFF6D00),
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: () {
+                    // cek kalau masih ada halaman berikutnya
+                    if (flowState!.currentIndex + 1 <
+                        flowState.sequence.length) {
+                      final nextPage =
+                          flowState.sequence[flowState.currentIndex + 1];
+
+                      // update state FlowCubit (naik 1 index)
+                      context.read<FlowCubit>().nextPage();
+
+                      Navigator.pushNamed(context, pageRoutes[nextPage]!);
+                    } else {
+                      // sudah halaman terakhir -> lakukan action (misal submit)
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Flow selesai")),
+                      );
+                    }
+                  },
+                  child: const Text(
+                    "Selanjutnya",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              onPressed: () {
-                // Hanya contoh aksi sederhana
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(content: Text("Nomor: ${_nomorController.text}")),
-                // );
-                final trxBaru = transaksi.copyWith(
-                  tujuan: _nomorController.text,
-                );
-                Navigator.pushNamed(
-                  context,
-                  '/inputNomorMid',
-                  arguments: {'transaksi': trxBaru},
-                );
-                print('Terkirim : $trxBaru');
-              },
-              child: const Text(
-                "Selanjutnya",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            Text('Tujuan: ${transaksi.tujuan}'),
-            Text('Kode Produk: ${transaksi.kodeProduk}'),
-            Text('Nama Produk: ${transaksi.namaProduk}'),
-            Text('Total: ${transaksi.total}'),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );

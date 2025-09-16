@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 
-import '../../../data/models/transaksi/transaksi_helper_model.dart';
+import '../../../core/helper/flow_cubit.dart';
 import '../../../viewmodels/icon_viewmodel.dart';
+import '../../input_nomor/transaksi_cubit.dart';
 
 class LayananSection extends StatelessWidget {
   const LayananSection({required this.iconVM, super.key});
@@ -14,17 +15,20 @@ class LayananSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final transaksi = context.read<TransaksiCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: iconVM.iconsByCategory.entries.map((entry) {
         final doubledList = [...entry.value, ...entry.value];
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               entry.key.toUpperCase(),
-              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: Screen.kSize18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 12),
             Container(
@@ -55,17 +59,7 @@ class LayananSection extends StatelessWidget {
                 itemCount: doubledList.length,
 
                 itemBuilder: (context, i) {
-                  // final iconItem = entry.value[i];
-
-                  ///test icon banyakan
                   final iconItem = doubledList[i];
-
-                  final trx = TransaksiModel(
-                    tujuan: iconItem.filename,
-                    kodeProduk: '',
-                    namaProduk: '',
-                    total: 0,
-                  );
                   return GestureDetector(
                     onTap: () {
                       // Ambil sequence berdasarkan flow
@@ -78,18 +72,31 @@ class LayananSection extends StatelessWidget {
                         );
                         return;
                       }
-                      // Navigate ke page pertama dari sequence
-                      Navigator.pushNamed(
-                        context,
-                        pageRoutes[sequence[0]]!,
-                        arguments: {
-                          'flow': iconItem.flow,
-                          'iconItem': iconItem,
-                          'currentIndex': 0,
-                          'sequence': sequence,
-                          'transaksi': trx,
-                        },
+                      // simpan state awal ke FlowCubit
+                      context.read<FlowCubit>().startFlow(
+                        iconItem.flow,
+                        iconItem,
                       );
+
+                      //simpan filename buat dipake di prefix page
+                      transaksi.setFileName(iconItem.filename);
+
+                      // ambil halaman pertama dari sequence
+                      final firstPage = sequence[0];
+
+                      Navigator.pushNamed(context, pageRoutes[firstPage]!);
+
+                      // Navigate ke page pertama dari sequence
+                      // Navigator.pushNamed(
+                      //   context,
+                      //   pageRoutes[sequence[0]]!,
+                      //   arguments: {
+                      //     'flow': iconItem.flow,
+                      //     'iconItem': iconItem,
+                      //     'currentIndex': 0,
+                      //     'sequence': sequence,
+                      //   },
+                      // );
                     },
                     child: Column(
                       children: [
@@ -127,7 +134,7 @@ class LayananSection extends StatelessWidget {
                         Expanded(
                           child: Text(
                             iconItem.filename,
-                            style: TextStyle(fontSize: 12.sp),
+                            style: TextStyle(fontSize: Screen.kSize12),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,

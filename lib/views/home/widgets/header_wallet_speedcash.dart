@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
@@ -35,7 +34,7 @@ class SpeedCashWalletHeader extends StatelessWidget {
               children: [
                 Text(
                   "Saldo Speedcash",
-                  style: TextStyle(fontSize: 13.sp, color: kNeutral90),
+                  style: TextStyle(fontSize: Screen.kSize14, color: kNeutral90),
                 ),
                 if (hasSpeedcash)
                   Column(
@@ -44,7 +43,7 @@ class SpeedCashWalletHeader extends StatelessWidget {
                       return Text(
                         CurrencyUtil.formatCurrency(ew.saldoEwallet),
                         style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: Screen.kSize16,
                           fontWeight: FontWeight.bold,
                         ),
                       );
@@ -54,7 +53,7 @@ class SpeedCashWalletHeader extends StatelessWidget {
                   Text(
                     "Tidak terhubung",
                     style: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: Screen.kSize14,
                       fontWeight: FontWeight.bold,
                       color: kBlack,
                     ),
@@ -91,7 +90,7 @@ class SpeedCashWalletHeader extends StatelessWidget {
             hasSpeedcash ? "Deposit" : "Hubungkan",
             style: TextStyle(
               color: kWhite,
-              fontSize: 12.sp,
+              fontSize: Screen.kSize12,
               fontWeight: FontWeight.bold,
             ),
           ),

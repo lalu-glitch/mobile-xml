@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/helper/constant_finals.dart';
 
@@ -21,7 +20,7 @@ class SpeedcashDepositPage extends StatelessWidget {
       body: Center(
         child: Text(
           "This is Speedcash Deposit Page",
-          style: TextStyle(fontSize: 20.sp),
+          style: TextStyle(fontSize: Screen.kSize20),
         ),
       ),
     );

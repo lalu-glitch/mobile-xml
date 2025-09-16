@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
@@ -29,14 +28,14 @@ class StokXMLHeader extends StatelessWidget {
               children: [
                 Text(
                   "Stok XML",
-                  style: TextStyle(fontSize: 13.sp, color: kNeutral90),
+                  style: TextStyle(fontSize: Screen.kSize14, color: kNeutral90),
                 ),
                 Text(
                   CurrencyUtil.formatCurrency(
                     balanceVM.userBalance?.saldo ?? 0,
                   ),
                   style: TextStyle(
-                    fontSize: 14.sp,
+                    fontSize: Screen.kSize14,
                     fontWeight: FontWeight.bold,
                     color: kBlack,
                   ),
@@ -69,7 +68,7 @@ class StokXMLHeader extends StatelessWidget {
             "Isi Stok",
             style: TextStyle(
               color: kWhite,
-              fontSize: 12.sp,
+              fontSize: Screen.kSize12,
               fontWeight: FontWeight.bold,
             ),
           ),

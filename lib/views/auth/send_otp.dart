@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../core/helper/constant_finals.dart';
 import '../../data/services/auth_service.dart';
 import '../../core/utils/bottom_sheet.dart';
@@ -118,7 +118,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                         Text(
                           "Login",
                           style: TextStyle(
-                            fontSize: 26.sp,
+                            fontSize: Screen.kSize24,
                             fontWeight: FontWeight.bold,
                             color: Colors.orange,
                           ),
@@ -192,7 +192,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                                 : Text(
                                     "Request OTP",
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: Screen.kSize18,
                                       fontWeight: FontWeight.w600,
                                       color: kWhite,
                                     ),
@@ -211,7 +211,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                               label: Text(
                                 "Lupa Kode Agen",
                                 style: TextStyle(
-                                  fontSize: 10.sp,
+                                  fontSize: Screen.kSize10,
                                   fontWeight: FontWeight.w600,
                                   color: kWhite,
                                 ),
@@ -238,7 +238,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                               label: Text(
                                 "Hubungi CS",
                                 style: TextStyle(
-                                  fontSize: 10.sp,
+                                  fontSize: Screen.kSize10,
                                   fontWeight: FontWeight.w600,
                                   color: kWhite,
                                 ),
@@ -268,7 +268,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                   child: Text(
                     'Belum punya akun? Daftar sekarang!',
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: Screen.kSize16,
                       color: Colors.grey[600],
                       decoration: TextDecoration.underline,
                     ),

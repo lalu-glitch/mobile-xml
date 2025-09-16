@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../core/helper/constant_finals.dart';
 import '../../data/services/auth_service.dart';
 import '../../core/utils/error_dialog.dart';
@@ -85,7 +85,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   Text(
                     "Verifikasi OTP",
                     style: TextStyle(
-                      fontSize: 26.sp,
+                      fontSize: Screen.kSize24,
                       fontWeight: FontWeight.bold,
                       color: Colors.green,
                     ),
@@ -93,7 +93,10 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   const SizedBox(height: 8),
                   Text(
                     "Kode OTP dikirim ke $nomor",
-                    style: TextStyle(fontSize: 14.sp, color: Colors.black54),
+                    style: TextStyle(
+                      fontSize: Screen.kSize14,
+                      color: Colors.black54,
+                    ),
                   ),
                   const SizedBox(height: 20),
                   // TextField OTP modern
@@ -101,7 +104,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                     controller: _otpCtrl,
                     keyboardType: TextInputType.number,
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: Screen.kSize16,
                       color: Colors.black87,
                       fontWeight: FontWeight.w500,
                     ),
@@ -162,7 +165,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                           : Text(
                               "Verifikasi",
                               style: TextStyle(
-                                fontSize: 18.sp,
+                                fontSize: Screen.kSize18,
                                 fontWeight: FontWeight.w600,
                                 color: kWhite,
                               ),

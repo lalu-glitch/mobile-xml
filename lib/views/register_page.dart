@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../core/helper/constant_finals.dart';
 import '../data/services/auth_service.dart';
@@ -132,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       Text(
                         "Daftar",
                         style: TextStyle(
-                          fontSize: 26.sp,
+                          fontSize: Screen.kSize24,
                           fontWeight: FontWeight.bold,
                           color: Colors.orange,
                         ),
@@ -297,7 +296,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               : Text(
                                   "Daftar",
                                   style: TextStyle(
-                                    fontSize: 18.sp,
+                                    fontSize: Screen.kSize18,
                                     fontWeight: FontWeight.w600,
                                     color: kWhite,
                                   ),

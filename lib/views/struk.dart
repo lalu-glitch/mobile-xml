@@ -1,7 +1,7 @@
 // struk_page.dart
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
@@ -80,7 +80,7 @@ class _StrukPageState extends State<StrukPage> {
                       style: TextStyle(
                         fontFamily: "monospace",
                         fontWeight: FontWeight.bold,
-                        fontSize: 16.sp,
+                        fontSize: Screen.kSize16,
                       ),
                     ),
                   ),
@@ -135,7 +135,10 @@ class _StrukPageState extends State<StrukPage> {
                   _line("OUTBOX", ''),
                   Text(
                     trx!.outbox,
-                    style: TextStyle(fontFamily: "monospace", fontSize: 14.sp),
+                    style: TextStyle(
+                      fontFamily: "monospace",
+                      fontSize: Screen.kSize14,
+                    ),
                   ),
                   const Divider(),
                   Center(
@@ -143,7 +146,7 @@ class _StrukPageState extends State<StrukPage> {
                       "--- TERIMA KASIH ---",
                       style: TextStyle(
                         fontFamily: "monospace",
-                        fontSize: 14.sp,
+                        fontSize: Screen.kSize14,
                       ),
                     ),
                   ),
@@ -177,7 +180,10 @@ class _StrukPageState extends State<StrukPage> {
                         icon: const Icon(Icons.print, color: kWhite),
                         label: Text(
                           "Cetak",
-                          style: TextStyle(color: kWhite, fontSize: 16.sp),
+                          style: TextStyle(
+                            color: kWhite,
+                            fontSize: Screen.kSize16,
+                          ),
                         ),
                       ),
                     ),
@@ -204,7 +210,10 @@ class _StrukPageState extends State<StrukPage> {
                         icon: const Icon(Icons.share, color: kWhite),
                         label: Text(
                           "Share",
-                          style: TextStyle(color: kWhite, fontSize: 16.sp),
+                          style: TextStyle(
+                            color: kWhite,
+                            fontSize: Screen.kSize16,
+                          ),
                         ),
                       ),
                     ),
@@ -227,7 +236,7 @@ class _StrukPageState extends State<StrukPage> {
                   child: Text(
                     "Selesai",
                     style: TextStyle(
-                      fontSize: 18.sp,
+                      fontSize: Screen.kSize18,
                       fontWeight: FontWeight.bold,
                       color: kWhite,
                     ),

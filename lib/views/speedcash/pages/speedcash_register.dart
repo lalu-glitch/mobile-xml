@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../../core/helper/constant_finals.dart';
@@ -170,7 +170,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
                                 : Text(
                                     "Register Speedcash",
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: Screen.kSize18,
                                       fontWeight: FontWeight.w600,
                                       color: kWhite,
                                     ),

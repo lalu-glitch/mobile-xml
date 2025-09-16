@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/helper/constant_finals.dart';
 
@@ -13,7 +12,10 @@ class PromoSectionAlt extends StatelessWidget {
       children: [
         Text(
           'PASTI PROMO 2',
-          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: Screen.kSize18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 12),
         SizedBox(
@@ -54,7 +56,7 @@ class PromoSectionAlt extends StatelessWidget {
                     child: Text(
                       "Promo Murah Murah Murah Murah Murah Murah Merdeka ${i + 1}",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14.sp),
+                      style: TextStyle(fontSize: Screen.kSize14),
                       maxLines: 1, // batas baris
                       overflow: TextOverflow.ellipsis, // kasih ...
                       softWrap: false, // biar ga pindah baris

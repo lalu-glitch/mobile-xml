@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../core/helper/constant_finals.dart';
 import '../data/models/transaksi/status_transaksi.dart';
 import 'package:intl/intl.dart';
@@ -59,7 +59,7 @@ class DetailTransaksiPage extends StatelessWidget {
             Text(
               isSuccess ? "Transaksi Berhasil!" : "Transaksi Gagal!",
               style: TextStyle(
-                fontSize: 24.sp,
+                fontSize: Screen.kSize24,
                 fontWeight: FontWeight.bold,
                 color: isSuccess ? Colors.green : Colors.red,
               ),
@@ -100,7 +100,7 @@ class DetailTransaksiPage extends StatelessWidget {
                       "Outbox",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16.sp,
+                        fontSize: Screen.kSize16,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -139,7 +139,7 @@ class DetailTransaksiPage extends StatelessWidget {
                     child: Text(
                       "Selesai",
                       style: TextStyle(
-                        fontSize: 18.sp,
+                        fontSize: Screen.kSize18,
                         fontWeight: FontWeight.bold,
                         color: kWhite,
                       ),
@@ -168,7 +168,7 @@ class DetailTransaksiPage extends StatelessWidget {
                     child: Text(
                       "Cetak Struk",
                       style: TextStyle(
-                        fontSize: 16.sp,
+                        fontSize: Screen.kSize16,
                         fontWeight: FontWeight.bold,
                         color: kWhite,
                       ),

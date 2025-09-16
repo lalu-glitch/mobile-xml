@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -69,7 +69,10 @@ class RiwayatTransaksiPage extends StatelessWidget {
               return Center(
                 child: Text(
                   "Belum ada transaksi",
-                  style: TextStyle(fontSize: 16.sp, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: Screen.kSize16,
+                    color: Colors.grey,
+                  ),
                 ),
               );
             }
@@ -105,7 +108,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                               t.tujuan,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16.sp,
+                                fontSize: Screen.kSize16,
                               ),
                             ),
                             subtitle: Padding(
@@ -116,7 +119,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                                   Text(
                                     "Tanggal: ${DateFormat('dd MMM yyyy, HH:mm').format(t.tglEntri)}",
                                     style: TextStyle(
-                                      fontSize: 13.sp,
+                                      fontSize: Screen.kSize14,
                                       color: Colors.black87,
                                     ),
                                   ),
@@ -124,7 +127,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                                   Text(
                                     "Status: ${t.keterangan}",
                                     style: TextStyle(
-                                      fontSize: 13.sp,
+                                      fontSize: Screen.kSize14,
                                       fontWeight: FontWeight.w600,
                                       color: _statusColor(t),
                                     ),
@@ -183,7 +186,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                             : Text(
                                 "Lainnya",
                                 style: TextStyle(
-                                  fontSize: 16.sp,
+                                  fontSize: Screen.kSize16,
                                   fontWeight: FontWeight.bold,
                                   color: kWhite,
                                 ),

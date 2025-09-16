@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:shimmer/shimmer.dart';
 
 import '../../../core/helper/constant_finals.dart';
@@ -122,11 +122,15 @@ class HeaderCard extends StatelessWidget {
                                       const SizedBox(width: 4),
                                       Text(
                                         "${balanceVM.userBalance?.poin ?? 0} ",
-                                        style: TextStyle(fontSize: 12.sp),
+                                        style: TextStyle(
+                                          fontSize: Screen.kSize12,
+                                        ),
                                       ),
                                       Text(
                                         " Komisi",
-                                        style: TextStyle(fontSize: 12.sp),
+                                        style: TextStyle(
+                                          fontSize: Screen.kSize12,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -154,11 +158,15 @@ class HeaderCard extends StatelessWidget {
                                     const SizedBox(width: 4),
                                     Text(
                                       "${balanceVM.userBalance?.poin ?? 0} ",
-                                      style: TextStyle(fontSize: 12.sp),
+                                      style: TextStyle(
+                                        fontSize: Screen.kSize12,
+                                      ),
                                     ),
                                     Text(
                                       "Poin",
-                                      style: TextStyle(fontSize: 12.sp),
+                                      style: TextStyle(
+                                        fontSize: Screen.kSize12,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -190,7 +198,7 @@ class HeaderCard extends StatelessWidget {
                                   Icon(Icons.history, color: Colors.orange),
                                   Text(
                                     " Riwayat",
-                                    style: TextStyle(fontSize: 12.sp),
+                                    style: TextStyle(fontSize: Screen.kSize12),
                                   ),
                                 ],
                               ),
@@ -209,7 +217,11 @@ class HeaderCard extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.report, color: kWhite, size: 14.sp),
+                            Icon(
+                              Icons.report,
+                              color: kWhite,
+                              size: Screen.kSize14,
+                            ),
                             const Text(
                               " Jangan biarin saldo kamu kosong! Yuk, topup sekarang!",
                               style: TextStyle(

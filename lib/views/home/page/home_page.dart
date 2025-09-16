@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final balanceVM = Provider.of<BalanceViewModel>(context);
     final iconVM = Provider.of<IconsViewModel>(context);
-
     return Scaffold(
       body: Stack(
         children: [

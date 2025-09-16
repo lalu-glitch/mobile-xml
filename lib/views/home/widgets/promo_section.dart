@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
@@ -115,7 +114,7 @@ class PromoSection extends StatelessWidget {
                                 child: Text(
                                   "Promo Murah Merdeka Merdeka Merdeka $i",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 14.sp),
+                                  style: TextStyle(fontSize: Screen.kSize14),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   softWrap: false,
