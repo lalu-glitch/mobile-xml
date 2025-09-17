@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../core/helper/constant_finals.dart';
 import '../core/helper/dynamic_app_page.dart';
 import '../core/helper/flow_cubit.dart';
-import '../data/models/icon_models/icon_data.dart';
 import '../core/helper/currency.dart';
 import '../viewmodels/provider_kartu_viewmodel.dart';
 import 'input_nomor/transaksi_cubit.dart';
@@ -41,7 +40,6 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
     final flowState = context.watch<FlowCubit>().state!;
     final flowCubit = context.read<FlowCubit>();
     final iconItem = flowState.iconItem;
-    final int flow = flowState.flow;
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;
 
@@ -50,8 +48,8 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
     return WillPopScope(
       onWillPop: () async {
         if (currentIndex > 0) {
-          flowCubit.previousPage(); // ✅ update Cubit state
-          Navigator.pop(context); // ✅ balik ke page sebelumnya
+          flowCubit.previousPage();
+          Navigator.pop(context);
           return false;
         }
         return true;
@@ -85,7 +83,6 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
               itemBuilder: (context, index) {
                 final provider = vm.providers[index];
                 final List produkList = provider.produk;
-
                 return Card(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -101,7 +98,6 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                         final bool isSelected =
                             selectedProductCode == produk.kode_produk;
                         final bool isGangguan = produk.gangguan == 1;
-
                         return GestureDetector(
                           onTap: isGangguan
                               ? null
@@ -110,6 +106,10 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     selectedProductCode = produk.kode_produk;
                                     selectedPrice = produk.hargaJual.toDouble();
                                     selectedProduk = produk;
+
+                                    print('selected : $selectedProductCode');
+                                    print('selected : $selectedPrice');
+                                    print('selected : $selectedProduk');
                                   });
 
                                   // update TransaksiCubit sekaligus
@@ -122,6 +122,9 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                   context.read<TransaksiCubit>().setNominal(
                                     produk.hargaJual,
                                   );
+                                  context
+                                      .read<TransaksiCubit>()
+                                      .setBebasNominal(produk.bebasNominal);
                                 },
                           child: Container(
                             margin: const EdgeInsets.symmetric(

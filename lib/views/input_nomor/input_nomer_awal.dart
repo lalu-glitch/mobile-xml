@@ -44,7 +44,7 @@ class _InputNomorPageState extends State<InputNomorPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocBuilder<TransaksiCubit, TransaksiModel>(
+        child: BlocBuilder<TransaksiCubit, TransaksiHelperModel>(
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

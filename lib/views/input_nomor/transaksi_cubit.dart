@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/transaksi/transaksi_helper_model.dart';
 
-class TransaksiCubit extends Cubit<TransaksiModel> {
-  TransaksiCubit() : super(const TransaksiModel());
+class TransaksiCubit extends Cubit<TransaksiHelperModel> {
+  TransaksiCubit() : super(const TransaksiHelperModel());
 
   void setKodeproduk(String val) {
     emit(state.copyWith(kodeProduk: val));
@@ -25,16 +25,11 @@ class TransaksiCubit extends Cubit<TransaksiModel> {
     emit(state.copyWith(filename: val));
   }
 
-  TransaksiModel getData() {
-    return state;
+  void setBebasNominal(int val) {
+    emit(state.copyWith(bebasNominal: val));
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'kodeProduk': state.kodeProduk,
-      'tujuan': state.tujuan,
-      'namaProduk': state.namaProduk,
-      'total': state.total,
-    };
+  TransaksiHelperModel getData() {
+    return state;
   }
 }

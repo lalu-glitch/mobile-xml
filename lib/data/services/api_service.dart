@@ -79,6 +79,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
+        print(response.data);
         final jsonData = Map<String, dynamic>.from(response.data);
         if (jsonData['data'] is List) {
           final providers = (jsonData['data'] as List)

@@ -19,12 +19,14 @@ class Produk {
   final String namaProduk;
   final int hargaJual;
   final int gangguan;
+  final int bebasNominal;
 
   Produk({
     required this.kode_produk,
     required this.namaProduk,
     required this.hargaJual,
     required this.gangguan,
+    required this.bebasNominal,
   });
 
   factory Produk.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class Produk {
       namaProduk: json['nama_produk'] ?? '',
       hargaJual: json['harga_jual'] ?? 0,
       gangguan: json['gangguan'] ?? 0,
+      bebasNominal: json['bebas_nominal'] ?? 0,
     );
   }
 }

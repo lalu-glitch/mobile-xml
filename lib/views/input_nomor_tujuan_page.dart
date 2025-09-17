@@ -24,6 +24,7 @@ class InputNomorTujuanPage extends StatefulWidget {
 
 class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
   final TextEditingController _nomorController = TextEditingController();
+  final TextEditingController _bebasNominalController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +33,6 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
 
     final flowState = context.watch<FlowCubit>().state!;
     final flowCubit = context.read<FlowCubit>();
-    final iconItem = flowState.iconItem;
-    final int flow = flowState.flow;
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;
 
@@ -114,6 +113,31 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                   suffixIcon: const Icon(Icons.contact_page),
                 ),
               ),
+              SizedBox(height: Screen.kSize14),
+
+              Visibility(
+                visible: transaksi.bebasNominal == 1,
+                child: const Text("Masukkan Bebas Nominal"),
+              ),
+              Visibility(
+                visible: transaksi.bebasNominal == 1,
+                child: SizedBox(height: Screen.kSize8),
+              ),
+              Visibility(
+                visible: transaksi.bebasNominal == 1,
+                child: TextField(
+                  controller: _bebasNominalController,
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: InputDecoration(
+                    hintText: "Input Bebas Nominal",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    suffixIcon: const Icon(Icons.contact_page),
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -127,6 +151,14 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                 onPressed: () {
                   if (_nomorController.text.isEmpty) {
                     showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
+                    return;
+                  }
+                  if (transaksi.bebasNominal == 1 &&
+                      _bebasNominalController.text.isEmpty) {
+                    showErrorDialog(
+                      context,
+                      "Bebas nominal tidak boleh kosong",
+                    );
                     return;
                   }
 
