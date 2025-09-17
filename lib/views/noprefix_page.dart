@@ -68,10 +68,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
             }
             if (vm.error != null) {
               return Center(
-                child: Text(
-                  vm.error!,
-                  style: const TextStyle(color: Colors.red),
-                ),
+                child: Text(vm.error!, style: const TextStyle(color: kRed)),
               );
             }
             if (vm.providers.isEmpty) {
@@ -137,7 +134,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                   : kWhite,
                               border: Border.all(
                                 color: isGangguan
-                                    ? Colors.red
+                                    ? kRed
                                     : isSelected
                                     ? Colors.deepOrange
                                     : Colors.grey.shade300,
@@ -157,15 +154,13 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                           children: const [
                                             Icon(
                                               Icons.cancel,
-                                              color: Colors.red,
+                                              color: kRed,
                                               size: 14,
                                             ),
                                             SizedBox(width: 4),
                                             Text(
                                               "Gangguan",
-                                              style: TextStyle(
-                                                color: Colors.red,
-                                              ),
+                                              style: TextStyle(color: kRed),
                                             ),
                                           ],
                                         ),
@@ -174,7 +169,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: isGangguan
-                                              ? Colors.red
+                                              ? kRed
                                               : isSelected
                                               ? kWhite
                                               : Colors.black,
@@ -188,7 +183,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: isGangguan
-                                        ? Colors.red
+                                        ? kRed
                                         : isSelected
                                         ? kWhite
                                         : Colors.black,

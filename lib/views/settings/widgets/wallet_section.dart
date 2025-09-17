@@ -33,10 +33,7 @@ class WalletSection extends StatelessWidget {
             ),
             margin: const EdgeInsets.only(bottom: 12),
             child: ListTile(
-              leading: const Icon(
-                Icons.card_membership_sharp,
-                color: Colors.orange,
-              ),
+              leading: const Icon(Icons.card_membership_sharp, color: kOrange),
               title: const Text("Dompet Aplikasi"),
               trailing: AnimatedRotation(
                 turns: isExpanded ? 0.25 : 0,

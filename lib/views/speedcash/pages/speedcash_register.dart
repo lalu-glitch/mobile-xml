@@ -26,7 +26,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
       ),
       child: Consumer<SpeedcashVM>(
         builder: (context, vm, _) {
-          Future<void> _speedcashRegister() async {
+          Future<void> speedcashRegister() async {
             final nama = _namaCtrl.text.trim();
             final phone = _phoneCtrl.text.trim();
             final email = _emailCtrl.text.trim();
@@ -97,10 +97,10 @@ class SpeedcashRegisterPage extends StatelessWidget {
                             labelText: "Nama",
                             prefixIcon: const Icon(
                               Icons.person,
-                              color: Colors.orange,
+                              color: kOrange,
                             ),
                             filled: true,
-                            fillColor: Colors.orange.withOpacity(0.1),
+                            fillColor: kOrange.withOpacity(0.1),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
@@ -114,12 +114,9 @@ class SpeedcashRegisterPage extends StatelessWidget {
                           keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
                             labelText: "Phone",
-                            prefixIcon: const Icon(
-                              Icons.phone,
-                              color: Colors.orange,
-                            ),
+                            prefixIcon: const Icon(Icons.phone, color: kOrange),
                             filled: true,
-                            fillColor: Colors.orange.withOpacity(0.1),
+                            fillColor: kOrange.withOpacity(0.1),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
@@ -133,12 +130,9 @@ class SpeedcashRegisterPage extends StatelessWidget {
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             labelText: "Email",
-                            prefixIcon: const Icon(
-                              Icons.email,
-                              color: Colors.orange,
-                            ),
+                            prefixIcon: const Icon(Icons.email, color: kOrange),
                             filled: true,
-                            fillColor: Colors.orange.withOpacity(0.1),
+                            fillColor: kOrange.withOpacity(0.1),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
@@ -149,13 +143,13 @@ class SpeedcashRegisterPage extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: vm.isLoading ? null : _speedcashRegister,
+                            onPressed: vm.isLoading ? null : speedcashRegister,
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              backgroundColor: Colors.orange,
+                              backgroundColor: kOrange,
                               elevation: 1,
                             ),
                             child: vm.isLoading

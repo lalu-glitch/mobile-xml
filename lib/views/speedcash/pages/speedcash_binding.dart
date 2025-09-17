@@ -26,7 +26,7 @@ class SpeedcashBindingPage extends StatelessWidget {
       ),
       child: Consumer<SpeedcashVM>(
         builder: (context, vm, _) {
-          Future<void> _bindSpeedcash() async {
+          Future<void> bindSpeedcash() async {
             final phone = _phoneCtrl.text.trim();
             final merchantId = _merchantIdCtrl.text.trim();
 
@@ -100,10 +100,10 @@ class SpeedcashBindingPage extends StatelessWidget {
                               labelText: "Phone",
                               prefixIcon: const Icon(
                                 Icons.phone,
-                                color: Colors.orange,
+                                color: kOrange,
                               ),
                               filled: true,
-                              fillColor: Colors.orange.withOpacity(0.1),
+                              fillColor: kOrange.withOpacity(0.1),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide.none,
@@ -119,10 +119,10 @@ class SpeedcashBindingPage extends StatelessWidget {
                               labelText: "Merchant ID",
                               prefixIcon: const Icon(
                                 Icons.account_balance,
-                                color: Colors.orange,
+                                color: kOrange,
                               ),
                               filled: true,
-                              fillColor: Colors.orange.withOpacity(0.1),
+                              fillColor: kOrange.withOpacity(0.1),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide.none,
@@ -135,7 +135,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: vm.isLoading ? null : _bindSpeedcash,
+                              onPressed: vm.isLoading ? null : bindSpeedcash,
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 16,
@@ -143,7 +143,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                 ),
-                                backgroundColor: Colors.orange,
+                                backgroundColor: kOrange,
                                 elevation: 1,
                               ),
                               child: vm.isLoading

@@ -103,7 +103,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                         Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.orange.withAlpha(25),
+                            color: kOrange.withAlpha(25),
                           ),
                           child: Image.asset(
                             'assets/images/logo.png',
@@ -121,7 +121,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                           style: TextStyle(
                             fontSize: Screen.kSize24,
                             fontWeight: FontWeight.bold,
-                            color: Colors.orange,
+                            color: kOrange,
                           ),
                         ),
 
@@ -134,10 +134,10 @@ class _SendOtpPageState extends State<SendOtpPage> {
                             labelText: "Kode Agen",
                             prefixIcon: const Icon(
                               Icons.person,
-                              color: Colors.orange,
+                              color: kOrange,
                             ),
                             filled: true,
-                            fillColor: Colors.orange.withAlpha(25),
+                            fillColor: kOrange.withAlpha(25),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
@@ -153,12 +153,9 @@ class _SendOtpPageState extends State<SendOtpPage> {
                           keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
                             labelText: "Nomor WhatsApp",
-                            prefixIcon: const Icon(
-                              Icons.phone,
-                              color: Colors.orange,
-                            ),
+                            prefixIcon: const Icon(Icons.phone, color: kOrange),
                             filled: true,
-                            fillColor: Colors.orange.withAlpha(25),
+                            fillColor: kOrange.withAlpha(25),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
@@ -178,7 +175,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              backgroundColor: Colors.orange,
+                              backgroundColor: kOrange,
                               elevation: 1,
                             ),
                             child: _loading

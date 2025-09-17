@@ -20,7 +20,7 @@ class SettingCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
-        leading: Icon(icons, color: Colors.orange),
+        leading: Icon(icons, color: kOrange),
         title: Text(title),
         trailing: Icon(Icons.arrow_forward_ios, size: Screen.kSize18),
         onTap: onTap,

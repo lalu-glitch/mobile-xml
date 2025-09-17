@@ -128,13 +128,13 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(Icons.error, color: Colors.red, size: 64),
+        const Icon(Icons.error, color: kRed, size: 64),
         const SizedBox(height: 16),
         Text(
           (message != null && message.isNotEmpty)
               ? message
               : "Gangguan transaksi, Ulangi beberapa saat lagi.",
-          style: TextStyle(color: Colors.red, fontSize: Screen.kSize16),
+          style: TextStyle(color: kRed, fontSize: Screen.kSize16),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 20),
@@ -193,14 +193,14 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.error, color: Colors.red, size: 64),
+          const Icon(Icons.error, color: kRed, size: 64),
           const SizedBox(height: 16),
           Text(
             status?.keterangan ?? "GAGAL",
             style: TextStyle(
               fontSize: Screen.kSize18,
               fontWeight: FontWeight.bold,
-              color: Colors.red,
+              color: kRed,
             ),
             textAlign: TextAlign.center,
           ),

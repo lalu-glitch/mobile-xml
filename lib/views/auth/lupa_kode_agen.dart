@@ -102,7 +102,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                     Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.orange.withOpacity(0.2),
+                        color: kOrange.withOpacity(0.2),
                       ),
                       child: Image.asset(
                         'assets/images/logo.png',
@@ -117,7 +117,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                       style: TextStyle(
                         fontSize: Screen.kSize24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.orange,
+                        color: kOrange,
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -128,12 +128,9 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         labelText: "Nomor WhatsApp",
-                        prefixIcon: const Icon(
-                          Icons.phone,
-                          color: Colors.orange,
-                        ),
+                        prefixIcon: const Icon(Icons.phone, color: kOrange),
                         filled: true,
-                        fillColor: Colors.orange.withOpacity(0.1),
+                        fillColor: kOrange.withOpacity(0.1),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide.none,
@@ -152,7 +149,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          backgroundColor: Colors.orange,
+                          backgroundColor: kOrange,
                           elevation: 1,
                         ),
                         child: _loading

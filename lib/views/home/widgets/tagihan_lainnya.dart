@@ -40,9 +40,7 @@ class TagihanLainnya extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Center(
-              child: Icon(Icons.flash_on, color: Colors.orange),
-            ),
+            child: const Center(child: Icon(Icons.flash_on, color: kOrange)),
           ),
         ),
       ],

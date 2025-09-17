@@ -115,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.orange.withAlpha(25),
+                          color: kOrange.withAlpha(25),
                         ),
                         child: Image.asset(
                           'assets/images/logo.png',
@@ -133,7 +133,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(
                           fontSize: Screen.kSize24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.orange,
+                          color: kOrange,
                         ),
                       ),
                       //api/register
@@ -142,12 +142,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: _namaUsahaCtrl,
                         decoration: InputDecoration(
                           labelText: "Nama Usaha",
-                          prefixIcon: const Icon(
-                            Icons.store,
-                            color: Colors.orange,
-                          ),
+                          prefixIcon: const Icon(Icons.store, color: kOrange),
                           filled: true,
-                          fillColor: Colors.orange.withAlpha(25),
+                          fillColor: kOrange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -161,12 +158,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: _namaPemilikCtrl,
                         decoration: InputDecoration(
                           labelText: "Nama Pemilik",
-                          prefixIcon: const Icon(
-                            Icons.person,
-                            color: Colors.orange,
-                          ),
+                          prefixIcon: const Icon(Icons.person, color: kOrange),
                           filled: true,
-                          fillColor: Colors.orange.withAlpha(25),
+                          fillColor: kOrange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -179,12 +173,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: _noWACtrl,
                         decoration: InputDecoration(
                           labelText: "Nomer Whatsapp",
-                          prefixIcon: const Icon(
-                            Icons.phone,
-                            color: Colors.orange,
-                          ),
+                          prefixIcon: const Icon(Icons.phone, color: kOrange),
                           filled: true,
-                          fillColor: Colors.orange.withAlpha(25),
+                          fillColor: kOrange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -199,10 +190,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           labelText: "Alamat",
                           prefixIcon: const Icon(
                             Icons.pin_drop,
-                            color: Colors.orange,
+                            color: kOrange,
                           ),
                           filled: true,
-                          fillColor: Colors.orange.withAlpha(25),
+                          fillColor: kOrange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -216,7 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: InputDecoration(
                           labelText: "Provinsi",
                           filled: true,
-                          fillColor: Colors.orange.withAlpha(25),
+                          fillColor: kOrange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -230,7 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: InputDecoration(
                           labelText: "Kabupaten",
                           filled: true,
-                          fillColor: Colors.orange.withAlpha(25),
+                          fillColor: kOrange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -244,7 +235,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: InputDecoration(
                           labelText: "Kecamatan",
                           filled: true,
-                          fillColor: Colors.orange.withAlpha(25),
+                          fillColor: kOrange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -257,12 +248,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: _kodeReferralCtrl,
                         decoration: InputDecoration(
                           labelText: "Kode Referral (Optional)",
-                          prefixIcon: const Icon(
-                            Icons.code,
-                            color: Colors.orange,
-                          ),
+                          prefixIcon: const Icon(Icons.code, color: kOrange),
                           filled: true,
-                          fillColor: Colors.orange.withAlpha(25),
+                          fillColor: kOrange.withAlpha(25),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
@@ -281,7 +269,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
-                            backgroundColor: Colors.orange,
+                            backgroundColor: kOrange,
                             elevation: 1,
                           ),
                           child: _loading

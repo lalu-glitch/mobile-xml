@@ -40,9 +40,7 @@ class DetailTransaksiPage extends StatelessWidget {
                 color: isSuccess ? Colors.green[600] : Colors.red[600],
                 boxShadow: [
                   BoxShadow(
-                    color: (isSuccess ? Colors.green : Colors.red).withOpacity(
-                      0.3,
-                    ),
+                    color: (isSuccess ? Colors.green : kRed).withOpacity(0.3),
                     blurRadius: 10,
                     offset: const Offset(0, 5),
                   ),
@@ -61,7 +59,7 @@ class DetailTransaksiPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: Screen.kSize24,
                 fontWeight: FontWeight.bold,
-                color: isSuccess ? Colors.green : Colors.red,
+                color: isSuccess ? Colors.green : kRed,
               ),
             ),
             const SizedBox(height: 24),

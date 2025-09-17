@@ -116,6 +116,21 @@ class _SettingsPageState extends State<SettingsPage> {
                         onTap: () {},
                       ),
 
+                      SettingCard(
+                        title: 'Webview',
+                        icons: Icons.play_arrow_rounded,
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/webView',
+                            arguments: {
+                              'url': 'https://youtube.com',
+                              'title': 'Youtube',
+                            },
+                          );
+                        },
+                      ),
+
                       const Divider(color: kNeutral50),
                       SizedBox(height: Screen.kSize11),
 
@@ -132,7 +147,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
                       const Divider(height: 32, thickness: 1),
 
-                      /// --- LOGOUT ---
+                      /// --- LOGOUT --- ///
                       LogoutCard(onTap: _showLogoutBottomSheet),
                     ],
                   ),

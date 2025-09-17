@@ -196,7 +196,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                         : kWhite,
                                     border: Border.all(
                                       color: isGangguan
-                                          ? Colors.red
+                                          ? kRed
                                           : isSelected
                                           ? Colors.deepOrange
                                           : Colors.grey.shade300,
@@ -217,14 +217,14 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                                 children: [
                                                   Icon(
                                                     Icons.cancel,
-                                                    color: Colors.red,
+                                                    color: kRed,
                                                     size: 14,
                                                   ),
                                                   SizedBox(width: 4),
                                                   Text(
                                                     "Gangguan",
                                                     style: TextStyle(
-                                                      color: Colors.red,
+                                                      color: kRed,
                                                       fontSize: Screen.kSize12,
                                                     ),
                                                   ),
@@ -235,7 +235,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: isGangguan
-                                                    ? Colors.red
+                                                    ? kRed
                                                     : isSelected
                                                     ? kWhite
                                                     : Colors.black,
@@ -249,7 +249,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: isGangguan
-                                              ? Colors.red
+                                              ? kRed
                                               : isSelected
                                               ? kWhite
                                               : Colors.black,

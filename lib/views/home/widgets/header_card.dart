@@ -151,7 +151,7 @@ class HeaderCard extends StatelessWidget {
                               mainAxisSize:
                                   MainAxisSize.min, // biar ukurannya pas
                               children: [
-                                const Icon(Icons.star, color: Colors.orange),
+                                const Icon(Icons.star, color: kOrange),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -195,7 +195,7 @@ class HeaderCard extends StatelessWidget {
                               ), // biar ada efek ripple bulat
                               child: Row(
                                 children: [
-                                  Icon(Icons.history, color: Colors.orange),
+                                  Icon(Icons.history, color: kOrange),
                                   Text(
                                     " Riwayat",
                                     style: TextStyle(fontSize: Screen.kSize12),

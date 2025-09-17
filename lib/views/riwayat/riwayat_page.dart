@@ -22,9 +22,9 @@ class RiwayatTransaksiPage extends StatelessWidget {
       case 52:
       case 53:
       case 55:
-        return Colors.red;
+        return kRed;
       default:
-        return Colors.orange;
+        return kOrange;
     }
   }
 
