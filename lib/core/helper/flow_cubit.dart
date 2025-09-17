@@ -8,7 +8,9 @@ class FlowCubit extends Cubit<FlowStateModel?> {
   FlowCubit() : super(null);
 
   void startFlow(int flowId, IconItem iconItem) {
+    resetFlow();
     final sequence = pageSequences[flowId] ?? [];
+    print("Start flow $flowId dengan sequence $sequence");
     emit(
       FlowStateModel(
         flow: flowId,
@@ -22,6 +24,10 @@ class FlowCubit extends Cubit<FlowStateModel?> {
   void nextPage() {
     if (state == null) return;
     if (state!.currentIndex + 1 < state!.sequence.length) {
+      final newIndex = state!.currentIndex + 1;
+      print(
+        "Flow ${state!.flow} nextPage → index $newIndex → ${state!.sequence[newIndex]}",
+      );
       emit(state!.copyWith(currentIndex: state!.currentIndex + 1));
     }
   }

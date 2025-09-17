@@ -8,6 +8,7 @@ import '../../views/input_nomor/input_nomer_awal.dart';
 import '../../views/input_nomor/input_nomer_mid.dart';
 import '../../views/komisi/pages/komisi_pages.dart';
 import '../../views/multi_sub_kategori_page.dart';
+import '../../views/register_page.dart';
 import '../../views/sub_kategori_page.dart';
 import '../utils/webview.dart';
 import '../../views/analytics/analytics_page.dart';
@@ -39,7 +40,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/sendOtp': (context) => (SendOtpPage()),
   '/lupaKodeAgen': (context) => (LupaKodeAgenPage()),
   '/verifyOtp': (context) => (VerifyOtpPage()),
-  '/registerpage': (context) => (SettingsPage()),
+  '/registerpage': (context) => (RegisterPage()),
   '/homepage': (context) => authGuardWrapper(HomePage()),
   '/settings': (context) => authGuardWrapper(SettingsPage()),
   '/shops': (context) => authGuardWrapper(const ShopsPage()),

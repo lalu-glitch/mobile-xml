@@ -64,6 +64,10 @@ class LayananSection extends StatelessWidget {
                     onTap: () {
                       // Ambil sequence berdasarkan flow
                       final sequence = pageSequences[iconItem.flow] ?? [];
+
+                      print("=== onTap icon ===");
+                      print("Flow ${iconItem.flow} punya sequence $sequence");
+
                       if (sequence.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -81,22 +85,18 @@ class LayananSection extends StatelessWidget {
                       //simpan filename buat dipake di prefix page
                       transaksi.setFileName(iconItem.filename);
 
+                      // langsung cek state cubit setelah startFlow
+                      final flowCubitState = context.read<FlowCubit>().state;
+                      print(
+                        "FlowCubit state setelah startFlow: "
+                        "flow=${flowCubitState?.flow}, "
+                        "index=${flowCubitState?.currentIndex}, "
+                        "sequence=${flowCubitState?.sequence}",
+                      );
+
                       // ambil halaman pertama dari sequence
                       final firstPage = sequence[0];
-
                       Navigator.pushNamed(context, pageRoutes[firstPage]!);
-
-                      // Navigate ke page pertama dari sequence
-                      // Navigator.pushNamed(
-                      //   context,
-                      //   pageRoutes[sequence[0]]!,
-                      //   arguments: {
-                      //     'flow': iconItem.flow,
-                      //     'iconItem': iconItem,
-                      //     'currentIndex': 0,
-                      //     'sequence': sequence,
-                      //   },
-                      // );
                     },
                     child: Column(
                       children: [

@@ -18,14 +18,18 @@ class _InputNomorPageState extends State<InputNomorPage> {
   final TextEditingController _nomorController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    // // Ambil arguments dari Navigator
-    // final args =
-    //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    // final sequence = args['sequence'] as List<AppPage>;
-    // final currentIndex = args['currentIndex'] as int;
-    // final flow = args['flow'];
+  void initState() {
+    super.initState();
+    final flowState = context.read<FlowCubit>().state;
+    print(
+      "Init InputNomorAwalPage → flow=${flowState?.flow}, "
+      "index=${flowState?.currentIndex}, "
+      "sequence=${flowState?.sequence}",
+    );
+  }
 
+  @override
+  Widget build(BuildContext context) {
     final flowState = context.watch<FlowCubit>().state;
 
     return Scaffold(
@@ -75,7 +79,7 @@ class _InputNomorPageState extends State<InputNomorPage> {
                         flowState.sequence.length) {
                       final nextPage =
                           flowState.sequence[flowState.currentIndex + 1];
-
+                      // print('page selanjutnya: ${nextPage.toString()}');
                       // update state FlowCubit (naik 1 index)
                       context.read<FlowCubit>().nextPage();
 
