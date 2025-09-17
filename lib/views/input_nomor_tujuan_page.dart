@@ -170,11 +170,9 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                     final nextPage =
                         flowState.sequence[flowState.currentIndex + 1];
 
-                    flowCubit.previousPage();
-
+                    flowCubit.nextPage();
                     Navigator.pushNamed(context, pageRoutes[nextPage]!);
                   } else {
-                    // halaman terakhir → langsung ke konfirmasi
                     Navigator.pushNamed(context, '/konfirmasiPembayaran');
                   }
                 },

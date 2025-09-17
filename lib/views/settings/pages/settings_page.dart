@@ -116,18 +116,6 @@ class _SettingsPageState extends State<SettingsPage> {
                         onTap: () {},
                       ),
 
-                      SettingCard(
-                        title: 'Webview',
-                        icons: Icons.play_arrow_rounded,
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            '/webView',
-                            arguments: {'url': 'google.com', 'title': ''},
-                          );
-                        },
-                      ),
-
                       const Divider(color: kNeutral50),
                       SizedBox(height: Screen.kSize11),
 

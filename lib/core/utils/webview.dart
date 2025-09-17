@@ -20,10 +20,11 @@ class _WebviewPageState extends State<WebviewPage> {
   String url = '';
   String title = '';
 
+  final String finalUrl = 'https://m.youtube.com/';
+
   @override
   void initState() {
     super.initState();
-
     // Delay untuk build page dulu sebelum init WebView
     Future.delayed(const Duration(milliseconds: 1000), () {
       final args =
@@ -73,10 +74,23 @@ class _WebviewPageState extends State<WebviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_currentUrl == finalUrl) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushNamed(
+          context,
+          '/transaksiProses',
+          arguments: {
+            'tujuan': '085239905885',
+            'kode_produk': 'CEKDANA',
+            'kode_dompet': 'SPEEDCASH',
+          },
+        );
+      });
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _currentUrl,
+          title,
           style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
         ),
         backgroundColor: kOrange,
@@ -92,6 +106,11 @@ class _WebviewPageState extends State<WebviewPage> {
         children: [
           if (_controller != null) WebViewWidget(controller: _controller!),
           if (isLoading) const Center(child: CircularProgressIndicator()),
+          if (_currentUrl == finalUrl)
+            Container(
+              color: Colors.white,
+              child: const Center(child: Text("Redirecting...")),
+            ),
         ],
       ),
     );

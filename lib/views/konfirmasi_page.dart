@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
-import 'package:xmlapp/core/helper/flow_cubit.dart';
 import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
 import '../core/helper/constant_finals.dart';
 import '../core/helper/currency.dart';
@@ -26,22 +25,7 @@ class KonfirmasiPembayaranPage extends StatefulWidget {
 }
 
 class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
-  // late String tujuan;
-  // late String kode_produk;
-  // late String namaProduk;
-  // late double total;
   final logger = Logger();
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // final args =
-    //     ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    // tujuan = args['tujuan'];
-    // kode_produk = args['kode_produk'];
-    // namaProduk = args['namaProduk'];
-    // total = (args['total'] as num).toDouble(); // <- aman untuk int/double
-  }
 
   String _selectedMethod = "SALDO"; // Default pilihan
   @override
@@ -50,9 +34,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
     final saldo = balanceVM.userBalance?.saldo ?? 0;
     final eWallet = balanceVM.userBalance?.ewallet;
-
-    final flowState = context.read<FlowCubit>().state!;
-    final flowCubit = context.read<FlowCubit>();
     final transaksi = context.read<TransaksiCubit>().getData();
     final methods = [
       // generate dari eWallet list
@@ -75,12 +56,8 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
     return WillPopScope(
       onWillPop: () async {
-        if (flowState.currentIndex > 0) {
-          flowCubit.previousPage();
-          Navigator.pop(context);
-          return false;
-        }
-        return true;
+        Navigator.pop(context);
+        return false;
       },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
@@ -149,6 +126,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                         setState(() {
                           _selectedMethod = (method["label"] as String? ?? '');
                         });
+                        print('metode pembayaran: $_selectedMethod');
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -219,6 +197,18 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                       );
                       return;
                     }
+                    if (_selectedMethod == 'SPEEDCASH') {
+                      Navigator.pushNamed(
+                        context,
+                        '/webView',
+                        arguments: {
+                          'url': 'google.com',
+                          'title': 'Bayar Speedcash',
+                        },
+                      );
+                      return;
+                    }
+
                     final selected = methods.firstWhere(
                       (m) => m["label"] == _selectedMethod,
                       orElse: () => {},
@@ -226,9 +216,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
                     final selectedSaldo =
                         (selected["secondaryVal"] as num?)?.toDouble() ?? 0;
-
-                    // logger.d("total: $total");
-                    // logger.d("selectedSaldo: $selectedSaldo");
 
                     if (transaksi.total! > selectedSaldo) {
                       if (selectedSaldo <= 0) {
