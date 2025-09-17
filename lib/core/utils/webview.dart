@@ -16,7 +16,7 @@ class WebviewPage extends StatefulWidget {
 class _WebviewPageState extends State<WebviewPage> {
   WebViewController? _controller;
   bool isLoading = true;
-
+  String _currentUrl = '';
   String url = '';
   String title = '';
 
@@ -28,7 +28,6 @@ class _WebviewPageState extends State<WebviewPage> {
     Future.delayed(const Duration(milliseconds: 1000), () {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
       String tempUrl = args?['url'] ?? widget.url ?? '';
       String tempTitle = args?['title'] ?? widget.title ?? 'Webview';
 
@@ -46,9 +45,24 @@ class _WebviewPageState extends State<WebviewPage> {
         ..setJavaScriptMode(JavaScriptMode.unrestricted)
         ..setNavigationDelegate(
           NavigationDelegate(
-            onPageFinished: (_) {
+            onPageStarted: (String url) {
+              setState(() {
+                isLoading = true;
+              });
+            },
+            onNavigationRequest: (NavigationRequest req) {
+              setState(() {
+                _currentUrl = req.url; // Simpan URL baru saat navigasi
+              });
+              print('Navigasi ke: $_currentUrl');
+              return NavigationDecision.navigate;
+            },
+            onPageFinished: (String url) {
               if (mounted) {
-                setState(() => isLoading = false);
+                setState(() {
+                  isLoading = false;
+                });
+                print('Halaman selesai dimuat: $_currentUrl');
               }
             },
           ),
@@ -62,7 +76,7 @@ class _WebviewPageState extends State<WebviewPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          title,
+          _currentUrl,
           style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
         ),
         backgroundColor: kOrange,
@@ -70,11 +84,7 @@ class _WebviewPageState extends State<WebviewPage> {
         leading: IconButton(
           icon: const Icon(Icons.close), // ikon X
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/', // ganti ke route homepage
-              (route) => false, // hapus semua route sebelumnya
-            );
+            Navigator.pop(context);
           },
         ),
       ),

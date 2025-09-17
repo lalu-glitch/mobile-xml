@@ -123,10 +123,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           Navigator.pushNamed(
                             context,
                             '/webView',
-                            arguments: {
-                              'url': 'https://youtube.com',
-                              'title': 'Youtube',
-                            },
+                            arguments: {'url': 'google.com', 'title': ''},
                           );
                         },
                       ),
