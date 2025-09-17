@@ -49,6 +49,7 @@ class _SendOtpPageState extends State<SendOtpPage> {
           "username": username,
           "nomor": nomor,
           "type": result["data"]['data']["type"],
+          "expiresAt": result["data"]['data']["expiresAt"],
         },
       );
     } else {

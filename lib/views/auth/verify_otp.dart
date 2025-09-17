@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../core/helper/constant_finals.dart';
@@ -18,8 +20,56 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
 
   //state
   bool _loading = false;
+  Timer? _timer;
+  int _start = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final String expire = args["expiresAt"];
+
+    // Hitung durasi dari sekarang hingga waktu kedaluwarsa
+    final expiresAt = DateTime.parse(expire);
+    _start = expiresAt.difference(DateTime.now()).inSeconds;
+
+    // Mulai timer hanya jika sisa waktu lebih dari 0
+    if (_start > 0) {
+      startTimer();
+    }
+  }
+
+  void startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      if (_start == 0) {
+        setState(() {
+          timer.cancel();
+        });
+      } else {
+        setState(() {
+          _start--;
+        });
+      }
+    });
+  }
 
   // Methods
+  String formatTime(int seconds) {
+    int minutes = seconds ~/ 60;
+    int remainingSeconds = seconds % 60;
+
+    String minutesStr = minutes.toString().padLeft(2, '0');
+    String secondsStr = remainingSeconds.toString().padLeft(2, '0');
+
+    return '$minutesStr:$secondsStr';
+  }
+
   /// Kirim request verifikasi OTP ke server
   Future<void> _doVerify(String kodeReseller, String type) async {
     if (_otpCtrl.text.trim().isEmpty) {
@@ -51,8 +101,9 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
     final type = args["type"];
     final kodeReseller = args["kode_reseller"];
     final nomor = args["nomor"];
+    final String expire = args["expiresAt"];
 
-    print("Kode Reseller dan Type : ${kodeReseller.runtimeType} --- $type");
+    print(expire);
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: Center(
@@ -98,6 +149,13 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                       color: Colors.black54,
                     ),
                   ),
+                  Text(
+                    "OTP berlaku ${formatTime(_start)}",
+                    style: TextStyle(
+                      fontSize: Screen.kSize14,
+                      color: _start == 0 ? kRed : Colors.black54,
+                    ),
+                  ),
                   const SizedBox(height: 20),
                   // TextField OTP modern
                   TextField(
@@ -139,7 +197,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: _loading
+                      onPressed: _loading || _start == 0
                           ? null
                           : () => _doVerify(
                               type == "register" ? kodeReseller : username,
@@ -150,7 +208,9 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        backgroundColor: Colors.green,
+                        backgroundColor: _start == 0
+                            ? Colors.grey
+                            : Colors.green,
                         elevation: 1,
                       ),
                       child: _loading
@@ -189,5 +249,11 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 }
