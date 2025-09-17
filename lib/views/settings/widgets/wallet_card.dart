@@ -9,7 +9,7 @@ import '../cubit/unbind_ewallet_cubit.dart';
 class WalletCard extends StatelessWidget {
   final Ewallet ewallet;
 
-  const WalletCard({required this.ewallet});
+  const WalletCard({super.key, required this.ewallet});
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +83,9 @@ class WalletCard extends StatelessWidget {
                               routeName =
                                   '/'; // <--- kalo gaada walet bakal dilempar ke homepage (case sementara)
                           }
-                          Navigator.pushNamedAndRemoveUntil(
+                          Navigator.pushNamed(
                             context,
                             routeName,
-                            (route) => false,
                             arguments: {'ewallet': ewallet},
                           );
                         },

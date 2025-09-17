@@ -106,10 +106,6 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     selectedProductCode = produk.kode_produk;
                                     selectedPrice = produk.hargaJual.toDouble();
                                     selectedProduk = produk;
-
-                                    print('selected : $selectedProductCode');
-                                    print('selected : $selectedPrice');
-                                    print('selected : $selectedProduk');
                                   });
 
                                   // update TransaksiCubit sekaligus

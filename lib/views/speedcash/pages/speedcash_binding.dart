@@ -56,125 +56,131 @@ class SpeedcashBindingPage extends StatelessWidget {
             }
           }
 
-          return Scaffold(
-            backgroundColor: Colors.grey[100],
-            appBar: AppBar(
-              title: const Text(
-                'Speedcash Binding',
-                style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
+          return PopScope(
+            canPop: true,
+            child: Scaffold(
+              backgroundColor: Colors.grey[100],
+              appBar: AppBar(
+                title: const Text(
+                  'Speedcash Binding',
+                  style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
+                ),
+                leading: BackButton(onPressed: () => Navigator.pop(context)),
+                backgroundColor: kOrange,
+                iconTheme: const IconThemeData(color: kWhite),
               ),
-              backgroundColor: kOrange,
-              iconTheme: const IconThemeData(color: kWhite),
-            ),
-            body: Center(
-              child: SingleChildScrollView(
-                child: Card(
-                  elevation: 1,
-                  color: kWhite,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Padding(
-                    padding: const EdgeInsets.all(18),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Logo
-                        Image.asset(
-                          'assets/images/logo-speedcash.png',
-                          width: 256,
-                          height: 80,
-                          fit: BoxFit.contain,
-                        ),
-                        const SizedBox(height: 24),
-
-                        // Phone
-                        TextField(
-                          controller: _phoneCtrl,
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            labelText: "Phone",
-                            prefixIcon: const Icon(
-                              Icons.phone,
-                              color: Colors.orange,
-                            ),
-                            filled: true,
-                            fillColor: Colors.orange.withOpacity(0.1),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide.none,
-                            ),
+              body: Center(
+                child: SingleChildScrollView(
+                  child: Card(
+                    elevation: 1,
+                    color: kWhite,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Padding(
+                      padding: const EdgeInsets.all(18),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Logo
+                          Image.asset(
+                            'assets/images/logo-speedcash.png',
+                            width: 256,
+                            height: 80,
+                            fit: BoxFit.contain,
                           ),
-                        ),
-                        const SizedBox(height: 16),
+                          const SizedBox(height: 24),
 
-                        // Merchant ID
-                        TextField(
-                          controller: _merchantIdCtrl,
-                          decoration: InputDecoration(
-                            labelText: "Merchant ID",
-                            prefixIcon: const Icon(
-                              Icons.account_balance,
-                              color: Colors.orange,
-                            ),
-                            filled: true,
-                            fillColor: Colors.orange.withOpacity(0.1),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 28),
-
-                        // Button
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: vm.isLoading ? null : _bindSpeedcash,
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                          // Phone
+                          TextField(
+                            controller: _phoneCtrl,
+                            keyboardType: TextInputType.phone,
+                            decoration: InputDecoration(
+                              labelText: "Phone",
+                              prefixIcon: const Icon(
+                                Icons.phone,
+                                color: Colors.orange,
                               ),
-                              backgroundColor: Colors.orange,
-                              elevation: 1,
+                              filled: true,
+                              fillColor: Colors.orange.withOpacity(0.1),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
-                            child: vm.isLoading
-                                ? const SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: kWhite,
-                                    ),
-                                  )
-                                : Text(
-                                    "Bind Speedcash",
-                                    style: TextStyle(
-                                      fontSize: Screen.kSize18,
-                                      fontWeight: FontWeight.w600,
-                                      color: kWhite,
-                                    ),
-                                  ),
                           ),
-                        ),
-                        const SizedBox(height: 12),
+                          const SizedBox(height: 16),
 
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/speedcashRegisterPage',
-                            );
-                          },
-                          child: Text(
-                            "Belum punya akun ? Buat di sini.",
-                            style: TextStyle(color: kOrange),
+                          // Merchant ID
+                          TextField(
+                            controller: _merchantIdCtrl,
+                            decoration: InputDecoration(
+                              labelText: "Merchant ID",
+                              prefixIcon: const Icon(
+                                Icons.account_balance,
+                                color: Colors.orange,
+                              ),
+                              filled: true,
+                              fillColor: Colors.orange.withOpacity(0.1),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 28),
+
+                          // Button
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: vm.isLoading ? null : _bindSpeedcash,
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                backgroundColor: Colors.orange,
+                                elevation: 1,
+                              ),
+                              child: vm.isLoading
+                                  ? const SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: kWhite,
+                                      ),
+                                    )
+                                  : Text(
+                                      "Bind Speedcash",
+                                      style: TextStyle(
+                                        fontSize: Screen.kSize18,
+                                        fontWeight: FontWeight.w600,
+                                        color: kWhite,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/speedcashRegisterPage',
+                              );
+                            },
+                            child: Text(
+                              "Belum punya akun ? Buat di sini.",
+                              style: TextStyle(color: kOrange),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

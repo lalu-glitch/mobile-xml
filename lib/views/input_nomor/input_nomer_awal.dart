@@ -5,6 +5,7 @@ import 'package:xmlapp/data/models/transaksi/transaksi_helper_model.dart';
 
 import '../../core/helper/dynamic_app_page.dart';
 import '../../core/helper/flow_cubit.dart';
+import '../../core/utils/error_dialog.dart';
 import 'transaksi_cubit.dart';
 
 class InputNomorPage extends StatefulWidget {
@@ -16,17 +17,6 @@ class InputNomorPage extends StatefulWidget {
 
 class _InputNomorPageState extends State<InputNomorPage> {
   final TextEditingController _nomorController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    final flowState = context.read<FlowCubit>().state;
-    print(
-      "Init InputNomorAwalPage → flow=${flowState?.flow}, "
-      "index=${flowState?.currentIndex}, "
-      "sequence=${flowState?.sequence}",
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +67,15 @@ class _InputNomorPageState extends State<InputNomorPage> {
                     // cek kalau masih ada halaman berikutnya
                     if (flowState!.currentIndex + 1 <
                         flowState.sequence.length) {
+                      if (_nomorController.text.isEmpty) {
+                        showErrorDialog(
+                          context,
+                          "Nomor tujuan tidak boleh kosong",
+                        );
+                        return;
+                      }
                       final nextPage =
                           flowState.sequence[flowState.currentIndex + 1];
-                      // print('page selanjutnya: ${nextPage.toString()}');
                       // update state FlowCubit (naik 1 index)
                       context.read<FlowCubit>().nextPage();
 

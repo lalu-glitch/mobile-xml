@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/helper/dynamic_app_page.dart';
+import '../../core/helper/flow_cubit.dart';
+import '../../core/utils/error_dialog.dart';
 
 class InputNomorMidPage extends StatefulWidget {
   const InputNomorMidPage({super.key});
@@ -15,13 +18,7 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Ambil arguments dari Navigator
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final sequence = args['sequence'] as List<AppPage>;
-    final currentIndex = args['currentIndex'] as int;
-    final flow = args['flow'];
-
+    final flowState = context.watch<FlowCubit>().state;
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -63,20 +60,17 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
               ),
               onPressed: () {
                 // cek kalau masih ada halaman berikutnya
-                if (currentIndex + 1 < sequence.length) {
-                  final nextPage = sequence[currentIndex + 1];
+                if (flowState!.currentIndex + 1 < flowState.sequence.length) {
+                  if (_nomorController.text.isEmpty) {
+                    showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
+                    return;
+                  }
+                  final nextPage =
+                      flowState.sequence[flowState.currentIndex + 1];
 
-                  Navigator.pushNamed(
-                    context,
-                    pageRoutes[nextPage]!,
-                    arguments: {
-                      'flow': flow,
-                      'iconItem': args['iconItem'],
-                      'currentIndex': currentIndex + 1,
-                      'sequence': sequence,
-                      'nomor': _nomorController.text, // kirim input nomor
-                    },
-                  );
+                  context.read<FlowCubit>().nextPage();
+
+                  Navigator.pushNamed(context, pageRoutes[nextPage]!);
                 } else {
                   // sudah halaman terakhir -> lakukan action (misal submit)
                   ScaffoldMessenger.of(

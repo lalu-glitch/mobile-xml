@@ -82,6 +82,7 @@ class WalletSection extends StatelessWidget {
                       itemCount: ewallets!.length,
                       itemBuilder: (context, index) {
                         final ewallet = ewallets![index];
+
                         return WalletCard(ewallet: ewallet);
                       },
                     ),
