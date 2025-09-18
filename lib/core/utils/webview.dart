@@ -65,15 +65,7 @@ class _WebviewPageState extends State<WebviewPage> {
                 });
               }
               if (!_hasRedirected && _currentUrl == finalUrl) {
-                Navigator.pushReplacementNamed(
-                  context,
-                  '/transaksiProses',
-                  arguments: {
-                    'tujuan': '085239905885', //hardcode dulu
-                    'kode_produk': 'CEKDANA', //hardcode dulu
-                    'kode_dompet': 'SPEEDCASH', //hardcode dulu
-                  },
-                );
+                Navigator.pushReplacementNamed(context, '/transaksiProses');
               }
             },
           ),

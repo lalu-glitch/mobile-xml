@@ -93,21 +93,21 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                     children: [
                       ...produkList.map((produk) {
                         final bool isSelected =
-                            selectedProductCode == produk.kode_produk;
+                            selectedProductCode == produk.kodeProduk;
                         final bool isGangguan = produk.gangguan == 1;
                         return GestureDetector(
                           onTap: isGangguan
                               ? null
                               : () {
                                   setState(() {
-                                    selectedProductCode = produk.kode_produk;
+                                    selectedProductCode = produk.kodeProduk;
                                     selectedPrice = produk.hargaJual.toDouble();
                                     selectedProduk = produk;
                                   });
 
                                   // update TransaksiCubit sekaligus
                                   context.read<TransaksiCubit>().setKodeproduk(
-                                    produk.kode_produk,
+                                    produk.kodeProduk,
                                   );
                                   context.read<TransaksiCubit>().setNamaProduk(
                                     produk.namaProduk,

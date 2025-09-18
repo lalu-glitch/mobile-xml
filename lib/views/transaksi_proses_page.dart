@@ -8,6 +8,8 @@ import '../core/utils/error_dialog.dart';
 import '../viewmodels/transaksi_viewmodel.dart';
 import 'package:logger/logger.dart';
 
+import 'input_nomor/transaksi_cubit.dart';
+
 class TransaksiProsesPage extends StatefulWidget {
   const TransaksiProsesPage({
     super.key,
@@ -20,35 +22,23 @@ class TransaksiProsesPage extends StatefulWidget {
 }
 
 class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
-  late String tujuan;
-  late String kode_produk;
-  late String kode_dompet;
   bool _isInit = false;
-
   final logger = Logger();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isInit) {
-      final args =
-          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      tujuan = args['tujuan'];
-      kode_produk = args['kode_produk'];
-      if (args['kode_dompet'] != null) {
-        kode_dompet = args['kode_dompet'] as String;
-      } else {
-        kode_dompet = "";
-      }
+      final transaksi = context.read<TransaksiCubit>().getData();
       _isInit = true;
 
       // langsung panggil proses transaksi
       Future.microtask(() {
         if (mounted) {
           context.read<TransaksiViewModel>().prosesTransaksi(
-            tujuan,
-            kode_produk,
-            kode_dompet,
+            transaksi.tujuan!,
+            transaksi.kodeProduk!,
+            transaksi.kodeDompet!,
           );
         }
       });

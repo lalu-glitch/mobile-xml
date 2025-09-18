@@ -167,7 +167,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                           children: [
                             ...produkList.map((produk) {
                               final bool isSelected =
-                                  selectedProductCode == produk.kode_produk;
+                                  selectedProductCode == produk.kodeProduk;
                               final bool isGangguan = produk.gangguan == 1;
 
                               return GestureDetector(
@@ -275,7 +275,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                 builder: (context, vm, child) {
                   final selectedProduk = vm.providers
                       .expand((p) => p.produk)
-                      .where((p) => p.kode_produk == selectedProductCode)
+                      .where((p) => p.kodeProduk == selectedProductCode)
                       .firstOrNull;
 
                   if (selectedProduk == null) return const SizedBox.shrink();
@@ -323,7 +323,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                   'currentIndex': currentIndex + 1,
                                   'sequence': sequence,
                                   'nomorTujuan': nomorTujuan, // Pass data baru
-                                  'kode_produk': selectedProduk.kode_produk,
+                                  'kode_produk': selectedProduk.kodeProduk,
                                   'namaProduk': selectedProduk.namaProduk,
                                   'total': selectedProduk.hargaJual.toDouble(),
                                 },
@@ -335,7 +335,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                 '/konfirmasiPembayaran',
                                 arguments: {
                                   'tujuan': nomorTujuan,
-                                  'kode_produk': selectedProduk.kode_produk,
+                                  'kode_produk': selectedProduk.kodeProduk,
                                   'namaProduk': selectedProduk.namaProduk,
                                   'total': selectedProduk.hargaJual.toDouble(),
                                 },

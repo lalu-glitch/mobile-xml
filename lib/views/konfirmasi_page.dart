@@ -174,6 +174,8 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
   /// Tombol Bayar
   Widget _buildPayButton(List<PaymentMethod> methods, dynamic transaksi) {
+    final sendTransaksi = context.read<TransaksiCubit>();
+
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -188,6 +190,8 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
         ),
         onPressed: () {
           final selected = methods.firstWhere((m) => m.nama == _selectedMethod);
+
+          sendTransaksi.setKodeDompet(selected.kodeDompet!);
 
           // case khusus SPEEDCASH → buka WebView
           if (selected.nama == 'SPEEDCASH') {
@@ -212,11 +216,11 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               context,
               '/transaksiProses',
               (route) => false,
-              arguments: {
-                'tujuan': transaksi.tujuan,
-                'kode_produk': transaksi.kodeProduk,
-                'kode_dompet': selected.kodeDompet,
-              },
+              // arguments: {
+              //   'tujuan': transaksi.tujuan,
+              //   'kode_produk': transaksi.kodeProduk,
+              //   'kode_dompet': selected.kodeDompet,
+              // },
             );
           }
         },

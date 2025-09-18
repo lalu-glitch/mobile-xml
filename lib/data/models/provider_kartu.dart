@@ -15,14 +15,14 @@ class ProviderKartu {
 }
 
 class Produk {
-  final String kode_produk;
+  final String kodeProduk;
   final String namaProduk;
   final int hargaJual;
   final int gangguan;
-  final int bebasNominal;
+  final String bebasNominal; //ERROR KARENA API OTOMAX BELUM DIRUBAH
 
   Produk({
-    required this.kode_produk,
+    required this.kodeProduk,
     required this.namaProduk,
     required this.hargaJual,
     required this.gangguan,
@@ -31,11 +31,18 @@ class Produk {
 
   factory Produk.fromJson(Map<String, dynamic> json) {
     return Produk(
-      kode_produk: json['kode_produk'] ?? '',
+      kodeProduk: json['kode_produk'] ?? '',
       namaProduk: json['nama_produk'] ?? '',
       hargaJual: json['harga_jual'] ?? 0,
       gangguan: json['gangguan'] ?? 0,
-      bebasNominal: json['bebas_nominal'] ?? 0,
+      bebasNominal: _toString(json['bebasNominal']),
     );
+  }
+
+  //function sementara karena API belum dirubah
+  static String _toString(dynamic value) {
+    if (value == null) return "";
+    if (value is String) return value;
+    return value.toString();
   }
 }

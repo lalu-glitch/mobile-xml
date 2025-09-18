@@ -105,13 +105,6 @@ class _HomePageState extends State<HomePage> {
                                         child: Text('Gagal memuat icon'),
                                       )
                                     : LayananSection(iconVM: iconVM),
-                                iconVM.isLoading
-                                    ? ShimmerBox.buildShimmerIcons()
-                                    : iconVM.error != null
-                                    ? const Center(
-                                        child: Text('Gagal memuat icon'),
-                                      )
-                                    : LayananSection(iconVM: iconVM),
                                 const SizedBox(height: 24),
                                 PromoSectionAlt(),
                                 const SizedBox(height: 24),

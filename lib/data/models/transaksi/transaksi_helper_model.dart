@@ -5,6 +5,7 @@ class TransaksiHelperModel {
   final String? filename; // <---- dipake ke parameter prefix & prefix
   final double? total;
   final int? bebasNominal;
+  final String? kodeDompet;
 
   const TransaksiHelperModel({
     this.tujuan,
@@ -13,6 +14,7 @@ class TransaksiHelperModel {
     this.filename,
     this.total,
     this.bebasNominal,
+    this.kodeDompet,
   });
 
   /// copyWith
@@ -23,6 +25,7 @@ class TransaksiHelperModel {
     String? filename,
     double? total,
     int? bebasNominal,
+    String? kodeDompet,
   }) {
     return TransaksiHelperModel(
       tujuan: tujuan ?? this.tujuan,
@@ -31,6 +34,7 @@ class TransaksiHelperModel {
       filename: filename ?? this.filename,
       total: total ?? this.total,
       bebasNominal: bebasNominal ?? this.bebasNominal,
+      kodeDompet: kodeDompet ?? this.kodeDompet,
     );
   }
 }

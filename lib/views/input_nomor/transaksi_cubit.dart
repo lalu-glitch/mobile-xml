@@ -29,6 +29,10 @@ class TransaksiCubit extends Cubit<TransaksiHelperModel> {
     emit(state.copyWith(bebasNominal: val));
   }
 
+  void setKodeDompet(String val) {
+    emit(state.copyWith(kodeDompet: val));
+  }
+
   TransaksiHelperModel getData() {
     return state;
   }
