@@ -8,16 +8,11 @@ import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
 import '../core/helper/constant_finals.dart';
 import '../core/helper/currency.dart';
 import '../core/utils/error_dialog.dart';
+import '../data/models/transaksi/ewallet_model.dart';
 import '../viewmodels/balance_viewmodel.dart';
 
 class KonfirmasiPembayaranPage extends StatefulWidget {
-  const KonfirmasiPembayaranPage({
-    super.key,
-    required String tujuan,
-    required String kode_produk,
-    required String namaProduk,
-    required int total,
-  });
+  const KonfirmasiPembayaranPage({super.key});
 
   @override
   State<KonfirmasiPembayaranPage> createState() =>
@@ -26,33 +21,14 @@ class KonfirmasiPembayaranPage extends StatefulWidget {
 
 class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   final logger = Logger();
-
   String _selectedMethod = "SALDO"; // Default pilihan
+
   @override
   Widget build(BuildContext context) {
     final balanceVM = Provider.of<BalanceViewModel>(context);
-
-    final saldo = balanceVM.userBalance?.saldo ?? 0;
-    final eWallet = balanceVM.userBalance?.ewallet;
     final transaksi = context.read<TransaksiCubit>().getData();
-    final methods = [
-      // generate dari eWallet list
-      {
-        "label": "SALDO",
-        "secondary": CurrencyUtil.formatCurrency(saldo),
-        "secondaryVal": saldo,
-        "ewallet": "",
-      },
 
-      if (eWallet != null)
-        for (var ew in eWallet)
-          {
-            "label": "${ew.nama}",
-            "secondary": CurrencyUtil.formatCurrency(ew.saldoEwallet),
-            "secondaryVal": ew.saldoEwallet,
-            "ewallet": ew.kodeDompet,
-          },
-    ];
+    final methods = _generatePaymentMethods(balanceVM);
 
     return WillPopScope(
       onWillPop: () async {
@@ -70,31 +46,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // === Info Produk ===
-              Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      _infoRow("Nomor Tujuan", transaksi.tujuan ?? ''),
-                      const Divider(height: 24),
-                      _infoRow("Kode Produk", transaksi.kodeProduk ?? ''),
-                      const Divider(height: 24),
-                      _infoRow("Nama Produk", transaksi.namaProduk ?? ''),
-                      const Divider(height: 24),
-                      _infoRow(
-                        "Total Pembayaran",
-                        CurrencyUtil.formatCurrency(transaksi.total),
-                        isTotal: true,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              _buildInfoCard(transaksi),
               const SizedBox(height: 24),
 
               // === Metode Pembayaran ===
@@ -111,150 +63,169 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               const SizedBox(height: 12),
 
               Column(
-                children: methods.map((method) {
-                  final isSelected =
-                      _selectedMethod == (method["label"] as String? ?? '');
-
-                  return Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: () {
-                        setState(() {
-                          _selectedMethod = (method["label"] as String? ?? '');
-                        });
-                        print('metode pembayaran: $_selectedMethod');
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              (method["label"] as String? ?? ''),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: Screen.kSize16,
-                              ),
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (method["secondary"] != null)
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: Text(
-                                      (method["secondary"] as String? ?? ''),
-                                      textAlign: TextAlign.right,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                Icon(
-                                  isSelected
-                                      ? Icons.check_circle
-                                      : Icons.radio_button_unchecked,
-                                  color: isSelected ? kOrange : Colors.grey,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
+                children: methods
+                    .map((m) => _paymentOption(m, _selectedMethod == m.nama))
+                    .toList(),
               ),
 
               const Spacer(),
 
               // === Tombol Bayar ===
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kOrange,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    elevation: 5,
-                    shadowColor: Colors.orangeAccent.shade100,
-                  ),
-                  onPressed: () {
-                    if (_selectedMethod == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Pilih metode pembayaran dulu"),
-                        ),
-                      );
-                      return;
-                    }
-                    if (_selectedMethod == 'SPEEDCASH') {
-                      Navigator.pushNamed(
-                        context,
-                        '/webView',
-                        arguments: {
-                          'url': 'google.com',
-                          'title': 'Bayar Speedcash',
-                        },
-                      );
-                      return;
-                    }
+              _buildPayButton(methods, transaksi),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
-                    final selected = methods.firstWhere(
-                      (m) => m["label"] == _selectedMethod,
-                      orElse: () => {},
-                    );
+  /// Generate daftar metode pembayaran
+  List<PaymentMethod> _generatePaymentMethods(BalanceViewModel balanceVM) {
+    final saldo = balanceVM.userBalance?.saldo ?? 0;
+    final eWallets = balanceVM.userBalance?.ewallet ?? [];
 
-                    final selectedSaldo =
-                        (selected["secondaryVal"] as num?)?.toDouble() ?? 0;
+    final methods = <PaymentMethod>[
+      PaymentMethod(nama: "SALDO", kodeDompet: "", saldoEwallet: saldo),
+      ...eWallets.map(
+        (ew) => PaymentMethod(
+          nama: ew.nama,
+          kodeDompet: ew.kodeDompet,
+          saldoEwallet: ew.saldoEwallet,
+        ),
+      ),
+    ];
+    return methods;
+  }
 
-                    if (transaksi.total! > selectedSaldo) {
-                      if (selectedSaldo <= 0) {
-                        showErrorDialog(
-                          context,
-                          "Saldo $_selectedMethod minus, hubungi CS / admin untuk bisa transaksi.",
-                        );
-                      } else {
-                        showErrorDialog(
-                          context,
-                          "Saldo $_selectedMethod tidak mencukupi untuk melakukan transaksi ini",
-                        );
-                      }
-                    } else {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        '/transaksiProses',
-                        (route) => false,
-                        arguments: {
-                          'tujuan':
-                              transaksi.tujuan, // ✔ Sama dengan yang dibaca
-                          'kode_produk':
-                              transaksi.kodeProduk, // ✔ Sama dengan yang dibaca
-                          'kode_dompet': selected["ewallet"],
-                        },
-                      );
-                    }
-                  },
-                  child: Text(
-                    "SELANJUTNYA",
-                    style: TextStyle(
-                      fontSize: Screen.kSize16,
-                      fontWeight: FontWeight.bold,
-                      color: kWhite,
-                    ),
-                  ),
+  /// Card informasi transaksi
+  Widget _buildInfoCard(dynamic transaksi) {
+    return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            _infoRow("Nomor Tujuan", transaksi.tujuan ?? ''),
+            const Divider(height: 24),
+            _infoRow("Kode Produk", transaksi.kodeProduk ?? ''),
+            const Divider(height: 24),
+            _infoRow("Nama Produk", transaksi.namaProduk ?? ''),
+            const Divider(height: 24),
+            _infoRow(
+              "Total Pembayaran",
+              CurrencyUtil.formatCurrency(transaksi.total),
+              isTotal: true,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Option pilihan metode pembayaran
+  Widget _paymentOption(PaymentMethod method, bool isSelected) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          setState(() => _selectedMethod = method.nama ?? '');
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                method.nama ?? '-',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Screen.kSize16,
                 ),
               ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (method.saldoEwallet != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Text(
+                        CurrencyUtil.formatCurrency(method.saldoEwallet ?? 0),
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  Icon(
+                    isSelected
+                        ? Icons.check_circle
+                        : Icons.radio_button_unchecked,
+                    color: isSelected ? kOrange : Colors.grey,
+                  ),
+                ],
+              ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Tombol Bayar
+  Widget _buildPayButton(List<PaymentMethod> methods, dynamic transaksi) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: kOrange,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 5,
+          shadowColor: Colors.orangeAccent.shade100,
+        ),
+        onPressed: () {
+          final selected = methods.firstWhere((m) => m.nama == _selectedMethod);
+
+          // case khusus SPEEDCASH → buka WebView
+          if (selected.nama == 'SPEEDCASH') {
+            Navigator.pushNamed(
+              context,
+              '/webView',
+              arguments: {'url': 'google.com', 'title': 'Bayar Speedcash'},
+            );
+            return;
+          }
+
+          final saldo = selected.saldoEwallet ?? 0;
+          final total = transaksi.total ?? 0;
+
+          if (total > saldo) {
+            final msg = saldo <= 0
+                ? "Saldo ${selected.nama} minus, hubungi CS / admin."
+                : "Saldo ${selected.nama} tidak mencukupi.";
+            showErrorDialog(context, msg);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/transaksiProses',
+              (route) => false,
+              arguments: {
+                'tujuan': transaksi.tujuan,
+                'kode_produk': transaksi.kodeProduk,
+                'kode_dompet': selected.kodeDompet,
+              },
+            );
+          }
+        },
+        child: Text(
+          "SELANJUTNYA",
+          style: TextStyle(
+            fontSize: Screen.kSize16,
+            fontWeight: FontWeight.bold,
+            color: kWhite,
           ),
         ),
       ),
@@ -284,7 +255,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             textAlign: TextAlign.right,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
-            maxLines: 2, // Maksimal 2 baris, ubah jika mau multi-line
+            maxLines: 2,
             style: TextStyle(
               fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
               fontSize: isTotal ? Screen.kSize16 : Screen.kSize14,

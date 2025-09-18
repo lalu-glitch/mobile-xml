@@ -21,6 +21,7 @@ class _WebviewPageState extends State<WebviewPage> {
   String title = '';
 
   final String finalUrl = 'https://m.youtube.com/';
+  bool _hasRedirected = false;
 
   @override
   void initState() {
@@ -55,7 +56,6 @@ class _WebviewPageState extends State<WebviewPage> {
               setState(() {
                 _currentUrl = req.url; // Simpan URL baru saat navigasi
               });
-              print('Navigasi ke: $_currentUrl');
               return NavigationDecision.navigate;
             },
             onPageFinished: (String url) {
@@ -63,7 +63,17 @@ class _WebviewPageState extends State<WebviewPage> {
                 setState(() {
                   isLoading = false;
                 });
-                print('Halaman selesai dimuat: $_currentUrl');
+              }
+              if (!_hasRedirected && _currentUrl == finalUrl) {
+                Navigator.pushReplacementNamed(
+                  context,
+                  '/transaksiProses',
+                  arguments: {
+                    'tujuan': '085239905885', //hardcode dulu
+                    'kode_produk': 'CEKDANA', //hardcode dulu
+                    'kode_dompet': 'SPEEDCASH', //hardcode dulu
+                  },
+                );
               }
             },
           ),
@@ -74,19 +84,6 @@ class _WebviewPageState extends State<WebviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_currentUrl == finalUrl) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushNamed(
-          context,
-          '/transaksiProses',
-          arguments: {
-            'tujuan': '085239905885',
-            'kode_produk': 'CEKDANA',
-            'kode_dompet': 'SPEEDCASH',
-          },
-        );
-      });
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text(

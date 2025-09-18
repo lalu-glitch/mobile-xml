@@ -60,14 +60,8 @@ final Map<String, WidgetBuilder> appRoutes = {
   ),
   '/inputNomorFirst': (context) => AuthGuard(child: InputNomorPage()),
   '/inputNomorMid': (context) => AuthGuard(child: InputNomorMidPage()),
-  '/konfirmasiPembayaran': (context) => authGuardWrapper(
-    KonfirmasiPembayaranPage(
-      tujuan: '', // placeholder, nanti dikirim via arguments
-      kode_produk: '',
-      namaProduk: '',
-      total: 0,
-    ),
-  ),
+  '/konfirmasiPembayaran': (context) =>
+      authGuardWrapper(KonfirmasiPembayaranPage()),
   '/transaksiProses': (context) =>
       authGuardWrapper(TransaksiProsesPage(tujuan: '', kode_produk: '')),
   '/transaksiDetail': (context) =>
