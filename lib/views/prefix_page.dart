@@ -58,8 +58,6 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   void _onNomorChanged(String value) {
     final providerVM = Provider.of<ProviderViewModel>(context, listen: false);
     providerVM.clearProviders();
-    // final testTransaksi = context.read<TransaksiCubit>();
-    // testTransaksi.setTujuan(value);
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
     if (value.length >= 4) {
@@ -112,7 +110,9 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                   TextField(
                     controller: _nomorController,
                     onChanged: _onNomorChanged,
-                    onSubmitted: _fetchProvider,
+                    onSubmitted: (_) {
+                      FocusScope.of(context).unfocus(); // hanya tutup keyboard
+                    },
                     keyboardType: TextInputType.phone,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: InputDecoration(
