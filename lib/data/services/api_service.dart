@@ -165,16 +165,16 @@ class ApiService {
   /// Proses transaksi
   Future<Map<String, dynamic>> prosesTransaksi(
     String tujuan,
-    String kode_produk,
-    String kode_dompet,
+    String kodeProduk,
+    String kodeDompet,
   ) async {
     try {
       final response = await authService.dio.post(
         "$baseURL/transaksi",
         data: {
           "tujuan": tujuan,
-          "kode_produk": kode_produk,
-          "kode_dompet": kode_dompet,
+          "kode_produk": kodeProduk,
+          "kode_dompet": kodeDompet,
         },
       );
 

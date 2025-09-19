@@ -46,20 +46,20 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
 
   Future<void> _fetchProvider(String value) async {
     if (value.length >= 4) {
-      // final args =
-      //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      // final iconItem = args['iconItem'] as IconItem; // Extract dari Map
-
-      final transaksi = context.read<TransaksiCubit>().getData();
+      final readTransaksi = context.read<TransaksiCubit>().getData();
       final providerVM = Provider.of<ProviderViewModel>(context, listen: false);
-      await providerVM.fetchProvidersPrefix(transaksi.filename ?? '-', value);
+      await providerVM.fetchProvidersPrefix(
+        readTransaksi.filename ?? '-',
+        value,
+      );
     }
   }
 
   void _onNomorChanged(String value) {
     final providerVM = Provider.of<ProviderViewModel>(context, listen: false);
     providerVM.clearProviders();
-
+    // final testTransaksi = context.read<TransaksiCubit>();
+    // testTransaksi.setTujuan(value);
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
     if (value.length >= 4) {
@@ -73,10 +73,12 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   Widget build(BuildContext context) {
     final flowState = context.watch<FlowCubit>().state!;
     final flowCubit = context.read<FlowCubit>();
+    final sendTransaksi = context.read<TransaksiCubit>();
     final iconItem = flowState.iconItem;
-    final int flow = flowState.flow;
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;
+
+    final nomorTujuan = _nomorController.text;
 
     // Cek apakah ini page terakhir di sequence
     final bool isLastPage = currentIndex == sequence.length - 1;
@@ -84,8 +86,8 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
     return WillPopScope(
       onWillPop: () async {
         if (currentIndex > 0) {
-          flowCubit.previousPage(); // ✅ update Cubit state
-          Navigator.pop(context); // ✅ balik ke page sebelumnya
+          flowCubit.previousPage(); //update flow state
+          Navigator.pop(context);
           return false;
         }
         return true;
@@ -176,10 +178,19 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                     : () {
                                         setState(() {
                                           selectedProductCode =
-                                              produk.kode_produk;
+                                              produk.kodeProduk;
                                           selectedPrice = produk.hargaJual
                                               .toDouble();
                                         });
+                                        sendTransaksi.setKodeproduk(
+                                          produk.kodeProduk,
+                                        );
+                                        sendTransaksi.setNamaProduk(
+                                          produk.namaProduk,
+                                        );
+                                        sendTransaksi.setNominal(
+                                          produk.hargaJual,
+                                        );
                                       },
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(
@@ -271,6 +282,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
           ],
         ),
         bottomNavigationBar: selectedProductCode != null
+            /// <---- ketika tekan done pada keyboard, ia bakal rebuild lagi disini
             ? Consumer<ProviderViewModel>(
                 builder: (context, vm, child) {
                   final selectedProduk = vm.providers
@@ -306,39 +318,24 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                             ),
                           ),
                           onPressed: () {
-                            final nomorTujuan = _nomorController.text;
-                            if (nomorTujuan.isEmpty) {
-                              // Tambah validasi kalau perlu
-                              return;
-                            }
-
                             if (!isLastPage) {
-                              // Navigate ke next page di sequence
+                              // update index ke halaman berikut
+                              final nextPage = flowState
+                                  .sequence[flowState.currentIndex + 1];
+
+                              //update flow state
+                              flowCubit.nextPage();
+
                               Navigator.pushNamed(
                                 context,
-                                pageRoutes[sequence[currentIndex + 1]]!,
-                                arguments: {
-                                  'flow': flow,
-                                  'iconItem': iconItem,
-                                  'currentIndex': currentIndex + 1,
-                                  'sequence': sequence,
-                                  'nomorTujuan': nomorTujuan, // Pass data baru
-                                  'kode_produk': selectedProduk.kodeProduk,
-                                  'namaProduk': selectedProduk.namaProduk,
-                                  'total': selectedProduk.hargaJual.toDouble(),
-                                },
+                                pageRoutes[nextPage]!,
                               );
                             } else {
+                              sendTransaksi.setTujuan(nomorTujuan);
                               // Page terakhir: Ke konfirmasi
                               Navigator.pushNamed(
                                 context,
                                 '/konfirmasiPembayaran',
-                                arguments: {
-                                  'tujuan': nomorTujuan,
-                                  'kode_produk': selectedProduk.kodeProduk,
-                                  'namaProduk': selectedProduk.namaProduk,
-                                  'total': selectedProduk.hargaJual.toDouble(),
-                                },
                               );
                             }
                           },

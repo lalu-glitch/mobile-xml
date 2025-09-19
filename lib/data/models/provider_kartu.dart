@@ -19,7 +19,7 @@ class Produk {
   final String namaProduk;
   final int hargaJual;
   final int gangguan;
-  final String bebasNominal; //ERROR KARENA API OTOMAX BELUM DIRUBAH
+  final int bebasNominal; //ERROR KARENA API OTOMAX BELUM DIRUBAH
 
   Produk({
     required this.kodeProduk,
@@ -35,14 +35,7 @@ class Produk {
       namaProduk: json['nama_produk'] ?? '',
       hargaJual: json['harga_jual'] ?? 0,
       gangguan: json['gangguan'] ?? 0,
-      bebasNominal: _toString(json['bebasNominal']),
+      bebasNominal: json['bebasNominal'] ?? 0,
     );
-  }
-
-  //function sementara karena API belum dirubah
-  static String _toString(dynamic value) {
-    if (value == null) return "";
-    if (value is String) return value;
-    return value.toString();
   }
 }

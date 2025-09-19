@@ -69,7 +69,7 @@ class PromoSection extends StatelessWidget {
                       if (i == 0) {
                         // SLIDE PERTAMA -> teks promosi (pop up awal)
                         return Container(
-                          width: 0,
+                          width: 150,
                           margin: const EdgeInsets.only(right: 12),
                           padding: const EdgeInsets.all(12),
                           child: SizedBox(),

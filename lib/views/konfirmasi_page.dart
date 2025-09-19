@@ -216,11 +216,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               context,
               '/transaksiProses',
               (route) => false,
-              // arguments: {
-              //   'tujuan': transaksi.tujuan,
-              //   'kode_produk': transaksi.kodeProduk,
-              //   'kode_dompet': selected.kodeDompet,
-              // },
             );
           }
         },

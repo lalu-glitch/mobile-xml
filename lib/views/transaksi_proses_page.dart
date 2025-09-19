@@ -11,11 +11,7 @@ import 'package:logger/logger.dart';
 import 'input_nomor/transaksi_cubit.dart';
 
 class TransaksiProsesPage extends StatefulWidget {
-  const TransaksiProsesPage({
-    super.key,
-    required String kode_produk,
-    required String tujuan,
-  }); // kosong, karena pakai pushNamed
+  const TransaksiProsesPage({super.key});
 
   @override
   State<TransaksiProsesPage> createState() => _TransaksiProsesPageState();

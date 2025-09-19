@@ -39,6 +39,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
   Widget build(BuildContext context) {
     final flowState = context.watch<FlowCubit>().state!;
     final flowCubit = context.read<FlowCubit>();
+    final transaksi = context.read<TransaksiCubit>();
     final iconItem = flowState.iconItem;
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;
@@ -104,20 +105,13 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     selectedPrice = produk.hargaJual.toDouble();
                                     selectedProduk = produk;
                                   });
-
                                   // update TransaksiCubit sekaligus
-                                  context.read<TransaksiCubit>().setKodeproduk(
-                                    produk.kodeProduk,
+                                  transaksi.setKodeproduk(produk.kodeProduk);
+                                  transaksi.setNamaProduk(produk.namaProduk);
+                                  transaksi.setNominal(produk.hargaJual);
+                                  transaksi.setBebasNominal(
+                                    produk.bebasNominal,
                                   );
-                                  context.read<TransaksiCubit>().setNamaProduk(
-                                    produk.namaProduk,
-                                  );
-                                  context.read<TransaksiCubit>().setNominal(
-                                    produk.hargaJual,
-                                  );
-                                  context
-                                      .read<TransaksiCubit>()
-                                      .setBebasNominal(produk.bebasNominal);
                                 },
                           child: Container(
                             margin: const EdgeInsets.symmetric(

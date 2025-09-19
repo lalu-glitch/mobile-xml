@@ -11,12 +11,7 @@ import '../core/helper/flow_cubit.dart';
 import '../core/utils/error_dialog.dart';
 
 class InputNomorTujuanPage extends StatefulWidget {
-  const InputNomorTujuanPage({
-    super.key,
-    required String kode_produk,
-    required String namaProduk,
-    required String total,
-  });
+  const InputNomorTujuanPage({super.key});
 
   @override
   State<InputNomorTujuanPage> createState() => _InputNomorTujuanPageState();

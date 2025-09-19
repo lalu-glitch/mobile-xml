@@ -12,8 +12,8 @@ enum AppPage {
 Map<int, List<AppPage>> pageSequences = {
   1: [AppPage.prefixFinal],
   2: [AppPage.pilihProduk, AppPage.inputNomorAkhir],
-  3: [AppPage.subKategori, AppPage.inputNomorMid, AppPage.pilihProduk],
-  4: [AppPage.subKategori, AppPage.pilihProduk, AppPage.inputNomorAkhir],
+  3: [AppPage.pilihProduk, AppPage.inputNomorMid, AppPage.pilihProduk],
+  4: [AppPage.pilihProduk, AppPage.inputNomorAkhir],
   5: [AppPage.inputNomorAwal, AppPage.pilihProduk],
   6: [AppPage.multiSubKategori, AppPage.inputNomorMid, AppPage.pilihProduk],
   7: [AppPage.multiSubKategori, AppPage.pilihProduk, AppPage.inputNomorAkhir],

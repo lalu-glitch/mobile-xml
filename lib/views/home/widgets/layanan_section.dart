@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +20,7 @@ class LayananSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: iconVM.iconsByCategory.entries.map((entry) {
-        final doubledList = [...entry.value, ...entry.value];
+        final layanan = entry.value;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -54,19 +55,14 @@ class LayananSection extends StatelessWidget {
                   crossAxisSpacing: 12,
                   childAspectRatio: 0.85,
                 ),
-                // itemCount: entry.value.length,
-                ///test icon banyakan
-                itemCount: doubledList.length,
+                itemCount: layanan.length,
 
                 itemBuilder: (context, i) {
-                  final iconItem = doubledList[i];
+                  final iconItem = layanan[i];
                   return GestureDetector(
                     onTap: () {
                       // Ambil sequence berdasarkan flow
                       final sequence = pageSequences[iconItem.flow] ?? [];
-
-                      print("=== onTap icon ===");
-                      print("Flow ${iconItem.flow} punya sequence $sequence");
 
                       if (sequence.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -84,16 +80,7 @@ class LayananSection extends StatelessWidget {
 
                       //simpan filename buat dipake di prefix page sama noPrefix
                       transaksi.setFileName(iconItem.filename);
-
-                      // langsung cek state cubit setelah startFlow
-                      final flowCubitState = context.read<FlowCubit>().state;
-                      print(
-                        "FlowCubit state setelah startFlow: "
-                        "flow=${flowCubitState?.flow}, "
-                        "index=${flowCubitState?.currentIndex}, "
-                        "sequence=${flowCubitState?.sequence}",
-                      );
-
+                      print('flow: ${iconItem.flow}');
                       // ambil halaman pertama dari sequence
                       final firstPage = sequence[0];
                       Navigator.pushNamed(context, pageRoutes[firstPage]!);
@@ -120,10 +107,15 @@ class LayananSection extends StatelessWidget {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              iconItem.url,
+                            child: CachedNetworkImage(
+                              imageUrl: iconItem.url,
                               fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Icon(
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.orange.shade200,
+                                ),
+                              ),
+                              errorWidget: (context, url, error) => Icon(
                                 Icons.apps,
                                 color: Colors.orange.shade200,
                               ),

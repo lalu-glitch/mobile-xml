@@ -21,21 +21,21 @@ class TransaksiViewModel extends ChangeNotifier {
   /// Proses transaksi dengan delay debounce
   void prosesTransaksiDebounce(
     String nomor,
-    String kode_produk,
-    String kode_dompet,
+    String kodeProduk,
+    String kodeDompet,
   ) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
     _debounce = Timer(const Duration(milliseconds: 800), () {
-      prosesTransaksi(nomor, kode_produk, kode_dompet);
+      prosesTransaksi(nomor, kodeProduk, kodeDompet);
     });
   }
 
   /// Proses transaksi satu kali
   Future<void> prosesTransaksi(
     String nomor,
-    String kode_produk,
-    String kode_dompet,
+    String kodeProduk,
+    String kodeDompet,
   ) async {
     isLoading = true;
     error = null;
@@ -44,8 +44,8 @@ class TransaksiViewModel extends ChangeNotifier {
     try {
       final result = await apiService.prosesTransaksi(
         nomor,
-        kode_produk,
-        kode_dompet,
+        kodeProduk,
+        kodeDompet,
       );
 
       if (result["success"] == true && result["data"] != null) {
