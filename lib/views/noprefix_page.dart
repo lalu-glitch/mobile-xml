@@ -50,6 +50,10 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
       onWillPop: () async {
         if (currentIndex > 0) {
           flowCubit.previousPage();
+          Provider.of<ProviderViewModel>(
+            context,
+            listen: false,
+          ).clearProviders();
           Navigator.pop(context);
           return false;
         }
@@ -73,7 +77,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
               );
             }
             if (vm.providers.isEmpty) {
-              return const Center(child: Text("Data tidak tersedia"));
+              return const Center(child: Text('Data tidak tersedia'));
             }
 
             return ListView.builder(

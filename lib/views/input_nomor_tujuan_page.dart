@@ -36,12 +36,11 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
     return WillPopScope(
       onWillPop: () async {
         if (flowState.currentIndex > 0) {
-          // ✅ betul
-          flowCubit.previousPage(); // sync Cubit
-          Navigator.pop(context); // kembali ke page sebelumnya
-          return false; // jangan biarkan default pop
+          flowCubit.previousPage(); // update sync Cubit
+          Navigator.pop(context);
+          return false;
         }
-        return true; // kalau sudah di index 0 → exit
+        return true; // misal sudah di index 0 → exit
       },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
@@ -54,7 +53,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
             onPressed: () {
               final flowCubit = context.read<FlowCubit>();
               if (flowCubit.state!.currentIndex > 0) {
-                flowCubit.previousPage(); // ✅ sync dengan Cubit
+                flowCubit.previousPage(); //  sync dengan Cubit
               }
               Navigator.pop(context);
             },
@@ -67,31 +66,25 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // === Info Produk ===
-                  Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          _infoRow("Nama Produk", transaksi.namaProduk ?? '-'),
-                          const Divider(height: 24),
-                          _infoRow(
-                            "Total Pembayaran",
-                            CurrencyUtil.formatCurrency(transaksi.total),
-                            isTotal: true,
-                          ),
-                        ],
+              Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      _infoRow("Nama Produk", transaksi.namaProduk ?? ''),
+                      const Divider(height: 24),
+                      _infoRow(
+                        "Total Pembayaran",
+                        CurrencyUtil.formatCurrency(transaksi.total),
+                        isTotal: true,
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
               const SizedBox(height: 20),
               const Text("Masukkan Nomor Tujuan"),
@@ -109,7 +102,6 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                 ),
               ),
               SizedBox(height: Screen.kSize14),
-
               Visibility(
                 visible: transaksi.bebasNominal == 1,
                 child: const Text("Masukkan Bebas Nominal"),

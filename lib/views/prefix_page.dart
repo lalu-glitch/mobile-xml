@@ -3,15 +3,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:provider/provider.dart';
-import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
+
 import '../core/helper/constant_finals.dart';
 import '../core/helper/dynamic_app_page.dart';
 import '../core/helper/flow_cubit.dart';
+import '../data/models/flow_state_models.dart';
 import '../data/models/icon_models/icon_data.dart';
 import '../core/helper/currency.dart';
 import '../viewmodels/provider_kartu_viewmodel.dart';
+import 'input_nomor/transaksi_cubit.dart';
 import 'konfirmasi_page.dart';
 
 class DetailPrefixPage extends StatefulWidget {
@@ -85,6 +86,10 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
       onWillPop: () async {
         if (currentIndex > 0) {
           flowCubit.previousPage(); //update flow state
+          Provider.of<ProviderViewModel>(
+            context,
+            listen: false,
+          ).clearProviders();
           Navigator.pop(context);
           return false;
         }
@@ -144,10 +149,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                     );
                   }
                   if (vm.providers.isEmpty) {
-                    return const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text("Input Nomor Tujuan"),
-                    );
+                    return const Center(child: Text('Data tidak tersedia'));
                   }
 
                   return ListView.builder(

@@ -80,7 +80,7 @@ class LayananSection extends StatelessWidget {
 
                       //simpan filename buat dipake di prefix page sama noPrefix
                       transaksi.setFileName(iconItem.filename);
-                      print('flow: ${iconItem.flow}');
+
                       // ambil halaman pertama dari sequence
                       final firstPage = sequence[0];
                       Navigator.pushNamed(context, pageRoutes[firstPage]!);
@@ -110,11 +110,8 @@ class LayananSection extends StatelessWidget {
                             child: CachedNetworkImage(
                               imageUrl: iconItem.url,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) => Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.orange.shade200,
-                                ),
-                              ),
+                              placeholder: (context, url) =>
+                                  Center(child: const SizedBox()),
                               errorWidget: (context, url, error) => Icon(
                                 Icons.apps,
                                 color: Colors.orange.shade200,
