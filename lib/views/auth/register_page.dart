@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../core/helper/constant_finals.dart';
-import '../data/services/auth_service.dart';
-import '../core/utils/error_dialog.dart';
+import '../../core/helper/constant_finals.dart';
+import '../../data/services/auth_service.dart';
+import '../../core/utils/error_dialog.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

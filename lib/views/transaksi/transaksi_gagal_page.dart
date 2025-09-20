@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:xmlapp/views/riwayat/riwayat_page.dart';
 
-import '../core/helper/constant_finals.dart';
+import '../../core/helper/constant_finals.dart';
 
 class TransaksiGagalPage extends StatelessWidget {
   const TransaksiGagalPage({super.key});

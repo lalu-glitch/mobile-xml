@@ -198,7 +198,10 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             Navigator.pushNamed(
               context,
               '/webView',
-              arguments: {'url': 'google.com', 'title': 'Bayar Speedcash'},
+              arguments: {
+                'url': 'google.com', // <--- menyusul
+                'title': 'Bayar Speedcash',
+              },
             );
             return;
           }

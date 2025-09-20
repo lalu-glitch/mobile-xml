@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import '../core/helper/constant_finals.dart';
-import '../core/utils/error_dialog.dart';
-import '../viewmodels/transaksi_viewmodel.dart';
+import '../../core/helper/constant_finals.dart';
+import '../../core/utils/error_dialog.dart';
+import '../../viewmodels/transaksi_viewmodel.dart';
 import 'package:logger/logger.dart';
 
-import 'input_nomor/transaksi_cubit.dart';
+import '../input_nomor/transaksi_cubit.dart';
 
 class TransaksiProsesPage extends StatefulWidget {
   const TransaksiProsesPage({super.key});
@@ -26,7 +26,11 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
     super.didChangeDependencies();
     if (!_isInit) {
       final transaksi = context.read<TransaksiCubit>().getData();
+      final vm = context.read<TransaksiViewModel>();
       _isInit = true;
+
+      // Reset ViewModel dulu untuk bersihkan state lama
+      vm.reset();
 
       // langsung panggil proses transaksi
       Future.microtask(() {

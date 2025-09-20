@@ -68,7 +68,7 @@ class ApiService {
   }
 
   /// Ambil provider berdasarkan kategori dan tujuan
-  Future<Map<String, dynamic>> fetchProviders(
+  Future<List<ProviderKartu>> fetchProviders(
     String category,
     String tujuan,
   ) async {
@@ -78,44 +78,30 @@ class ApiService {
         data: {"tujuan": tujuan},
       );
 
-      if (response.statusCode == 200) {
-        final jsonData = Map<String, dynamic>.from(response.data);
-        if (jsonData['data'] is List) {
-          final providers = (jsonData['data'] as List)
-              .map(
-                (item) =>
-                    ProviderKartu.fromJson(Map<String, dynamic>.from(item)),
-              )
-              .toList();
+      final jsonData = Map<String, dynamic>.from(response.data);
 
-          return {
-            "success": true,
-            "data": providers,
-            "message": jsonData["message"] ?? "Data provider berhasil dimuat.",
-          };
-        } else {
-          return {
-            "success": false,
-            "data": null,
-            "message": "Format data tidak sesuai.",
-          };
-        }
-      } else {
-        return {
-          "success": false,
-          "data": null,
-          "message": "Gagal memuat provider. Status: ${response.statusCode}",
-        };
+      if (response.statusCode == 200 && jsonData['success'] == true) {
+        final providers = (jsonData['data'] as List? ?? [])
+            .map(
+              (item) => ProviderKartu.fromJson(Map<String, dynamic>.from(item)),
+            )
+            .toList();
+        return providers;
       }
+
+      throw Exception(
+        jsonData["message"] ??
+            "Gagal memuat provider. Status: ${response.statusCode}",
+      );
     } on DioException catch (e) {
       final apiMessage = e.response?.data is Map
           ? e.response?.data["message"] ?? "Terjadi kesalahan pada server."
           : e.message;
-      return {"success": false, "data": null, "message": apiMessage};
+      throw Exception(apiMessage);
     }
   }
 
-  Future<Map<String, dynamic>> fetchProvidersPrefix(
+  Future<List<ProviderKartu>> fetchProvidersPrefix(
     String category,
     String tujuan,
   ) async {
@@ -125,40 +111,25 @@ class ApiService {
         data: {"tujuan": tujuan},
       );
 
-      if (response.statusCode == 200) {
-        final jsonData = Map<String, dynamic>.from(response.data);
-        if (jsonData['data'] is List) {
-          final providers = (jsonData['data'] as List)
-              .map(
-                (item) =>
-                    ProviderKartu.fromJson(Map<String, dynamic>.from(item)),
-              )
-              .toList();
+      final jsonData = Map<String, dynamic>.from(response.data);
 
-          return {
-            "success": true,
-            "data": providers,
-            "message": jsonData["message"] ?? "Data provider berhasil dimuat.",
-          };
-        } else {
-          return {
-            "success": false,
-            "data": null,
-            "message": "Format data tidak sesuai.",
-          };
-        }
-      } else {
-        return {
-          "success": false,
-          "data": null,
-          "message": "Gagal memuat provider. Status: ${response.statusCode}",
-        };
+      if (response.statusCode == 200 && jsonData['success'] == true) {
+        return (jsonData['data'] as List? ?? [])
+            .map(
+              (item) => ProviderKartu.fromJson(Map<String, dynamic>.from(item)),
+            )
+            .toList();
       }
+
+      throw Exception(
+        jsonData["message"] ??
+            "Gagal memuat provider prefix. Status: ${response.statusCode}",
+      );
     } on DioException catch (e) {
       final apiMessage = e.response?.data is Map
           ? e.response?.data["message"] ?? "Terjadi kesalahan pada server."
           : e.message;
-      return {"success": false, "data": null, "message": apiMessage};
+      throw Exception(apiMessage);
     }
   }
 

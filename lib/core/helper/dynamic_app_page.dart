@@ -4,7 +4,6 @@ enum AppPage {
   inputNomorAkhir,
   inputNomorMid,
   pilihProduk,
-  subKategori,
   multiSubKategori,
 }
 
@@ -26,6 +25,5 @@ Map<AppPage, String> pageRoutes = {
   AppPage.inputNomorMid: '/inputNomorMid',
   AppPage.inputNomorAkhir: '/inputNomorTujuan',
   AppPage.pilihProduk: '/detailNoPrefix',
-  AppPage.subKategori: '/subKategori',
   AppPage.multiSubKategori: '/multiSubKategori',
 };

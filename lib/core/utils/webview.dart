@@ -20,13 +20,12 @@ class _WebviewPageState extends State<WebviewPage> {
   String url = '';
   String title = '';
 
-  final String finalUrl = 'https://m.youtube.com/';
   bool _hasRedirected = false;
+  bool _isActiveFailed = false; // flag untuk binding gagal
 
   @override
   void initState() {
     super.initState();
-    // Delay untuk build page dulu sebelum init WebView
     Future.delayed(const Duration(milliseconds: 1000), () {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
@@ -54,18 +53,29 @@ class _WebviewPageState extends State<WebviewPage> {
             },
             onNavigationRequest: (NavigationRequest req) {
               setState(() {
-                _currentUrl = req.url; // Simpan URL baru saat navigasi
+                _currentUrl = req.url;
               });
               return NavigationDecision.navigate;
             },
-            onPageFinished: (String url) {
+            onPageFinished: (String finishedUrl) {
               if (mounted) {
                 setState(() {
                   isLoading = false;
+                  _currentUrl = finishedUrl;
                 });
               }
-              if (!_hasRedirected && _currentUrl == finalUrl) {
-                Navigator.pushReplacementNamed(context, '/transaksiProses');
+
+              final uri = Uri.tryParse(_currentUrl);
+              if (uri != null && uri.queryParameters.containsKey('isActive')) {
+                final isActive = uri.queryParameters['isActive'];
+                if (!_hasRedirected && isActive == 'true') {
+                  _hasRedirected = true;
+                  Navigator.pushReplacementNamed(context, '/');
+                } else if (isActive == 'false') {
+                  setState(() {
+                    _isActiveFailed = true;
+                  });
+                }
               }
             },
           ),
@@ -80,12 +90,15 @@ class _WebviewPageState extends State<WebviewPage> {
       appBar: AppBar(
         title: Text(
           title,
-          style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: kOrange,
-        iconTheme: const IconThemeData(color: kWhite),
+        iconTheme: const IconThemeData(color: Colors.white),
         leading: IconButton(
-          icon: const Icon(Icons.close), // ikon X
+          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -95,10 +108,15 @@ class _WebviewPageState extends State<WebviewPage> {
         children: [
           if (_controller != null) WebViewWidget(controller: _controller!),
           if (isLoading) const Center(child: CircularProgressIndicator()),
-          if (_currentUrl == finalUrl)
+          if (_isActiveFailed)
             Container(
               color: Colors.white,
-              child: const Center(child: Text("Redirecting...")),
+              child: const Center(
+                child: Text(
+                  "Binding gagal, silakan coba lagi.",
+                  style: TextStyle(fontSize: 18, color: kRed),
+                ),
+              ),
             ),
         ],
       ),

@@ -8,11 +8,16 @@ import '../data/services/api_service.dart';
 class TransaksiViewModel extends ChangeNotifier {
   final ApiService apiService;
 
-  bool isLoading = false;
-  String? error;
+  bool _isLoading = false;
+  String? _error;
   TransaksiResponse? transaksiResponse;
-  StatusTransaksi? statusTransaksi;
+  StatusTransaksi? _statusTransaksi;
   Timer? _debounce;
+
+  bool get isLoading => _isLoading;
+  String? get error => _error;
+  StatusTransaksi? get statusTransaksi => _statusTransaksi;
+
   final logger = Logger();
 
   TransaksiViewModel({ApiService? service})
@@ -37,8 +42,8 @@ class TransaksiViewModel extends ChangeNotifier {
     String kodeProduk,
     String kodeDompet,
   ) async {
-    isLoading = true;
-    error = null;
+    _isLoading = true;
+    _error = null;
     notifyListeners();
 
     try {
@@ -56,18 +61,18 @@ class TransaksiViewModel extends ChangeNotifier {
           await Future.delayed(const Duration(seconds: 3));
           await cekStatusTransaksi();
         } else {
-          isLoading = false;
-          error = "Kode Inbox tidak tersedia";
+          _isLoading = false;
+          _error = "Kode Inbox tidak tersedia";
           notifyListeners();
         }
       } else {
-        isLoading = false;
-        error = result["message"] ?? "Gagal memulai transaksi";
+        _isLoading = false;
+        _error = result["message"] ?? "Gagal memulai transaksi";
         notifyListeners();
       }
     } catch (e) {
-      isLoading = false;
-      error = e.toString();
+      _isLoading = false;
+      _error = e.toString();
       notifyListeners();
     }
   }
@@ -79,8 +84,8 @@ class TransaksiViewModel extends ChangeNotifier {
   }) async {
     final kodeInbox = transaksiResponse?.kodeInbox;
     if (kodeInbox == null) {
-      error = "Kode Inbox tidak ditemukan. Transaksi belum dimulai.";
-      isLoading = false;
+      _error = "Kode Inbox tidak ditemukan. Transaksi belum dimulai.";
+      _isLoading = false;
       notifyListeners();
       return;
     }
@@ -91,16 +96,16 @@ class TransaksiViewModel extends ChangeNotifier {
       if (result['success'] == true) {
         final data = result['data'];
         if (data is StatusTransaksi) {
-          statusTransaksi = data;
+          _statusTransaksi = data;
         } else if (data is Map<String, dynamic>) {
-          statusTransaksi = StatusTransaksi.fromJson(data);
+          _statusTransaksi = StatusTransaksi.fromJson(data);
         } else {
           throw Exception("Format data tidak dikenali");
         }
 
         // Jika status_trx masih 1 atau 2, coba lagi setelah 1 detik
-        if (statusTransaksi?.statusTrx == 1 ||
-            statusTransaksi?.statusTrx == 2) {
+        if (_statusTransaksi?.statusTrx == 1 ||
+            _statusTransaksi?.statusTrx == 2) {
           if (retryCount < maxRetry) {
             await Future.delayed(const Duration(seconds: 1));
             await cekStatusTransaksi(
@@ -109,22 +114,31 @@ class TransaksiViewModel extends ChangeNotifier {
             );
             return;
           } else {
-            error =
-                "Status masih ${statusTransaksi?.keterangan} setelah $maxRetry percobaan";
+            _error =
+                "Status masih ${_statusTransaksi?.keterangan} setelah $maxRetry percobaan";
           }
         }
 
-        error = null; // sukses dan status final
+        _error = null; // sukses dan status final
       } else {
-        error =
+        _error =
             result['message']?.toString() ?? "Gagal mengambil status transaksi";
       }
     } catch (e) {
-      error = "Gagal mengambil status transaksi: $e";
+      _error = "Gagal mengambil status transaksi: $e";
     }
 
-    isLoading = false;
+    _isLoading = false;
     notifyListeners();
+  }
+
+  // Method baru: Reset state ke awal
+  void reset() {
+    _isLoading =
+        true; // Mulai dengan loading agar langsung tampil _loadingWidget()
+    _error = null;
+    _statusTransaksi = null;
+    notifyListeners(); // Trigger rebuild dengan state bersih
   }
 
   @override
