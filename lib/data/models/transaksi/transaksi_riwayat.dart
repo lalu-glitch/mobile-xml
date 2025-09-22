@@ -1,3 +1,32 @@
+class RiwayatTransaksiResponse {
+  final int total;
+  final int totalPages;
+  final int currentPage;
+  final int perPage;
+  final List<RiwayatTransaksi> items;
+
+  RiwayatTransaksiResponse({
+    required this.total,
+    required this.totalPages,
+    required this.currentPage,
+    required this.perPage,
+    required this.items,
+  });
+
+  factory RiwayatTransaksiResponse.fromJson(Map<String, dynamic> json) {
+    final List<dynamic> rawItems = json['data'] ?? [];
+    return RiwayatTransaksiResponse(
+      total: json['total'] ?? 0,
+      totalPages: json['total_pages'] ?? 1,
+      currentPage: json['current_page'] ?? 1,
+      perPage: json['perPage'] ?? 5,
+      items: rawItems
+          .map((e) => RiwayatTransaksi.fromJson(Map<String, dynamic>.from(e)))
+          .toList(),
+    );
+  }
+}
+
 class RiwayatTransaksi {
   final String kode;
   final String tujuan;
@@ -47,34 +76,5 @@ class RiwayatTransaksi {
       default:
         return "Status Tidak Diketahui";
     }
-  }
-}
-
-class RiwayatTransaksiResponse {
-  final int total;
-  final int totalPages;
-  final int currentPage;
-  final int perPage;
-  final List<RiwayatTransaksi> items;
-
-  RiwayatTransaksiResponse({
-    required this.total,
-    required this.totalPages,
-    required this.currentPage,
-    required this.perPage,
-    required this.items,
-  });
-
-  factory RiwayatTransaksiResponse.fromJson(Map<String, dynamic> json) {
-    final List<dynamic> rawItems = json['data'] ?? [];
-    return RiwayatTransaksiResponse(
-      total: json['total'] ?? 0,
-      totalPages: json['total_pages'] ?? 1,
-      currentPage: json['current_page'] ?? 1,
-      perPage: json['perPage'] ?? 5,
-      items: rawItems
-          .map((e) => RiwayatTransaksi.fromJson(Map<String, dynamic>.from(e)))
-          .toList(),
-    );
   }
 }

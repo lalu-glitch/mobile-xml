@@ -122,8 +122,6 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     transaksi.setBebasNominal(
                                       produk.bebasNominal,
                                     );
-
-                                    print('WOI : ${produk.bebasNominal}');
                                   },
                             child: Container(
                               margin: const EdgeInsets.symmetric(

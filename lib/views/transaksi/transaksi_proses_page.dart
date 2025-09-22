@@ -26,13 +26,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
     super.didChangeDependencies();
     if (!_isInit) {
       final transaksi = context.read<TransaksiCubit>().getData();
-      final vm = context.read<TransaksiViewModel>();
       _isInit = true;
-
-      // Reset ViewModel dulu untuk bersihkan state lama
-      vm.reset();
-
-      // langsung panggil proses transaksi
       Future.microtask(() {
         if (mounted) {
           context.read<TransaksiViewModel>().prosesTransaksi(

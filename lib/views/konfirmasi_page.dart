@@ -10,6 +10,7 @@ import '../core/helper/currency.dart';
 import '../core/utils/error_dialog.dart';
 import '../data/models/transaksi/ewallet_model.dart';
 import '../viewmodels/balance_viewmodel.dart';
+import '../viewmodels/transaksi_viewmodel.dart';
 
 class KonfirmasiPembayaranPage extends StatefulWidget {
   const KonfirmasiPembayaranPage({super.key});
@@ -215,6 +216,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                 : "Saldo ${selected.nama} tidak mencukupi.";
             showErrorDialog(context, msg);
           } else {
+            context
+                .read<TransaksiViewModel>()
+                .reset(); // <-- Reset ViewModel dulu untuk bersihkan state lama
             Navigator.pushNamedAndRemoveUntil(
               context,
               '/transaksiProses',
