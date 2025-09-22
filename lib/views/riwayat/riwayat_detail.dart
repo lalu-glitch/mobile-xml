@@ -1,138 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:provider/provider.dart';
 import 'package:flutter/services.dart'; // Untuk Clipboard
 import 'package:intl/intl.dart';
 
 import '../../core/helper/constant_finals.dart';
-import '../../data/services/api_service.dart';
-import '../../data/services/auth_service.dart';
 import '../../core/utils/error_dialog.dart';
-import '../../viewmodels/riwayat_viewmodel.dart';
+import 'cubit/detail_riwayat_transaksi_cubit.dart';
 
 class DetailRiwayatPage extends StatefulWidget {
-  final String kode;
-  const DetailRiwayatPage({super.key, required this.kode});
+  const DetailRiwayatPage({super.key});
 
   @override
   State<DetailRiwayatPage> createState() => _DetailRiwayatPageState();
 }
 
 class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
-  late final RiwayatTransaksiViewModel vm;
   bool _isInit = false;
-
-  @override
-  void initState() {
-    super.initState();
-    vm = RiwayatTransaksiViewModel(
-      service: ApiService(authService: AuthService()),
-    );
-  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isInit) {
       final args =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      final String kode = args['kode'];
-      vm.loadDetailRiwayat(kode); // aman, context sudah valid
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+      final String kode = args?['kode'] ?? '';
+      if (kode.isNotEmpty) {
+        context.read<DetailRiwayatTransaksiCubit>().loadDetailRiwayat(kode);
+      }
       _isInit = true;
     }
-  }
-
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: vm,
-      child: Consumer<RiwayatTransaksiViewModel>(
-        builder: (context, vm, _) {
-          if (vm.isLoading) {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
-          }
-
-          if (vm.error != null) {
-            return Scaffold(body: Center(child: Text(vm.error!)));
-          }
-
-          final status = vm.statusTransaksi!;
-          // final bool isSuccess = status.statusTrx == 20;
-
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text(
-                'Detail Riwayat Transaksi',
-                style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
-              ),
-              backgroundColor: kOrange,
-              iconTheme: const IconThemeData(color: kWhite),
-            ),
-            body: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(16),
-                    children: [
-                      _buildDetailItem("Kode", status.kode.toString()),
-                      _buildDetailItem("Produk", status.kodeProduk),
-                      _buildDetailItem("Tujuan", status.tujuan),
-                      _buildDetailItem(
-                        "Waktu",
-                        DateFormat(
-                          'dd MMM yyyy, HH:mm',
-                        ).format(status.tglEntri),
-                      ),
-                      _buildDetailItem("Status", status.keterangan),
-                      _buildDetailItem("Harga", status.harga.toString()),
-                      _buildDetailItem("SN", status.sn),
-                      _buildDetailItem("Outbox", status.outbox),
-                    ],
-                  ),
-                ),
-                // Tombol Struk di paling bawah
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kOrange,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        elevation: 5,
-                        shadowColor: Colors.orangeAccent.shade100,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/struk',
-                          arguments: {'transaksi': status},
-                        );
-                      },
-                      child: Text(
-                        "Cetak Struk",
-                        style: TextStyle(
-                          fontSize: Screen.kSize16,
-                          fontWeight: FontWeight.bold,
-                          color: kWhite,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
   }
 
   Widget _buildDetailItem(String label, String? value) => Card(
@@ -153,4 +50,94 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
       ),
     ),
   );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Detail Riwayat Transaksi',
+          style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: kOrange,
+        iconTheme: const IconThemeData(color: kWhite),
+      ),
+      body:
+          BlocBuilder<DetailRiwayatTransaksiCubit, DetailRiwayatTransaksiState>(
+            builder: (context, state) {
+              if (state is DetailRiwayatTransaksiInitial ||
+                  state is DetailRiwayatTransaksiLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (state is DetailRiwayatTransaksiError) {
+                return Center(child: Text(state.message));
+              }
+
+              if (state is DetailRiwayatTransaksiSuccess) {
+                final status = state.statusTransaksi;
+
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView(
+                        padding: const EdgeInsets.all(16),
+                        children: [
+                          _buildDetailItem("Kode", status.kode.toString()),
+                          _buildDetailItem("Produk", status.kodeProduk),
+                          _buildDetailItem("Tujuan", status.tujuan),
+                          _buildDetailItem(
+                            "Waktu",
+                            DateFormat(
+                              'dd MMM yyyy, HH:mm',
+                            ).format(status.tglEntri),
+                          ),
+                          _buildDetailItem("Status", status.keterangan),
+                          _buildDetailItem("Harga", status.harga.toString()),
+                          _buildDetailItem("SN", status.sn),
+                          _buildDetailItem("Outbox", status.outbox),
+                        ],
+                      ),
+                    ),
+                    // Tombol Struk di paling bawah
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kOrange,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            elevation: 5,
+                            shadowColor: Colors.orangeAccent.shade100,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/struk',
+                              arguments: {'transaksi': status},
+                            );
+                          },
+                          child: Text(
+                            "Cetak Struk",
+                            style: TextStyle(
+                              fontSize: Screen.kSize16,
+                              fontWeight: FontWeight.bold,
+                              color: kWhite,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox.shrink(); // Fallback, though unlikely
+            },
+          ),
+    );
+  }
 }

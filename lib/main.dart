@@ -23,6 +23,8 @@ import 'viewmodels/transaksi_viewmodel.dart';
 import 'views/input_nomor/transaksi_cubit.dart';
 import 'views/noprefix/cubit/provider_noprefix_cubit.dart';
 import 'views/prefix/cubit/provider_prefix_cubit.dart';
+import 'views/riwayat/cubit/detail_riwayat_transaksi_cubit.dart';
+import 'views/riwayat/cubit/riwayat_transaksi_cubit.dart';
 import 'views/settings/cubit/info_akun_cubit.dart';
 import 'views/settings/cubit/unbind_ewallet_cubit.dart';
 
@@ -131,6 +133,10 @@ class _XmlAppState extends State<XmlApp> {
         BlocProvider(create: (context) => InfoAkunCubit(ApiService())),
         BlocProvider(create: (context) => ProviderNoPrefixCubit(ApiService())),
         BlocProvider(create: (context) => ProviderPrefixCubit(ApiService())),
+        BlocProvider(create: (context) => RiwayatTransaksiCubit(ApiService())),
+        BlocProvider(
+          create: (context) => DetailRiwayatTransaksiCubit(ApiService()),
+        ),
         BlocProvider(create: (context) => TransaksiCubit()),
         BlocProvider(create: (context) => FlowCubit()),
       ],
