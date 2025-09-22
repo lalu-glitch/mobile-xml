@@ -14,20 +14,16 @@ class IconsViewModel extends ChangeNotifier {
   String? get error => _error;
 
   Future<void> fetchIcons() async {
-    print("DEBUG: fetchIcons() called");
     _isLoading = true;
     notifyListeners();
 
     try {
       final iconsData = await _apiService.fetchIcons();
-      print("DEBUG: Keys dari API = ${iconsData.keys}");
 
       _iconsByCategory = iconsData;
       _error = null;
-    } catch (e, stack) {
+    } catch (e) {
       _error = e.toString();
-      print("DEBUG: Error in fetchIcons() -> $_error");
-      print("DEBUG: Stacktrace -> $stack");
     } finally {
       _isLoading = false;
       notifyListeners();

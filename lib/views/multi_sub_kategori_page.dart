@@ -26,36 +26,39 @@ class MultiSubKategoriPage extends StatelessWidget {
         return true; // kalau sudah di index 0 → exit
       },
       child: Scaffold(
-        body: Column(
-          children: [
-            Center(child: Text('Multi Sub Kategori Page')),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kOrange,
-                foregroundColor: kWhite,
-                minimumSize: const Size(double.infinity, 48),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(child: Text('Multi Sub Kategori Page')),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: kOrange,
+                  foregroundColor: kWhite,
+                  minimumSize: const Size(double.infinity, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () {
+                  if (!isLastPage) {
+                    // update index ke halaman berikut
+                    final nextPage =
+                        flowState.sequence[flowState.currentIndex + 1];
+
+                    flowCubit.nextPage();
+                    Navigator.pushNamed(context, pageRoutes[nextPage]!);
+                  } else {
+                    Navigator.pushNamed(context, '/konfirmasiPembayaran');
+                  }
+                },
+                child: const Text(
+                  "Selanjutnya",
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              onPressed: () {
-                if (!isLastPage) {
-                  // update index ke halaman berikut
-                  final nextPage =
-                      flowState.sequence[flowState.currentIndex + 1];
-
-                  flowCubit.nextPage();
-                  Navigator.pushNamed(context, pageRoutes[nextPage]!);
-                } else {
-                  Navigator.pushNamed(context, '/konfirmasiPembayaran');
-                }
-              },
-              child: const Text(
-                "Selanjutnya",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
