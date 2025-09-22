@@ -17,7 +17,6 @@ import 'data/services/location_service.dart';
 import 'data/services/speedcash_api_service.dart';
 import 'viewmodels/balance_viewmodel.dart';
 import 'viewmodels/icon_viewmodel.dart';
-import 'viewmodels/riwayat_viewmodel.dart';
 import 'viewmodels/speedcash/speedcash_viewmodel.dart';
 import 'viewmodels/transaksi_viewmodel.dart';
 import 'views/input_nomor/transaksi_cubit.dart';
@@ -144,7 +143,6 @@ class _XmlAppState extends State<XmlApp> {
         providers: [
           ChangeNotifierProvider(create: (_) => BalanceViewModel()),
           ChangeNotifierProvider(create: (_) => IconsViewModel()),
-          ChangeNotifierProvider(create: (_) => RiwayatTransaksiViewModel()),
           ChangeNotifierProvider(
             create: (_) => SpeedcashVM(apiService: SpeedcashApiService()),
           ),
