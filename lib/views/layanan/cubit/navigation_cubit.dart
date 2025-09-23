@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import '../core/helper/dynamic_app_page.dart';
+import '../../../core/helper/dynamic_app_page.dart';
 
 class NavigationState {
   final List<AppPage> sequence;

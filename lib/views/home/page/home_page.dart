@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                       // === Overlay Card ===
                       Positioned(
                         top:
-                            80, // atur biar card nempel di antara header & container
+                            100, // atur biar card nempel di antara header & container
                         left: 16,
                         right: 16,
                         child: HeaderCard(balanceVM: balanceVM),

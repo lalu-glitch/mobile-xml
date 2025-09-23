@@ -28,7 +28,7 @@ class _AuthGuardState extends State<AuthGuard> {
       if (!mounted) return;
       if (!loggedIn) {
         _timer?.cancel();
-        Navigator.pushReplacementNamed(context, '/sendOtp');
+        Navigator.pushReplacementNamed(context, '/authPage');
       }
     });
   }
@@ -39,7 +39,7 @@ class _AuthGuardState extends State<AuthGuard> {
     if (!mounted) return;
 
     if (!loggedIn) {
-      Navigator.pushReplacementNamed(context, '/sendOtp');
+      Navigator.pushReplacementNamed(context, '/authPage');
     } else {
       setState(() {
         _isLoggedIn = true;

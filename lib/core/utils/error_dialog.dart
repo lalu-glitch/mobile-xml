@@ -22,12 +22,12 @@ void showErrorDialog(BuildContext context, String message) {
   );
 }
 
-void showInfoToast(String message) {
+void showInfoToast(String message, Color color) {
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
-    backgroundColor: Colors.black87,
+    backgroundColor: color,
     textColor: kWhite,
     fontSize: Screen.kSize16,
   );

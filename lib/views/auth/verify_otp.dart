@@ -235,7 +235,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   const SizedBox(height: 12),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/sendOtp');
+                      Navigator.pushReplacementNamed(context, '/authPage');
                     },
                     child: const Text(
                       "Kirim ulang OTP",

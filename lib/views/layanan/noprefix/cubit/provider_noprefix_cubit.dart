@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../data/models/provider_kartu.dart';
-import '../../../data/services/api_service.dart';
+import '../../../../data/models/provider_kartu.dart';
+import '../../../../data/services/api_service.dart';
 
 part 'provider_noprefix_state.dart';
 

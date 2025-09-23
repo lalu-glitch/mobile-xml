@@ -54,7 +54,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
 
       // Kalau user tekan OK, pindah page
       if (ok == true) {
-        Navigator.pushReplacementNamed(context, "/sendOtp");
+        Navigator.pushReplacementNamed(context, "/authPage");
       }
     } else {
       showErrorDialog(context, result["message"]);
@@ -175,7 +175,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
 
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, "/sendOtp");
+                        Navigator.pushReplacementNamed(context, "/authPage");
                       },
                       child: Text(
                         "Kembali ke Request OTP",

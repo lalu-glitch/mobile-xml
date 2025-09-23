@@ -5,8 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:xmlapp/core/helper/constant_finals.dart';
 
-import 'core/helper/flow_cubit.dart';
+import 'views/layanan/cubit/flow_cubit.dart';
 import 'core/route/app_route.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -20,8 +21,8 @@ import 'viewmodels/icon_viewmodel.dart';
 import 'viewmodels/speedcash/speedcash_viewmodel.dart';
 import 'viewmodels/transaksi_viewmodel.dart';
 import 'views/input_nomor/transaksi_cubit.dart';
-import 'views/noprefix/cubit/provider_noprefix_cubit.dart';
-import 'views/prefix/cubit/provider_prefix_cubit.dart';
+import 'views/layanan/noprefix/cubit/provider_noprefix_cubit.dart';
+import 'views/layanan/prefix/cubit/provider_prefix_cubit.dart';
 import 'views/riwayat/cubit/detail_riwayat_transaksi_cubit.dart';
 import 'views/riwayat/cubit/riwayat_transaksi_cubit.dart';
 import 'views/settings/cubit/info_akun_cubit.dart';
@@ -153,7 +154,8 @@ class _XmlAppState extends State<XmlApp> {
         child: MaterialApp(
           title: "XML App",
           theme: ThemeData(
-            textTheme: GoogleFonts.varelaRoundTextTheme(),
+            colorScheme: ColorScheme.fromSeed(seedColor: kWhite),
+            textTheme: GoogleFonts.robotoTextTheme(),
             useMaterial3: true,
           ),
           navigatorKey: navigatorKey,

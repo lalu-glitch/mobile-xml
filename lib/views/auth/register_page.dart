@@ -65,7 +65,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
       if (!mounted) return;
       if (result["success"]) {
-        print("RESULT REGISTER : $result");
         Navigator.pushReplacementNamed(
           context,
           '/verifyOtp',
