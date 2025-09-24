@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/helper/constant_finals.dart';
 
@@ -17,6 +18,7 @@ class CustomTextField extends StatelessWidget {
   final TextCapitalization capitalization;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
+  final List<TextInputFormatter>? textFormater;
 
   const CustomTextField({
     Key? key,
@@ -34,6 +36,7 @@ class CustomTextField extends StatelessWidget {
     this.capitalization = TextCapitalization.none,
     this.keyboardType,
     this.validator,
+    this.textFormater,
   }) : super(key: key);
 
   @override
@@ -45,6 +48,7 @@ class CustomTextField extends StatelessWidget {
       textAlign: align,
       textCapitalization: capitalization,
       style: style,
+      inputFormatters: textFormater,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         labelText: labelText,

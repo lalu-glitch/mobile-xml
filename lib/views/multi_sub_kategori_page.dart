@@ -26,6 +26,10 @@ class MultiSubKategoriPage extends StatelessWidget {
         return true; // kalau sudah di index 0 → exit
       },
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kOrange,
+          leading: Icon(Icons.arrow_back),
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

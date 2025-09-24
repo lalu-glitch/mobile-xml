@@ -5,7 +5,7 @@ import '../../../core/helper/constant_finals.dart';
 class LogoutCard extends StatelessWidget {
   final VoidCallback onTap;
 
-  const LogoutCard({required this.onTap});
+  const LogoutCard({required this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {

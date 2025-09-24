@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../cubit/flow_cubit.dart';
-import '../../../data/models/flow_state_models.dart';
+import '../../../data/models/icon_models/flow_state_models.dart';
 import '../../../data/models/icon_models/icon_data.dart';
 import '../../../core/helper/currency.dart';
 import '../../input_nomor/transaksi_cubit.dart';
@@ -49,14 +49,14 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   }
 
   void _onNomorChanged(String value) {
-    context.read<ProviderPrefixCubit>().clear();
-
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
     if (value.length >= 4) {
       _debounce = Timer(const Duration(milliseconds: 800), () {
         _fetchProvider(value);
       });
+    } else {
+      context.read<ProviderPrefixCubit>().clear();
     }
   }
 
@@ -151,6 +151,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                             horizontal: 12,
                             vertical: 6,
                           ),
+                          color: kWhite,
                           child: ExpansionTile(
                             title: Text(
                               provider.namaProvider,

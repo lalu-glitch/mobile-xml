@@ -26,10 +26,12 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
-    // Ambil data akun setelah widget selesai dibangun
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<InfoAkunCubit>().getInfoAkun();
-    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.read<InfoAkunCubit>().getInfoAkun();
   }
 
   /// Fungsi logout (hapus semua data lalu arahkan ke halaman login)

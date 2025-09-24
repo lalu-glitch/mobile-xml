@@ -15,7 +15,7 @@ import '../data/models/transaksi/status_transaksi.dart';
 import '../viewmodels/balance_viewmodel.dart';
 
 class StrukPage extends StatefulWidget {
-  final StatusTransaksi? transaksi;
+  final StatusTransaksiModel? transaksi;
   const StrukPage({super.key, this.transaksi});
 
   @override
@@ -24,7 +24,7 @@ class StrukPage extends StatefulWidget {
 
 class _StrukPageState extends State<StrukPage> {
   late TextEditingController _hargaController;
-  StatusTransaksi? trx;
+  StatusTransaksiModel? trx;
   String namaUser = "KONTER PULSA";
   bool _isInit = false; // biar cuma sekali eksekusi
 
@@ -40,7 +40,7 @@ class _StrukPageState extends State<StrukPage> {
     if (!_isInit) {
       final args =
           ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      trx = args['transaksi'] as StatusTransaksi;
+      trx = args['transaksi'] as StatusTransaksiModel;
 
       final balanceVM = Provider.of<BalanceViewModel>(context, listen: false);
       namaUser = balanceVM.userBalance?.namauser ?? "KONTER PULSA";
@@ -284,7 +284,7 @@ class _StrukPageState extends State<StrukPage> {
 
   /// PDF generator menerima harga input
   Future<Uint8List> _generatePdf(
-    StatusTransaksi trx,
+    StatusTransaksiModel trx,
     String namaUser,
     String hargaInput,
   ) async {

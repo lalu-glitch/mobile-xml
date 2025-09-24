@@ -1,5 +1,5 @@
-import '../../core/helper/dynamic_app_page.dart';
-import 'icon_models/icon_data.dart';
+import '../../../core/helper/dynamic_app_page.dart';
+import 'icon_data.dart';
 
 class FlowStateModel {
   final int flow;

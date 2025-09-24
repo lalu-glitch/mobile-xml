@@ -1,10 +1,10 @@
 class UserBalance {
-  final String namauser; // maps from 'nama'
-  final String kodeReseller; // maps from 'kode_reseller'
-  final int saldo; // maps from 'saldo'
-  final int poin; // maps from 'poin'
-  final String kodeLevel; // maps from 'kode_level'
-  final List<EWallet> ewallet; // maps from 'ewallet'
+  final String namauser;
+  final String kodeReseller;
+  final int saldo;
+  final int poin;
+  final String kodeLevel;
+  final List<EWallet> ewallet;
 
   UserBalance({
     required this.namauser,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xmlapp/data/models/transaksi/transaksi_helper_model.dart';
+import 'package:xmlapp/data/models/transaksi/transaksi_helper.dart';
 
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/dynamic_app_page.dart';

@@ -1,16 +1,16 @@
-class TransaksiResponse {
+class TransaksiResponseModel {
   final bool success;
   final String message;
   final int? kodeInbox;
 
-  TransaksiResponse({
+  TransaksiResponseModel({
     required this.success,
     required this.message,
     this.kodeInbox,
   });
 
-  factory TransaksiResponse.fromJson(Map<String, dynamic> json) {
-    return TransaksiResponse(
+  factory TransaksiResponseModel.fromJson(Map<String, dynamic> json) {
+    return TransaksiResponseModel(
       success: json["success"] ?? false,
       message: json["message"] ?? "",
       kodeInbox: json["kode_inbox"],

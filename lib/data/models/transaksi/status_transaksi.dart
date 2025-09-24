@@ -1,4 +1,4 @@
-class StatusTransaksi {
+class StatusTransaksiModel {
   final int kode;
   final String tujuan;
   final int statusTrx;
@@ -10,7 +10,7 @@ class StatusTransaksi {
   final String harga;
   final String komisi;
 
-  const StatusTransaksi({
+  const StatusTransaksiModel({
     required this.kode,
     required this.tujuan,
     required this.statusTrx,
@@ -23,8 +23,8 @@ class StatusTransaksi {
     required this.komisi,
   });
 
-  factory StatusTransaksi.fromJson(Map<String, dynamic> json) {
-    return StatusTransaksi(
+  factory StatusTransaksiModel.fromJson(Map<String, dynamic> json) {
+    return StatusTransaksiModel(
       kode: json['kode'] is int
           ? json['kode']
           : int.tryParse(json['kode']?.toString() ?? '') ?? 0,

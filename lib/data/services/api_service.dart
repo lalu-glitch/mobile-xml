@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../core/helper/constant_finals.dart';
-import '../models/provider_kartu.dart';
+import '../models/produk/provider_kartu.dart';
 import '../models/transaksi/status_transaksi.dart';
 import '../models/transaksi/transaksi_riwayat.dart';
 import '../models/transaksi/transaksi_response.dart';
@@ -22,7 +22,7 @@ class ApiService {
   Future<UserBalance> fetchUserBalance() async {
     try {
       final response = await authService.dio.get("$baseURL/get_user");
-
+      print('response : ${response.data}');
       if (response.statusCode == 200) {
         final dataMap = Map<String, dynamic>.from(response.data);
         return UserBalance.fromJson(dataMap);
@@ -153,7 +153,7 @@ class ApiService {
         final jsonData = Map<String, dynamic>.from(response.data);
         return {
           "success": jsonData["success"] ?? false,
-          "data": TransaksiResponse.fromJson(jsonData),
+          "data": TransaksiResponseModel.fromJson(jsonData),
           "message": jsonData["message"] ?? "Berhasil memproses transaksi",
         };
       } else {
@@ -185,7 +185,7 @@ class ApiService {
         final jsonData = Map<String, dynamic>.from(response.data);
         return {
           "success": true,
-          "data": StatusTransaksi.fromJson(jsonData),
+          "data": StatusTransaksiModel.fromJson(jsonData),
           "message": "Berhasil mendapatkan status transaksi",
         };
       } else {
@@ -205,7 +205,7 @@ class ApiService {
     }
   }
 
-  Future<RiwayatTransaksiResponse?> fetchHistory({
+  Future<RiwayatTransaksiResponseModel?> fetchHistory({
     int page = 1,
     int limit = 5,
   }) async {
@@ -219,7 +219,7 @@ class ApiService {
         final Map<String, dynamic> data = Map<String, dynamic>.from(
           response.data,
         );
-        return RiwayatTransaksiResponse.fromJson(data);
+        return RiwayatTransaksiResponseModel.fromJson(data);
       }
       return null;
     } on DioException catch (e) {

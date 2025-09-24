@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../data/models/transaksi/status_transaksi.dart';
@@ -20,11 +19,11 @@ class DetailRiwayatTransaksiCubit extends Cubit<DetailRiwayatTransaksiState> {
 
       if (result['success'] == true) {
         final data = result['data'];
-        StatusTransaksi statusTransaksi;
-        if (data is StatusTransaksi) {
+        StatusTransaksiModel statusTransaksi;
+        if (data is StatusTransaksiModel) {
           statusTransaksi = data;
         } else if (data is Map<String, dynamic>) {
-          statusTransaksi = StatusTransaksi.fromJson(data);
+          statusTransaksi = StatusTransaksiModel.fromJson(data);
         } else {
           throw Exception("Format data tidak dikenali");
         }

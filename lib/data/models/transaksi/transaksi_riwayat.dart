@@ -1,11 +1,11 @@
-class RiwayatTransaksiResponse {
+class RiwayatTransaksiResponseModel {
   final int total;
   final int totalPages;
   final int currentPage;
   final int perPage;
   final List<RiwayatTransaksi> items;
 
-  RiwayatTransaksiResponse({
+  RiwayatTransaksiResponseModel({
     required this.total,
     required this.totalPages,
     required this.currentPage,
@@ -13,9 +13,9 @@ class RiwayatTransaksiResponse {
     required this.items,
   });
 
-  factory RiwayatTransaksiResponse.fromJson(Map<String, dynamic> json) {
+  factory RiwayatTransaksiResponseModel.fromJson(Map<String, dynamic> json) {
     final List<dynamic> rawItems = json['data'] ?? [];
-    return RiwayatTransaksiResponse(
+    return RiwayatTransaksiResponseModel(
       total: json['total'] ?? 0,
       totalPages: json['total_pages'] ?? 1,
       currentPage: json['current_page'] ?? 1,

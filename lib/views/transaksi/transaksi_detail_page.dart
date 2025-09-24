@@ -10,7 +10,7 @@ class DetailTransaksiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status =
-        ModalRoute.of(context)!.settings.arguments as StatusTransaksi;
+        ModalRoute.of(context)!.settings.arguments as StatusTransaksiModel;
 
     final bool isSuccess = status.statusTrx == 20;
 

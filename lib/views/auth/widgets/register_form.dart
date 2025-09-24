@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/error_dialog.dart';
@@ -255,6 +256,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           CustomTextField(
             controller: nomorCtrl,
             labelText: 'Nomor Whatsapp',
+            textFormater: [FilteringTextInputFormatter.digitsOnly],
             prefixIcon: Icon(Icons.phone, color: kOrangeAccent400),
             keyboardType: TextInputType.phone,
           ),

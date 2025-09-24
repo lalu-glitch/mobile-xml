@@ -14,12 +14,6 @@ class AuthService extends ChangeNotifier {
 
   final FlutterSecureStorage storage = const FlutterSecureStorage();
 
-  // Basic Auth Credentials
-  // static const String _basicUser = "xmlapp";
-  // static const String _basicPass = "apkxml";
-  // static final String _basicAuthHeader =
-  //     "Basic ${base64Encode(utf8.encode("$_basicUser:$_basicPass"))}";
-
   final String _basicAuthHeader =
       "Basic ${base64Encode(utf8.encode("${dotenv.env['BASIC_USER']}:${dotenv.env['BASIC_PASS']}"))}";
   AuthService() {
@@ -360,9 +354,6 @@ class AuthService extends ChangeNotifier {
 
       if (newAccess != null) {
         userData["accessToken"] = newAccess;
-        // Hanya update refreshToken jika ada
-        // if (newRefresh != null) userData["refreshToken"] = newRefresh;
-
         await storage.write(key: "userData", value: jsonEncode(userData));
         notifyListeners(); // biar UI refresh
 

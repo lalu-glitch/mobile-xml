@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:xmlapp/core/helper/constant_finals.dart';
 
 import 'views/layanan/cubit/flow_cubit.dart';
 import 'core/route/app_route.dart';
@@ -154,7 +153,6 @@ class _XmlAppState extends State<XmlApp> {
         child: MaterialApp(
           title: "XML App",
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: kWhite),
             textTheme: GoogleFonts.robotoTextTheme(),
             useMaterial3: true,
           ),

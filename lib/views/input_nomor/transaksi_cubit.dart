@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/transaksi/transaksi_helper_model.dart';
+import '../../data/models/transaksi/transaksi_helper.dart';
 
 class TransaksiCubit extends Cubit<TransaksiHelperModel> {
   TransaksiCubit() : super(const TransaksiHelperModel());

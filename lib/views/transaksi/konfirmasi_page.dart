@@ -8,7 +8,7 @@ import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/currency.dart';
 import '../../core/utils/error_dialog.dart';
-import '../../data/models/transaksi/ewallet_model.dart';
+import '../../data/models/transaksi/metode_transaksi.dart';
 import '../../viewmodels/balance_viewmodel.dart';
 import '../../viewmodels/transaksi_viewmodel.dart';
 
@@ -81,14 +81,14 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   }
 
   /// Generate daftar metode pembayaran
-  List<PaymentMethod> _generatePaymentMethods(BalanceViewModel balanceVM) {
+  List<PaymentMethodModel> _generatePaymentMethods(BalanceViewModel balanceVM) {
     final saldo = balanceVM.userBalance?.saldo ?? 0;
     final eWallets = balanceVM.userBalance?.ewallet ?? [];
 
-    final methods = <PaymentMethod>[
-      PaymentMethod(nama: "SALDO", kodeDompet: "", saldoEwallet: saldo),
+    final methods = <PaymentMethodModel>[
+      PaymentMethodModel(nama: "SALDO", kodeDompet: "", saldoEwallet: saldo),
       ...eWallets.map(
-        (ew) => PaymentMethod(
+        (ew) => PaymentMethodModel(
           nama: ew.nama,
           kodeDompet: ew.kodeDompet,
           saldoEwallet: ew.saldoEwallet,
@@ -125,7 +125,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   }
 
   /// Option pilihan metode pembayaran
-  Widget _paymentOption(PaymentMethod method, bool isSelected) {
+  Widget _paymentOption(PaymentMethodModel method, bool isSelected) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -174,7 +174,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   }
 
   /// Tombol Bayar
-  Widget _buildPayButton(List<PaymentMethod> methods, dynamic transaksi) {
+  Widget _buildPayButton(List<PaymentMethodModel> methods, dynamic transaksi) {
     final sendTransaksi = context.read<TransaksiCubit>();
 
     return SizedBox(

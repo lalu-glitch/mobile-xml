@@ -10,13 +10,13 @@ class TransaksiViewModel extends ChangeNotifier {
 
   bool _isLoading = false;
   String? _error;
-  TransaksiResponse? transaksiResponse;
-  StatusTransaksi? _statusTransaksi;
+  TransaksiResponseModel? transaksiResponse;
+  StatusTransaksiModel? _statusTransaksi;
   Timer? _debounce;
 
   bool get isLoading => _isLoading;
   String? get error => _error;
-  StatusTransaksi? get statusTransaksi => _statusTransaksi;
+  StatusTransaksiModel? get statusTransaksi => _statusTransaksi;
 
   final logger = Logger();
 
@@ -54,7 +54,7 @@ class TransaksiViewModel extends ChangeNotifier {
       );
 
       if (result["success"] == true && result["data"] != null) {
-        transaksiResponse = result["data"] as TransaksiResponse;
+        transaksiResponse = result["data"] as TransaksiResponseModel;
         if (transaksiResponse?.kodeInbox != null) {
           // cek status transaksi sekali
           // kasih delay 1 detik sebelum cek status
@@ -95,10 +95,10 @@ class TransaksiViewModel extends ChangeNotifier {
 
       if (result['success'] == true) {
         final data = result['data'];
-        if (data is StatusTransaksi) {
+        if (data is StatusTransaksiModel) {
           _statusTransaksi = data;
         } else if (data is Map<String, dynamic>) {
-          _statusTransaksi = StatusTransaksi.fromJson(data);
+          _statusTransaksi = StatusTransaksiModel.fromJson(data);
         } else {
           throw Exception("Format data tidak dikenali");
         }

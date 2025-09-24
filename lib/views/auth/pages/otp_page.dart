@@ -152,7 +152,7 @@ class _KodeOTPState extends State<KodeOTP> {
                   letterSpacing: 30,
                 ),
                 align: TextAlign.center,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: 12),
               Text(

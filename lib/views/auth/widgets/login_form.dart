@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/error_dialog.dart';
@@ -51,8 +52,8 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         '/kodeOTP',
         arguments: {
           "kodeAgen": kodeAgen,
-          "type": result["data"]['data']["type"],
-          "expiresAt": result["data"]['data']["expiresAt"],
+          "type": result["data"]["type"],
+          "expiresAt": result["data"]["expiresAt"],
         },
       );
     } else {
@@ -75,8 +76,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         CustomTextField(
           controller: nomorCtrl,
           labelText: 'Nomer Whatsapp',
+          textFormater: [FilteringTextInputFormatter.digitsOnly],
           prefixIcon: Icon(Icons.phone, color: kOrangeAccent400),
-          keyboardType: TextInputType.number,
+          keyboardType: TextInputType.phone,
         ),
         SizedBox(height: 20),
         GestureDetector(
