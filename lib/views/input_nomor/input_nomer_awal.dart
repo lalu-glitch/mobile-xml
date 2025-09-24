@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xmlapp/data/models/transaksi/transaksi_helper_model.dart';
 
+import '../../core/helper/constant_finals.dart';
 import '../../core/helper/dynamic_app_page.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/error_dialog.dart';
@@ -29,7 +30,7 @@ class _InputNomorPageState extends State<InputNomorPage> {
           "Input Nomor Tujuan",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color(0xFFFF6D00),
+        backgroundColor: kOrange,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Padding(
@@ -56,7 +57,7 @@ class _InputNomorPageState extends State<InputNomorPage> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF6D00),
+                    backgroundColor: kOrange,
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 48),
                     shape: RoundedRectangleBorder(

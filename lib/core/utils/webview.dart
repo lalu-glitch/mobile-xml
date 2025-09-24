@@ -122,4 +122,10 @@ class _WebviewPageState extends State<WebviewPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _controller = null;
+    super.dispose();
+  }
 }

@@ -58,7 +58,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
               Navigator.pop(context);
             },
           ),
-          backgroundColor: const Color(0xFFFF6D00),
+          backgroundColor: kOrange,
           iconTheme: const IconThemeData(color: kWhite),
         ),
         body: Padding(

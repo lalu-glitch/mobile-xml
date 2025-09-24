@@ -222,13 +222,16 @@ class HeaderCard extends StatelessWidget {
                               color: kWhite,
                               size: Screen.kSize14,
                             ),
-                            const Text(
-                              " Jangan biarin saldo kamu kosong! Yuk, topup sekarang!",
-                              style: TextStyle(
-                                color: kWhite,
-                                fontSize: 11,
-                                fontWeight:
-                                    FontWeight.bold, // bold untuk nama user
+                            Flexible(
+                              child: const Text(
+                                " Jangan biarin saldo kamu kosong! Yuk, topup sekarang!",
+                                style: TextStyle(
+                                  color: kWhite,
+                                  fontSize: 11,
+                                  fontWeight:
+                                      FontWeight.bold, // bold untuk nama user
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],

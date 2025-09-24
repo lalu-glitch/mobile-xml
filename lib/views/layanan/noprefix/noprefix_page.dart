@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:provider/provider.dart';
-
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../cubit/flow_cubit.dart';
@@ -82,9 +80,6 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                 child: Text(state.message, style: const TextStyle(color: kRed)),
               );
             }
-            // if (state is ProviderSuccess && state.providers.isEmpty) {
-            //   return const Center(child: Text('Data tidak tersedia'));
-            // }
             if (state is ProviderNoPrefixSuccess) {
               return ListView.builder(
                 itemCount: state.providers.length,
@@ -94,13 +89,15 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                   return Card(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 12,
-                      vertical: 6,
+                      vertical: 8,
                     ),
+                    color: kNeutral10,
                     child: ExpansionTile(
                       title: Text(
                         provider.namaProvider,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
+                      shape: Border(),
                       children: [
                         ...produkList.map((produk) {
                           final bool isSelected =
@@ -126,7 +123,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                             child: Container(
                               margin: const EdgeInsets.symmetric(
                                 horizontal: 12,
-                                vertical: 6,
+                                vertical: 10,
                               ),
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(

@@ -27,10 +27,8 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
           ),
         );
       } else if (state is RiwayatTransaksiLoadingMore) {
-        // Already loading more, prevent duplicate calls
         return;
       } else {
-        // Not in a state to append, fallback to initial load
         append = false;
       }
     }
@@ -78,7 +76,7 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
         append: true,
       );
     } else if (state is RiwayatTransaksiLoadingMore) {
-      // Already loading, do nothing
+      //udah loading, gausah ngapa ngapain
     }
   }
 }

@@ -10,7 +10,7 @@ class StatusTransaksi {
   final String harga;
   final String komisi;
 
-  StatusTransaksi({
+  const StatusTransaksi({
     required this.kode,
     required this.tujuan,
     required this.statusTrx,
