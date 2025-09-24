@@ -8,6 +8,7 @@ import 'package:xmlapp/views/home/widgets/header_card.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import '../../../viewmodels/icon_viewmodel.dart';
+import '../../onboarding/onboarding_screen.dart';
 import '../../widgets/promo_popup.dart';
 import '../widgets/header.dart';
 import '../widgets/layanan_section.dart';
@@ -96,6 +97,19 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 const SizedBox(height: 120),
                                 PromoSection(balanceVM: balanceVM),
+                                const SizedBox(height: 24),
+                                Center(
+                                  child: ElevatedButton(
+                                    onPressed: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const OnboardingScreen(),
+                                      ),
+                                    ),
+                                    child: Text('Navigate'),
+                                  ),
+                                ),
                                 const SizedBox(height: 24),
                                 iconVM.isLoading
                                     ? ShimmerBox.buildShimmerIcons()

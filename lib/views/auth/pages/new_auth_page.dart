@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:xmlapp/views/auth/widgets/login_form.dart';
-import 'dart:math' as math;
 
-import '../../core/helper/constant_finals.dart';
-import 'widgets/register_form.dart';
+import '../../../core/helper/constant_finals.dart';
+import '../widgets/register_form.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
