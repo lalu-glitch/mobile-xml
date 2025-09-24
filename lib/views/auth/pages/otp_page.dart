@@ -47,13 +47,20 @@ class _KodeOTPState extends State<KodeOTP> {
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (start == 0) {
-        setState(() {
-          timer.cancel();
-        });
+        if (mounted) {
+          // Tambahkan check mounted
+          setState(() {
+            timer.cancel();
+          });
+        }
+        ;
       } else {
-        setState(() {
-          start--;
-        });
+        if (mounted) {
+          // Tambahkan check mounted
+          setState(() {
+            start--;
+          });
+        }
       }
     });
   }
@@ -82,7 +89,9 @@ class _KodeOTPState extends State<KodeOTP> {
       kodeOTPCtrl.text.trim(),
       type,
     );
-    setState(() => loading = false);
+    if (mounted) {
+      setState(() => loading = false);
+    }
 
     if (result["success"]) {
       Navigator.pushReplacementNamed(context, '/');
