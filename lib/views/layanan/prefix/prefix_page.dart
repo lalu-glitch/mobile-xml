@@ -12,7 +12,7 @@ import '../../../data/models/flow_state_models.dart';
 import '../../../data/models/icon_models/icon_data.dart';
 import '../../../core/helper/currency.dart';
 import '../../input_nomor/transaksi_cubit.dart';
-import '../../konfirmasi_page.dart';
+import '../../transaksi/konfirmasi_page.dart';
 import 'cubit/provider_prefix_cubit.dart';
 
 class DetailPrefixPage extends StatefulWidget {

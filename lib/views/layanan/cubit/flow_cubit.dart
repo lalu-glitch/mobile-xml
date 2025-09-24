@@ -23,7 +23,6 @@ class FlowCubit extends Cubit<FlowStateModel?> {
   void nextPage() {
     if (state == null) return;
     if (state!.currentIndex + 1 < state!.sequence.length) {
-      final newIndex = state!.currentIndex + 1;
       emit(state!.copyWith(currentIndex: state!.currentIndex + 1));
     }
   }

@@ -61,7 +61,7 @@ class StokXMLHeader extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30)),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           ),
           icon: Icon(Icons.add_box, size: 24, color: kWhite),
           label: Text(

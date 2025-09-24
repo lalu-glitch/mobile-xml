@@ -166,7 +166,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                     labelText: 'Kecamatan',
                     labelStyle: TextStyle(color: kNeutral80),
                     floatingLabelStyle: TextStyle(color: kOrange),
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                       horizontal: 8,
                       vertical: 12,
                     ),
@@ -211,7 +211,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                     labelText: 'Kabupaten',
                     labelStyle: TextStyle(color: kNeutral80),
                     floatingLabelStyle: TextStyle(color: kOrange),
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                       horizontal: 8,
                       vertical: 12,
                     ),

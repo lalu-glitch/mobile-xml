@@ -104,7 +104,7 @@ class _KodeOTPState extends State<KodeOTP> {
       backgroundColor: kWhite,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsetsGeometry.all(16),
+          padding: const EdgeInsetsGeometry.all(16),
           child: Column(
             children: [
               Row(
