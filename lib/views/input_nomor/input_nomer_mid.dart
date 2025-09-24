@@ -28,7 +28,16 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: kOrange,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: kWhite),
+        leading: BackButton(
+          onPressed: () {
+            final flowCubit = context.read<FlowCubit>();
+            if (flowCubit.state!.currentIndex > 0) {
+              flowCubit.previousPage(); //  sync dengan Cubit
+            }
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

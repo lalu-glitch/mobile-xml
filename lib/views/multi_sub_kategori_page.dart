@@ -26,9 +26,19 @@ class MultiSubKategoriPage extends StatelessWidget {
         return true; // kalau sudah di index 0 → exit
       },
       child: Scaffold(
+        backgroundColor: kNeutral20,
         appBar: AppBar(
           backgroundColor: kOrange,
-          leading: Icon(Icons.arrow_back),
+          iconTheme: IconThemeData(color: kWhite),
+          leading: BackButton(
+            onPressed: () {
+              final flowCubit = context.read<FlowCubit>();
+              if (flowCubit.state!.currentIndex > 0) {
+                flowCubit.previousPage(); //  sync dengan Cubit
+              }
+              Navigator.pop(context);
+            },
+          ),
         ),
         body: Center(
           child: Column(

@@ -18,9 +18,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   bool loading = false;
 
   bool isRegisterChecked = false;
-  String? selectedProvince;
-  String? selectedRegency;
-  String? selectedDistrict;
+  String? selectedProvinsi;
+  String? selectedKabupaten;
+  String? selectedKecamatan;
 
   //controller
   final namaCtrl = TextEditingController();
@@ -29,10 +29,10 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   final nomorCtrl = TextEditingController();
   final kodeReferralCtrl = TextEditingController();
 
-  // Placeholder data untuk dropdown
-  final List<String> provinces = ['Jawa Barat', 'Jawa Tengah', 'Jawa Timur'];
-  final List<String> regencies = ['Bandung', 'Cimahi', 'Garut'];
-  final List<String> districts = [
+  // Placeholder data  dropdown
+  final List<String> provinsi = ['Jawa Barat', 'Jawa Tengah', 'Jawa Timur'];
+  final List<String> kabupaten = ['Bandung', 'Cimahi', 'Garut'];
+  final List<String> kecamatan = [
     'Cibaduyut',
     'Cihampelas',
     'Cicalengka',
@@ -55,9 +55,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     if (namaCtrl.text.trim().isEmpty ||
         alamatLengkapCtrl.text.trim().isEmpty ||
         nomorCtrl.text.trim().isEmpty ||
-        selectedProvince == null ||
-        selectedRegency == null ||
-        selectedDistrict == null) {
+        selectedProvinsi == null ||
+        selectedKabupaten == null ||
+        selectedKecamatan == null) {
       showInfoToast('Semua data wajib diisi, kecuali kode referral', kRed);
       return;
     }
@@ -144,9 +144,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                 borderSide: BorderSide(color: kOrangeAccent500, width: 2),
               ),
             ),
-            value: selectedProvince,
+            value: selectedProvinsi,
             // hint: Text('Provinsi'),
-            items: provinces.map((String province) {
+            items: provinsi.map((String province) {
               return DropdownMenuItem<String>(
                 value: province,
                 child: Text(province),
@@ -154,7 +154,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             }).toList(),
             onChanged: (String? newValue) {
               setState(() {
-                selectedProvince = newValue;
+                selectedProvinsi = newValue;
               });
             },
           ),
@@ -184,8 +184,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                       borderSide: BorderSide(color: kOrangeAccent500, width: 2),
                     ),
                   ),
-                  value: selectedDistrict,
-                  items: districts.map((String district) {
+                  value: selectedKecamatan,
+                  items: kecamatan.map((String district) {
                     return DropdownMenuItem<String>(
                       value: district,
                       child: Text(
@@ -197,7 +197,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                   }).toList(),
                   onChanged: (String? newValue) {
                     setState(() {
-                      selectedDistrict = newValue;
+                      selectedKecamatan = newValue;
                     });
                   },
                   isDense: true,
@@ -229,8 +229,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                       borderSide: BorderSide(color: kOrangeAccent500, width: 2),
                     ),
                   ),
-                  value: selectedRegency,
-                  items: regencies.map((String regency) {
+                  value: selectedKabupaten,
+                  items: kabupaten.map((String regency) {
                     return DropdownMenuItem<String>(
                       value: regency,
                       child: Text(
@@ -242,7 +242,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                   }).toList(),
                   onChanged: (String? newValue) {
                     setState(() {
-                      selectedRegency = newValue;
+                      selectedKabupaten = newValue;
                     });
                   },
                   isDense: true,
@@ -301,9 +301,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                 ? null
                 : () {
                     doRegister(
-                      selectedProvince!,
-                      selectedRegency!,
-                      selectedDistrict!,
+                      selectedProvinsi!,
+                      selectedKabupaten!,
+                      selectedKecamatan!,
                     );
                   },
             style: ElevatedButton.styleFrom(
