@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../views/auth/pages/lupa_kode_agen_copy.dart';
+import '../../views/auth/pages/lupa_kode_agen.dart';
 import '../../views/auth/pages/otp_page.dart';
 import '../../views/auth/pages/auth_page.dart';
 import '../../main_page.dart';

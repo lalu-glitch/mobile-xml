@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,8 +28,15 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => await showExitDialog(context),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        final shouldExit = await showExitDialog(context);
+        if (shouldExit) {
+          Navigator.of(context).pop(true);
+        }
+      },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         body: BlocConsumer<RequestKodeAgenCubit, RequestKodeAgenState>(
