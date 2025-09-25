@@ -25,7 +25,7 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
   Color _statusColor(RiwayatTransaksi t) {
     switch (t.status) {
       case 20:
-        return Colors.green;
+        return kGreen;
       case 40:
       case 43:
       case 50:

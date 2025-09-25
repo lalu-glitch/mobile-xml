@@ -42,9 +42,13 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
         onPressed: () {
           if (value != null && value.isNotEmpty) {
             Clipboard.setData(ClipboardData(text: value));
-            showInfoToast("Text berhasil di copy : $value", kGreenComplete);
+            showAppToast(
+              context,
+              'Text berhasil di copy : $value',
+              ToastType.complete,
+            );
           } else {
-            showInfoToast("gagal copy", kRed);
+            showAppToast(context, 'Gagal copy', ToastType.error);
           }
         },
       ),

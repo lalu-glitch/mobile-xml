@@ -58,12 +58,20 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         selectedProvinsi == null ||
         selectedKabupaten == null ||
         selectedKecamatan == null) {
-      showInfoToast('Semua data wajib diisi, kecuali kode referral', kRed);
+      showAppToast(
+        context,
+        'Semua data wajib diisi, kecuali kode referral',
+        ToastType.warning,
+      );
       return;
     }
 
     if (!isRegisterChecked) {
-      showInfoToast('Anda harus menyetujuan syarat dan ketentuan', kRed);
+      showAppToast(
+        context,
+        'Anda harus menyetujui syarat dan ketentuan',
+        ToastType.error,
+      );
       return;
     }
 

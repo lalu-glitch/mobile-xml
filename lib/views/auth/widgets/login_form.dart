@@ -23,6 +23,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   void toggleCheckbox(bool? value) {
     setState(() {
       isChecked = value ?? false;
+      print('checked status : $isChecked');
     });
   }
 
@@ -34,7 +35,11 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     final nomor = nomorCtrl.text.trim();
 
     if (kodeAgen.isEmpty || nomor.isEmpty) {
-      showInfoToast('Nomor dan kode agen tidak boleh kosong', kRed);
+      showAppToast(
+        context,
+        'Nomor dan kode agen tidak boleh kosong',
+        ToastType.warning,
+      );
       return;
     }
 
@@ -121,7 +126,15 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         ),
         SizedBox(height: 24),
         ElevatedButton(
-          onPressed: isChecked || loading ? doOTP : null,
+          onPressed: isChecked || loading
+              ? doOTP
+              : () {
+                  showAppToast(
+                    context,
+                    'Anda harus menyetujui syarat dan ketentuan',
+                    ToastType.error,
+                  );
+                },
           style: ElevatedButton.styleFrom(
             backgroundColor: isChecked ? kOrange : kNeutral40,
             minimumSize: Size(double.infinity, 50),

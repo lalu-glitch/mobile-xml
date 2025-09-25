@@ -212,7 +212,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
           if (total > saldo) {
             final msg = saldo <= 0
-                ? "Saldo ${selected.nama} minus, hubungi CS / admin."
+                ? "Saldo ${selected.nama} tidak cukup, hubungi CS / admin."
                 : "Saldo ${selected.nama} tidak mencukupi.";
             showErrorDialog(context, msg);
           } else {

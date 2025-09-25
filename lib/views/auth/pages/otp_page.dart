@@ -79,7 +79,7 @@ class _KodeOTPState extends State<KodeOTP> {
   // Methode request verifikasi OTP ke server
   Future<void> doVerifyOTP(String kodeReseller, String type) async {
     if (kodeOTPCtrl.text.trim().isEmpty) {
-      showInfoToast("OTP tidak boleh kosong", kRed);
+      showAppToast(context, 'OTP tidak boleh kosong', ToastType.warning);
       return;
     }
 
