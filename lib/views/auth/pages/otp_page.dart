@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/bottom_sheet.dart';
-import '../../../core/utils/error_dialog.dart';
+import '../../../core/utils/dialog.dart';
 import '../../../data/services/auth_service.dart';
 import '../widgets/custom_textfield.dart';
 

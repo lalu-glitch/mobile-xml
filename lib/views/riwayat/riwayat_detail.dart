@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:flutter/services.dart'; // Untuk Clipboard
 import 'package:intl/intl.dart';
 
 import '../../core/helper/constant_finals.dart';
-import '../../core/utils/error_dialog.dart';
 import 'cubit/detail_riwayat_transaksi_cubit.dart';
+import 'widgets/card_detail_item.dart';
 
 class DetailRiwayatPage extends StatefulWidget {
   const DetailRiwayatPage({super.key});
@@ -32,36 +30,13 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
     }
   }
 
-  Widget _buildDetailItem(String label, String? value) => Card(
-    margin: const EdgeInsets.symmetric(vertical: 1),
-    child: ListTile(
-      title: Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
-      subtitle: Text(value ?? '-'), // tampilkan '-' kalau null
-      trailing: IconButton(
-        icon: const Icon(Icons.copy, size: 20),
-        onPressed: () {
-          if (value != null && value.isNotEmpty) {
-            Clipboard.setData(ClipboardData(text: value));
-            showAppToast(
-              context,
-              'Text berhasil di copy : $value',
-              ToastType.complete,
-            );
-          } else {
-            showAppToast(context, 'Gagal copy', ToastType.error);
-          }
-        },
-      ),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Detail Riwayat Transaksi',
-          style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
+          style: TextStyle(color: kWhite),
         ),
         backgroundColor: kOrange,
         iconTheme: const IconThemeData(color: kWhite),
@@ -69,8 +44,7 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
       body:
           BlocBuilder<DetailRiwayatTransaksiCubit, DetailRiwayatTransaksiState>(
             builder: (context, state) {
-              if (state is DetailRiwayatTransaksiInitial ||
-                  state is DetailRiwayatTransaksiLoading) {
+              if (state is DetailRiwayatTransaksiLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
 
@@ -87,19 +61,44 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
                       child: ListView(
                         padding: const EdgeInsets.all(16),
                         children: [
-                          _buildDetailItem("Kode", status.kode.toString()),
-                          _buildDetailItem("Produk", status.kodeProduk),
-                          _buildDetailItem("Tujuan", status.tujuan),
-                          _buildDetailItem(
-                            "Waktu",
-                            DateFormat(
+                          buildInfoTile(
+                            context,
+                            label: "Kode",
+                            value: status.kode.toString(),
+                          ),
+                          buildInfoTile(
+                            context,
+                            label: "Produk",
+                            value: status.kodeProduk,
+                          ),
+                          buildInfoTile(
+                            context,
+                            label: "Tujuan",
+                            value: status.tujuan,
+                          ),
+                          buildInfoTile(
+                            context,
+                            label: "Waktu",
+                            value: DateFormat(
                               'dd MMM yyyy, HH:mm',
                             ).format(status.tglEntri),
                           ),
-                          _buildDetailItem("Status", status.keterangan),
-                          _buildDetailItem("Harga", status.harga.toString()),
-                          _buildDetailItem("SN", status.sn),
-                          _buildDetailItem("Outbox", status.outbox),
+                          buildInfoTile(
+                            context,
+                            label: "Status",
+                            value: status.keterangan,
+                          ),
+                          buildInfoTile(
+                            context,
+                            label: "Harga",
+                            value: status.harga.toString(),
+                          ),
+                          buildInfoTile(context, label: "SN", value: status.sn),
+                          buildInfoTile(
+                            context,
+                            label: "Outbox",
+                            value: status.outbox,
+                          ),
                         ],
                       ),
                     ),

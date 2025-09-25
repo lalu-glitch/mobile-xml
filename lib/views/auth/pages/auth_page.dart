@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:xmlapp/views/auth/widgets/login_form.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../../../core/utils/dialog.dart';
 import '../widgets/register_form.dart';
 
 class AuthPage extends StatefulWidget {
@@ -36,28 +37,12 @@ class _AuthPageState extends State<AuthPage> {
     });
   }
 
-  Future<bool> onWillPop() async {
-    return await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Keluar Aplikasi?'),
-            content: const Text('Apakah kamu yakin ingin keluar?'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Tidak'),
-              ),
-              TextButton(onPressed: () => exit(0), child: const Text('Ya')),
-            ],
-          ),
-        ) ??
-        false;
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: onWillPop,
+      onWillPop: () async {
+        return await showExitDialog(context);
+      },
       child: Scaffold(
         backgroundColor: kWhite,
         body: SafeArea(

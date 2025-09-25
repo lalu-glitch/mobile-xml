@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/dynamic_app_page.dart';
 import '../layanan/cubit/flow_cubit.dart';
-import '../../core/utils/error_dialog.dart';
+import '../../core/utils/dialog.dart';
 
 class InputNomorMidPage extends StatefulWidget {
   const InputNomorMidPage({super.key});

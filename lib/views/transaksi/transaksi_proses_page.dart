@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import '../../core/helper/constant_finals.dart';
-import '../../core/utils/error_dialog.dart';
+import '../../core/utils/dialog.dart';
 import '../../viewmodels/transaksi_viewmodel.dart';
 import 'package:logger/logger.dart';
 

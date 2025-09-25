@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/currency.dart';
-import '../../core/utils/error_dialog.dart';
+import '../../core/utils/dialog.dart';
 import '../../data/models/transaksi/metode_transaksi.dart';
 import '../../viewmodels/balance_viewmodel.dart';
 import '../../viewmodels/transaksi_viewmodel.dart';

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:intl/intl.dart';
-
 import '../../core/helper/constant_finals.dart';
 
 import '../../data/models/transaksi/transaksi_riwayat.dart';
 import 'cubit/riwayat_transaksi_cubit.dart';
+import 'widgets/card_transaksi.dart';
 
 class RiwayatTransaksiPage extends StatefulWidget {
   const RiwayatTransaksiPage({super.key});
@@ -20,38 +19,6 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
   void initState() {
     super.initState();
     context.read<RiwayatTransaksiCubit>().loadRiwayat();
-  }
-
-  Color _statusColor(RiwayatTransaksi t) {
-    switch (t.status) {
-      case 20:
-        return kGreen;
-      case 40:
-      case 43:
-      case 50:
-      case 52:
-      case 53:
-      case 55:
-        return kRed;
-      default:
-        return kOrange;
-    }
-  }
-
-  IconData _statusIcon(RiwayatTransaksi t) {
-    switch (t.status) {
-      case 20:
-        return Icons.check_circle;
-      case 40:
-      case 43:
-      case 50:
-      case 52:
-      case 53:
-      case 55:
-        return Icons.error;
-      default:
-        return Icons.hourglass_top;
-    }
   }
 
   @override
@@ -118,69 +85,7 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
                         horizontal: 12,
                         vertical: 1,
                       ),
-                      child: Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 6,
-                          ),
-                          leading: Icon(
-                            _statusIcon(t),
-                            color: _statusColor(t),
-                            size: 32,
-                          ),
-                          title: Text(
-                            t.tujuan,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: Screen.kSize16,
-                            ),
-                          ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Tanggal: ${DateFormat('dd MMM yyyy, HH:mm').format(t.tglEntri)}",
-                                  style: TextStyle(
-                                    fontSize: Screen.kSize14,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  "Status: ${t.keterangan}",
-                                  style: TextStyle(
-                                    fontSize: Screen.kSize14,
-                                    fontWeight: FontWeight.w600,
-                                    color: _statusColor(t),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          trailing: Text(
-                            "Rp ${t.harga.toStringAsFixed(0)}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          onTap: () {
-                            print('KODE: ${t.kode}');
-                            Navigator.pushNamed(
-                              context,
-                              '/detailRiwayatTransaksi',
-                              arguments: {'kode': t.kode},
-                            );
-                          },
-                        ),
-                      ),
+                      child: TransactionCard(t: t),
                     );
                   },
                 ),

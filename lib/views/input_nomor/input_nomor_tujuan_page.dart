@@ -8,7 +8,7 @@ import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/dynamic_app_page.dart';
 import '../layanan/cubit/flow_cubit.dart';
-import '../../core/utils/error_dialog.dart';
+import '../../core/utils/dialog.dart';
 
 class InputNomorTujuanPage extends StatefulWidget {
   const InputNomorTujuanPage({super.key});

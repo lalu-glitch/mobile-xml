@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/utils/error_dialog.dart';
+import '../../../core/utils/dialog.dart';
 import '../../../data/services/speedcash_api_service.dart';
 import '../../../viewmodels/speedcash/speedcash_viewmodel.dart';
 import '../../../data/services/auth_service.dart';

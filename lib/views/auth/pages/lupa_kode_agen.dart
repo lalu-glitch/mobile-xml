@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../data/services/auth_service.dart';
-import '../../../core/utils/error_dialog.dart';
+import '../../../core/utils/dialog.dart';
 
 class LupaKodeAgenPage extends StatefulWidget {
   const LupaKodeAgenPage({super.key});
@@ -61,28 +61,12 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
     }
   }
 
-  Future<bool> _onWillPop() async {
-    return await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Keluar Aplikasi?'),
-            content: const Text('Apakah kamu yakin ingin keluar?'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Tidak'),
-              ),
-              TextButton(onPressed: () => exit(0), child: const Text('Ya')),
-            ],
-          ),
-        ) ??
-        false;
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: _onWillPop,
+      onWillPop: () async {
+        return await showExitDialog(context);
+      },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         body: Center(

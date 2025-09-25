@@ -6,7 +6,7 @@ import 'package:xmlapp/data/models/transaksi/transaksi_helper.dart';
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/dynamic_app_page.dart';
 import '../layanan/cubit/flow_cubit.dart';
-import '../../core/utils/error_dialog.dart';
+import '../../core/utils/dialog.dart';
 import 'transaksi_cubit.dart';
 
 class InputNomorPage extends StatefulWidget {
