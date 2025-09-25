@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:xmlapp/data/services/auth_service.dart';
+import 'package:xmlapp/views/auth/cubit/request_kode_agen_cubit.dart';
 
 import 'views/layanan/cubit/flow_cubit.dart';
 import 'core/route/app_route.dart';
@@ -130,6 +132,7 @@ class _XmlAppState extends State<XmlApp> {
               UnbindEwalletCubit(apiService: SpeedcashApiService()),
         ),
         BlocProvider(create: (context) => InfoAkunCubit(ApiService())),
+        BlocProvider(create: (context) => RequestKodeAgenCubit(AuthService())),
         BlocProvider(create: (context) => ProviderNoPrefixCubit(ApiService())),
         BlocProvider(create: (context) => ProviderPrefixCubit(ApiService())),
         BlocProvider(create: (context) => RiwayatTransaksiCubit(ApiService())),

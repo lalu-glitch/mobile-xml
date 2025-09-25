@@ -74,6 +74,74 @@ void showErrorDialog(BuildContext context, String message) {
   );
 }
 
+class SuccessDialog extends StatelessWidget {
+  final String title;
+  final String message;
+  final VoidCallback? onOk;
+
+  const SuccessDialog({
+    super.key,
+    this.title = "Berhasil",
+    required this.message,
+    this.onOk,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: kGreenComplete,
+            ),
+            child: const Icon(Icons.check, color: Colors.white, size: 55),
+          ),
+          const SizedBox(height: 25),
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: kNiggaBlack,
+            ),
+          ),
+        ],
+      ),
+      content: Text(
+        message,
+        style: const TextStyle(fontSize: 15, height: 1.4, color: kNeutral90),
+        textAlign: TextAlign.center,
+      ),
+      actions: [
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+              if (onOk != null) onOk!();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kGreen,
+              foregroundColor: kWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 14),
+            ),
+            child: const Text(
+              "OK",
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 enum ToastType { success, complete, warning, error }
 
 void showAppToast(BuildContext context, String message, ToastType type) {
