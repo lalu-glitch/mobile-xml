@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:xmlapp/data/services/onboarding_screen_service.dart';
 import 'auth_service.dart';
 
 class AuthGuard extends StatefulWidget {
@@ -14,28 +15,37 @@ class AuthGuard extends StatefulWidget {
 class _AuthGuardState extends State<AuthGuard> {
   bool _loading = true;
   bool _isLoggedIn = false;
+  bool _showOnboarding = false;
   Timer? _timer;
   final _authService = AuthService();
+  final _storageService = OnboardingScreenService();
 
   @override
   void initState() {
     super.initState();
-    _checkAuth();
+    _checkAppFlow();
 
     // Cek login status setiap 2 detik
     _timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
       final loggedIn = await _authService.isLoggedIn();
       if (!mounted) return;
-      if (!loggedIn) {
+      if (!loggedIn && !_showOnboarding) {
         _timer?.cancel();
         Navigator.pushReplacementNamed(context, '/authPage');
       }
     });
   }
 
-  Future<void> _checkAuth() async {
-    final loggedIn = await _authService.isLoggedIn();
+  Future<void> _checkAppFlow() async {
+    final onboardingSeen = await _storageService.isOnboardingSeen();
 
+    if (!onboardingSeen) {
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/onboarding');
+      return;
+    }
+
+    final loggedIn = await _authService.isLoggedIn();
     if (!mounted) return;
 
     if (!loggedIn) {

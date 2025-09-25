@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:xmlapp/views/onboarding/onboarding_page.dart';
 
 import '../../core/helper/constant_finals.dart';
+import '../../data/services/onboarding_screen_service.dart';
+import 'onboarding_page.dart';
 import 'onboarding_page_data.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController pageCtrl = PageController();
   int currentPage = 0;
+  final storage = OnboardingScreenService();
 
   @override
   void initState() {
@@ -23,6 +25,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         currentPage = pageCtrl.page!.round();
       });
     });
+  }
+
+  Future<void> _finishOnboarding() async {
+    await storage.setOnboardingSeen();
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, '/authPage');
   }
 
   @override
@@ -50,15 +58,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
+
           Padding(
             padding: EdgeInsetsGeometry.symmetric(vertical: 40, horizontal: 24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/authPage');
-                  },
+                  onPressed: _finishOnboarding,
                   child: Text(
                     'Skip',
                     style: TextStyle(color: kNeutral90, fontSize: 14),
@@ -72,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         curve: Curves.easeIn,
                       );
                     } else {
-                      Navigator.pushNamed(context, '/authPage');
+                      _finishOnboarding();
                     }
                   },
                   icon: Icon(Icons.arrow_forward),

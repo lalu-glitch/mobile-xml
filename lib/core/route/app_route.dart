@@ -8,6 +8,7 @@ import '../../views/input_nomor/input_nomer_awal.dart';
 import '../../views/input_nomor/input_nomer_mid.dart';
 import '../../views/komisi/pages/komisi_pages.dart';
 import '../../views/multi_sub_kategori_page.dart';
+import '../../views/onboarding/onboarding_screen.dart';
 import '../utils/webview.dart';
 import '../../views/analytics/analytics_page.dart';
 import '../../views/input_nomor/input_nomor_tujuan_page.dart';
@@ -33,6 +34,7 @@ Widget authGuardWrapper(Widget child) {
 
 final Map<String, WidgetBuilder> appRoutes = {
   '/': (context) => authGuardWrapper(const MainPage()),
+  '/onboarding': (context) => const OnboardingScreen(),
   '/lupaKodeAgen': (context) => (LupaKodeAgenPage()),
   '/authPage': (context) => (AuthPage()),
   '/kodeOTP': (context) => (KodeOTP()),
