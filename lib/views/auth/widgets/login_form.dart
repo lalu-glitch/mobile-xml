@@ -24,7 +24,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   void toggleCheckbox(bool? value) {
     setState(() {
       isChecked = value ?? false;
-      print('checked status : $isChecked');
     });
   }
 

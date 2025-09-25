@@ -19,81 +19,99 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
 
   @override
   Widget build(BuildContext context) {
-    final flowState = context.watch<FlowCubit>().state;
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        title: const Text(
-          "Input Nomor Tujuan",
-          style: TextStyle(color: Colors.white),
+    final flowState = context.watch<FlowCubit>().state!;
+    final flowCubit = context.read<FlowCubit>();
+    final int currentIndex = flowState.currentIndex;
+    final List<AppPage> sequence = flowState.sequence;
+
+    final bool isLastPage = currentIndex == sequence.length - 1;
+
+    return WillPopScope(
+      onWillPop: () async {
+        print('index saat ini : $currentIndex');
+        if (currentIndex > 0) {
+          flowCubit.previousPage();
+          Navigator.pop(context);
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.grey[100],
+        appBar: AppBar(
+          title: const Text(
+            "Input Nomor Tujuan",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: kOrange,
+          iconTheme: IconThemeData(color: kWhite),
+          leading: BackButton(
+            onPressed: () {
+              final flowCubit = context.read<FlowCubit>();
+              if (flowCubit.state!.currentIndex > 0) {
+                flowCubit.previousPage(); //  sync dengan Cubit
+              }
+              Navigator.pop(context);
+            },
+          ),
         ),
-        backgroundColor: kOrange,
-        iconTheme: IconThemeData(color: kWhite),
-        leading: BackButton(
-          onPressed: () {
-            final flowCubit = context.read<FlowCubit>();
-            if (flowCubit.state!.currentIndex > 0) {
-              flowCubit.previousPage(); //  sync dengan Cubit
-            }
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Masukkan Nomor Tujuan"),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _nomorController,
-              keyboardType: TextInputType.phone,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(
-                hintText: "Input Nomor Tujuan",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                suffixIcon: const Icon(Icons.contact_page),
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kOrange,
-                foregroundColor: Colors.white,
-                minimumSize: const Size(double.infinity, 48),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Masukkan Nomor Tujuan"),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _nomorController,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  hintText: "Input Nomor Tujuan",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  suffixIcon: const Icon(Icons.contact_page),
                 ),
               ),
-              onPressed: () {
-                // cek kalau masih ada halaman berikutnya
-                if (flowState!.currentIndex + 1 < flowState.sequence.length) {
-                  if (_nomorController.text.isEmpty) {
-                    showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
-                    return;
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: kOrange,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () {
+                  // cek kalau masih ada halaman berikutnya
+                  if (!isLastPage) {
+                    if (_nomorController.text.isEmpty) {
+                      showErrorDialog(
+                        context,
+                        "Nomor tujuan tidak boleh kosong",
+                      );
+                      return;
+                    }
+                    final nextPage =
+                        flowState.sequence[flowState.currentIndex + 1];
+                    flowCubit.nextPage();
+                    Navigator.pushNamed(context, pageRoutes[nextPage]!);
+                  } else {
+                    // sudah halaman terakhir -> lakukan action (misal submit)
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Flow selesai")),
+                    );
                   }
-                  final nextPage =
-                      flowState.sequence[flowState.currentIndex + 1];
-
-                  context.read<FlowCubit>().nextPage();
-
-                  Navigator.pushNamed(context, pageRoutes[nextPage]!);
-                } else {
-                  // sudah halaman terakhir -> lakukan action (misal submit)
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(const SnackBar(content: Text("Flow selesai")));
-                }
-              },
-              child: const Text(
-                "Selanjutnya",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                },
+                child: const Text(
+                  "Selanjutnya",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

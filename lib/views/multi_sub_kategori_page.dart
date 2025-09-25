@@ -18,12 +18,13 @@ class MultiSubKategoriPage extends StatelessWidget {
     final bool isLastPage = currentIndex == sequence.length - 1;
     return WillPopScope(
       onWillPop: () async {
-        if (flowState.currentIndex > 0) {
-          flowCubit.previousPage(); // update sync Cubit
+        print('index saat ini : $currentIndex');
+        if (currentIndex > 0) {
+          flowCubit.previousPage();
           Navigator.pop(context);
           return false;
         }
-        return true; // kalau sudah di index 0 → exit
+        return true;
       },
       child: Scaffold(
         backgroundColor: kNeutral20,
