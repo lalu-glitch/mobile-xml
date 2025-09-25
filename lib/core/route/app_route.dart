@@ -4,6 +4,7 @@ import '../../views/auth/pages/otp_page.dart';
 import '../../views/auth/pages/lupa_kode_agen.dart';
 import '../../views/auth/pages/auth_page.dart';
 import '../../main_page.dart';
+import '../../views/auth/pages/SK_page.dart';
 import '../../views/input_nomor/input_nomer_awal.dart';
 import '../../views/input_nomor/input_nomer_mid.dart';
 import '../../views/komisi/pages/komisi_pages.dart';
@@ -38,6 +39,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/lupaKodeAgen': (context) => (LupaKodeAgenPage()),
   '/authPage': (context) => (AuthPage()),
   '/kodeOTP': (context) => (KodeOTP()),
+  '/S&KPage': (context) => (SyaratDanKetentuan()),
   '/homepage': (context) => authGuardWrapper(HomePage()),
   '/settings': (context) => authGuardWrapper(SettingsPage()),
   '/shops': (context) => authGuardWrapper(const ShopsPage()),

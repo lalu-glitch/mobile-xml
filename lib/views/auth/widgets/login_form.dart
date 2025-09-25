@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -115,7 +116,12 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                       style: TextStyle(
                         color: kOrange,
                         fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline,
                       ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.pushNamed(context, '/S&KPage');
+                        },
                     ),
                     TextSpan(text: ' yang berlaku.'),
                   ],

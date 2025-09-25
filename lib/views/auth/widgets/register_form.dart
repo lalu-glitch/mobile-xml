@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -153,7 +154,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               ),
             ),
             value: selectedProvinsi,
-            // hint: Text('Provinsi'),
             items: provinsi.map((String province) {
               return DropdownMenuItem<String>(
                 value: province,
@@ -294,8 +294,14 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                         style: TextStyle(
                           color: kOrange,
                           fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
                         ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(context, '/S&KPage');
+                          },
                       ),
+
                       TextSpan(text: ' yang berlaku.'),
                     ],
                   ),

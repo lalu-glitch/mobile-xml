@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:xmlapp/views/auth/widgets/login_form.dart';
 
@@ -88,9 +86,7 @@ class _AuthPageState extends State<AuthPage> {
                               const SizedBox(height: 10),
                               Container(
                                 height: 2,
-                                color: isLoginSelected
-                                    ? kOrange
-                                    : Colors.transparent,
+                                color: isLoginSelected ? kOrange : kLightGrey,
                               ),
                             ],
                           ),
@@ -113,9 +109,7 @@ class _AuthPageState extends State<AuthPage> {
                               const SizedBox(height: 10),
                               Container(
                                 height: 2,
-                                color: !isLoginSelected
-                                    ? kOrange
-                                    : Colors.transparent,
+                                color: !isLoginSelected ? kOrange : kLightGrey,
                               ),
                             ],
                           ),
