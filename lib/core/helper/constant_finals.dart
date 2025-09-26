@@ -60,7 +60,7 @@ class Screen {
 }
 
 //Colors
-
+const Color kBackground = Color(0xFFf9fbfc);
 const Color kGrey = Color(0xFF7A8089);
 const Color kLightGrey = Color(0XFFF0F1F2);
 

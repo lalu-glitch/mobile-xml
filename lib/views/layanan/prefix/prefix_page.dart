@@ -121,7 +121,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
               child: BlocBuilder<ProviderPrefixCubit, ProviderPrefixState>(
                 builder: (context, state) {
                   if (_nomorController.text.isEmpty) {
-                    return const Center(child: Text('Isi nomer hp dulu hep'));
+                    return const Center(child: Text('Silahkan isi nomor HP'));
                   }
                   if (state is ProviderPrefixLoading) {
                     return const Center(child: CircularProgressIndicator());

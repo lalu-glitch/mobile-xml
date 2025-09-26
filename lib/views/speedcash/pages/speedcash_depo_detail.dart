@@ -118,7 +118,7 @@ class SpeedCashDetailDepo extends StatelessWidget {
             Navigator.pushNamed(context, '/speedcashTiketDepositPage');
           },
           child: const Text(
-            "Konfirmasi",
+            "Selanjutnya",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),

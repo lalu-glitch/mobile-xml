@@ -16,11 +16,11 @@ class BankCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      elevation: 1,
       shadowColor: Colors.black12,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       color: kWhite,
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(top: 6, bottom: 6),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -42,7 +42,7 @@ class BankCard extends StatelessWidget {
                     SizedBox(height: 4),
                     Text(
                       minimumTopUp,
-                      style: TextStyle(fontSize: 13, color: Colors.grey),
+                      style: TextStyle(fontSize: 13, color: kNeutral70),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
@@ -52,10 +52,10 @@ class BankCard extends StatelessWidget {
             // Tombol Pilih
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: kOrangeAccent400,
-                foregroundColor: Colors.white,
+                backgroundColor: kOrangeAccent500,
+                foregroundColor: kWhite,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
+                  horizontal: 30,
                   vertical: 10,
                 ),
                 shape: RoundedRectangleBorder(
