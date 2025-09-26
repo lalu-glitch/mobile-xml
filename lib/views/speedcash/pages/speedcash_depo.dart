@@ -28,7 +28,7 @@ class SpeedcashDepositPage extends StatelessWidget {
                 title: 'Bank Rakyat Tertindas',
                 minimumTopUp: 'Rp. 10.000',
                 onTap: () =>
-                    Navigator.pushNamed(context, '/speedCashDetailDepositPage'),
+                    Navigator.pushNamed(context, '/speedcashDetailDepositPage'),
               );
             },
           ),

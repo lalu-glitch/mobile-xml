@@ -73,4 +73,10 @@ class _RupiahTextFieldState extends State<RupiahTextField> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }
