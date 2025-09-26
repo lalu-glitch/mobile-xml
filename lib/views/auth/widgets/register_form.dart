@@ -315,9 +315,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                 ? null
                 : () {
                     doRegister(
-                      selectedProvinsi!,
-                      selectedKabupaten!,
-                      selectedKecamatan!,
+                      selectedProvinsi ?? '',
+                      selectedKabupaten ?? '',
+                      selectedKecamatan ?? '',
                     );
                   },
             style: ElevatedButton.styleFrom(

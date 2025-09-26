@@ -32,10 +32,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
-        final shouldExit = await showExitDialog(context);
-        if (shouldExit) {
-          Navigator.of(context).pop(true);
-        }
+        Navigator.pop(context);
       },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
