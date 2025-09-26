@@ -36,7 +36,7 @@ class Header extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    balanceVM.userBalance?.namauser ?? 'sundel',
+                    balanceVM.userBalance?.namauser ?? 'Guest',
                     style: Styles.kNunitoBold.copyWith(
                       color: kWhite,
                       fontSize: Screen.kSize20,
