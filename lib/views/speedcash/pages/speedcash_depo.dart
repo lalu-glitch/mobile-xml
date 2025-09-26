@@ -25,9 +25,10 @@ class SpeedcashDepositPage extends StatelessWidget {
             itemCount: 100,
             itemBuilder: (context, int index) {
               return BankCard(
-                title: 'Bank Pukimai Woi Pencuri',
+                title: 'Bank Rakyat Tertindas',
                 minimumTopUp: 'Rp. 10.000',
-                onTap: () {},
+                onTap: () =>
+                    Navigator.pushNamed(context, '/speedCashDetailDepositPage'),
               );
             },
           ),

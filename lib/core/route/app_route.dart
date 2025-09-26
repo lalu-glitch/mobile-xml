@@ -10,13 +10,14 @@ import '../../views/input_nomor/input_nomer_mid.dart';
 import '../../views/komisi/pages/komisi_pages.dart';
 import '../../views/multi_sub_kategori_page.dart';
 import '../../views/onboarding/onboarding_screen.dart';
+import '../../views/speedcash/pages/speedcash_depo_detail.dart';
 import '../utils/webview.dart';
 import '../../views/analytics/analytics_page.dart';
 import '../../views/input_nomor/input_nomor_tujuan_page.dart';
 import '../../views/layanan/noprefix/noprefix_page.dart';
 import '../../views/layanan/prefix/prefix_page.dart';
 import '../../views/speedcash/pages/speedcash_binding.dart';
-import '../../views/speedcash/pages/speedcash_deposit.dart';
+import '../../views/speedcash/pages/speedcash_depo.dart';
 import '../../views/speedcash/pages/speedcash_register.dart';
 import '../../views/home/page/home_page.dart';
 import '../../views/transaksi/konfirmasi_page.dart';
@@ -66,6 +67,8 @@ final Map<String, WidgetBuilder> appRoutes = {
       authGuardWrapper(SpeedcashRegisterPage()),
   '/speedcashDepositPage': (context) =>
       authGuardWrapper(const SpeedcashDepositPage()),
+  '/speedCashDetailDepositPage': (context) =>
+      authGuardWrapper(const SpeedCashDetailDepo()),
 
   '/webView': (context) => authGuardWrapper(WebviewPage(url: '', title: '')),
 };
