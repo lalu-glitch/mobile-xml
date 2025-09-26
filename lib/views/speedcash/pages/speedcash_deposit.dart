@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../widgets/bank_card.dart';
 
 class SpeedcashDepositPage extends StatelessWidget {
   const SpeedcashDepositPage({super.key});
@@ -17,10 +18,19 @@ class SpeedcashDepositPage extends StatelessWidget {
         backgroundColor: kOrange,
         iconTheme: const IconThemeData(color: kWhite),
       ),
-      body: Center(
-        child: Text(
-          "This is Speedcash Deposit Page",
-          style: TextStyle(fontSize: Screen.kSize20),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsetsGeometry.symmetric(vertical: 0, horizontal: 16),
+          child: ListView.builder(
+            itemCount: 100,
+            itemBuilder: (context, int index) {
+              return BankCard(
+                title: 'Bank Pukimai Woi Pencuri',
+                minimumTopUp: 'Rp. 10.000',
+                onTap: () {},
+              );
+            },
+          ),
         ),
       ),
     );

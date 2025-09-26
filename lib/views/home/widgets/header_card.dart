@@ -37,9 +37,7 @@ class HeaderCard extends StatelessWidget {
                           margin: const EdgeInsets.only(bottom: 12),
                           decoration: BoxDecoration(
                             color: kWhite,
-                            borderRadius: BorderRadius.circular(
-                              8,
-                            ), // <-- radius 8
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         Container(
@@ -48,9 +46,7 @@ class HeaderCard extends StatelessWidget {
                           margin: const EdgeInsets.only(bottom: 12),
                           decoration: BoxDecoration(
                             color: kWhite,
-                            borderRadius: BorderRadius.circular(
-                              12,
-                            ), // <-- radius 12
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                         Row(
@@ -64,9 +60,7 @@ class HeaderCard extends StatelessWidget {
                                 height: 50,
                                 decoration: BoxDecoration(
                                   color: kWhite,
-                                  borderRadius: BorderRadius.circular(
-                                    10,
-                                  ), // <-- radius 10
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
                             );
