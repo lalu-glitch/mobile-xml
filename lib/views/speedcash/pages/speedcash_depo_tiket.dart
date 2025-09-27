@@ -40,7 +40,6 @@ class SpeedCashTiketDeposit extends StatelessWidget {
               'Silahkan Transfer',
               style: TextStyle(
                 color: kBlack,
-                fontFamily: 'SFProDisplay',
                 fontWeight: FontWeight.w700,
                 fontSize: 20,
               ),
@@ -49,7 +48,6 @@ class SpeedCashTiketDeposit extends StatelessWidget {
             Text(
               'Silahkan transfer melalui Bank Mandiri\n Jika tidak dilakukan transfer maka kita baku hantam',
               style: TextStyle(
-                fontFamily: 'SFProDisplay',
                 fontWeight: FontWeight.w500,
                 color: kNeutral80,
                 fontSize: 14,
