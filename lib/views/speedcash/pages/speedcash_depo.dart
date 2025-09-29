@@ -11,10 +11,7 @@ class SpeedcashDepositPage extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Colors.orange[50],
       appBar: AppBar(
-        title: const Text(
-          'Speedcash Deposit',
-          style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
-        ),
+        title: const Text('Speedcash Deposit', style: TextStyle(color: kWhite)),
         backgroundColor: kOrange,
         iconTheme: const IconThemeData(color: kWhite),
       ),

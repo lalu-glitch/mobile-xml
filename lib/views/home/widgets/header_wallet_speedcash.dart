@@ -43,7 +43,7 @@ class SpeedCashWalletHeader extends StatelessWidget {
                       return Text(
                         CurrencyUtil.formatCurrency(ew.saldoEwallet),
                         style: TextStyle(
-                          fontSize: Screen.kSize16,
+                          fontSize: Screen.kSize14,
                           fontWeight: FontWeight.bold,
                         ),
                       );

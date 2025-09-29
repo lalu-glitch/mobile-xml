@@ -156,7 +156,9 @@ class _XmlAppState extends State<XmlApp> {
         child: MaterialApp(
           title: "XML App",
           theme: ThemeData(
-            textTheme: GoogleFonts.robotoTextTheme(),
+            textTheme: GoogleFonts.gabaritoTextTheme(
+              Theme.of(context).textTheme,
+            ),
             useMaterial3: true,
           ),
           navigatorKey: navigatorKey,

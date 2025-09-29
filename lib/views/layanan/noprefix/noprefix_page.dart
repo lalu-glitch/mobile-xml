@@ -244,7 +244,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                         }
                       },
                       child: Text(
-                        isLastPage ? "Selanjutnya" : "Next",
+                        isLastPage ? "Selanjutnya" : "Selanjutnya",
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),

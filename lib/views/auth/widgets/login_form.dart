@@ -52,7 +52,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     if (!mounted) return;
 
     if (result["success"]) {
-      Navigator.pushNamed(
+      Navigator.pushReplacementNamed(
         context,
         '/kodeOTP',
         arguments: {
