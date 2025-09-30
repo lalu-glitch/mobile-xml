@@ -88,7 +88,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         SizedBox(height: 20),
         GestureDetector(
           child: Text(
-            'Lupa ID Agen?',
+            'Lupa Kode Agen?',
             style: TextStyle(color: kOrange, fontWeight: FontWeight.bold),
           ),
           onTap: () {
