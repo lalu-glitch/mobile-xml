@@ -94,8 +94,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                   // Harga
                   Text(
-                    // "Rp ${t.harga.toStringAsFixed(0)}",
-                    "Rp 1.000.000",
+                    "Rp ${t.harga.toStringAsFixed(0)}",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,

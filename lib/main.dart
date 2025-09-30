@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:xmlapp/data/services/auth_service.dart';
-import 'package:xmlapp/views/auth/cubit/request_kode_agen_cubit.dart';
 
+import 'data/services/auth_service.dart';
+import 'views/auth/cubit/request_kode_agen_cubit.dart';
 import 'views/layanan/cubit/flow_cubit.dart';
 import 'core/route/app_route.dart';
 
