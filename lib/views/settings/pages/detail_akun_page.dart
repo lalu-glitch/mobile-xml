@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xmlapp/core/helper/constant_finals.dart';
@@ -12,7 +14,6 @@ class DetailInfoAkun extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -39,22 +40,63 @@ class DetailInfoAkun extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Header Info
-                    Center(
+                    const SizedBox(height: 12),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 32,
+                        horizontal: 20,
+                      ),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            kOrange,
+                            kOrangeAccent400,
+                            kYellow,
+                          ], // pink → orange
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(24),
+                          bottomRight: Radius.circular(24),
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24),
+                        ),
+                      ),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             data.nama,
                             style: theme.textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: kBlack,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 25,
+                              letterSpacing: 0.5,
+                              color: Colors.white,
                             ),
+                            textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 6),
-                          Text(
-                            data.kodeReseller,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey[700],
+                          const SizedBox(height: 12),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.5),
+                              ),
+                            ),
+                            child: Text(
+                              data.kodeReseller,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0.5,
+                              ),
                             ),
                           ),
                         ],
@@ -115,7 +157,7 @@ class DetailInfoAkun extends StatelessWidget {
               return const Center(
                 child: Text(
                   'Error mengambil Data',
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(color: kRed),
                 ),
               );
             }
@@ -129,6 +171,6 @@ class DetailInfoAkun extends StatelessWidget {
 
   /// Divider for detail rows
   Widget _buildDivider() {
-    return Divider(color: Colors.grey[300], thickness: 1, height: 1);
+    return Divider(color: kNeutral40, thickness: 1, height: 1);
   }
 }
