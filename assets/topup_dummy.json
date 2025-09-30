@@ -1,0 +1,11 @@
+{
+    "message": "success",
+    "data": {
+        "nominal": 550000,
+        "tanggal": "2088-88-88T08:30:00Z",
+        "keterangan": "success",
+        "nama_bank": "Jago",
+        "rekening": 111222333,
+        "expired": "2099-99-99T08:30:00Z"
+    }
+}

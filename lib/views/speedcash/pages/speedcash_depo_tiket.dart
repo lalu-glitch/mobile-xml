@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xmlapp/core/utils/dialog.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
 
 class SpeedCashTiketDeposit extends StatelessWidget {
   const SpeedCashTiketDeposit({super.key});
@@ -9,11 +12,7 @@ class SpeedCashTiketDeposit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      appBar: AppBar(
-        backgroundColor: kWhite,
-        centerTitle: true,
-        title: Text('Konfirmasi Deposit'),
-      ),
+      appBar: AppBar(backgroundColor: kWhite, title: Text('TopUp')),
       body: Center(
         child: Column(
           children: [
@@ -25,10 +24,10 @@ class SpeedCashTiketDeposit extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
                 boxShadow: [
                   BoxShadow(
-                    color: kOrange.withAlpha(80), // Warna bayangan (transparan)
-                    spreadRadius: 25, // Seberapa jauh bayangan menyebar
-                    blurRadius: 30, // Tingkat keburaman bayangan
-                    offset: Offset(0, 0), // Posisi bayangan (x, y)
+                    color: kOrange.withAlpha(80),
+                    spreadRadius: 25,
+                    blurRadius: 30,
+                    offset: Offset(0, 0),
                   ),
                 ],
               ),
@@ -37,7 +36,7 @@ class SpeedCashTiketDeposit extends StatelessWidget {
             ),
             const SizedBox(height: 100),
             Text(
-              'Silahkan Transfer',
+              'Detail Transfer',
               style: TextStyle(
                 color: kBlack,
                 fontWeight: FontWeight.w700,
@@ -46,7 +45,7 @@ class SpeedCashTiketDeposit extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             Text(
-              'Silahkan transfer melalui Bank Mandiri\n Jika tidak dilakukan transfer maka kita baku hantam',
+              'Silahkan cek detail Top Up dibawah ini \n Terimakasih sudah menggunakan layanan di XML Mobile',
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: kNeutral80,
@@ -55,97 +54,111 @@ class SpeedCashTiketDeposit extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: kOrangeAccent300.withAlpha(50),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Bank',
-                        style: TextStyle(color: kBlack, fontSize: 14),
-                      ),
-                      Text(
-                        'Mandiri',
-                        style: TextStyle(color: kBlack, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Nama',
-                        style: TextStyle(color: kBlack, fontSize: 14),
-                      ),
-                      Text(
-                        'PT. XMLTronik',
-                        style: TextStyle(color: kBlack, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Nomor Rekening',
-                        style: TextStyle(color: kBlack, fontSize: 14),
-                      ),
-                      Text(
-                        '1234 5678 90',
-                        style: TextStyle(color: kBlack, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Berlaku sampai',
-                        style: TextStyle(color: kBlack, fontSize: 14),
-                      ),
-                      Text(
-                        '99 Desember 2099',
-                        style: TextStyle(color: kBlack, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Divider(color: kOrange),
-                  const SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Total Nominal',
-                        style: TextStyle(
-                          color: kBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w900,
+            BlocBuilder<TopupDummySpeedcashCubit, TopupDummySpeedcashState>(
+              builder: (context, state) {
+                print('state: $state');
+                if (state is TopupDummySpeedcashLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (state is TopupDummySpeedcashLoaded) {
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    margin: EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: kOrangeAccent300.withAlpha(50),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Bank',
+                              style: TextStyle(color: kBlack, fontSize: 14),
+                            ),
+                            Text(
+                              state.data.namaBank,
+                              style: TextStyle(color: kBlack, fontSize: 14),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        'Rp. 1.999.999',
-                        style: TextStyle(
-                          color: kBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w900,
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Keterangan',
+                              style: TextStyle(color: kBlack, fontSize: 14),
+                            ),
+                            Text(
+                              state.data.keterangan,
+                              style: TextStyle(color: kBlack, fontSize: 14),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Nomor Rekening',
+                              style: TextStyle(color: kBlack, fontSize: 14),
+                            ),
+                            Text(
+                              state.data.rekening.toString(),
+                              style: TextStyle(color: kBlack, fontSize: 14),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Berlaku sampai',
+                              style: TextStyle(color: kBlack, fontSize: 14),
+                            ),
+                            Text(
+                              state.data.expired,
+                              style: TextStyle(color: kBlack, fontSize: 14),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        const Divider(color: kOrange),
+                        const SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total Nominal',
+                              style: TextStyle(
+                                color: kBlack,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            Text(
+                              'Rp. ${state.data.nominal.toString()}',
+                              style: TextStyle(
+                                color: kBlack,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                if (state is TopupDummySpeedcashError) {
+                  return Center(child: Text('Error'));
+                }
+                return SizedBox();
+              },
             ),
           ],
         ),
@@ -162,10 +175,10 @@ class SpeedCashTiketDeposit extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            Navigator.pushNamed(context, '/transaksiProses');
+            showAppToast(context, 'Success', ToastType.success);
           },
           child: const Text(
-            "Konfirmasi",
+            "Selesai",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),

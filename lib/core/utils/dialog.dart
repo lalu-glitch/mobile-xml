@@ -173,6 +173,7 @@ void showAppToast(BuildContext context, String message, ToastType type) {
 
   // Widget toast custom
   Widget toast = Container(
+    width: double.infinity,
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     margin: const EdgeInsets.symmetric(horizontal: 12),
     decoration: BoxDecoration(

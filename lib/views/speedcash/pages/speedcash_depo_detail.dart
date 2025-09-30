@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:xmlapp/views/speedcash/widgets/rupiah_text_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
+import '../widgets/rupiah_text_field.dart';
 
 class SpeedCashDetailDepo extends StatelessWidget {
   const SpeedCashDetailDepo({super.key});
@@ -38,7 +40,7 @@ class SpeedCashDetailDepo extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 25),
-            RupiahTextField(),
+            RupiahTextField(), // <--- TextField buat masukin nominal topup
             const SizedBox(height: 16),
             Text(
               ' Minimal top up: Rp. 10.000',
@@ -114,7 +116,8 @@ class SpeedCashDetailDepo extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          onPressed: () {
+          onPressed: () async {
+            context.read<TopupDummySpeedcashCubit>().fetchTopup();
             Navigator.pushNamed(context, '/speedcashTiketDepositPage');
           },
           child: const Text(
