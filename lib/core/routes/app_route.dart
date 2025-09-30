@@ -10,6 +10,7 @@ import '../../views/input_nomor/input_nomer_mid.dart';
 import '../../views/komisi/pages/komisi_pages.dart';
 import '../../views/multi_sub_kategori_page.dart';
 import '../../views/onboarding/onboarding_screen.dart';
+import '../../views/settings/pages/detail_akun_page.dart';
 import '../../views/speedcash/pages/speedcash_depo_detail.dart';
 import '../../views/speedcash/pages/speedcash_depo_tiket.dart';
 import '../utils/webview.dart';
@@ -57,6 +58,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanPage()),
   '/inputNomorFirst': (context) => authGuardWrapper(InputNomorPage()),
   '/inputNomorMid': (context) => authGuardWrapper(InputNomorMidPage()),
+  '/detailInfoAkun': (context) => authGuardWrapper(DetailInfoAkun()),
   '/konfirmasiPembayaran': (context) =>
       authGuardWrapper(KonfirmasiPembayaranPage()),
   '/transaksiProses': (context) => authGuardWrapper(TransaksiProsesPage()),

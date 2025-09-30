@@ -56,7 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
             return const InfoAkunShimmer();
           }
 
-          if (state is InfoAkunSuccess) {
+          if (state is InfoAkunLoaded) {
             return Column(
               children: [
                 Header(state: state), // Header profil user

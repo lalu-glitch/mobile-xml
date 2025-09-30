@@ -4,7 +4,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../cubit/info_akun_cubit.dart';
 
 class Header extends StatelessWidget {
-  final InfoAkunSuccess state;
+  final InfoAkunLoaded state;
 
   const Header({super.key, required this.state});
 
@@ -53,10 +53,11 @@ class Header extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: Screen.kSize16),
-                    Icon(
-                      Icons.mode_edit_rounded,
+                    IconButton(
+                      icon: Icon(Icons.mode_edit_rounded),
                       color: kWhite,
-                      size: Screen.kSize20,
+                      onPressed: () =>
+                          Navigator.pushNamed(context, '/detailInfoAkun'),
                     ),
                   ],
                 ),

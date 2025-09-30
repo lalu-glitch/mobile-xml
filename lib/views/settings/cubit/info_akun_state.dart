@@ -7,10 +7,9 @@ final class InfoAkunInitial extends InfoAkunState {}
 
 final class InfoAkunLoading extends InfoAkunInitial {}
 
-final class InfoAkunSuccess extends InfoAkunInitial {
-  //sementara pake message aja
+final class InfoAkunLoaded extends InfoAkunInitial {
   final InfoAkunModel data;
-  InfoAkunSuccess(this.data);
+  InfoAkunLoaded(this.data);
 }
 
 final class InfoAkunError extends InfoAkunInitial {

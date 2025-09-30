@@ -15,7 +15,7 @@ class InfoAkunCubit extends Cubit<InfoAkunState> {
     emit(InfoAkunLoading());
     try {
       final result = await apiService.infoAkun();
-      emit(InfoAkunSuccess(result));
+      emit(InfoAkunLoaded(result));
     } catch (e) {
       emit(InfoAkunError(e.toString()));
     }
