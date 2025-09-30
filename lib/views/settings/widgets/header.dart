@@ -29,6 +29,9 @@ class Header extends StatelessWidget {
               color: kWhite,
               borderRadius: BorderRadius.circular(100),
             ),
+            child: ClipOval(
+              child: Image.asset('assets/images/pfp.png', fit: BoxFit.cover),
+            ),
           ),
 
           SizedBox(width: Screen.kSize24),
@@ -43,13 +46,25 @@ class Header extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        state.data.data.nama,
-                        style: Styles.kNunitoRegular.copyWith(
-                          color: kWhite,
-                          fontSize: Screen.kSize24,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
                         ),
-                        overflow: TextOverflow.ellipsis,
+                        decoration: BoxDecoration(
+                          color: kWhite.withAlpha(80),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: kWhite.withAlpha(100)),
+                        ),
+                        child: Text(
+                          state.data.data.nama,
+                          style: TextStyle(
+                            color: kWhite,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(width: Screen.kSize16),
@@ -68,30 +83,48 @@ class Header extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        state.data.data.kodeReferral,
-                        style: Styles.kNunitoRegular.copyWith(
-                          color: kWhite,
-                          fontSize: Screen.kSize18,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
                         ),
-                        overflow: TextOverflow.ellipsis,
+                        decoration: BoxDecoration(
+                          color: kWhite.withAlpha(80),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: kWhite.withAlpha(100)),
+                        ),
+                        child: Text(
+                          state.data.data.kodeReseller,
+                          style: TextStyle(
+                            color: kWhite,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(width: Screen.kSize16),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Screen.kSize12,
-                        vertical: Screen.kSize4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: kWhite,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Text(
-                        state.data.data.kodeLevel,
-                        style: Styles.kNunitoRegular.copyWith(
-                          color: kNeutral100,
-                          fontSize: Screen.kSize14,
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: kWhite.withAlpha(80),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: kWhite.withAlpha(100)),
+                        ),
+                        child: Align(
+                          alignment: AlignmentGeometry.centerRight,
+                          child: Text(
+                            state.data.data.kodeLevel,
+                            style: TextStyle(
+                              color: kWhite,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
                         ),
                       ),
                     ),

@@ -48,7 +48,7 @@ class DetailInfoAkun extends StatelessWidget {
                         horizontal: 20,
                       ),
                       decoration: BoxDecoration(
-                        color: kOrangeAccent400,
+                        color: kOrange,
                         borderRadius: BorderRadius.circular(26),
                       ),
                       child: Column(
@@ -60,7 +60,7 @@ class DetailInfoAkun extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               fontSize: 25,
                               letterSpacing: 0.5,
-                              color: Colors.white,
+                              color: kWhite,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -71,16 +71,14 @@ class DetailInfoAkun extends StatelessWidget {
                               vertical: 6,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
+                              color: kWhite.withAlpha(80),
                               borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.white.withOpacity(0.5),
-                              ),
+                              border: Border.all(color: kWhite.withAlpha(100)),
                             ),
                             child: Text(
                               data.kodeReseller,
                               style: theme.textTheme.bodyMedium?.copyWith(
-                                color: Colors.white,
+                                color: kWhite,
                                 fontWeight: FontWeight.w500,
                                 letterSpacing: 0.5,
                               ),
