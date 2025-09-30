@@ -47,22 +47,9 @@ class DetailInfoAkun extends StatelessWidget {
                         vertical: 32,
                         horizontal: 20,
                       ),
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            kOrange,
-                            kOrangeAccent400,
-                            kYellow,
-                          ], // pink → orange
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(24),
-                          bottomRight: Radius.circular(24),
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24),
-                        ),
+                      decoration: BoxDecoration(
+                        color: kOrangeAccent400,
+                        borderRadius: BorderRadius.circular(26),
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
