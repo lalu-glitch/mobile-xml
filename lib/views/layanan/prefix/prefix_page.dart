@@ -124,7 +124,9 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                     return const Center(child: Text('Silahkan isi nomor HP'));
                   }
                   if (state is ProviderPrefixLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                      child: CircularProgressIndicator(color: kOrange),
+                    );
                   }
                   if (state is ProviderPrefixError) {
                     return Padding(

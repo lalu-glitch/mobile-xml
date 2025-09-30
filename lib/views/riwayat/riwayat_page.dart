@@ -36,7 +36,9 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
         builder: (context, state) {
           if (state is RiwayatTransaksiInitial ||
               state is RiwayatTransaksiLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(color: kOrange),
+            );
           }
 
           if (state is RiwayatTransaksiError) {

@@ -58,7 +58,9 @@ class SpeedCashTiketDeposit extends StatelessWidget {
               builder: (context, state) {
                 print('state: $state');
                 if (state is TopupDummySpeedcashLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(
+                    child: CircularProgressIndicator(color: kOrange),
+                  );
                 }
                 if (state is TopupDummySpeedcashLoaded) {
                   return Container(

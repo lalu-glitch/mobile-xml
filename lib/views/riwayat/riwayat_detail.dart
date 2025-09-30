@@ -45,7 +45,9 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
           BlocBuilder<DetailRiwayatTransaksiCubit, DetailRiwayatTransaksiState>(
             builder: (context, state) {
               if (state is DetailRiwayatTransaksiLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(
+                  child: CircularProgressIndicator(color: kOrange),
+                );
               }
 
               if (state is DetailRiwayatTransaksiError) {

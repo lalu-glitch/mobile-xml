@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:xmlapp/data/services/onboarding_screen_service.dart';
+import '../../core/helper/constant_finals.dart';
 import 'auth_service.dart';
 
 class AuthGuard extends StatefulWidget {
@@ -67,7 +68,9 @@ class _AuthGuardState extends State<AuthGuard> {
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator(color: kOrange)),
+      );
     }
     if (!_isLoggedIn) {
       return const SizedBox.shrink();

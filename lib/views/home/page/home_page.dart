@@ -64,6 +64,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(top: 16.0),
 
               child: RefreshIndicator(
+                color: kOrange,
                 onRefresh: () async {
                   await Future.wait([
                     balanceVM.fetchBalance(),

@@ -107,7 +107,8 @@ class _WebviewPageState extends State<WebviewPage> {
       body: Stack(
         children: [
           if (_controller != null) WebViewWidget(controller: _controller!),
-          if (isLoading) const Center(child: CircularProgressIndicator()),
+          if (isLoading)
+            const Center(child: CircularProgressIndicator(color: kOrange)),
           if (_isActiveFailed)
             Container(
               color: Colors.white,

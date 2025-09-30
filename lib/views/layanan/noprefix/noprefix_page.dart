@@ -73,7 +73,9 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
         body: BlocBuilder<ProviderNoPrefixCubit, ProviderState>(
           builder: (context, state) {
             if (state is ProviderNoPrefixLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                child: CircularProgressIndicator(color: kOrange),
+              );
             }
             if (state is ProviderNoPrefixError) {
               return Center(
@@ -204,7 +206,9 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                 },
               );
             }
-            return const Center(child: CircularProgressIndicator()); // Fallback
+            return const Center(
+              child: CircularProgressIndicator(color: kOrange),
+            ); // Fallback
           },
         ),
         bottomNavigationBar: selectedProductCode != null

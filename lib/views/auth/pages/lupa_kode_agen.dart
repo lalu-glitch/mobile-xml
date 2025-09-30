@@ -62,7 +62,9 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
           },
           builder: (context, state) {
             if (state is RequestKodeAgenLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                child: CircularProgressIndicator(color: kOrange),
+              );
             }
 
             return Center(
