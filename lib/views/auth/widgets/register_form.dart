@@ -153,7 +153,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                 borderSide: BorderSide(color: kOrangeAccent500, width: 2),
               ),
             ),
-            value: selectedProvinsi,
+            initialValue: selectedProvinsi,
             items: provinsi.map((String province) {
               return DropdownMenuItem<String>(
                 value: province,
@@ -192,7 +192,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                       borderSide: BorderSide(color: kOrangeAccent500, width: 2),
                     ),
                   ),
-                  value: selectedKecamatan,
+                  initialValue: selectedKecamatan,
                   items: kecamatan.map((String district) {
                     return DropdownMenuItem<String>(
                       value: district,
@@ -237,7 +237,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                       borderSide: BorderSide(color: kOrangeAccent500, width: 2),
                     ),
                   ),
-                  value: selectedKabupaten,
+                  initialValue: selectedKabupaten,
                   items: kabupaten.map((String regency) {
                     return DropdownMenuItem<String>(
                       value: regency,
