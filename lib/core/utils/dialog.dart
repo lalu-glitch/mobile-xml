@@ -105,7 +105,7 @@ class SuccessDialog extends StatelessWidget {
             title,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: kNiggaBlack,
+              color: kSupaBlack,
             ),
           ),
         ],

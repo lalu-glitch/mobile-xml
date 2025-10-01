@@ -30,7 +30,7 @@ class SpeedCashDetailDepo extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 Text(
-                  'Bank Rakyat Tertindas',
+                  'Bank Central Asia',
                   style: TextStyle(
                     color: kNeutral100,
                     fontSize: 16,
@@ -43,7 +43,7 @@ class SpeedCashDetailDepo extends StatelessWidget {
             RupiahTextField(), // <--- TextField buat masukin nominal topup
             const SizedBox(height: 16),
             Text(
-              ' Minimal top up: Rp. 10.000',
+              ' Minimal top up Rp. 10.000',
               style: TextStyle(color: kNeutral90),
             ),
             const SizedBox(height: 16),

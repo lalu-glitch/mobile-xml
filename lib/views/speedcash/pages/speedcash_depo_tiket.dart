@@ -12,7 +12,7 @@ class SpeedCashTiketDeposit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      appBar: AppBar(backgroundColor: kWhite, title: Text('TopUp')),
+      appBar: AppBar(backgroundColor: kWhite),
       body: Center(
         child: Column(
           children: [
@@ -56,7 +56,6 @@ class SpeedCashTiketDeposit extends StatelessWidget {
             const SizedBox(height: 24),
             BlocBuilder<TopupDummySpeedcashCubit, TopupDummySpeedcashState>(
               builder: (context, state) {
-                print('state: $state');
                 if (state is TopupDummySpeedcashLoading) {
                   return Center(
                     child: CircularProgressIndicator(color: kOrange),
