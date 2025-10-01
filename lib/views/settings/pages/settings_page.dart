@@ -11,7 +11,6 @@ import '../widgets/logout_card.dart';
 import '../widgets/setting_card.dart';
 import '../widgets/settings_shimmer.dart';
 import '../widgets/wallet_section.dart';
-import 'dummy_favorite/dummy_prefix_fav_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

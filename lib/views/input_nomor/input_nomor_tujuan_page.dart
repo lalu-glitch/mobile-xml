@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
+import 'package:flutter_native_contact_picker/model/contact.dart';
 
 import 'package:xmlapp/core/helper/currency.dart';
 import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
@@ -32,6 +34,9 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
     final List<AppPage> sequence = flowState.sequence;
 
     final bool isLastPage = currentIndex == sequence.length - 1;
+
+    final FlutterNativeContactPicker contactPicker =
+        FlutterNativeContactPicker();
 
     return WillPopScope(
       onWillPop: () async {
@@ -89,6 +94,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
               const SizedBox(height: 20),
               const Text("Masukkan Nomor Tujuan"),
               const SizedBox(height: 8),
+
               TextField(
                 controller: _nomorController,
                 keyboardType: TextInputType.phone,
@@ -98,9 +104,42 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  suffixIcon: const Icon(Icons.contact_page),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.contact_page),
+                    onPressed: () async {
+                      try {
+                        Contact? contact = await contactPicker
+                            .selectPhoneNumber();
+
+                        if (!mounted) return;
+
+                        if (contact != null &&
+                            contact.selectedPhoneNumber != null) {
+                          setState(() {
+                            _nomorController.text =
+                                contact.selectedPhoneNumber!;
+                          });
+                        } else {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Kontak tidak memiliki nomor"),
+                              ),
+                            );
+                          }
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Gagal memilih kontak: $e")),
+                          );
+                        }
+                      }
+                    },
+                  ),
                 ),
               ),
+
               SizedBox(height: Screen.kSize14),
               Visibility(
                 visible: transaksi.bebasNominal == 1,
