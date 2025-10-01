@@ -96,8 +96,6 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   bool _dialogShown = false;
 
   Widget _errorWidget(String message) {
-    // logger.d("resultresult: $message");
-
     if (!_dialogShown) {
       _dialogShown = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -134,8 +132,6 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
 
   Widget _statusWidget(TransaksiViewModel vm) {
     final status = vm.statusTransaksi;
-    // logger.d("resultresult: $vm");
-
     if (status?.isSukses ?? false) {
       // Jika SUKSES
       return Column(
@@ -165,7 +161,8 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
                 context,
                 '/transaksiDetail',
                 (route) => false,
-                arguments: status,
+                arguments:
+                    status, // <--- pas status including outbox ke page berikutnya
               );
             },
             child: const Text("Lihat Detail"),
@@ -191,7 +188,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           const SizedBox(height: 20),
           Text(
             status?.outbox ?? "Silahkan Lihat Detail",
-            style: TextStyle(fontSize: Screen.kSize14, color: Colors.black),
+            style: TextStyle(fontSize: Screen.kSize14, color: kBlack),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),

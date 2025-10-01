@@ -22,7 +22,7 @@ import '../../views/speedcash/pages/speedcash_binding.dart';
 import '../../views/speedcash/pages/speedcash_depo.dart';
 import '../../views/speedcash/pages/speedcash_register.dart';
 import '../../views/home/page/home_page.dart';
-import '../../views/transaksi/konfirmasi_page.dart';
+import '../../views/transaksi/konfirmasi_pembayaran_page.dart';
 import '../../views/riwayat/riwayat_detail.dart';
 import '../../views/riwayat/riwayat_page.dart';
 import '../../views/settings/pages/settings_page.dart';

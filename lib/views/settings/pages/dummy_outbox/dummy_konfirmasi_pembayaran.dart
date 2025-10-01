@@ -1,26 +1,25 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'package:flutter/material.dart';
-
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
-import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
-import '../../core/helper/constant_finals.dart';
-import '../../core/helper/currency.dart';
-import '../../core/utils/dialog.dart';
-import '../../data/models/transaksi/metode_transaksi.dart';
-import '../../viewmodels/balance_viewmodel.dart';
-import '../../viewmodels/transaksi_viewmodel.dart';
+import 'package:xmlapp/core/helper/currency.dart' show CurrencyUtil;
 
-class KonfirmasiPembayaranPage extends StatefulWidget {
-  const KonfirmasiPembayaranPage({super.key});
+import '../../../../core/helper/constant_finals.dart';
+import '../../../../core/utils/dialog.dart';
+import '../../../../data/models/transaksi/metode_transaksi.dart';
+import '../../../../viewmodels/balance_viewmodel.dart';
+import '../../../../viewmodels/transaksi_viewmodel.dart';
+import '../../../input_nomor/transaksi_cubit.dart';
+
+class DummyKonfirmasiPembayaranPage extends StatefulWidget {
+  const DummyKonfirmasiPembayaranPage({super.key});
 
   @override
-  State<KonfirmasiPembayaranPage> createState() =>
-      _KonfirmasiPembayaranPageState();
+  State<DummyKonfirmasiPembayaranPage> createState() =>
+      _DummyKonfirmasiPembayaranPageState();
 }
 
-class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
+class _DummyKonfirmasiPembayaranPageState
+    extends State<DummyKonfirmasiPembayaranPage> {
   final logger = Logger();
   String _selectedMethod = "SALDO"; // Default pilihan
 
@@ -207,7 +206,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             return;
           }
 
-          final saldo = selected.saldoEwallet ?? 0;
+          final saldo = 999999 ?? 0;
           final total = transaksi.total ?? 0;
 
           if (total > saldo) {

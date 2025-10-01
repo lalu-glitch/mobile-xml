@@ -11,6 +11,7 @@ import '../widgets/logout_card.dart';
 import '../widgets/setting_card.dart';
 import '../widgets/settings_shimmer.dart';
 import '../widgets/wallet_section.dart';
+import 'dummy_outbox/dummy_prefix_outbox_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -125,13 +126,13 @@ class _SettingsPageState extends State<SettingsPage> {
                         title: 'TES FAVORITE - DUMMY',
                         icons: Icons.code,
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) =>
-                          //         const PrefixPageWithFavorite(),
-                          //   ),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const DummyPrefixOutboxPage(),
+                            ),
+                          );
                         },
                       ),
                       SettingCard(

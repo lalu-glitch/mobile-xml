@@ -5,24 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/dynamic_app_page.dart';
-import '../cubit/flow_cubit.dart';
-import '../../../data/models/icon_models/flow_state_models.dart';
-import '../../../data/models/icon_models/icon_data.dart';
-import '../../../core/helper/currency.dart';
-import '../../input_nomor/transaksi_cubit.dart';
-import '../../transaksi/konfirmasi_pembayaran_page.dart';
-import 'cubit/provider_prefix_cubit.dart';
+import '../../../../core/helper/constant_finals.dart';
+import '../../../../core/helper/currency.dart';
+import '../../../../core/helper/dynamic_app_page.dart';
+import '../../../input_nomor/transaksi_cubit.dart';
+import '../../../layanan/cubit/flow_cubit.dart';
+import '../../../layanan/prefix/cubit/provider_prefix_cubit.dart';
+import 'dummy_konfirmasi_pembayaran.dart';
 
-class DetailPrefixPage extends StatefulWidget {
-  const DetailPrefixPage({super.key});
+class DummyPrefixOutboxPage extends StatefulWidget {
+  const DummyPrefixOutboxPage({super.key});
 
   @override
-  State<DetailPrefixPage> createState() => _DetailPrefixPageState();
+  State<DummyPrefixOutboxPage> createState() => _DummyPrefixOutboxPageState();
 }
 
-class _DetailPrefixPageState extends State<DetailPrefixPage> {
+class _DummyPrefixOutboxPageState extends State<DummyPrefixOutboxPage> {
   final TextEditingController _nomorController = TextEditingController();
   Timer? _debounce;
   String? selectedProductCode;
@@ -62,29 +60,17 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
 
   @override
   Widget build(BuildContext context) {
-    final flowState = context.watch<FlowCubit>().state!;
-    final flowCubit = context.read<FlowCubit>();
-    final sendTransaksi = context.read<TransaksiCubit>();
-    final iconItem = flowState.iconItem;
-    final int currentIndex = flowState.currentIndex;
-    final List<AppPage> sequence = flowState.sequence;
-
-    final nomorTujuan = _nomorController.text;
-    final bool isLastPage = currentIndex == sequence.length - 1;
-
     return WillPopScope(
       onWillPop: () async {
-        if (currentIndex > 0) {
-          flowCubit.previousPage();
-          Navigator.pop(context);
-          return false;
-        }
         return true;
       },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: Text(iconItem.filename, style: const TextStyle(color: kWhite)),
+          title: Text(
+            "DUMMY PREFIX OUTBOX",
+            style: const TextStyle(color: kWhite),
+          ),
           backgroundColor: kOrange,
           iconTheme: const IconThemeData(color: kWhite),
         ),
@@ -177,15 +163,6 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                             selectedPrice = produk.hargaJual
                                                 .toDouble();
                                           });
-                                          sendTransaksi.setKodeproduk(
-                                            produk.kodeProduk,
-                                          );
-                                          sendTransaksi.setNamaProduk(
-                                            produk.namaProduk,
-                                          );
-                                          sendTransaksi.setNominal(
-                                            produk.hargaJual,
-                                          );
                                         },
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
@@ -320,24 +297,16 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                             ),
                           ),
                           onPressed: () {
-                            if (!isLastPage) {
-                              final nextPage = flowState
-                                  .sequence[flowState.currentIndex + 1];
-                              flowCubit.nextPage();
-                              Navigator.pushNamed(
-                                context,
-                                pageRoutes[nextPage]!,
-                              );
-                            } else {
-                              sendTransaksi.setTujuan(nomorTujuan);
-                              Navigator.pushNamed(
-                                context,
-                                '/konfirmasiPembayaran',
-                              );
-                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const DummyKonfirmasiPembayaranPage(),
+                              ),
+                            );
                           },
                           child: Text(
-                            isLastPage ? "Selanjutnya" : "Next",
+                            "Selanjutnya",
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),

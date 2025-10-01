@@ -52,13 +52,13 @@ class TransaksiViewModel extends ChangeNotifier {
         kodeProduk,
         kodeDompet,
       );
-
+      logger.e('message: $result');
       if (result["success"] == true && result["data"] != null) {
         transaksiResponse = result["data"] as TransaksiResponseModel;
         if (transaksiResponse?.kodeInbox != null) {
           // cek status transaksi sekali
           // kasih delay 1 detik sebelum cek status
-          await Future.delayed(const Duration(seconds: 3));
+          await Future.delayed(const Duration(seconds: 1));
           await cekStatusTransaksi();
         } else {
           _isLoading = false;
