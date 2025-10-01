@@ -73,22 +73,27 @@ class _AuthPageState extends State<AuthPage> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () => toggleSelection(true),
-                          child: Column(
-                            children: [
-                              Text(
-                                'Log in',
-                                style: TextStyle(
-                                  color: isLoginSelected ? kOrange : kNeutral90,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Log in',
+                                  style: TextStyle(
+                                    color: isLoginSelected
+                                        ? kOrange
+                                        : kNeutral90,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                height: 2,
-                                color: isLoginSelected ? kOrange : kLightGrey,
-                              ),
-                            ],
+                                const SizedBox(height: 10),
+                                Container(
+                                  height: 2,
+                                  color: isLoginSelected ? kOrange : kLightGrey,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -96,22 +101,29 @@ class _AuthPageState extends State<AuthPage> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () => toggleSelection(false),
-                          child: Column(
-                            children: [
-                              Text(
-                                'Daftar',
-                                style: TextStyle(
-                                  color: isLoginSelected ? kNeutral90 : kOrange,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Daftar',
+                                  style: TextStyle(
+                                    color: isLoginSelected
+                                        ? kNeutral90
+                                        : kOrange,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                height: 2,
-                                color: !isLoginSelected ? kOrange : kLightGrey,
-                              ),
-                            ],
+                                const SizedBox(height: 10),
+                                Container(
+                                  height: 2,
+                                  color: !isLoginSelected
+                                      ? kOrange
+                                      : kLightGrey,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

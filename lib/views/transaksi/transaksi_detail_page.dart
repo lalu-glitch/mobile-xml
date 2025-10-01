@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/helper/constant_finals.dart';
 import '../../data/models/transaksi/status_transaksi.dart';
 import 'package:intl/intl.dart';
 
@@ -14,68 +13,65 @@ class DetailTransaksiPage extends StatelessWidget {
 
     final bool isSuccess = status.statusTrx == 20;
 
+    final Color statusColor = isSuccess ? Colors.green : Colors.red;
+    final IconData statusIcon = isSuccess ? Icons.check_circle : Icons.cancel;
+
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        backgroundColor: kOrange,
+        backgroundColor: statusColor,
+        elevation: 0,
+        centerTitle: true,
         title: Text(
-          isSuccess ? "Transaksi Sukses!" : "Transaksi Gagal!",
-          style: const TextStyle(color: kWhite),
+          isSuccess ? "Transaksi Sukses" : "Transaksi Gagal",
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.close),
-          color: kWhite,
+          icon: const Icon(Icons.close, color: Colors.white),
           onPressed: () =>
               Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false),
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Header Icon
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isSuccess ? Colors.green[600] : Colors.red[600],
-                boxShadow: [
-                  BoxShadow(
-                    color: (isSuccess ? Colors.green : kRed).withOpacity(0.3),
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
+            // Header Status
+            Column(
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundColor: statusColor.withOpacity(0.15),
+                  child: Icon(statusIcon, color: statusColor, size: 60),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  isSuccess ? "Transaksi Berhasil" : "Transaksi Gagal",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: statusColor,
                   ),
-                ],
-              ),
-              padding: const EdgeInsets.all(20),
-              child: Icon(
-                isSuccess ? Icons.check : Icons.close,
-                color: kWhite,
-                size: 50,
-              ),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            Text(
-              isSuccess ? "Transaksi Berhasil!" : "Transaksi Gagal!",
-              style: TextStyle(
-                fontSize: Screen.kSize24,
-                fontWeight: FontWeight.bold,
-                color: isSuccess ? Colors.green : kRed,
-              ),
-            ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 28),
 
-            // Card detail transaksi
+            // Card Detail
             Card(
+              elevation: 3,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
-              elevation: 4,
+              margin: EdgeInsets.zero,
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _infoRow("Kode", status.kode.toString()),
+                    _infoRow("Kode Transaksi", status.kode.toString()),
                     _infoRow("Status", status.statusTrx.toString()),
                     _infoRow("Produk", status.kodeProduk),
                     _infoRow("Tujuan", status.tujuan),
@@ -84,41 +80,37 @@ class DetailTransaksiPage extends StatelessWidget {
                       DateFormat('dd MMM yyyy, HH:mm').format(status.tglEntri),
                     ),
                     _infoRow("Keterangan", status.keterangan),
-                    const SizedBox(height: 10),
-
-                    Container(
-                      color: Colors.grey[300],
-                      height: 10,
-                      width: double.infinity,
-                    ),
-                    const SizedBox(height: 10),
-                    _infoRow("SN ", status.sn),
-                    const Divider(height: 10),
-                    Text(
-                      "Outbox",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: Screen.kSize16,
+                    const Divider(height: 32),
+                    _infoRow("Serial Number", status.sn),
+                    const Divider(height: 32),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Pesan Outbox",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: Colors.grey[800],
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(status.outbox),
-                    const SizedBox(height: 10),
-                    Container(
-                      color: Colors.grey[300],
-                      height: 10,
-                      width: double.infinity,
+                    const SizedBox(height: 8),
+                    Text(
+                      status.outbox,
+                      style: TextStyle(color: Colors.grey[700], height: 1.4),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 32),
 
-            // Tombol Selesai
-            Row(
+            const SizedBox(height: 40),
+
+            // Tombol Action
+            Column(
               children: [
-                Expanded(
+                SizedBox(
+                  width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => Navigator.pushNamedAndRemoveUntil(
                       context,
@@ -126,36 +118,27 @@ class DetailTransaksiPage extends StatelessWidget {
                       (route) => false,
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: isSuccess
-                          ? Colors.green[600]
-                          : Colors.red[600],
+                      backgroundColor: statusColor,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(14),
                       ),
+                      elevation: 2,
                     ),
-                    child: Text(
+                    child: const Text(
                       "Selesai",
                       style: TextStyle(
-                        fontSize: Screen.kSize18,
-                        fontWeight: FontWeight.bold,
-                        color: kWhite,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 16), // Jarak antar tombol
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: kOrange,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      elevation: 5,
-                      shadowColor: Colors.orangeAccent.shade100,
-                    ),
+                const SizedBox(height: 14),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
                     onPressed: () {
                       Navigator.pushNamed(
                         context,
@@ -163,12 +146,19 @@ class DetailTransaksiPage extends StatelessWidget {
                         arguments: {'transaksi': status},
                       );
                     },
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      side: BorderSide(color: statusColor, width: 1.4),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
                     child: Text(
                       "Cetak Struk",
                       style: TextStyle(
-                        fontSize: Screen.kSize16,
-                        fontWeight: FontWeight.bold,
-                        color: kWhite,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: statusColor,
                       ),
                     ),
                   ),
@@ -183,24 +173,29 @@ class DetailTransaksiPage extends StatelessWidget {
 
   Widget _infoRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 120,
+            width: 130,
             child: Text(
               label,
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
+                fontSize: 15,
                 color: Colors.black87,
               ),
             ),
           ),
           Expanded(
             child: Text(
-              ": $value",
-              style: const TextStyle(color: Colors.black87),
+              value,
+              style: const TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                height: 1.3,
+              ),
             ),
           ),
         ],

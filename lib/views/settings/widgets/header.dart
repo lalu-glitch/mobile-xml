@@ -115,15 +115,12 @@ class Header extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: kWhite.withAlpha(100)),
                         ),
-                        child: Align(
-                          alignment: AlignmentGeometry.centerRight,
-                          child: Text(
-                            state.data.data.kodeLevel,
-                            style: TextStyle(
-                              color: kWhite,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 0.5,
-                            ),
+                        child: Text(
+                          state.data.data.kodeLevel,
+                          style: TextStyle(
+                            color: kWhite,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.5,
                           ),
                         ),
                       ),

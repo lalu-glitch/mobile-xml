@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import '../../core/helper/constant_finals.dart';
 import '../models/produk/provider_kartu.dart';
 import '../models/transaksi/status_transaksi.dart';
-import '../models/transaksi/transaksi_riwayat.dart';
+import '../models/transaksi/riwayat_transaksi.dart';
 import '../models/transaksi/transaksi_response.dart';
 import '../models/user/info_akun.dart';
 import '../models/user/user_balance.dart';

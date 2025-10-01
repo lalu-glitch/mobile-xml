@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/helper/constant_finals.dart';
 
-import '../../data/models/transaksi/transaksi_riwayat.dart';
+import '../../data/models/transaksi/riwayat_transaksi.dart';
 import 'cubit/riwayat_transaksi_cubit.dart';
 import 'widgets/card_transaksi.dart';
 
@@ -19,6 +19,10 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
   void initState() {
     super.initState();
     context.read<RiwayatTransaksiCubit>().loadRiwayat();
+  }
+
+  Future<void> _onRefresh() async {
+    await context.read<RiwayatTransaksiCubit>().loadRiwayat();
   }
 
   @override
@@ -67,10 +71,21 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
           }
 
           if (riwayatList.isEmpty) {
-            return Center(
-              child: Text(
-                "Belum ada transaksi",
-                style: TextStyle(fontSize: Screen.kSize16, color: Colors.grey),
+            return RefreshIndicator(
+              onRefresh: _onRefresh,
+              child: ListView(
+                children: [
+                  SizedBox(height: 200),
+                  Center(
+                    child: Text(
+                      "Belum ada transaksi",
+                      style: TextStyle(
+                        fontSize: Screen.kSize16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           }
@@ -78,18 +93,21 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
           return Column(
             children: [
               Expanded(
-                child: ListView.builder(
-                  itemCount: riwayatList.length,
-                  itemBuilder: (context, index) {
-                    RiwayatTransaksi t = riwayatList[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 1,
-                      ),
-                      child: TransactionCard(t: t),
-                    );
-                  },
+                child: RefreshIndicator(
+                  onRefresh: _onRefresh,
+                  child: ListView.builder(
+                    itemCount: riwayatList.length,
+                    itemBuilder: (context, index) {
+                      RiwayatTransaksi t = riwayatList[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 1,
+                        ),
+                        child: TransactionCard(t: t),
+                      );
+                    },
+                  ),
                 ),
               ),
               if (currentPage < totalPages)

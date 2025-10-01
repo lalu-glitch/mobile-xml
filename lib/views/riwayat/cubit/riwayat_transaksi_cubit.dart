@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../data/models/transaksi/transaksi_riwayat.dart';
+import '../../../data/models/transaksi/riwayat_transaksi.dart';
 import '../../../data/services/api_service.dart';
 
 part 'riwayat_transaksi_state.dart';

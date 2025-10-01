@@ -11,6 +11,7 @@ import '../widgets/logout_card.dart';
 import '../widgets/setting_card.dart';
 import '../widgets/settings_shimmer.dart';
 import '../widgets/wallet_section.dart';
+import 'dummy_favorite/dummy_prefix_fav_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -121,6 +122,19 @@ class _SettingsPageState extends State<SettingsPage> {
                       const Divider(color: kNeutral50),
                       SizedBox(height: Screen.kSize11),
 
+                      SettingCard(
+                        title: 'TES FAVORITE - DUMMY',
+                        icons: Icons.code,
+                        onTap: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) =>
+                          //         const PrefixPageWithFavorite(),
+                          //   ),
+                          // );
+                        },
+                      ),
                       SettingCard(
                         title: 'Pengaturan',
                         icons: Icons.settings,
