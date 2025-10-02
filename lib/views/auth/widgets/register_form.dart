@@ -18,7 +18,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   final authService = AuthService();
   bool loading = false;
 
-  bool isRegisterChecked = false;
+  bool isChecked = false;
   String? selectedProvinsi;
   String? selectedKabupaten;
   String? selectedKecamatan;
@@ -42,7 +42,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
 
   void toggleRegisterCheckbox(bool? value) {
     setState(() {
-      isRegisterChecked = value ?? false;
+      isChecked = value ?? false;
     });
   }
 
@@ -67,7 +67,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       return;
     }
 
-    if (!isRegisterChecked) {
+    if (!isChecked) {
       showAppToast(
         context,
         'Anda harus menyetujui syarat dan ketentuan',
@@ -108,6 +108,27 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       showErrorDialog(context, "Terjadi kesalahan register: $e");
     } finally {
       if (mounted) setState(() => loading = false);
+    }
+  }
+
+  void navigateToSnKPage() async {
+    // Use the route name you have defined, e.g., '/S&KPage'
+    final result = await Navigator.pushNamed(context, '/S&KPage');
+
+    // Check if a boolean result was returned (true if agreed, false if declined/back)
+    if (result is bool) {
+      setState(() {
+        // Update isChecked state directly with the result from the T&C page
+        isChecked = result;
+      });
+      if (result == true) {
+        // Optional: Show success toast if agreed
+        showAppToast(
+          context,
+          'Syarat dan Ketentuan telah disetujui.',
+          ToastType.success,
+        );
+      }
     }
   }
 
@@ -278,7 +299,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           Row(
             children: [
               Checkbox(
-                value: isRegisterChecked,
+                value: isChecked,
                 onChanged: toggleRegisterCheckbox,
                 activeColor: kOrange,
                 checkColor: kWhite,
@@ -293,12 +314,11 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                         text: 'syarat dan ketentuan',
                         style: TextStyle(
                           color: kOrange,
-                          fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.pushNamed(context, '/S&KPage');
+                            navigateToSnKPage();
                           },
                       ),
 
@@ -321,7 +341,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                     );
                   },
             style: ElevatedButton.styleFrom(
-              backgroundColor: isRegisterChecked ? kOrange : kNeutral40,
+              backgroundColor: isChecked ? kOrange : kNeutral40,
               minimumSize: Size(double.infinity, 50),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),

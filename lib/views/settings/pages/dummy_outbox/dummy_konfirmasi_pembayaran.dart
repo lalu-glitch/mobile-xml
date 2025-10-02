@@ -206,7 +206,7 @@ class _DummyKonfirmasiPembayaranPageState
             return;
           }
 
-          final saldo = 999999 ?? 0;
+          final saldo = selected.saldoEwallet ?? 0;
           final total = transaksi.total ?? 0;
 
           if (total > saldo) {

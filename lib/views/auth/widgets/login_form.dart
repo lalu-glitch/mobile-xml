@@ -52,7 +52,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     if (!mounted) return;
 
     if (result["success"]) {
-      Navigator.pushReplacementNamed(
+      Navigator.pushNamed(
         context,
         '/kodeOTP',
         arguments: {
@@ -63,6 +63,27 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
       );
     } else {
       showErrorDialog(context, result["message"]);
+    }
+  }
+
+  void navigateToSnKPage() async {
+    // Use the route name you have defined, e.g., '/S&KPage'
+    final result = await Navigator.pushNamed(context, '/S&KPage');
+
+    // Check if a boolean result was returned (true if agreed, false if declined/back)
+    if (result is bool) {
+      setState(() {
+        // Update isChecked state directly with the result from the T&C page
+        isChecked = result;
+      });
+      if (result == true) {
+        // Optional: Show success toast if agreed
+        showAppToast(
+          context,
+          'Syarat dan Ketentuan telah disetujui.',
+          ToastType.success,
+        );
+      }
     }
   }
 
@@ -119,7 +140,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.pushNamed(context, '/S&KPage');
+                          navigateToSnKPage();
                         },
                     ),
                     TextSpan(text: ' yang berlaku.'),
