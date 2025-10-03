@@ -4,9 +4,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
+import 'package:flutter_native_contact_picker/model/contact.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
+import '../../../core/utils/dialog.dart';
+import '../../input_nomor/contact_handler.dart';
 import '../cubit/flow_cubit.dart';
 import '../../../data/models/icon_models/flow_state_models.dart';
 import '../../../data/models/icon_models/icon_data.dart';
@@ -28,11 +32,22 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   String? selectedProductCode;
   double selectedPrice = 0;
 
+  late final ContactFlowHandler handler;
+
   @override
   void initState() {
     super.initState();
     _nomorController.text = "";
 
+    handler = ContactFlowHandler(
+      context: context,
+      nomorController: _nomorController,
+      setStateCallback: (fn) {
+        if (mounted) {
+          setState(fn);
+        }
+      },
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ProviderPrefixCubit>().clear();
     });
@@ -107,9 +122,21 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: kOrange),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(color: kOrange),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(color: kOrange),
                       ),
                       hintText: "0812 1111 2222",
-                      suffixIcon: const Icon(Icons.contact_page),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.contact_page),
+                        onPressed: handler.pickContact,
+                      ),
                     ),
                   ),
                 ],

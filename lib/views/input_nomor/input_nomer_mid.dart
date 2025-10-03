@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/dynamic_app_page.dart';
+import '../../core/utils/navigation_handler.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
+import 'contact_handler.dart';
 
 class InputNomorMidPage extends StatefulWidget {
   const InputNomorMidPage({super.key});
@@ -17,22 +19,39 @@ class InputNomorMidPage extends StatefulWidget {
 class _InputNomorPageState extends State<InputNomorMidPage> {
   final TextEditingController _nomorController = TextEditingController();
 
+  late final NavigationHandler navigationHandler;
+  late final ContactFlowHandler handler;
+
+  @override
+  void initState() {
+    super.initState();
+    // ⚠️ Inisialisasi handler dengan context saat initState
+    navigationHandler = NavigationHandler(context);
+    handler = ContactFlowHandler(
+      context: context,
+      nomorController: _nomorController,
+      // Berikan setState sebagai callback ke Handler
+      setStateCallback: (fn) {
+        if (mounted) {
+          setState(fn);
+        }
+      },
+    );
+  }
+
+  // MARK: - Build Method
   @override
   Widget build(BuildContext context) {
     final flowState = context.watch<FlowCubit>().state!;
     final flowCubit = context.read<FlowCubit>();
     final int currentIndex = flowState.currentIndex;
-    final List<AppPage> sequence = flowState.sequence;
-
-    final bool isLastPage = currentIndex == sequence.length - 1;
+    final bool isLastPage = currentIndex == flowState.sequence.length - 1;
 
     return WillPopScope(
       onWillPop: () async {
-        print('index saat ini : $currentIndex');
-        if (currentIndex > 0) {
-          flowCubit.previousPage();
-          Navigator.pop(context);
-          return false;
+        if (flowState.currentIndex > 0) {
+          navigationHandler.handleBackNavigation();
+          return false; // Mencegah pop ganda
         }
         return true;
       },
@@ -45,15 +64,6 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
           ),
           backgroundColor: kOrange,
           iconTheme: IconThemeData(color: kWhite),
-          leading: BackButton(
-            onPressed: () {
-              final flowCubit = context.read<FlowCubit>();
-              if (flowCubit.state!.currentIndex > 0) {
-                flowCubit.previousPage(); //  sync dengan Cubit
-              }
-              Navigator.pop(context);
-            },
-          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -70,8 +80,20 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
                   hintText: "Input Nomor Tujuan",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: kOrange),
                   ),
-                  suffixIcon: const Icon(Icons.contact_page),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(color: kOrange), // Diperjelas
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(color: kOrange),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.contact_page),
+                    onPressed: handler.pickContact,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -85,21 +107,16 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
                   ),
                 ),
                 onPressed: () {
-                  // cek kalau masih ada halaman berikutnya
+                  if (_nomorController.text.isEmpty) {
+                    showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
+                    return;
+                  }
                   if (!isLastPage) {
-                    if (_nomorController.text.isEmpty) {
-                      showErrorDialog(
-                        context,
-                        "Nomor tujuan tidak boleh kosong",
-                      );
-                      return;
-                    }
                     final nextPage =
                         flowState.sequence[flowState.currentIndex + 1];
                     flowCubit.nextPage();
                     Navigator.pushNamed(context, pageRoutes[nextPage]!);
                   } else {
-                    // sudah halaman terakhir -> lakukan action (misal submit)
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Flow selesai")),
                     );
@@ -115,5 +132,11 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _nomorController.dispose();
+    super.dispose();
   }
 }

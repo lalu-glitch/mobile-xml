@@ -18,7 +18,6 @@ class MultiSubKategoriPage extends StatelessWidget {
     final bool isLastPage = currentIndex == sequence.length - 1;
     return WillPopScope(
       onWillPop: () async {
-        print('index saat ini : $currentIndex');
         if (currentIndex > 0) {
           flowCubit.previousPage();
           Navigator.pop(context);
@@ -33,7 +32,6 @@ class MultiSubKategoriPage extends StatelessWidget {
           iconTheme: IconThemeData(color: kWhite),
           leading: BackButton(
             onPressed: () {
-              final flowCubit = context.read<FlowCubit>();
               if (flowCubit.state!.currentIndex > 0) {
                 flowCubit.previousPage(); //  sync dengan Cubit
               }

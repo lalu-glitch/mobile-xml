@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
-import 'package:flutter_native_contact_picker/model/contact.dart';
-
-import 'package:xmlapp/core/helper/currency.dart';
-import 'package:xmlapp/views/input_nomor/transaksi_cubit.dart';
 
 import '../../core/helper/constant_finals.dart';
+import '../../core/helper/currency.dart';
 import '../../core/helper/dynamic_app_page.dart';
+import '../../core/utils/navigation_handler.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
+import 'contact_handler.dart';
+import 'transaksi_cubit.dart';
 
 class InputNomorTujuanPage extends StatefulWidget {
   const InputNomorTujuanPage({super.key});
@@ -23,29 +22,41 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
   final TextEditingController _nomorController = TextEditingController();
   final TextEditingController _bebasNominalController = TextEditingController();
 
+  late final NavigationHandler navigationHandler;
+  late final ContactFlowHandler handler;
+
+  @override
+  void initState() {
+    super.initState();
+    navigationHandler = NavigationHandler(context);
+    handler = ContactFlowHandler(
+      context: context,
+      nomorController: _nomorController,
+      setStateCallback: (fn) {
+        if (mounted) {
+          setState(fn);
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiCubit>().getData();
     final sendTransaksi = context.read<TransaksiCubit>();
-
     final flowState = context.watch<FlowCubit>().state!;
-    final flowCubit = context.read<FlowCubit>();
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;
-
     final bool isLastPage = currentIndex == sequence.length - 1;
-
-    final FlutterNativeContactPicker contactPicker =
-        FlutterNativeContactPicker();
 
     return WillPopScope(
       onWillPop: () async {
+        // Panggil handler navigasi yang terpisah
         if (flowState.currentIndex > 0) {
-          flowCubit.previousPage(); // update sync Cubit
-          Navigator.pop(context);
-          return false;
+          navigationHandler.handleBackNavigation();
+          return false; // Mencegah pop ganda
         }
-        return true; // misal sudah di index 0 → exit
+        return true;
       },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
@@ -104,38 +115,17 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(color: kOrange),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(color: kOrange),
+                  ),
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.contact_page),
-                    onPressed: () async {
-                      try {
-                        Contact? contact = await contactPicker
-                            .selectPhoneNumber();
-
-                        if (!mounted) return;
-
-                        if (contact != null &&
-                            contact.selectedPhoneNumber != null) {
-                          setState(() {
-                            _nomorController.text =
-                                contact.selectedPhoneNumber!;
-                          });
-                        } else {
-                          if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Kontak tidak memiliki nomor"),
-                              ),
-                            );
-                          }
-                        }
-                      } catch (e) {
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Gagal memilih kontak: $e")),
-                          );
-                        }
-                      }
-                    },
+                    onPressed: handler.pickContact,
                   ),
                 ),
               ),
@@ -159,6 +149,14 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                     hintText: "Input Bebas Nominal",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(color: kOrange),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(color: kOrange),
                     ),
                     suffixIcon: const Icon(Icons.contact_page),
                   ),
@@ -188,15 +186,14 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                     return;
                   }
 
-                  //update data
+                  //update data cubit
                   sendTransaksi.setTujuan(_nomorController.text);
 
                   if (!isLastPage) {
-                    // update index ke halaman berikut
                     final nextPage =
                         flowState.sequence[flowState.currentIndex + 1];
 
-                    flowCubit.nextPage();
+                    context.read<FlowCubit>().nextPage();
                     Navigator.pushNamed(context, pageRoutes[nextPage]!);
                   } else {
                     Navigator.pushNamed(context, '/konfirmasiPembayaran');

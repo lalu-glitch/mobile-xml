@@ -20,7 +20,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
   double selectedPrice = 0;
   dynamic selectedProduk;
 
-  bool _isInitialized = false; // Flag untuk init sekali
+  bool _isInitialized = false;
 
   @override
   void initState() {
@@ -31,9 +31,8 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isInitialized) {
-      _isInitialized = true; // Set flag agar tidak jalan lagi
+      _isInitialized = true;
 
-      // Logic fetch aman di sini
       final flowState = context.watch<FlowCubit>().state!;
       final iconItem = flowState.iconItem;
       context.read<ProviderNoPrefixCubit>().fetchProviders(
@@ -248,7 +247,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                         }
                       },
                       child: Text(
-                        isLastPage ? "Selanjutnya" : "Selanjutnya",
+                        "Selanjutnya",
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xmlapp/data/models/transaksi/transaksi_helper.dart';
 
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/dynamic_app_page.dart';
+import '../../data/models/transaksi/transaksi_helper.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
+import 'contact_handler.dart';
 import 'transaksi_cubit.dart';
 
 class InputNomorPage extends StatefulWidget {
@@ -18,6 +19,23 @@ class InputNomorPage extends StatefulWidget {
 
 class _InputNomorPageState extends State<InputNomorPage> {
   final TextEditingController _nomorController = TextEditingController();
+
+  late final ContactFlowHandler handler;
+
+  @override
+  void initState() {
+    super.initState();
+    handler = ContactFlowHandler(
+      context: context,
+      nomorController: _nomorController,
+      // Berikan setState sebagai callback ke Handler
+      setStateCallback: (fn) {
+        if (mounted) {
+          setState(fn);
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +69,18 @@ class _InputNomorPageState extends State<InputNomorPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    suffixIcon: const Icon(Icons.contact_page),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(color: kOrange),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(color: kOrange),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.contact_page),
+                      onPressed: handler.pickContact,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
