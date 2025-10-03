@@ -126,4 +126,10 @@ class _InputNomorPageState extends State<InputNomorPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _nomorController.dispose();
+    super.dispose();
+  }
 }

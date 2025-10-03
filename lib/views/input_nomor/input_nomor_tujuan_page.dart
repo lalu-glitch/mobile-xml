@@ -243,4 +243,11 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
       ],
     );
   }
+
+  @override
+  void dispose() {
+    _nomorController.dispose();
+    _bebasNominalController.dispose();
+    super.dispose();
+  }
 }
