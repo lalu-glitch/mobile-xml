@@ -28,7 +28,6 @@ class _InputNomorPageState extends State<InputNomorPage> {
     handler = ContactFlowHandler(
       context: context,
       nomorController: _nomorController,
-      // Berikan setState sebagai callback ke Handler
       setStateCallback: (fn) {
         if (mounted) {
           setState(fn);
@@ -106,12 +105,10 @@ class _InputNomorPageState extends State<InputNomorPage> {
                       }
                       final nextPage =
                           flowState.sequence[flowState.currentIndex + 1];
-                      // update state FlowCubit (naik 1 index)
                       context.read<FlowCubit>().nextPage();
 
                       Navigator.pushNamed(context, pageRoutes[nextPage]!);
                     } else {
-                      // sudah halaman terakhir -> lakukan action (misal submit)
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Flow selesai")),
                       );

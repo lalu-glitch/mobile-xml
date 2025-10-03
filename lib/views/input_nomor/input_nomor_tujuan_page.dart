@@ -51,10 +51,9 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
 
     return WillPopScope(
       onWillPop: () async {
-        // Panggil handler navigasi yang terpisah
         if (flowState.currentIndex > 0) {
           navigationHandler.handleBackNavigation();
-          return false; // Mencegah pop ganda
+          return false;
         }
         return true;
       },
@@ -69,7 +68,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
             onPressed: () {
               final flowCubit = context.read<FlowCubit>();
               if (flowCubit.state!.currentIndex > 0) {
-                flowCubit.previousPage(); //  sync dengan Cubit
+                flowCubit.previousPage();
               }
               Navigator.pop(context);
             },
@@ -233,7 +232,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
             textAlign: TextAlign.right,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
-            maxLines: 2, // Maksimal 2 baris, ubah jika mau multi-line
+            maxLines: 2,
             style: TextStyle(
               fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
               fontSize: isTotal ? Screen.kSize16 : Screen.kSize14,
