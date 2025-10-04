@@ -5,6 +5,7 @@ class TransaksiHelperModel {
   final String? filename; // <---- dipake ke parameter prefix & prefix
   final double? total;
   final int? bebasNominal;
+  final int? bebasNominalValue;
   final String? kodeDompet;
 
   const TransaksiHelperModel({
@@ -14,6 +15,7 @@ class TransaksiHelperModel {
     this.filename,
     this.total,
     this.bebasNominal,
+    this.bebasNominalValue,
     this.kodeDompet,
   });
 
@@ -25,6 +27,7 @@ class TransaksiHelperModel {
     String? filename,
     double? total,
     int? bebasNominal,
+    int? bebasNominalValue,
     String? kodeDompet,
   }) {
     return TransaksiHelperModel(
@@ -34,6 +37,7 @@ class TransaksiHelperModel {
       filename: filename ?? this.filename,
       total: total ?? this.total,
       bebasNominal: bebasNominal ?? this.bebasNominal,
+      bebasNominalValue: bebasNominalValue ?? this.bebasNominalValue,
       kodeDompet: kodeDompet ?? this.kodeDompet,
     );
   }
