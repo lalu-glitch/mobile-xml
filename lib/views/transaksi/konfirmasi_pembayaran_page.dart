@@ -25,6 +25,16 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   final logger = Logger();
   String _selectedMethod = "SALDO"; // Default pilihan
 
+  double getTotalTransaksi(dynamic transaksi) {
+    final double baseTotal = transaksi.total ?? 0;
+    if (transaksi.isBebasNominal == 1) {
+      final int nominalTambahan = transaksi.bebasNominalValue ?? 0;
+      final total = baseTotal + nominalTambahan;
+      return total;
+    }
+    return baseTotal; // Return as double untuk konsistensi
+  }
+
   @override
   Widget build(BuildContext context) {
     final balanceVM = Provider.of<BalanceViewModel>(context);
@@ -99,8 +109,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
   /// Card informasi transaksi
   Widget _buildInfoCard(dynamic transaksi) {
-    final int nominalTambahan = transaksi.bebasNominalValue ?? 0;
-    final totalTransaksi = transaksi.total + nominalTambahan;
+    final totalTransaksi = getTotalTransaksi(transaksi);
     return Card(
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -116,11 +125,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             const Divider(height: 24),
             infoRow(
               "Total Pembayaran",
-              CurrencyUtil.formatCurrency(
-                transaksi.isBebasNominal == 1
-                    ? totalTransaksi
-                    : transaksi.total,
-              ),
+              CurrencyUtil.formatCurrency(totalTransaksi),
               isTotal: true,
             ),
           ],
@@ -181,6 +186,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   /// Tombol Bayar
   Widget _buildPayButton(List<PaymentMethodModel> methods, dynamic transaksi) {
     final sendTransaksi = context.read<TransaksiCubit>();
+    final totalTransaksi = getTotalTransaksi(transaksi);
 
     return SizedBox(
       width: double.infinity,
@@ -213,9 +219,8 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
           }
 
           final saldo = selected.saldoEwallet ?? 0;
-          final total = transaksi.total ?? 0;
 
-          if (total > saldo) {
+          if (totalTransaksi > saldo) {
             final msg = saldo <= 0
                 ? "Saldo ${selected.nama} tidak cukup, hubungi CS / admin."
                 : "Saldo ${selected.nama} tidak mencukupi.";
