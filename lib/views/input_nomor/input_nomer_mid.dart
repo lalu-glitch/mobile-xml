@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/dynamic_app_page.dart';
-import 'base_state.dart';
+import '../../core/utils/navigation_handler.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
-
-import 'widgets/nomor_text_field.dart';
+import 'contact_handler.dart';
 
 class InputNomorMidPage extends StatefulWidget {
   const InputNomorMidPage({super.key});
@@ -16,36 +16,45 @@ class InputNomorMidPage extends StatefulWidget {
   State<InputNomorMidPage> createState() => _InputNomorPageState();
 }
 
-class _InputNomorPageState extends BaseInputNomorState<InputNomorMidPage> {
+class _InputNomorPageState extends State<InputNomorMidPage> {
   final TextEditingController _nomorController = TextEditingController();
 
+  late final NavigationHandler navigationHandler;
+  late final ContactFlowHandler handler;
+
   @override
-  void handleNextButtonPress() {
+  void initState() {
+    super.initState();
+    // ⚠️ Inisialisasi handler dengan context saat initState
+    navigationHandler = NavigationHandler(context);
+    handler = ContactFlowHandler(
+      context: context,
+      nomorController: _nomorController,
+      // Berikan setState sebagai callback ke Handler
+      setStateCallback: (fn) {
+        if (mounted) {
+          setState(fn);
+        }
+      },
+    );
+  }
+
+  // MARK: - Build Method
+  @override
+  Widget build(BuildContext context) {
+    final flowState = context.watch<FlowCubit>().state!;
     final flowCubit = context.read<FlowCubit>();
-    final flowState = flowCubit.state!;
     final int currentIndex = flowState.currentIndex;
     final bool isLastPage = currentIndex == flowState.sequence.length - 1;
 
-    if (nomorController.text.isEmpty) {
-      showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
-      return;
-    }
-
-    if (!isLastPage) {
-      final nextPage = flowState.sequence[currentIndex + 1];
-      flowCubit.nextPage();
-      Navigator.pushNamed(context, pageRoutes[nextPage]!);
-    } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Flow selesai")));
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: onWillPopLogic,
+      onWillPop: () async {
+        if (flowState.currentIndex > 0) {
+          navigationHandler.handleBackNavigation();
+          return false; // Mencegah pop ganda
+        }
+        return true;
+      },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
@@ -63,9 +72,29 @@ class _InputNomorPageState extends BaseInputNomorState<InputNomorMidPage> {
             children: [
               const Text("Masukkan Nomor Tujuan"),
               const SizedBox(height: 8),
-              buildNomorTextField(
+              TextField(
                 controller: _nomorController,
-                onPickContact: pickContact,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  hintText: "Input Nomor Tujuan",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: kOrange),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(color: kOrange), // Diperjelas
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(color: kOrange),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.contact_page),
+                    onPressed: handler.pickContact,
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -77,7 +106,22 @@ class _InputNomorPageState extends BaseInputNomorState<InputNomorMidPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: handleNextButtonPress,
+                onPressed: () {
+                  if (_nomorController.text.isEmpty) {
+                    showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
+                    return;
+                  }
+                  if (!isLastPage) {
+                    final nextPage =
+                        flowState.sequence[flowState.currentIndex + 1];
+                    flowCubit.nextPage();
+                    Navigator.pushNamed(context, pageRoutes[nextPage]!);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Flow selesai")),
+                    );
+                  }
+                },
                 child: const Text(
                   "Selanjutnya",
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -88,5 +132,11 @@ class _InputNomorPageState extends BaseInputNomorState<InputNomorMidPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _nomorController.dispose();
+    super.dispose();
   }
 }

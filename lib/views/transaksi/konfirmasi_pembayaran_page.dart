@@ -100,9 +100,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
   /// Card informasi transaksi
   Widget _buildInfoCard(dynamic transaksi) {
-    final int nominalTambahan = transaksi.bebasNominalValue ?? 0;
-    // Sekarang perhitungan aman:
-    final totalTransaksi = transaksi.total + nominalTambahan;
     return Card(
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -118,9 +115,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             const Divider(height: 24),
             _infoRow(
               "Total Pembayaran",
-              CurrencyUtil.formatCurrency(
-                transaksi.bebasNominal == 1 ? totalTransaksi : transaksi.total,
-              ),
+              CurrencyUtil.formatCurrency(transaksi.total),
               isTotal: true,
             ),
           ],
@@ -270,7 +265,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             style: TextStyle(
               fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
               fontSize: isTotal ? Screen.kSize16 : Screen.kSize14,
-              color: isTotal ? kOrange : kBlack,
+              color: isTotal ? kOrange : Colors.black,
             ),
           ),
         ),

@@ -117,7 +117,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     transaksi.setKodeproduk(produk.kodeProduk);
                                     transaksi.setNamaProduk(produk.namaProduk);
                                     transaksi.setNominal(produk.hargaJual);
-                                    transaksi.isBebasNominal(
+                                    transaksi.setBebasNominal(
                                       produk.bebasNominal,
                                     );
                                   },

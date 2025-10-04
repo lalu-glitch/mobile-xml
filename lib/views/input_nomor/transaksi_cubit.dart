@@ -25,12 +25,8 @@ class TransaksiCubit extends Cubit<TransaksiHelperModel> {
     emit(state.copyWith(filename: val));
   }
 
-  void isBebasNominal(int val) {
+  void setBebasNominal(int val) {
     emit(state.copyWith(bebasNominal: val));
-  }
-
-  void bebasNominalValue(int val) {
-    emit(state.copyWith(bebasNominalValue: val));
   }
 
   void setKodeDompet(String val) {

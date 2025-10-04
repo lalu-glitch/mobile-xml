@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/currency.dart';
 import '../../core/helper/dynamic_app_page.dart';
-import 'navigation_handler.dart';
+import '../../core/utils/navigation_handler.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
 import 'contact_handler.dart';
@@ -132,7 +132,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
               SizedBox(height: Screen.kSize14),
               Visibility(
                 visible: transaksi.bebasNominal == 1,
-                child: const Text("Masukkan Nominal"),
+                child: const Text("Masukkan Bebas Nominal"),
               ),
               Visibility(
                 visible: transaksi.bebasNominal == 1,
@@ -176,24 +176,13 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                     showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
                     return;
                   }
-                  if (transaksi.bebasNominal == 1) {
-                    final bebasNominalValue = _bebasNominalController.text
-                        .trim();
-                    if (bebasNominalValue.isEmpty) {
-                      showErrorDialog(
-                        context,
-                        "Bebas nominal tidak boleh kosong",
-                      );
-                      return;
-                    }
-
-                    final nominal = int.tryParse(bebasNominalValue);
-                    if (nominal == null) {
-                      showErrorDialog(context, "Input harus berupa angka");
-                      return;
-                    }
-                    //update data cubit
-                    sendTransaksi.bebasNominalValue(nominal);
+                  if (transaksi.bebasNominal == 1 &&
+                      _bebasNominalController.text.isEmpty) {
+                    showErrorDialog(
+                      context,
+                      "Bebas nominal tidak boleh kosong",
+                    );
+                    return;
                   }
 
                   //update data cubit
