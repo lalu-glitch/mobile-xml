@@ -39,7 +39,10 @@ class _InputNomorTujuanAkhirState
       return;
     }
     if (transaksi.isBebasNominal == 1) {
-      final bebasNominalText = _bebasNominalController.text.trim();
+      final bebasNominalText = _bebasNominalController.text.trim().replaceAll(
+        '.',
+        '',
+      );
 
       if (bebasNominalText.isEmpty) {
         showErrorDialog(context, "Bebas nominal tidak boleh kosong");
