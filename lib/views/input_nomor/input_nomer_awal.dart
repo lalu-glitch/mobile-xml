@@ -9,6 +9,7 @@ import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
 import 'contact_handler.dart';
 import 'transaksi_cubit.dart';
+import 'widgets/nomor_text_field.dart';
 
 class InputNomorPage extends StatefulWidget {
   const InputNomorPage({super.key});
@@ -59,28 +60,9 @@ class _InputNomorPageState extends State<InputNomorPage> {
               children: [
                 const Text("Masukkan Nomor Tujuan"),
                 const SizedBox(height: 8),
-                TextField(
+                buildNomorTextField(
                   controller: _nomorController,
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: InputDecoration(
-                    hintText: "Input Nomor Tujuan",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(color: kOrange),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(color: kOrange),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.contact_page),
-                      onPressed: handler.pickContact,
-                    ),
-                  ),
+                  onPickContact: () {},
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(

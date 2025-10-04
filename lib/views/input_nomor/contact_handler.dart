@@ -4,16 +4,13 @@ import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart
 import 'package:flutter_native_contact_picker/model/contact.dart';
 
 import '../../core/utils/dialog.dart';
-// Asumsikan Anda memiliki Cubit, Toast, dan utilitas lainnya
-// ...
 
 class ContactFlowHandler {
   final BuildContext context;
   final TextEditingController nomorController;
   final Function(VoidCallback fn)
-  setStateCallback; // Menerima setState dari State
+  setStateCallback; // buat nerima  setState dari State
 
-  // Pindahkan inisialisasi picker ke handler
   final FlutterNativeContactPicker contactPicker = FlutterNativeContactPicker();
 
   ContactFlowHandler({
@@ -22,7 +19,6 @@ class ContactFlowHandler {
     required this.setStateCallback,
   });
 
-  // 2. Logika Pemilihan Kontak
   Future<void> pickContact() async {
     try {
       Contact? contact = await contactPicker.selectPhoneNumber();
