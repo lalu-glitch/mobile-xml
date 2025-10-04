@@ -6,6 +6,7 @@ import '../../core/helper/currency.dart';
 import '../../core/helper/dynamic_app_page.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
+import '../speedcash/widgets/rupiah_text_field.dart';
 import 'utils/base_state.dart';
 import 'utils/transaksi_cubit.dart';
 import '../../core/utils/info_row.dart';
@@ -141,7 +142,10 @@ class _InputNomorTujuanAkhirState
               ),
               Visibility(
                 visible: transaksi.isBebasNominal == 1,
-                child: InputBebasNominal(controller: _bebasNominalController),
+                child: RupiahTextField(
+                  controller: _bebasNominalController,
+                  fontSize: 20,
+                ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(

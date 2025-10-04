@@ -5,8 +5,21 @@ import '../../../core/helper/constant_finals.dart';
 import '../topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
 import '../widgets/rupiah_text_field.dart';
 
-class SpeedCashDetailDepo extends StatelessWidget {
+class SpeedCashDetailDepo extends StatefulWidget {
   const SpeedCashDetailDepo({super.key});
+
+  @override
+  State<SpeedCashDetailDepo> createState() => _SpeedCashDetailDepoState();
+}
+
+class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
+  late final TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController(); // ✅ Dibuat di initState
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +53,7 @@ class SpeedCashDetailDepo extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 25),
-            RupiahTextField(), // <--- TextField buat masukin nominal topup
+            RupiahTextField(controller: controller, fontSize: 25),
             const SizedBox(height: 16),
             Text(
               ' Minimal top up Rp. 10.000',
@@ -127,5 +140,11 @@ class SpeedCashDetailDepo extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

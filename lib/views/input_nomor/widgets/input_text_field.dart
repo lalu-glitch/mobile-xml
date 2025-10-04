@@ -32,24 +32,3 @@ Widget buildNomorTextField({
     ),
   );
 }
-
-Widget InputBebasNominal({required TextEditingController controller}) {
-  return TextField(
-    controller: controller,
-    keyboardType: TextInputType.phone,
-    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-    decoration: InputDecoration(
-      hintText: "Input nominal",
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        borderSide: const BorderSide(color: kOrange),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        borderSide: const BorderSide(color: kOrange),
-      ),
-      suffixIcon: const Icon(Icons.attach_money_rounded),
-    ),
-  );
-}

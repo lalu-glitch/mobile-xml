@@ -1,62 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:xmlapp/core/helper/constant_finals.dart';
+
+import '../../../core/helper/constant_finals.dart';
 
 class RupiahTextField extends StatefulWidget {
-  const RupiahTextField({super.key});
-
+  const RupiahTextField({
+    required this.controller,
+    required this.fontSize,
+    super.key,
+  });
+  final double fontSize;
+  final TextEditingController controller;
   @override
   State<RupiahTextField> createState() => _RupiahTextFieldState();
 }
 
 class _RupiahTextFieldState extends State<RupiahTextField> {
-  final TextEditingController _controller = TextEditingController();
   final _formatter = NumberFormat.currency(
     locale: 'id', // Indonesia
     symbol: '', // kosong dulu, karena "Rp" kita kasih manual
     decimalDigits: 0,
   );
 
+  late VoidCallback _listener;
+
   @override
   void initState() {
     super.initState();
-
-    _controller.addListener(() {
-      final text = _controller.text.replaceAll('.', '');
+    _listener = () {
+      final text = widget.controller.text.replaceAll('.', '');
       if (text.isEmpty) return;
 
       final value = int.parse(text);
       final newText = _formatter.format(value);
-      if (newText != _controller.text) {
-        _controller.value = TextEditingValue(
+
+      //biar cursor gak selalu ke akhir pas user edit nominal
+      final oldSelection = widget.controller.selection.baseOffset;
+      final diff = newText.length - widget.controller.text.length;
+
+      if (newText != widget.controller.text) {
+        widget.controller.value = TextEditingValue(
           text: newText,
-          selection: TextSelection.collapsed(offset: newText.length),
+          selection: TextSelection.collapsed(offset: oldSelection + diff),
         );
       }
-    });
+    };
+    widget.controller.addListener(_listener);
   }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: _controller,
+      controller: widget.controller,
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      style: const TextStyle(fontSize: 35, color: kNeutral100),
+      style: TextStyle(fontSize: widget.fontSize, color: kNeutral100),
       cursorColor: kOrangeAccent300,
+
       decoration: InputDecoration(
-        prefixIcon: const Padding(
-          padding: EdgeInsets.only(left: 12, right: 8),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.only(left: 12, right: 8),
           child: Text(
             "Rp.",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: widget.fontSize,
               fontWeight: FontWeight.bold,
               color: kOrange,
             ),
           ),
         ),
+
         prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
         filled: true,
         fillColor: kNeutral20,
@@ -76,7 +90,7 @@ class _RupiahTextFieldState extends State<RupiahTextField> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    widget.controller.removeListener(_listener);
     super.dispose();
   }
 }
