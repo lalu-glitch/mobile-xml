@@ -110,7 +110,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                 keyboardType: TextInputType.phone,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
-                  hintText: "Input Nomor Tujuan",
+                  hintText: "Input nomor tujuan",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -131,21 +131,21 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
 
               SizedBox(height: Screen.kSize14),
               Visibility(
-                visible: transaksi.bebasNominal == 1,
-                child: const Text("Masukkan Bebas Nominal"),
+                visible: transaksi.isBebasNominal == 1,
+                child: const Text("Masukkan Nominal"),
               ),
               Visibility(
-                visible: transaksi.bebasNominal == 1,
+                visible: transaksi.isBebasNominal == 1,
                 child: SizedBox(height: Screen.kSize8),
               ),
               Visibility(
-                visible: transaksi.bebasNominal == 1,
+                visible: transaksi.isBebasNominal == 1,
                 child: TextField(
                   controller: _bebasNominalController,
                   keyboardType: TextInputType.phone,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
-                    hintText: "Input Bebas Nominal",
+                    hintText: "Input nominal",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -176,13 +176,24 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                     showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
                     return;
                   }
-                  if (transaksi.bebasNominal == 1 &&
-                      _bebasNominalController.text.isEmpty) {
-                    showErrorDialog(
-                      context,
-                      "Bebas nominal tidak boleh kosong",
-                    );
-                    return;
+                  if (transaksi.isBebasNominal == 1) {
+                    final bebasNominalValue = _bebasNominalController.text
+                        .trim();
+                    if (bebasNominalValue.isEmpty) {
+                      showErrorDialog(
+                        context,
+                        "Bebas nominal tidak boleh kosong",
+                      );
+                      return;
+                    }
+
+                    final nominal = int.tryParse(bebasNominalValue);
+                    if (nominal == null) {
+                      showErrorDialog(context, "Input harus berupa angka");
+                      return;
+                    }
+                    //update data cubit
+                    sendTransaksi.bebasNominalValue(nominal);
                   }
 
                   //update data cubit

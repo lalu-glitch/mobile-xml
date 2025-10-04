@@ -22,20 +22,14 @@ class ContactFlowHandler {
   Future<void> pickContact() async {
     try {
       Contact? contact = await contactPicker.selectPhoneNumber();
-
-      // Cek mounted dilakukan di dalam page sebelum memanggil handler
-      // Tapi kita cek lagi untuk keamanan setelah await
       if (contact != null && contact.selectedPhoneNumber != null) {
         setStateCallback(() {
-          // Menggunakan setStateCallback yang diberikan
-          // Hanya ambil digit
           nomorController.text = contact.selectedPhoneNumber!.replaceAll(
             RegExp(r'\D'),
             '',
           );
         });
       } else {
-        // Tampilkan pesan gagal (menggunakan context yang diberikan)
         showAppToast(
           context,
           'Kontak tidak memiliki nomor telepon yang valid.',

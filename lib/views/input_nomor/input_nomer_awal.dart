@@ -7,6 +7,7 @@ import '../../core/helper/dynamic_app_page.dart';
 import '../../data/models/transaksi/transaksi_helper.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
+import 'base_state.dart';
 import 'contact_handler.dart';
 import 'transaksi_cubit.dart';
 import 'widgets/nomor_text_field.dart';
@@ -18,29 +19,32 @@ class InputNomorPage extends StatefulWidget {
   State<InputNomorPage> createState() => _InputNomorPageState();
 }
 
-class _InputNomorPageState extends State<InputNomorPage> {
-  final TextEditingController _nomorController = TextEditingController();
-
-  late final ContactFlowHandler handler;
-
+class _InputNomorPageState extends BaseInputNomorState<InputNomorPage> {
   @override
-  void initState() {
-    super.initState();
-    handler = ContactFlowHandler(
-      context: context,
-      nomorController: _nomorController,
-      setStateCallback: (fn) {
-        if (mounted) {
-          setState(fn);
-        }
-      },
-    );
+  void handleNextButtonPress() {
+    final flowCubit = context.read<FlowCubit>();
+    final flowState = flowCubit.state!;
+    final int currentIndex = flowState.currentIndex;
+    final bool isLastPage = currentIndex == flowState.sequence.length - 1;
+
+    if (nomorController.text.isEmpty) {
+      showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
+      return;
+    }
+
+    if (!isLastPage) {
+      final nextPage = flowState.sequence[currentIndex + 1];
+      flowCubit.nextPage();
+      Navigator.pushNamed(context, pageRoutes[nextPage]!);
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Flow selesai")));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final flowState = context.watch<FlowCubit>().state;
-
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -61,8 +65,8 @@ class _InputNomorPageState extends State<InputNomorPage> {
                 const Text("Masukkan Nomor Tujuan"),
                 const SizedBox(height: 8),
                 buildNomorTextField(
-                  controller: _nomorController,
-                  onPickContact: () {},
+                  controller: nomorController,
+                  onPickContact: pickContact,
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -74,28 +78,7 @@ class _InputNomorPageState extends State<InputNomorPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  onPressed: () {
-                    // cek kalau masih ada halaman berikutnya
-                    if (flowState!.currentIndex + 1 <
-                        flowState.sequence.length) {
-                      if (_nomorController.text.isEmpty) {
-                        showErrorDialog(
-                          context,
-                          "Nomor tujuan tidak boleh kosong",
-                        );
-                        return;
-                      }
-                      final nextPage =
-                          flowState.sequence[flowState.currentIndex + 1];
-                      context.read<FlowCubit>().nextPage();
-
-                      Navigator.pushNamed(context, pageRoutes[nextPage]!);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Flow selesai")),
-                      );
-                    }
-                  },
+                  onPressed: handleNextButtonPress,
                   child: const Text(
                     "Selanjutnya",
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -107,11 +90,5 @@ class _InputNomorPageState extends State<InputNomorPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _nomorController.dispose();
-    super.dispose();
   }
 }

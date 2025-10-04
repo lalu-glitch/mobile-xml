@@ -7,6 +7,7 @@ import '../../core/helper/dynamic_app_page.dart';
 import '../../core/utils/navigation_handler.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
+import 'base_state.dart';
 import 'contact_handler.dart';
 import 'widgets/nomor_text_field.dart';
 
@@ -17,45 +18,34 @@ class InputNomorMidPage extends StatefulWidget {
   State<InputNomorMidPage> createState() => _InputNomorPageState();
 }
 
-class _InputNomorPageState extends State<InputNomorMidPage> {
-  final TextEditingController _nomorController = TextEditingController();
-
-  late final NavigationHandler navigationHandler;
-  late final ContactFlowHandler handler;
-
+class _InputNomorPageState extends BaseInputNomorState<InputNomorMidPage> {
   @override
-  void initState() {
-    super.initState();
-    // ⚠️ Inisialisasi handler dengan context saat initState
-    navigationHandler = NavigationHandler(context);
-    handler = ContactFlowHandler(
-      context: context,
-      nomorController: _nomorController,
-      // Berikan setState sebagai callback ke Handler
-      setStateCallback: (fn) {
-        if (mounted) {
-          setState(fn);
-        }
-      },
-    );
-  }
-
-  // MARK: - Build Method
-  @override
-  Widget build(BuildContext context) {
-    final flowState = context.watch<FlowCubit>().state!;
+  void handleNextButtonPress() {
     final flowCubit = context.read<FlowCubit>();
+    final flowState = flowCubit.state!;
     final int currentIndex = flowState.currentIndex;
     final bool isLastPage = currentIndex == flowState.sequence.length - 1;
 
+    if (nomorController.text.isEmpty) {
+      showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
+      return;
+    }
+
+    if (!isLastPage) {
+      final nextPage = flowState.sequence[currentIndex + 1];
+      flowCubit.nextPage();
+      Navigator.pushNamed(context, pageRoutes[nextPage]!);
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Flow selesai")));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        if (flowState.currentIndex > 0) {
-          navigationHandler.handleBackNavigation();
-          return false; // Mencegah pop ganda
-        }
-        return true;
-      },
+      onWillPop: onWillPopLogic,
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
@@ -74,8 +64,8 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
               const Text("Masukkan Nomor Tujuan"),
               const SizedBox(height: 8),
               buildNomorTextField(
-                controller: _nomorController,
-                onPickContact: () {},
+                controller: nomorController,
+                onPickContact: pickContact,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -87,22 +77,7 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: () {
-                  if (_nomorController.text.isEmpty) {
-                    showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
-                    return;
-                  }
-                  if (!isLastPage) {
-                    final nextPage =
-                        flowState.sequence[flowState.currentIndex + 1];
-                    flowCubit.nextPage();
-                    Navigator.pushNamed(context, pageRoutes[nextPage]!);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Flow selesai")),
-                    );
-                  }
-                },
+                onPressed: handleNextButtonPress,
                 child: const Text(
                   "Selanjutnya",
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -113,11 +88,5 @@ class _InputNomorPageState extends State<InputNomorMidPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _nomorController.dispose();
-    super.dispose();
   }
 }
