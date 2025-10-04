@@ -8,6 +8,7 @@ import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
 import 'utils/base_state.dart';
 import 'utils/transaksi_cubit.dart';
+import 'widgets/info_row.dart';
 import 'widgets/input_text_field.dart';
 
 class InputNomorTujuanAkhir extends StatefulWidget {
@@ -109,9 +110,9 @@ class _InputNomorTujuanAkhirState
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      _infoRow("Nama Produk", transaksi.namaProduk ?? ''),
+                      infoRow("Nama Produk", transaksi.namaProduk ?? ''),
                       const Divider(height: 24),
-                      _infoRow(
+                      infoRow(
                         "Total Pembayaran",
                         CurrencyUtil.formatCurrency(transaksi.total),
                         isTotal: true,
@@ -162,40 +163,6 @@ class _InputNomorTujuanAkhirState
           ),
         ),
       ),
-    );
-  }
-
-  Widget _infoRow(String label, String value, {bool isTotal = false}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 4,
-          child: Text(
-            label,
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          flex: 6,
-          child: Text(
-            value,
-            textAlign: TextAlign.right,
-            softWrap: true,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: TextStyle(
-              fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
-              fontSize: isTotal ? Screen.kSize16 : Screen.kSize14,
-              color: isTotal ? kOrange : Colors.black,
-            ),
-          ),
-        ),
-      ],
     );
   }
 
