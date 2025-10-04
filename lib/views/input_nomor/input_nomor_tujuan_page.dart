@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/currency.dart';
 import '../../core/helper/dynamic_app_page.dart';
-import '../../core/utils/navigation_handler.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
-import 'contact_handler.dart';
+import 'base_state.dart';
 import 'transaksi_cubit.dart';
+import 'widgets/nomor_text_field.dart';
 
 class InputNomorTujuanPage extends StatefulWidget {
   const InputNomorTujuanPage({super.key});
@@ -18,45 +18,66 @@ class InputNomorTujuanPage extends StatefulWidget {
   State<InputNomorTujuanPage> createState() => _InputNomorTujuanPageState();
 }
 
-class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
-  final TextEditingController _nomorController = TextEditingController();
+class _InputNomorTujuanPageState
+    extends BaseInputNomorState<InputNomorTujuanPage> {
   final TextEditingController _bebasNominalController = TextEditingController();
 
-  late final NavigationHandler navigationHandler;
-  late final ContactFlowHandler handler;
-
   @override
-  void initState() {
-    super.initState();
-    navigationHandler = NavigationHandler(context);
-    handler = ContactFlowHandler(
-      context: context,
-      nomorController: _nomorController,
-      setStateCallback: (fn) {
-        if (mounted) {
-          setState(fn);
-        }
-      },
-    );
+  void handleNextButtonPress() {
+    final flowCubit = context.read<FlowCubit>();
+    final flowState = flowCubit.state!;
+
+    final sendTransaksi = context.read<TransaksiCubit>();
+    final transaksi = sendTransaksi.getData();
+
+    final int currentIndex = flowState.currentIndex;
+    final bool isLastPage = currentIndex == flowState.sequence.length - 1;
+
+    if (nomorController.text.isEmpty) {
+      showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
+      return;
+    }
+    if (transaksi.isBebasNominal == 1) {
+      final bebasNominalText = _bebasNominalController.text.trim();
+
+      // Validasi Kosong
+      if (bebasNominalText.isEmpty) {
+        showErrorDialog(context, "Bebas nominal tidak boleh kosong");
+        return;
+      }
+      final nominal = int.tryParse(bebasNominalText);
+      if (nominal == null) {
+        showErrorDialog(context, "Input harus berupa angka");
+        return;
+      }
+
+      sendTransaksi.bebasNominalValue(nominal);
+    } else {
+      sendTransaksi.bebasNominalValue(0);
+    }
+
+    sendTransaksi.setTujuan(nomorController.text);
+
+    if (!isLastPage) {
+      final nextPage = flowState.sequence[currentIndex + 1];
+
+      flowCubit.nextPage();
+
+      if (pageRoutes.containsKey(nextPage)) {
+        Navigator.pushNamed(context, pageRoutes[nextPage]!);
+      } else {
+        showErrorDialog(context, "Rute halaman berikutnya tidak ditemukan.");
+      }
+    } else {
+      Navigator.pushNamed(context, '/konfirmasiPembayaran');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiCubit>().getData();
-    final sendTransaksi = context.read<TransaksiCubit>();
-    final flowState = context.watch<FlowCubit>().state!;
-    final int currentIndex = flowState.currentIndex;
-    final List<AppPage> sequence = flowState.sequence;
-    final bool isLastPage = currentIndex == sequence.length - 1;
-
     return WillPopScope(
-      onWillPop: () async {
-        if (flowState.currentIndex > 0) {
-          navigationHandler.handleBackNavigation();
-          return false;
-        }
-        return true;
-      },
+      onWillPop: onWillPopLogic,
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
@@ -105,28 +126,9 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
               const Text("Masukkan Nomor Tujuan"),
               const SizedBox(height: 8),
 
-              TextField(
-                controller: _nomorController,
-                keyboardType: TextInputType.phone,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  hintText: "Input nomor tujuan",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: const BorderSide(color: kOrange),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: const BorderSide(color: kOrange),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.contact_page),
-                    onPressed: handler.pickContact,
-                  ),
-                ),
+              buildNomorTextField(
+                controller: nomorController,
+                onPickContact: pickContact,
               ),
 
               SizedBox(height: Screen.kSize14),
@@ -157,7 +159,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: const BorderSide(color: kOrange),
                     ),
-                    suffixIcon: const Icon(Icons.contact_page),
+                    suffixIcon: const Icon(Icons.attach_money_rounded),
                   ),
                 ),
               ),
@@ -171,44 +173,7 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: () {
-                  if (_nomorController.text.isEmpty) {
-                    showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
-                    return;
-                  }
-                  if (transaksi.isBebasNominal == 1) {
-                    final bebasNominalValue = _bebasNominalController.text
-                        .trim();
-                    if (bebasNominalValue.isEmpty) {
-                      showErrorDialog(
-                        context,
-                        "Bebas nominal tidak boleh kosong",
-                      );
-                      return;
-                    }
-
-                    final nominal = int.tryParse(bebasNominalValue);
-                    if (nominal == null) {
-                      showErrorDialog(context, "Input harus berupa angka");
-                      return;
-                    }
-                    //update data cubit
-                    sendTransaksi.bebasNominalValue(nominal);
-                  }
-
-                  //update data cubit
-                  sendTransaksi.setTujuan(_nomorController.text);
-
-                  if (!isLastPage) {
-                    final nextPage =
-                        flowState.sequence[flowState.currentIndex + 1];
-
-                    context.read<FlowCubit>().nextPage();
-                    Navigator.pushNamed(context, pageRoutes[nextPage]!);
-                  } else {
-                    Navigator.pushNamed(context, '/konfirmasiPembayaran');
-                  }
-                },
+                onPressed: handleNextButtonPress,
                 child: const Text(
                   "Selanjutnya",
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -257,7 +222,6 @@ class _InputNomorTujuanPageState extends State<InputNomorTujuanPage> {
 
   @override
   void dispose() {
-    _nomorController.dispose();
     _bebasNominalController.dispose();
     super.dispose();
   }
