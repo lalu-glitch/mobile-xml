@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/utils/info_row.dart';
 import '../../data/models/transaksi/status_transaksi.dart';
 import 'package:intl/intl.dart';
 
@@ -71,17 +72,17 @@ class DetailTransaksiPage extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    _infoRow("Kode Transaksi", status.kode.toString()),
-                    _infoRow("Status", status.statusTrx.toString()),
-                    _infoRow("Produk", status.kodeProduk),
-                    _infoRow("Tujuan", status.tujuan),
-                    _infoRow(
+                    infoRow("Kode Transaksi", status.kode.toString()),
+                    infoRow("Status", status.statusTrx.toString()),
+                    infoRow("Produk", status.kodeProduk),
+                    infoRow("Tujuan", status.tujuan),
+                    infoRow(
                       "Waktu",
                       DateFormat('dd MMM yyyy, HH:mm').format(status.tglEntri),
                     ),
-                    _infoRow("Keterangan", status.keterangan),
+                    infoRow("Keterangan", status.keterangan),
                     const Divider(height: 32),
-                    _infoRow("Serial Number", status.sn),
+                    infoRow("Serial Number", status.sn),
                     const Divider(height: 32),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -167,38 +168,6 @@ class DetailTransaksiPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _infoRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 130,
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 15,
-                color: Colors.black87,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.black87,
-                height: 1.3,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

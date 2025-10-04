@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/helper/constant_finals.dart';
+import '../helper/constant_finals.dart';
 
 Widget infoRow(String label, String value, {bool isTotal = false}) {
   return Row(

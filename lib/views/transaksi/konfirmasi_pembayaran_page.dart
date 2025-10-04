@@ -8,6 +8,7 @@ import 'package:xmlapp/views/input_nomor/utils/transaksi_cubit.dart';
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/currency.dart';
 import '../../core/utils/dialog.dart';
+import '../../core/utils/info_row.dart';
 import '../../data/models/transaksi/metode_transaksi.dart';
 import '../../viewmodels/balance_viewmodel.dart';
 import '../../viewmodels/transaksi_viewmodel.dart';
@@ -50,7 +51,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               _buildInfoCard(transaksi),
               const SizedBox(height: 24),
 
-              // === Metode Pembayaran ===
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -71,7 +71,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
               const Spacer(),
 
-              // === Tombol Bayar ===
               _buildPayButton(methods, transaksi),
             ],
           ),
@@ -109,13 +108,13 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            _infoRow("Nomor Tujuan", transaksi.tujuan ?? ''),
+            infoRow("Nomor Tujuan", transaksi.tujuan ?? ''),
             const Divider(height: 24),
-            _infoRow("Kode Produk", transaksi.kodeProduk ?? ''),
+            infoRow("Kode Produk", transaksi.kodeProduk ?? ''),
             const Divider(height: 24),
-            _infoRow("Nama Produk", transaksi.namaProduk ?? ''),
+            infoRow("Nama Produk", transaksi.namaProduk ?? ''),
             const Divider(height: 24),
-            _infoRow(
+            infoRow(
               "Total Pembayaran",
               CurrencyUtil.formatCurrency(
                 transaksi.isBebasNominal == 1
@@ -241,41 +240,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
           ),
         ),
       ),
-    );
-  }
-
-  /// Widget helper untuk row informasi produk
-  Widget _infoRow(String label, String value, {bool isTotal = false}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 4,
-          child: Text(
-            label,
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          flex: 6,
-          child: Text(
-            value,
-            textAlign: TextAlign.right,
-            softWrap: true,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: TextStyle(
-              fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
-              fontSize: isTotal ? Screen.kSize16 : Screen.kSize14,
-              color: isTotal ? kOrange : kBlack,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
