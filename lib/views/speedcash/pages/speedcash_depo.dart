@@ -3,16 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../widgets/bank_card.dart';
 
-class SpeedcashDepositPage extends StatefulWidget {
+class SpeedcashDepositPage extends StatelessWidget {
   const SpeedcashDepositPage({super.key});
 
   @override
-  State<SpeedcashDepositPage> createState() => _SpeedcashDepositPageState();
-}
-
-class _SpeedcashDepositPageState extends State<SpeedcashDepositPage> {
-  @override
   Widget build(BuildContext context) {
+    const int itemCount = 15;
     return Scaffold(
       backgroundColor: kBackground,
       appBar: AppBar(
@@ -22,15 +18,17 @@ class _SpeedcashDepositPageState extends State<SpeedcashDepositPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsetsGeometry.symmetric(vertical: 0, horizontal: 16),
+          // Gunakan EdgeInsets.symmetric
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
           child: ListView.builder(
-            itemCount: 15,
+            itemCount: itemCount,
             itemBuilder: (context, int index) {
               return BankCard(
-                title: 'Bank Central Asia',
+                title: 'Bank Central Asia ${index + 1}',
                 minimumTopUp: 'Rp. 10.000',
-                klik: () =>
-                    Navigator.pushNamed(context, '/speedcashDetailDepositPage'),
+                klik: () {
+                  Navigator.pushNamed(context, '/speedcashDetailDepositPage');
+                },
               );
             },
           ),
