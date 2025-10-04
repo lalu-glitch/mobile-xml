@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/helper/constant_finals.dart';
@@ -7,19 +6,19 @@ import '../../core/helper/currency.dart';
 import '../../core/helper/dynamic_app_page.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
-import 'base_state.dart';
-import 'transaksi_cubit.dart';
-import 'widgets/nomor_text_field.dart';
+import 'utils/base_state.dart';
+import 'utils/transaksi_cubit.dart';
+import 'widgets/input_text_field.dart';
 
-class InputNomorTujuanPage extends StatefulWidget {
-  const InputNomorTujuanPage({super.key});
+class InputNomorTujuanAkhir extends StatefulWidget {
+  const InputNomorTujuanAkhir({super.key});
 
   @override
-  State<InputNomorTujuanPage> createState() => _InputNomorTujuanPageState();
+  State<InputNomorTujuanAkhir> createState() => _InputNomorTujuanAkhirState();
 }
 
-class _InputNomorTujuanPageState
-    extends BaseInputNomorState<InputNomorTujuanPage> {
+class _InputNomorTujuanAkhirState
+    extends BaseInputNomorState<InputNomorTujuanAkhir> {
   final TextEditingController _bebasNominalController = TextEditingController();
 
   @override
@@ -40,7 +39,6 @@ class _InputNomorTujuanPageState
     if (transaksi.isBebasNominal == 1) {
       final bebasNominalText = _bebasNominalController.text.trim();
 
-      // Validasi Kosong
       if (bebasNominalText.isEmpty) {
         showErrorDialog(context, "Bebas nominal tidak boleh kosong");
         return;
@@ -142,26 +140,7 @@ class _InputNomorTujuanPageState
               ),
               Visibility(
                 visible: transaksi.isBebasNominal == 1,
-                child: TextField(
-                  controller: _bebasNominalController,
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: InputDecoration(
-                    hintText: "Input nominal",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(color: kOrange),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(color: kOrange),
-                    ),
-                    suffixIcon: const Icon(Icons.attach_money_rounded),
-                  ),
-                ),
+                child: InputBebasNominal(controller: _bebasNominalController),
               ),
               const SizedBox(height: 20),
               ElevatedButton(

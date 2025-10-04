@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
 
-import '../../core/utils/dialog.dart';
+import '../../../core/utils/dialog.dart';
 
 class ContactFlowHandler {
   final BuildContext context;

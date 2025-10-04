@@ -15,7 +15,7 @@ import '../../views/speedcash/pages/speedcash_depo_detail.dart';
 import '../../views/speedcash/pages/speedcash_depo_tiket.dart';
 import '../utils/webview.dart';
 import '../../views/analytics/analytics_page.dart';
-import '../../views/input_nomor/input_nomor_tujuan_page.dart';
+import '../../views/input_nomor/input_nomor_akhir.dart';
 import '../../views/layanan/noprefix/noprefix_page.dart';
 import '../../views/layanan/prefix/prefix_page.dart';
 import '../../views/speedcash/pages/speedcash_binding.dart';
@@ -55,7 +55,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
   '/komisiPage': (context) => authGuardWrapper(KomisiPage()),
   '/detailRiwayatTransaksi': (context) => authGuardWrapper(DetailRiwayatPage()),
-  '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanPage()),
+  '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanAkhir()),
   '/inputNomorFirst': (context) => authGuardWrapper(InputNomorPage()),
   '/inputNomorMid': (context) => authGuardWrapper(InputNomorMidPage()),
   '/detailInfoAkun': (context) => authGuardWrapper(DetailInfoAkun()),

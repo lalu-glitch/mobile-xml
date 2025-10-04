@@ -8,7 +8,7 @@ import '../../core/utils/dialog.dart';
 import '../../viewmodels/transaksi_viewmodel.dart';
 import 'package:logger/logger.dart';
 
-import '../input_nomor/transaksi_cubit.dart';
+import '../input_nomor/utils/transaksi_cubit.dart';
 
 class TransaksiProsesPage extends StatefulWidget {
   const TransaksiProsesPage({super.key});

@@ -8,7 +8,7 @@ import '../../../../core/utils/dialog.dart';
 import '../../../../data/models/transaksi/metode_transaksi.dart';
 import '../../../../viewmodels/balance_viewmodel.dart';
 import '../../../../viewmodels/transaksi_viewmodel.dart';
-import '../../../input_nomor/transaksi_cubit.dart';
+import '../../../input_nomor/utils/transaksi_cubit.dart';
 
 class DummyKonfirmasiPembayaranPage extends StatefulWidget {
   const DummyKonfirmasiPembayaranPage({super.key});

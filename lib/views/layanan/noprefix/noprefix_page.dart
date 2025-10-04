@@ -5,7 +5,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../cubit/flow_cubit.dart';
 import '../../../core/helper/currency.dart';
-import '../../input_nomor/transaksi_cubit.dart';
+import '../../input_nomor/utils/transaksi_cubit.dart';
 import 'cubit/provider_noprefix_cubit.dart';
 
 class DetailNoPrefixPage extends StatefulWidget {

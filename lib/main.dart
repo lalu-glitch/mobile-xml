@@ -21,7 +21,7 @@ import 'viewmodels/balance_viewmodel.dart';
 import 'viewmodels/icon_viewmodel.dart';
 import 'viewmodels/speedcash/speedcash_viewmodel.dart';
 import 'viewmodels/transaksi_viewmodel.dart';
-import 'views/input_nomor/transaksi_cubit.dart';
+import 'views/input_nomor/utils/transaksi_cubit.dart';
 import 'views/layanan/noprefix/cubit/provider_noprefix_cubit.dart';
 import 'views/layanan/prefix/cubit/provider_prefix_cubit.dart';
 import 'views/riwayat/cubit/detail_riwayat_transaksi_cubit.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../views/layanan/cubit/flow_cubit.dart';
+import '../../layanan/cubit/flow_cubit.dart';
 
 class NavigationHandler {
   final BuildContext context;

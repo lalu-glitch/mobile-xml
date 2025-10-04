@@ -7,7 +7,7 @@ import '../../../core/helper/dynamic_app_page.dart';
 
 import '../../layanan/cubit/flow_cubit.dart';
 import '../../../viewmodels/icon_viewmodel.dart';
-import '../../input_nomor/transaksi_cubit.dart';
+import '../../input_nomor/utils/transaksi_cubit.dart';
 
 class LayananSection extends StatelessWidget {
   const LayananSection({required this.iconVM, super.key});
