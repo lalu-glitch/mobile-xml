@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
@@ -83,7 +82,6 @@ class Header extends StatelessWidget {
             ],
           ),
         ),
-
         // Card
         const SizedBox(height: 50),
       ],
