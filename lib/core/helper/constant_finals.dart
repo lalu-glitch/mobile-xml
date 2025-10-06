@@ -63,7 +63,7 @@ const Color kNeutral80 = Color(0xFF7A8089);
 const Color kNeutral90 = Color(0xFF5F6570);
 const Color kNeutral100 = Color(0xFF293241);
 
-const Color kOrange = Color(0xFFF06821);
+const Color kOrange = Color(0xFFFE7F04);
 const Color kOrangeAccent500 = Color(0xFFF17737);
 const Color kOrangeAccent400 = Color(0xFFF3864D);
 const Color kOrangeAccent300 = Color(0xFFF49563);

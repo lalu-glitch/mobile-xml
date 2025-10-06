@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:xmlapp/views/home/widgets/new_header_card.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import 'package:xmlapp/views/home/widgets/header_card.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import '../../../viewmodels/icon_viewmodel.dart';
@@ -86,9 +86,8 @@ class _HomePageState extends State<HomePage> {
                           ),
 
                           const SizedBox(
-                            height: 100,
+                            height: 150,
                           ), // kasih space supaya card muat di overlay
-                          // === Bagian bawah (container putih) ===
                           Container(
                             decoration: BoxDecoration(color: Colors.grey[100]),
                             padding: const EdgeInsets.all(16),
@@ -115,13 +114,90 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
 
-                      // === Overlay Card ===
+                      //Tambahan
+                      Positioned(
+                        top: 110,
+                        left: 25,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Colors.yellow,
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Column(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Poin',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: kWhite,
+                                      ),
+                                    ),
+                                    Text(
+                                      '500.200',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: kWhite,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 30),
+                            Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Colors.yellow,
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Column(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Komisi',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: kWhite,
+                                      ),
+                                    ),
+                                    Text(
+                                      '1.800.200',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: kWhite,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       Positioned(
                         top:
-                            100, // atur biar card nempel di antara header & container
+                            150, // atur biar card nempel di antara header & container
                         left: 16,
                         right: 16,
-                        child: HeaderCard(balanceVM: balanceVM),
+                        child: NewHeaderCard(balanceVM: balanceVM),
                       ),
                     ],
                   ),
