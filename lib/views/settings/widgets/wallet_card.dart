@@ -98,7 +98,7 @@ class WalletCard extends StatelessWidget {
                         ),
                         child: Text(
                           'Hubungkan',
-                          style: Styles.kNunitoMedium.copyWith(
+                          style: TextStyle(
                             color: kWhite,
                             fontSize: Screen.kSize16,
                           ),
@@ -127,7 +127,7 @@ class WalletCard extends StatelessWidget {
                           children: [
                             Text(
                               'Unbind',
-                              style: Styles.kNunitoMedium.copyWith(
+                              style: TextStyle(
                                 color: kWhite,
                                 fontSize: Screen.kSize16,
                               ),

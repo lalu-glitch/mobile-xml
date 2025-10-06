@@ -102,19 +102,13 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
             const SizedBox(height: 16),
             Text(
               'Unbind Akun SpeedCash',
-              style: Styles.kNunitoSemiBold.copyWith(
-                color: Colors.black,
-                fontSize: Screen.kSize20,
-              ),
+              style: TextStyle(color: Colors.black, fontSize: Screen.kSize20),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               'Apakah Anda yakin ingin melepas akun SpeedCash Anda?',
-              style: Styles.kNunitoMedium.copyWith(
-                color: Colors.grey,
-                fontSize: Screen.kSize16,
-              ),
+              style: TextStyle(color: Colors.grey, fontSize: Screen.kSize16),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
@@ -132,10 +126,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
               ),
               child: Text(
                 'Ya, Unbind',
-                style: Styles.kNunitoMedium.copyWith(
-                  color: kWhite,
-                  fontSize: Screen.kSize16,
-                ),
+                style: TextStyle(color: kWhite, fontSize: Screen.kSize16),
               ),
             ),
             const SizedBox(height: 10),
@@ -145,10 +136,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
               },
               child: Text(
                 'Batal',
-                style: Styles.kNunitoMedium.copyWith(
-                  color: Colors.grey,
-                  fontSize: Screen.kSize16,
-                ),
+                style: TextStyle(color: Colors.grey, fontSize: Screen.kSize16),
               ),
             ),
           ],
@@ -179,19 +167,13 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
             const SizedBox(height: 16),
             Text(
               'Keluar',
-              style: Styles.kNunitoSemiBold.copyWith(
-                color: Colors.black,
-                fontSize: Screen.kSize20,
-              ),
+              style: TextStyle(color: Colors.black, fontSize: Screen.kSize20),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               'Apakah Anda yakin ingin Keluar dari aplikasi?',
-              style: Styles.kNunitoMedium.copyWith(
-                color: Colors.grey,
-                fontSize: Screen.kSize16,
-              ),
+              style: TextStyle(color: Colors.grey, fontSize: Screen.kSize16),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
@@ -209,10 +191,7 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
               ),
               child: Text(
                 'Ya, Keluar',
-                style: Styles.kNunitoMedium.copyWith(
-                  color: kWhite,
-                  fontSize: Screen.kSize16,
-                ),
+                style: TextStyle(color: kWhite, fontSize: Screen.kSize16),
               ),
             ),
             const SizedBox(height: 10),
@@ -222,10 +201,7 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
               },
               child: Text(
                 'Batal',
-                style: Styles.kNunitoMedium.copyWith(
-                  color: Colors.grey,
-                  fontSize: Screen.kSize16,
-                ),
+                style: TextStyle(color: Colors.grey, fontSize: Screen.kSize16),
               ),
             ),
           ],

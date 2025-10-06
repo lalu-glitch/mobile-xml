@@ -25,19 +25,13 @@ class ErrorView extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               "Terjadi kesalahan",
-              style: Styles.kNunitoBold.copyWith(
-                fontSize: 20,
-                color: Colors.black87,
-              ),
+              style: TextStyle(fontSize: 20, color: Colors.black87),
             ),
             const SizedBox(height: 8),
             Text(
               errorMessage,
               textAlign: TextAlign.center,
-              style: Styles.kNunitoRegular.copyWith(
-                fontSize: 16,
-                color: Colors.grey[600],
-              ),
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
@@ -47,10 +41,7 @@ class ErrorView extends StatelessWidget {
               icon: const Icon(Icons.refresh, color: Colors.white),
               label: Text(
                 "Coba Lagi",
-                style: Styles.kNunitoMedium.copyWith(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
+                style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: kOrange,

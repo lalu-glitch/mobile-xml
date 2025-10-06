@@ -34,8 +34,6 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: kWhite,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey,
-        selectedLabelStyle: Styles.kNunitoBold,
-        unselectedLabelStyle: Styles.kNunitoRegular,
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() => _selectedIndex = index);

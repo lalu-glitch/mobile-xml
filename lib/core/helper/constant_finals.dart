@@ -6,21 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 String baseURL = '${dotenv.env['BASE_URL']}';
 
-class Styles {
-  static final TextStyle kNunitoBold = GoogleFonts.nunito(
-    fontWeight: FontWeight.w700,
-  );
-  static final TextStyle kNunitoSemiBold = GoogleFonts.nunito(
-    fontWeight: FontWeight.w600,
-  );
-  static final TextStyle kNunitoMedium = GoogleFonts.nunito(
-    fontWeight: FontWeight.w500,
-  );
-  static final TextStyle kNunitoRegular = GoogleFonts.nunito(
-    fontWeight: FontWeight.w400,
-  );
-}
-
 class Screen {
   static final FlutterView view =
       WidgetsBinding.instance.platformDispatcher.views.first;

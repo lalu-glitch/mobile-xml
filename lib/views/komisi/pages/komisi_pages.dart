@@ -11,10 +11,7 @@ class KomisiPage extends StatelessWidget {
       backgroundColor: kWhite,
       appBar: AppBar(
         backgroundColor: kOrange,
-        title: Text(
-          'Tukar Komisi',
-          style: Styles.kNunitoBold.copyWith(color: kWhite),
-        ),
+        title: Text('Tukar Komisi', style: TextStyle(color: kWhite)),
         iconTheme: const IconThemeData(color: kWhite),
       ),
       body: Padding(
@@ -24,18 +21,12 @@ class KomisiPage extends StatelessWidget {
           children: [
             Text(
               'Total Komisi',
-              style: Styles.kNunitoBold.copyWith(
-                color: kNeutral100,
-                fontSize: Screen.kSize24,
-              ),
+              style: TextStyle(color: kNeutral100, fontSize: Screen.kSize24),
             ),
             SizedBox(height: Screen.kSize12),
             Text(
               'Rp. 999.999.999.999',
-              style: Styles.kNunitoMedium.copyWith(
-                color: kNeutral100,
-                fontSize: Screen.kSize48,
-              ),
+              style: TextStyle(color: kNeutral100, fontSize: Screen.kSize48),
             ),
             SizedBox(height: Screen.kSize16),
             SizedBox(
@@ -53,10 +44,7 @@ class KomisiPage extends StatelessWidget {
                 ),
                 child: Text(
                   'Tukar komisi',
-                  style: Styles.kNunitoSemiBold.copyWith(
-                    color: kWhite,
-                    fontSize: Screen.kSize16,
-                  ),
+                  style: TextStyle(color: kWhite, fontSize: Screen.kSize16),
                 ),
               ),
             ),
