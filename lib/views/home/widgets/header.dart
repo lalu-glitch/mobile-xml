@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
@@ -40,19 +41,42 @@ class Header extends StatelessWidget {
               ),
 
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.notifications_none, color: kWhite),
-                    onPressed: () {
-                      // aksi notifikasi
-                    },
+                  InkWell(
+                    onTap: () {},
+                    customBorder:
+                        const CircleBorder(), // Agar efek splash-nya lingkaran
+                    child: Icon(Icons.search, color: kWhite),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.headset_mic, color: kWhite),
-                    onPressed: () {
-                      // aksi notifikasi
+                  const SizedBox(width: 8),
+                  InkWell(
+                    onTap: () {},
+                    customBorder: const CircleBorder(),
+                    child: Stack(
+                      children: [
+                        Icon(Icons.notifications_none, color: kWhite),
+                        Positioned(
+                          left: 12,
+                          child: Container(
+                            height: 10,
+                            width: 10,
+                            decoration: BoxDecoration(
+                              color: kGreen,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  InkWell(
+                    onTap: () {
                       showCSBottomSheet(context, "Hubungi CS");
                     },
+                    customBorder: const CircleBorder(),
+                    child: Icon(Icons.headset_mic, color: kWhite),
                   ),
                 ],
               ),
