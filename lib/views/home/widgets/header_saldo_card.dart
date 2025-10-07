@@ -9,27 +9,28 @@ class HeaderSaldo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
-              child: Text(
-                'Saldo XML',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: kBlack,
-                ),
-                overflow: TextOverflow.ellipsis,
+            Text(
+              'Saldo XML',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: kBlack,
               ),
+              overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Image.asset('assets/images/logo_name.png', height: 16),
           ],
         ),
         const SizedBox(height: 24),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               'Rp 999.999.999',
@@ -39,7 +40,7 @@ class HeaderSaldo extends StatelessWidget {
                 color: kBlack,
               ),
             ),
-            Spacer(),
+            const SizedBox(width: 8),
             IconButton(
               onPressed: () {},
               icon: Icon(
@@ -53,101 +54,77 @@ class HeaderSaldo extends StatelessWidget {
         const SizedBox(height: 24),
         IntrinsicHeight(
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: kOrange,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const Icon(
-                      Icons.add_rounded,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Top Up Saldo',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: kNeutral90,
-                    ),
-                  ),
-                ],
-              ),
-
+              _ActionItem(icon: Icons.add_rounded, label: 'Top Up Saldo'),
               const SizedBox(width: 24),
-
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: kOrange,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const Icon(
-                      Icons.swap_horiz_sharp,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Transfer Stok',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: kNeutral90,
-                    ),
-                  ),
-                ],
-              ),
-
+              _ActionItem(icon: Icons.swap_horiz_sharp, label: 'Transfer Stok'),
               const SizedBox(width: 24),
-
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.all(5),
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: kOrange,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      // aksi QRIS
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Icon(
-                          Icons.qr_code_rounded,
+              Container(
+                height: 50,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                decoration: BoxDecoration(
+                  color: kOrange,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: InkWell(
+                  onTap: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(
+                        Icons.qr_code_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      SizedBox(width: 6),
+                      Text(
+                        'QRIS Member',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
                           color: Colors.white,
-                          size: 20,
                         ),
-                        Text(
-                          'QRIS Member',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ActionItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _ActionItem({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+            color: kOrange,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Icon(icon, color: Colors.white, size: 24),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+            color: kNeutral90,
           ),
         ),
       ],

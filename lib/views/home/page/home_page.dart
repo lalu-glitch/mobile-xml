@@ -11,6 +11,7 @@ import '../../../viewmodels/icon_viewmodel.dart';
 import '../../widgets/promo_popup.dart';
 import '../widgets/header.dart';
 import '../widgets/layanan_section.dart';
+import '../widgets/poin_komisi.dart';
 import '../widgets/promo_section.dart';
 import '../widgets/promo_section_alt.dart';
 import '../widgets/tagihan_lainnya.dart';
@@ -42,6 +43,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final balanceVM = Provider.of<BalanceViewModel>(context);
     final iconVM = Provider.of<IconsViewModel>(context);
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -114,90 +117,30 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
 
-                      //Tambahan
+                      //Poin dan Komisi
+                      PoinKomisi(),
+
+                      // Main Card
                       Positioned(
-                        top: 110,
-                        left: 25,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                color: Colors.yellow,
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Column(
+                        top: 150,
+                        left: 0,
+                        right: 0,
+                        child: SizedBox(
+                          height: 240,
+                          width: 300,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Poin',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: kWhite,
-                                      ),
-                                    ),
-                                    Text(
-                                      '500.200',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: kWhite,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                const SizedBox(width: 16),
+                                NewHeaderCard(balanceVM: balanceVM),
+                                const SizedBox(width: 16),
+                                NewHeaderCard(balanceVM: balanceVM),
+                                const SizedBox(width: 16),
                               ],
                             ),
-                            SizedBox(width: 30),
-                            Container(
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                color: Colors.yellow,
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Column(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Komisi',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: kWhite,
-                                      ),
-                                    ),
-                                    Text(
-                                      '1.800.200',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: kWhite,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                      Positioned(
-                        top:
-                            150, // atur biar card nempel di antara header & container
-                        left: 16,
-                        right: 16,
-                        child: NewHeaderCard(balanceVM: balanceVM),
                       ),
                     ],
                   ),
