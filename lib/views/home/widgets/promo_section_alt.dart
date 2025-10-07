@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
 
-class PromoSectionAlt extends StatelessWidget {
-  const PromoSectionAlt({super.key});
+class PastiPromoSection extends StatelessWidget {
+  const PastiPromoSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,13 @@ class PromoSectionAlt extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 160,
+          height: 140,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 4,
             itemBuilder: (context, i) => Container(
               width: 260,
-              margin: const EdgeInsets.only(right: 5),
+              margin: const EdgeInsets.only(right: 24),
               decoration: BoxDecoration(
                 color: kWhite,
                 boxShadow: const [
@@ -38,6 +38,7 @@ class PromoSectionAlt extends StatelessWidget {
               ),
               child: Container(
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
                     image: AssetImage('assets/images/promo_bwh${i + 1}.jpg'),
                     fit: BoxFit.cover,

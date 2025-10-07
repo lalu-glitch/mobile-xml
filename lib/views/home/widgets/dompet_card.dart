@@ -16,7 +16,7 @@ class DompetCard extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Card(
-          elevation: 1,
+          elevation: 20,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           color: kWhite,
           child: Padding(

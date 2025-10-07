@@ -12,7 +12,6 @@ import '../../widgets/promo_popup.dart';
 import '../widgets/header.dart';
 import '../widgets/layanan_section.dart';
 import '../widgets/poin_komisi.dart';
-import '../widgets/promo_section.dart';
 import '../widgets/promo_section_alt.dart';
 import '../widgets/tagihan_lainnya.dart';
 
@@ -82,15 +81,11 @@ class _HomePageState extends State<HomePage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // === Header ===
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Header(balanceVM: balanceVM),
                           ),
-
-                          const SizedBox(
-                            height: 150,
-                          ), // kasih space supaya card muat di overlay
+                          const SizedBox(height: 150),
                           Container(
                             decoration: BoxDecoration(color: Colors.grey[100]),
                             padding: const EdgeInsets.all(16),
@@ -98,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 120),
-                                PromoSectionAlt(),
+                                PastiPromoSection(),
                                 const SizedBox(height: 24),
                                 iconVM.isLoading
                                     ? ShimmerBox.buildShimmerIcons()
@@ -126,31 +121,20 @@ class _HomePageState extends State<HomePage> {
                         left: 0,
                         right: 0,
                         child: SizedBox(
-                          height: 240,
-                          width: 300,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                const SizedBox(width: 16),
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: SizedBox(
-                                    width: size.width * 0.86,
-                                    child: DompetCard(balanceVM: balanceVM),
-                                  ),
+                          height: 220,
+                          child: PageView.builder(
+                            controller: PageController(viewportFraction: 0.9),
+                            padEnds: true,
+                            clipBehavior: Clip.none,
+                            itemCount: 2, // jumlah card
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4,
                                 ),
-                                const SizedBox(width: 8),
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: SizedBox(
-                                    width: size.width * 0.85,
-                                    child: DompetCard(balanceVM: balanceVM),
-                                  ),
-                                ),
-                                const SizedBox(width: 16),
-                              ],
-                            ),
+                                child: DompetCard(balanceVM: balanceVM),
+                              );
+                            },
                           ),
                         ),
                       ),
