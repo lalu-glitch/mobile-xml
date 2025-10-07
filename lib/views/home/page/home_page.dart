@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:xmlapp/views/home/widgets/new_header_card.dart';
+import 'package:xmlapp/views/home/widgets/header_card.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/shimmer.dart';
