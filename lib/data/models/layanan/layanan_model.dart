@@ -50,14 +50,14 @@ class HeadingItem {
 
 class IconItem {
   final String? icon; // digunakan di Promo
-  final String? filename; // digunakan di Layanan
+  final String? title; // digunakan di Layanan
   final String? url; // digunakan di Layanan
   final String kodeCatatan;
   final int? flow; // digunakan di Layanan
 
   IconItem({
     this.icon,
-    this.filename,
+    this.title,
     this.url,
     required this.kodeCatatan,
     this.flow,
@@ -66,7 +66,7 @@ class IconItem {
   factory IconItem.fromJson(Map<String, dynamic> json) {
     return IconItem(
       icon: json['icon'],
-      filename: json['filename'],
+      title: json['title'],
       url: json['url'],
       kodeCatatan: json['kode_catatan'] ?? '',
       flow: json['flow'],
@@ -75,7 +75,7 @@ class IconItem {
 
   Map<String, dynamic> toJson() => {
     'icon': icon,
-    'filename': filename,
+    'title': title,
     'url': url,
     'kode_catatan': kodeCatatan,
     'flow': flow,

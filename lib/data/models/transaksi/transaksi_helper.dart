@@ -2,7 +2,7 @@ class TransaksiHelperModel {
   final String? tujuan;
   final String? kodeProduk;
   final String? namaProduk;
-  final String? filename; // <---- dipake ke parameter prefix & prefix
+  final String? kodeCatatan; // <---- dipake ke parameter prefix & prefix
   final double? total;
   final int? isBebasNominal;
   final int? bebasNominalValue;
@@ -12,7 +12,7 @@ class TransaksiHelperModel {
     this.tujuan,
     this.kodeProduk,
     this.namaProduk,
-    this.filename,
+    this.kodeCatatan,
     this.total,
     this.isBebasNominal,
     this.bebasNominalValue,
@@ -24,7 +24,7 @@ class TransaksiHelperModel {
     String? tujuan,
     String? kodeProduk,
     String? namaProduk,
-    String? filename,
+    String? kodeCatatan,
     double? total,
     int? isBebasNominal,
     final int? bebasNominalValue,
@@ -34,7 +34,7 @@ class TransaksiHelperModel {
       tujuan: tujuan ?? this.tujuan,
       kodeProduk: kodeProduk ?? this.kodeProduk,
       namaProduk: namaProduk ?? this.namaProduk,
-      filename: filename ?? this.filename,
+      kodeCatatan: kodeCatatan ?? this.kodeCatatan,
       total: total ?? this.total,
       isBebasNominal: isBebasNominal ?? this.isBebasNominal,
       bebasNominalValue: bebasNominalValue ?? this.bebasNominalValue,

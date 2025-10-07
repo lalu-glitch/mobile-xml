@@ -55,8 +55,9 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   Future<void> _fetchProvider(String value) async {
     if (value.length >= 4) {
       final readTransaksi = context.read<TransaksiCubit>().getData();
+      print('transaksi : ${readTransaksi.kodeCatatan}');
       await context.read<ProviderPrefixCubit>().fetchProvidersPrefix(
-        readTransaksi.filename ?? '-',
+        readTransaksi.kodeCatatan ?? '-',
         value,
       );
     }
@@ -99,7 +100,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
           title: Text(
-            iconItem.filename ?? '',
+            iconItem.title ?? '',
             style: const TextStyle(color: kWhite),
           ),
           backgroundColor: kOrange,

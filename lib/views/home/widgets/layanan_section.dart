@@ -90,7 +90,8 @@ class LayananSection extends StatelessWidget {
                       context.read<FlowCubit>().startFlow(item.flow!, item);
 
                       // Simpan filename untuk prefix page
-                      transaksi.setFileName(item.filename ?? '');
+                      transaksi.setFileName(item.title ?? '');
+                      transaksi.setKodeCatatan(item.kodeCatatan);
 
                       // Navigasi ke halaman pertama dari flow
                       final firstPage = sequence[0];
@@ -132,7 +133,7 @@ class LayananSection extends StatelessWidget {
                         const SizedBox(height: 6),
                         Expanded(
                           child: Text(
-                            item.filename ?? '-',
+                            item.title ?? '-',
                             style: TextStyle(fontSize: Screen.kSize12),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,

@@ -123,19 +123,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       SizedBox(height: Screen.kSize11),
 
                       SettingCard(
-                        title: 'TES FAVORITE - DUMMY',
-                        icons: Icons.code,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const DummyPrefixOutboxPage(),
-                            ),
-                          );
-                        },
-                      ),
-                      SettingCard(
                         title: 'Pengaturan',
                         icons: Icons.settings,
                         onTap: () {},

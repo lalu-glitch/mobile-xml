@@ -22,7 +22,7 @@ class TransaksiCubit extends Cubit<TransaksiHelperModel> {
   }
 
   void setFileName(String val) {
-    emit(state.copyWith(filename: val));
+    emit(state.copyWith(kodeCatatan: val));
   }
 
   void isBebasNominal(int val) {
@@ -35,6 +35,10 @@ class TransaksiCubit extends Cubit<TransaksiHelperModel> {
 
   void setKodeDompet(String val) {
     emit(state.copyWith(kodeDompet: val));
+  }
+
+  void setKodeCatatan(String val) {
+    emit(state.copyWith(kodeCatatan: val));
   }
 
   TransaksiHelperModel getData() {

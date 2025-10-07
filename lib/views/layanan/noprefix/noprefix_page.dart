@@ -36,7 +36,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
       final flowState = context.watch<FlowCubit>().state!;
       final iconItem = flowState.layananItem;
       context.read<ProviderNoPrefixCubit>().fetchProviders(
-        iconItem.filename ?? '',
+        iconItem.title ?? '',
         "",
       );
     }
@@ -66,7 +66,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
           title: Text(
-            iconItem.filename ?? '',
+            iconItem.title ?? '',
             style: const TextStyle(color: kWhite),
           ),
           backgroundColor: kOrange,
