@@ -1,136 +1,128 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../viewmodels/balance_viewmodel.dart';
 
-class PromoSection extends StatelessWidget {
-  const PromoSection({required this.balanceVM, super.key});
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 
-  final BalanceViewModel balanceVM;
+import '../../../viewmodels/promo_vm.dart';
+
+class PastiPromoSection extends StatelessWidget {
+  const PastiPromoSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 280, // total tinggi section
-      child: Stack(
-        children: [
-          // 👉 Background gradient besar
-          Positioned.fill(
-            child: Container(
-              margin: const EdgeInsets.only(
-                right: 40,
-              ), // lebih lebar dari slider
-              decoration: BoxDecoration(
-                gradient: RadialGradient(
-                  center: Alignment.bottomLeft,
-                  radius: 1.2,
-                  colors: [Colors.orangeAccent, Colors.grey.shade100],
-                  stops: const [0.0, 1.0],
-                ),
+    final promoVM = context.watch<PromoViewModel>();
 
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  bottomLeft: Radius.circular(24),
-                ),
-              ),
+    if (promoVM.isLoading) {
+      return _buildShimmerList();
+    }
 
-              // 👉 tambahin child di atas background
-              child: Align(
-                alignment: Alignment
-                    .bottomLeft, // atau Alignment.centerLeft kalau mau di kiri
-                child: Container(
-                  width: 200,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    image: const DecorationImage(
-                      image: AssetImage("assets/images/bg-promo.png"),
-                      fit: BoxFit.cover,
+    if (promoVM.error != null) {
+      return Center(child: Text("Terjadi kesalahan: ${promoVM.error}"));
+    }
+
+    if (promoVM.promoList.isEmpty) {
+      return const Center(child: Text("Belum ada promo tersedia."));
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Pasti Promo',
+          style: TextStyle(
+            fontSize: Screen.kSize18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 140,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: promoVM.promoList.length,
+            itemBuilder: (context, i) {
+              final item = promoVM.promoList[i];
+              return Container(
+                width: 260,
+                margin: const EdgeInsets.only(right: 24),
+                decoration: BoxDecoration(
+                  color: kWhite,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 4,
+                      offset: Offset(0, 2),
                     ),
-                    borderRadius: BorderRadius.circular(24),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: CachedNetworkImage(
+                    imageUrl: item.icon ?? '',
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.image_not_supported),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
+        ),
+      ],
+    );
+  }
 
-          // 👉 Konten ditaruh center
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // biar tinggi ikut isi
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 220,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (context, i) {
-                      if (i == 0) {
-                        // SLIDE PERTAMA -> teks promosi (pop up awal)
-                        return Container(
-                          width: 150,
-                          margin: const EdgeInsets.only(right: 12),
-                          padding: const EdgeInsets.all(12),
-                          child: SizedBox(),
-                        );
-                      }
-
-                      // SLIDE PROMO BERGAMBAR
-                      return Container(
-                        width: 160,
-                        margin: const EdgeInsets.only(right: 12),
-                        decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withAlpha(10),
-                              blurRadius: 6,
-                              spreadRadius: 1,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 160,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.vertical(
-                                  top: Radius.circular(16),
-                                ),
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    'assets/images/promo$i.jpg',
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Promo Murah Merdeka Merdeka Merdeka $i",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: Screen.kSize14),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  softWrap: false,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+  Widget _buildShimmerList() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Shimmer.fromColors(
+          baseColor: Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: Container(
+            height: 22,
+            width: 120,
+            color: Colors.grey.shade300,
+            margin: const EdgeInsets.only(bottom: 12),
           ),
-        ],
+        ),
+        SizedBox(
+          height: 140,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 3,
+            itemBuilder: (context, _) => _buildShimmerCard(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// 🔹 Satu kartu shimmer (skeleton)
+  Widget _buildShimmerCard() {
+    return Container(
+      width: 260,
+      margin: const EdgeInsets.only(right: 24),
+      decoration: BoxDecoration(
+        color: kNeutral40,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Shimmer.fromColors(
+        baseColor: kNeutral40,
+        highlightColor: Colors.grey.shade100,
+        child: Container(
+          decoration: BoxDecoration(
+            color: kNeutral40,
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
     );
   }

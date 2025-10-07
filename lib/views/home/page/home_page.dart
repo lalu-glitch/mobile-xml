@@ -13,7 +13,7 @@ import '../../widgets/promo_popup.dart';
 import '../widgets/header.dart';
 import '../widgets/layanan_section.dart';
 import '../widgets/poin_komisi.dart';
-import '../widgets/promo_section_alt.dart';
+import '../widgets/promo_section.dart';
 import '../widgets/tagihan_lainnya.dart';
 
 class HomePage extends StatefulWidget {

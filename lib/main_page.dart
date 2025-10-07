@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'core/helper/constant_finals.dart';
 import 'views/home/page/home_page.dart';
+import 'views/riwayat/riwayat_page.dart';
 import 'views/shops/shops_page.dart';
-import 'views/analytics/analytics_page.dart';
 import 'views/settings/pages/settings_page.dart';
 // Tambahkan import service auth
 import 'data/services/auth_guard.dart';
@@ -21,7 +21,7 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _pages = [
     AuthGuard(child: HomePage()),
     AuthGuard(child: ShopsPage()),
-    AuthGuard(child: AnalyticsPage()),
+    AuthGuard(child: RiwayatTransaksiPage()),
     AuthGuard(child: SettingsPage()),
   ];
 
@@ -45,12 +45,12 @@ class _MainPageState extends State<MainPage> {
             label: 'Shop',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.analytics),
-            label: 'Analytics',
+            icon: Icon(Icons.history_rounded),
+            label: 'Riwayat',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.person_rounded),
+            label: 'User',
           ),
         ],
       ),
