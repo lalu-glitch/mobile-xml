@@ -34,9 +34,9 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
       _isInitialized = true;
 
       final flowState = context.watch<FlowCubit>().state!;
-      final iconItem = flowState.iconItem;
+      final iconItem = flowState.layananItem;
       context.read<ProviderNoPrefixCubit>().fetchProviders(
-        iconItem.filename,
+        iconItem.filename ?? '',
         "",
       );
     }
@@ -47,7 +47,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
     final flowState = context.watch<FlowCubit>().state!;
     final flowCubit = context.read<FlowCubit>();
     final transaksi = context.read<TransaksiCubit>();
-    final iconItem = flowState.iconItem;
+    final iconItem = flowState.layananItem;
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;
 
@@ -65,7 +65,10 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: Text(iconItem.filename, style: const TextStyle(color: kWhite)),
+          title: Text(
+            iconItem.filename ?? '',
+            style: const TextStyle(color: kWhite),
+          ),
           backgroundColor: kOrange,
           iconTheme: const IconThemeData(color: kWhite),
         ),

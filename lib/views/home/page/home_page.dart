@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:xmlapp/viewmodels/promo_vm.dart';
 import 'package:xmlapp/views/home/widgets/dompet_card.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
-import '../../../viewmodels/icon_viewmodel.dart';
+import '../../../viewmodels/layanan_vm.dart';
 import '../../widgets/promo_popup.dart';
 import '../widgets/header.dart';
 import '../widgets/layanan_section.dart';
@@ -28,9 +29,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final balanceVM = Provider.of<BalanceViewModel>(context, listen: false);
-      final iconVM = Provider.of<IconsViewModel>(context, listen: false);
+      final layananVM = Provider.of<LayananViewModel>(context, listen: false);
+      final promoVM = Provider.of<PromoViewModel>(context, listen: false);
       balanceVM.fetchBalance();
-      iconVM.fetchIcons();
+      layananVM.fetchLayanan();
+      promoVM.fetchPromo();
       // buat promo
       Future.delayed(const Duration(seconds: 1), () {
         PromoPopup.show(context, "assets/images/promo.jpg");
@@ -41,9 +44,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final balanceVM = Provider.of<BalanceViewModel>(context);
-    final iconVM = Provider.of<IconsViewModel>(context);
-    final size = MediaQuery.of(context).size;
-
+    final layananVM = Provider.of<LayananViewModel>(context);
+    final promoVM = Provider.of<PromoViewModel>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -70,7 +72,8 @@ class _HomePageState extends State<HomePage> {
                 onRefresh: () async {
                   await Future.wait([
                     balanceVM.fetchBalance(),
-                    iconVM.fetchIcons(),
+                    layananVM.fetchLayanan(),
+                    promoVM.fetchPromo(),
                   ]);
                 },
                 child: SingleChildScrollView(
@@ -95,13 +98,13 @@ class _HomePageState extends State<HomePage> {
                                 const SizedBox(height: 120),
                                 PastiPromoSection(),
                                 const SizedBox(height: 24),
-                                iconVM.isLoading
+                                layananVM.isLoading
                                     ? ShimmerBox.buildShimmerIcons()
-                                    : iconVM.error != null
+                                    : layananVM.error != null
                                     ? const Center(
                                         child: Text('Gagal memuat icon'),
                                       )
-                                    : LayananSection(iconVM: iconVM),
+                                    : LayananSection(layananVM: layananVM),
                                 const SizedBox(height: 24),
 
                                 const SizedBox(height: 24),

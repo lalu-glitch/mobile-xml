@@ -80,7 +80,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
     final flowState = context.watch<FlowCubit>().state!;
     final flowCubit = context.read<FlowCubit>();
     final sendTransaksi = context.read<TransaksiCubit>();
-    final iconItem = flowState.iconItem;
+    final iconItem = flowState.layananItem;
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;
 
@@ -99,7 +99,10 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: Text(iconItem.filename, style: const TextStyle(color: kWhite)),
+          title: Text(
+            iconItem.filename ?? '',
+            style: const TextStyle(color: kWhite),
+          ),
           backgroundColor: kOrange,
           iconTheme: const IconThemeData(color: kWhite),
         ),

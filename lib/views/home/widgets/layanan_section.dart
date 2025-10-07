@@ -6,26 +6,41 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 
 import '../../layanan/cubit/flow_cubit.dart';
-import '../../../viewmodels/icon_viewmodel.dart';
+import '../../../viewmodels/layanan_vm.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
 
 class LayananSection extends StatelessWidget {
-  const LayananSection({required this.iconVM, super.key});
+  const LayananSection({required this.layananVM, super.key});
 
-  final IconsViewModel iconVM;
+  final LayananViewModel layananVM;
 
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiCubit>();
+
+    if (layananVM.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (layananVM.error != null) {
+      return Center(child: Text("Terjadi kesalahan: ${layananVM.error}"));
+    }
+
+    if (layananVM.layananByHeading.isEmpty) {
+      return const Center(child: Text("Tidak ada layanan tersedia."));
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: iconVM.iconsByCategory.entries.map((entry) {
-        final layanan = entry.value;
+      children: layananVM.layananByHeading.entries.map((entry) {
+        final kategori = entry.key; // contoh: "Prabayar", "Tagihan", "E-Wallet"
+        final layananList = entry.value; // List<IconItem>
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              entry.key.toUpperCase(),
+              kategori.toUpperCase(),
               style: TextStyle(
                 fontSize: Screen.kSize18,
                 fontWeight: FontWeight.bold,
@@ -34,9 +49,9 @@ class LayananSection extends StatelessWidget {
             const SizedBox(height: 12),
             Container(
               decoration: BoxDecoration(
-                color: kWhite, // background putih 1 blok
+                color: kWhite,
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 2,
@@ -45,7 +60,6 @@ class LayananSection extends StatelessWidget {
                 ],
               ),
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -55,33 +69,30 @@ class LayananSection extends StatelessWidget {
                   crossAxisSpacing: 12,
                   childAspectRatio: 0.85,
                 ),
-                itemCount: layanan.length,
-
+                itemCount: layananList.length,
                 itemBuilder: (context, i) {
-                  final iconItem = layanan[i];
+                  final item = layananList[i]; // IconItem
+
                   return GestureDetector(
                     onTap: () {
-                      // Ambil sequence berdasarkan flow
-                      final sequence = pageSequences[iconItem.flow] ?? [];
+                      final sequence = pageSequences[item.flow] ?? [];
 
                       if (sequence.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Invalid flow ID: ${iconItem.flow}'),
+                            content: Text('Invalid flow ID: ${item.flow}'),
                           ),
                         );
                         return;
                       }
-                      // simpan state awal ke FlowCubit
-                      context.read<FlowCubit>().startFlow(
-                        iconItem.flow,
-                        iconItem,
-                      );
 
-                      //simpan filename buat dipake di prefix page sama noPrefix
-                      transaksi.setFileName(iconItem.filename);
+                      // Simpan state awal ke FlowCubit
+                      context.read<FlowCubit>().startFlow(item.flow!, item);
 
-                      // ambil halaman pertama dari sequence
+                      // Simpan filename untuk prefix page
+                      transaksi.setFileName(item.filename ?? '');
+
+                      // Navigasi ke halaman pertama dari flow
                       final firstPage = sequence[0];
                       Navigator.pushNamed(context, pageRoutes[firstPage]!);
                     },
@@ -97,7 +108,7 @@ class LayananSection extends StatelessWidget {
                               color: Colors.orange.shade200,
                               width: 1.5,
                             ),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Colors.black12,
                                 blurRadius: 2,
@@ -108,10 +119,9 @@ class LayananSection extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: CachedNetworkImage(
-                              imageUrl: iconItem.url,
+                              imageUrl: item.url ?? '',
                               fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  Center(child: const SizedBox()),
+                              placeholder: (context, url) => const SizedBox(),
                               errorWidget: (context, url, error) => Icon(
                                 Icons.apps,
                                 color: Colors.orange.shade200,
@@ -122,7 +132,7 @@ class LayananSection extends StatelessWidget {
                         const SizedBox(height: 6),
                         Expanded(
                           child: Text(
-                            iconItem.filename,
+                            item.filename ?? '-',
                             style: TextStyle(fontSize: Screen.kSize12),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,

@@ -60,7 +60,7 @@ class DompetCard extends StatelessWidget {
                                 margin: const EdgeInsets.symmetric(
                                   horizontal: 4,
                                 ),
-                                height: 50,
+                                height: 20,
                                 decoration: BoxDecoration(
                                   color: kWhite,
                                   borderRadius: BorderRadius.circular(10),

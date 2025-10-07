@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../core/helper/constant_finals.dart';
+import '../models/layanan/layanan_model.dart';
 import '../models/produk/provider_kartu.dart';
 import '../models/transaksi/status_transaksi.dart';
 import '../models/transaksi/riwayat_transaksi.dart';
@@ -36,28 +37,12 @@ class ApiService {
   }
 
   /// Ambil icon dengan kategori (pulsa, ewallet, token, dll)
-  Future<Map<String, List<IconItem>>> fetchIcons() async {
+  Future<IconResponse> fetchIcons() async {
     try {
       final response = await authService.dio.get("$baseURL/list-icon");
 
       if (response.statusCode == 200) {
-        final jsonData = response.data;
-        if (jsonData is Map) {
-          final Map<String, List<IconItem>> parsedData = {};
-          jsonData.forEach((key, value) {
-            if (value is List) {
-              parsedData[key] = value
-                  .map(
-                    (item) =>
-                        IconItem.fromJson(Map<String, dynamic>.from(item)),
-                  )
-                  .toList();
-            }
-          });
-          return parsedData;
-        } else {
-          throw Exception("Invalid JSON format for icons");
-        }
+        return IconResponse.fromJson(response.data);
       } else {
         throw Exception("Failed to load icons. Status: ${response.statusCode}");
       }

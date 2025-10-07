@@ -1,19 +1,20 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/icon_models/flow_state_models.dart';
-import '../../../data/models/icon_models/icon_data.dart';
+
 import '../../../core/helper/dynamic_app_page.dart';
+import '../../../data/models/layanan/layanan_model.dart';
 
 class FlowCubit extends Cubit<FlowStateModel?> {
   FlowCubit() : super(null);
 
-  void startFlow(int flowId, IconItem iconItem) {
+  void startFlow(int flowId, IconItem layananItem) {
     resetFlow();
     final sequence = pageSequences[flowId] ?? [];
     emit(
       FlowStateModel(
         flow: flowId,
-        iconItem: iconItem,
+        layananItem: layananItem,
         currentIndex: 0,
         sequence: sequence,
       ),

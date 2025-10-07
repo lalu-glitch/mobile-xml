@@ -1,26 +1,33 @@
 class IconItem {
-  final String filename;
-  final String url;
-  final String kodeCatatan;
-  final int flow;
+  String icon; // Digunakan di section "Promo"
+  String kodeCatatan;
+  String filename; // Digunakan di section "Layanan"
+  String url; // Digunakan di section "Layanan"
+  int flow;
 
   IconItem({
+    required this.icon,
+    required this.kodeCatatan,
     required this.filename,
     required this.url,
-    required this.kodeCatatan,
     required this.flow,
   });
 
   factory IconItem.fromJson(Map<String, dynamic> json) {
     return IconItem(
-      filename: json['filename'],
-      url: json['url'],
+      icon: json["icon"],
       kodeCatatan: json["kode_catatan"],
+      filename: json["filename"],
+      url: json["url"],
       flow: json["flow"],
     );
   }
 
-  static List<IconItem> fromJsonList(List<dynamic> jsonList) {
-    return jsonList.map((e) => IconItem.fromJson(e)).toList();
-  }
+  Map<String, dynamic> toJson() => {
+    "icon": icon,
+    "kode_catatan": kodeCatatan,
+    "filename": filename,
+    "url": url,
+    "flow": flow,
+  };
 }
