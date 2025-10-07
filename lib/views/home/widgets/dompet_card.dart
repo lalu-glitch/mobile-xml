@@ -6,8 +6,8 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import 'header_saldo_card.dart';
 
-class NewHeaderCard extends StatelessWidget {
-  const NewHeaderCard({required this.balanceVM, super.key});
+class DompetCard extends StatelessWidget {
+  const DompetCard({required this.balanceVM, super.key});
 
   final BalanceViewModel balanceVM;
 
