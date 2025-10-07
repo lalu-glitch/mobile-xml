@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 120),
-                                PromoSection(balanceVM: balanceVM),
+                                PromoSectionAlt(),
                                 const SizedBox(height: 24),
                                 iconVM.isLoading
                                     ? ShimmerBox.buildShimmerIcons()
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                                       )
                                     : LayananSection(iconVM: iconVM),
                                 const SizedBox(height: 24),
-                                PromoSectionAlt(),
+
                                 const SizedBox(height: 24),
                                 TagihanLainnya(),
                               ],
@@ -133,9 +133,21 @@ class _HomePageState extends State<HomePage> {
                             child: Row(
                               children: [
                                 const SizedBox(width: 16),
-                                DompetCard(balanceVM: balanceVM),
-                                const SizedBox(width: 16),
-                                DompetCard(balanceVM: balanceVM),
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: SizedBox(
+                                    width: size.width * 0.86,
+                                    child: DompetCard(balanceVM: balanceVM),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: SizedBox(
+                                    width: size.width * 0.85,
+                                    child: DompetCard(balanceVM: balanceVM),
+                                  ),
+                                ),
                                 const SizedBox(width: 16),
                               ],
                             ),

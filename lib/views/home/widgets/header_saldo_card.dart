@@ -12,7 +12,7 @@ class HeaderSaldo extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               'Saldo XML',
@@ -30,7 +30,6 @@ class HeaderSaldo extends StatelessWidget {
         const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               'Rp 999.999.999',

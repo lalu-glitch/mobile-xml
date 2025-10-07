@@ -11,7 +11,7 @@ class PromoSectionAlt extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'PASTI PROMO 2',
+          'Pasti Promo',
           style: TextStyle(
             fontSize: Screen.kSize18,
             fontWeight: FontWeight.bold,
@@ -19,16 +19,15 @@ class PromoSectionAlt extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 160, // lebih rendah biar landscape
+          height: 160,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 4,
             itemBuilder: (context, i) => Container(
-              width: 260, // lebih lebar dari sebelumnya
+              width: 260,
               margin: const EdgeInsets.only(right: 5),
               decoration: BoxDecoration(
                 color: kWhite,
-                // borderRadius: BorderRadius.circular(16),
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
@@ -37,32 +36,13 @@ class PromoSectionAlt extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            'assets/images/promo_bwh${i + 1}.jpg',
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/promo_bwh${i + 1}.jpg'),
+                    fit: BoxFit.cover,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Promo Murah Murah Murah Murah Murah Murah Merdeka ${i + 1}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: Screen.kSize14),
-                      maxLines: 1, // batas baris
-                      overflow: TextOverflow.ellipsis, // kasih ...
-                      softWrap: false, // biar ga pindah baris
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
