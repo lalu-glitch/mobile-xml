@@ -21,10 +21,6 @@ class TransaksiCubit extends Cubit<TransaksiHelperModel> {
     emit(state.copyWith(total: val.toDouble()));
   }
 
-  void setFileName(String val) {
-    emit(state.copyWith(kodeCatatan: val));
-  }
-
   void isBebasNominal(int val) {
     emit(state.copyWith(isBebasNominal: val));
   }

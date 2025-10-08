@@ -15,7 +15,6 @@ import '../widgets/header.dart';
 import '../widgets/layanan_section.dart';
 import '../widgets/poin_komisi.dart';
 import '../widgets/promo_section.dart';
-import '../widgets/tagihan_lainnya.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -117,7 +116,6 @@ class _HomePageState extends State<HomePage> {
                                   const SizedBox(height: 24),
 
                                   const SizedBox(height: 24),
-                                  TagihanLainnya(),
                                 ],
                               ),
                             ),

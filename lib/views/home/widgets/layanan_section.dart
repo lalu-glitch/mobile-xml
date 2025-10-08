@@ -89,8 +89,7 @@ class LayananSection extends StatelessWidget {
                       // Simpan state awal ke FlowCubit
                       context.read<FlowCubit>().startFlow(item.flow!, item);
 
-                      // Simpan filename untuk prefix page
-                      transaksi.setFileName(item.title ?? '');
+                      // // Simpan filename untuk prefix page
                       transaksi.setKodeCatatan(item.kodeCatatan);
 
                       // Navigasi ke halaman pertama dari flow
