@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'core/helper/constant_finals.dart';
 
 import 'views/home/page/home_page.dart';
-import 'views/komisi/pages/konfirmasi_tukar_poin.dart';
 import 'views/riwayat/riwayat_page.dart';
 import 'views/shops/shops_page.dart';
 import 'views/settings/pages/settings_page.dart';
@@ -23,7 +22,6 @@ class _MainPageState extends State<MainPage> {
     AuthGuard(child: HomePage()),
     AuthGuard(child: ShopsPage()),
     AuthGuard(child: RiwayatTransaksiPage()),
-    // AuthGuard(child: KomisiTukarPoin()),
     AuthGuard(child: SettingsPage()),
   ];
 

@@ -106,6 +106,7 @@ class _InputNomorTujuanAkhirState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Card(
+                color: kWhite,
                 elevation: 3,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

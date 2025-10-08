@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/helper/constant_finals.dart';
 import '../../core/utils/info_row.dart';
 import '../../data/models/transaksi/status_transaksi.dart';
 import 'package:intl/intl.dart';
@@ -63,6 +64,7 @@ class DetailTransaksiPage extends StatelessWidget {
 
             // Card Detail
             Card(
+              color: kWhite,
               elevation: 3,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),

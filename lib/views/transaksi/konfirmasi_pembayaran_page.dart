@@ -111,6 +111,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   Widget _buildInfoCard(dynamic transaksi) {
     final totalTransaksi = getTotalTransaksi(transaksi);
     return Card(
+      color: kWhite,
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -137,6 +138,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   /// Option pilihan metode pembayaran
   Widget _paymentOption(PaymentMethodModel method, bool isSelected) {
     return Card(
+      color: kWhite,
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
