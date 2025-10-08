@@ -24,25 +24,38 @@ class _AuthGuardState extends State<AuthGuard> {
   @override
   void initState() {
     super.initState();
-    _checkAppFlow();
+    // FIX: Hapus _checkAppFlow() dari initState, pindah ke post-frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkAppFlow();
+    });
 
-    // Cek login status setiap 2 detik
+    // Timer tetap, tapi sekarang navigasi awal sudah deferred
     _timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
-      final loggedIn = await _authService.isLoggedIn();
       if (!mounted) return;
+      final loggedIn = await _authService.isLoggedIn();
       if (!loggedIn && !_showOnboarding) {
-        _timer?.cancel();
+        // Flag ini sekarang di-set correctly
         Navigator.pushReplacementNamed(context, '/authPage');
       }
     });
   }
 
   Future<void> _checkAppFlow() async {
+    // FIX: Sekarang dipanggil post-frame
     final onboardingSeen = await _storageService.isOnboardingSeen();
 
     if (!onboardingSeen) {
+      setState(() {
+        // FIX: Set flag sebelum navigasi
+        _showOnboarding = true;
+      });
       if (!mounted) return;
-      Navigator.pushReplacementNamed(context, '/onboarding');
+      // FIX: Gunakan post-frame lagi untuk navigasi, double-safe
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/onboarding');
+        }
+      });
       return;
     }
 
@@ -50,12 +63,19 @@ class _AuthGuardState extends State<AuthGuard> {
     if (!mounted) return;
 
     if (!loggedIn) {
-      Navigator.pushReplacementNamed(context, '/authPage');
-    } else {
-      setState(() {
-        _isLoggedIn = true;
-        _loading = false;
+      // FIX: Defer juga untuk konsistensi
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/authPage');
+        }
       });
+    } else {
+      if (mounted) {
+        setState(() {
+          _isLoggedIn = true;
+          _loading = false;
+        });
+      }
     }
   }
 
@@ -72,7 +92,8 @@ class _AuthGuardState extends State<AuthGuard> {
         body: Center(child: CircularProgressIndicator(color: kOrange)),
       );
     }
-    if (!_isLoggedIn) {
+    if (!_isLoggedIn && !_showOnboarding) {
+      // FIX: Tambah check _showOnboarding di build
       return const SizedBox.shrink();
     }
     return widget.child;

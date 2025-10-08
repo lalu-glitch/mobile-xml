@@ -30,7 +30,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Future<void> _finishOnboarding() async {
     await storage.setOnboardingSeen();
     if (!mounted) return;
-    Navigator.pushReplacementNamed(context, '/authPage');
+    // FIX: Defer jika perlu, tapi button press sudah safe
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/authPage');
+      }
+    });
   }
 
   @override

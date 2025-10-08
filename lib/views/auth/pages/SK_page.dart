@@ -57,48 +57,50 @@ class SyaratDanKetentuan extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: kLightGrey,
-                      foregroundColor: kBlack,
-                      minimumSize: const Size(double.infinity, 48),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+            SafeArea(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kLightGrey,
+                        foregroundColor: kBlack,
+                        minimumSize: const Size(double.infinity, 48),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context, false);
+                      },
+                      child: const Text(
+                        "Kembali",
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                    },
-                    child: const Text(
-                      "Kembali",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: kOrange,
-                      foregroundColor: kWhite,
-                      minimumSize: const Size(double.infinity, 48),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kOrange,
+                        foregroundColor: kWhite,
+                        minimumSize: const Size(double.infinity, 48),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                      child: const Text(
+                        "Setuju",
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.pop(context, true);
-                    },
-                    child: const Text(
-                      "Setuju",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
