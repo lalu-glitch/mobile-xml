@@ -17,7 +17,9 @@ class SaldoCard extends StatelessWidget {
       builder: (context, constraints) {
         return Card(
           elevation: 20,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
           color: kWhite,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

@@ -50,17 +50,10 @@ class PastiPromoSection extends StatelessWidget {
                 margin: const EdgeInsets.only(right: 24),
                 decoration: BoxDecoration(
                   color: kWhite,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 4,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
+                  borderRadius: BorderRadius.circular(18),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(18),
                   child: CachedNetworkImage(
                     imageUrl: item.icon ?? '',
                     fit: BoxFit.cover,
@@ -105,7 +98,6 @@ class PastiPromoSection extends StatelessWidget {
     );
   }
 
-  /// 🔹 Satu kartu shimmer (skeleton)
   Widget _buildShimmerCard() {
     return Container(
       width: 260,

@@ -13,6 +13,7 @@ Future<void> _launchUrl(String url) async {
 void showCSBottomSheet(BuildContext context, String title) {
   showModalBottomSheet(
     context: context,
+    backgroundColor: kNeutral20,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
@@ -30,6 +31,7 @@ void showCSBottomSheet(BuildContext context, String title) {
 
             // CS WA
             Card(
+              color: kWhite,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
@@ -53,6 +55,7 @@ void showCSBottomSheet(BuildContext context, String title) {
 
             // CS Telegram
             Card(
+              color: kWhite,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),

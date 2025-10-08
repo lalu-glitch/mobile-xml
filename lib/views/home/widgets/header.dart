@@ -75,7 +75,7 @@ class Header extends StatelessWidget {
                       showCSBottomSheet(context, "Hubungi CS");
                     },
                     customBorder: const CircleBorder(),
-                    child: Icon(Icons.headset_mic, color: kWhite),
+                    child: Icon(Icons.headset_mic_rounded, color: kWhite),
                   ),
                 ],
               ),

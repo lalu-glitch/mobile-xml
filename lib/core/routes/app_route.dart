@@ -7,9 +7,10 @@ import '../../main_page.dart';
 import '../../views/auth/pages/SK_page.dart';
 import '../../views/input_nomor/input_nomer_awal.dart';
 import '../../views/input_nomor/input_nomer_mid.dart';
-import '../../views/poin_dan_komisi/pages/komisi_pages.dart';
+import '../../views/poin_dan_komisi/pages/komisi_page.dart';
 import '../../views/multi_sub_kategori_page.dart';
 import '../../views/onboarding/onboarding_screen.dart';
+import '../../views/poin_dan_komisi/pages/poin_page.dart';
 import '../../views/settings/pages/detail_akun_page.dart';
 import '../../views/speedcash/pages/speedcash_depo_detail.dart';
 import '../../views/speedcash/pages/speedcash_depo_tiket.dart';
@@ -54,6 +55,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/riwayatTransaksi': (context) => authGuardWrapper(RiwayatTransaksiPage()),
   '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
   '/komisiPage': (context) => authGuardWrapper(KomisiPage()),
+  '/poinPage': (context) => authGuardWrapper(PoinPage()),
   '/detailRiwayatTransaksi': (context) => authGuardWrapper(DetailRiwayatPage()),
   '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanAkhir()),
   '/inputNomorFirst': (context) => authGuardWrapper(InputNomorPage()),

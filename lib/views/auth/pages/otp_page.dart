@@ -126,7 +126,7 @@ class _KodeOTPState extends State<KodeOTP> {
                     },
                   ),
                   IconButton(
-                    icon: Icon(Icons.headset_mic, color: kOrange),
+                    icon: Icon(Icons.headset_mic_rounded, color: kOrange),
                     onPressed: () {
                       showCSBottomSheet(context, "Hubungi CS");
                     },

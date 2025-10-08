@@ -67,7 +67,7 @@ class HeaderSaldo extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
                     color: kOrange,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                   child: InkWell(
                     onTap: () {},
@@ -80,7 +80,6 @@ class HeaderSaldo extends StatelessWidget {
                           color: Colors.white,
                           size: 26,
                         ),
-                        SizedBox(width: 6),
                         Text(
                           'QRIS Member',
                           style: TextStyle(
@@ -117,7 +116,7 @@ class _ActionItem extends StatelessWidget {
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             color: kOrange,
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: Colors.white, size: 24),
         ),

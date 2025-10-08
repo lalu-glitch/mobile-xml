@@ -50,7 +50,7 @@ class LayananSection extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: kWhite,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(16),
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
@@ -59,14 +59,15 @@ class LayananSection extends StatelessWidget {
                   ),
                 ],
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              margin: const EdgeInsets.only(bottom: 24),
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
+                  crossAxisSpacing: 20,
                   childAspectRatio: 0.85,
                 ),
                 itemCount: layananList.length,
@@ -98,35 +99,16 @@ class LayananSection extends StatelessWidget {
                     },
                     child: Column(
                       children: [
-                        Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: kWhite,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: Colors.orange.shade200,
-                              width: 1.5,
-                            ),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 2,
-                                offset: Offset(0, 1),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: CachedNetworkImage(
-                              imageUrl: item.url ?? '',
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => const SizedBox(),
-                              errorWidget: (context, url, error) => Icon(
-                                Icons.apps,
-                                color: Colors.orange.shade200,
-                              ),
-                            ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: CachedNetworkImage(
+                            imageUrl: item.url ?? '',
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => const SizedBox(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.apps, color: Colors.orange.shade200),
                           ),
                         ),
                         const SizedBox(height: 6),
@@ -145,7 +127,7 @@ class LayananSection extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 24),
+            // const SizedBox(height: 24),
           ],
         );
       }).toList(),
