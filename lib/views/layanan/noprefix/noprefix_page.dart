@@ -22,10 +22,10 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
 
   bool _isInitialized = false;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   @override
   void didChangeDependencies() {
@@ -63,7 +63,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: kNeutral20,
         appBar: AppBar(
           title: Text(
             iconItem.title ?? '',
@@ -214,47 +214,52 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
           },
         ),
         bottomNavigationBar: selectedProductCode != null
-            ? Container(
-                color: kOrange,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
-                      style: TextStyle(
-                        color: kWhite,
-                        fontWeight: FontWeight.bold,
-                        fontSize: Screen.kSize16,
-                      ),
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kWhite,
-                        foregroundColor: kOrange,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+            ? SafeArea(
+                child: Container(
+                  color: kOrange,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
+                        style: TextStyle(
+                          color: kWhite,
+                          fontWeight: FontWeight.bold,
+                          fontSize: Screen.kSize16,
                         ),
                       ),
-                      onPressed: () {
-                        if (!isLastPage) {
-                          final nextPage =
-                              flowState.sequence[flowState.currentIndex + 1];
-                          flowCubit.nextPage();
-                          Navigator.pushNamed(context, pageRoutes[nextPage]!);
-                        } else {
-                          Navigator.pushNamed(context, '/konfirmasiPembayaran');
-                        }
-                      },
-                      child: Text(
-                        "Selanjutnya",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: kWhite,
+                          foregroundColor: kOrange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (!isLastPage) {
+                            final nextPage =
+                                flowState.sequence[flowState.currentIndex + 1];
+                            flowCubit.nextPage();
+                            Navigator.pushNamed(context, pageRoutes[nextPage]!);
+                          } else {
+                            Navigator.pushNamed(
+                              context,
+                              '/konfirmasiPembayaran',
+                            );
+                          }
+                        },
+                        child: const Text(
+                          "Selanjutnya",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               )
             : null,

@@ -220,25 +220,27 @@ class _StrukPageState extends State<StrukPage> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/',
-                    (route) => false,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kOrange,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                SafeArea(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/',
+                      (route) => false,
                     ),
-                  ),
-                  child: Text(
-                    "Selesai",
-                    style: TextStyle(
-                      fontSize: Screen.kSize18,
-                      fontWeight: FontWeight.bold,
-                      color: kWhite,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kOrange,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: Text(
+                      "Selesai",
+                      style: TextStyle(
+                        fontSize: Screen.kSize18,
+                        fontWeight: FontWeight.bold,
+                        color: kWhite,
+                      ),
                     ),
                   ),
                 ),

@@ -97,7 +97,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: kNeutral20,
         appBar: AppBar(
           title: Text(
             iconItem.title ?? '',
@@ -324,54 +324,58 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
 
                   if (selectedProduk == null) return const SizedBox.shrink();
 
-                  return Container(
-                    color: kOrange,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
-                          style: TextStyle(
-                            color: kWhite,
-                            fontWeight: FontWeight.bold,
-                            fontSize: Screen.kSize16,
-                          ),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: kWhite,
-                            foregroundColor: kOrange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                  return SafeArea(
+                    child: Container(
+                      color: kOrange,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
+                            style: TextStyle(
+                              color: kWhite,
+                              fontWeight: FontWeight.bold,
+                              fontSize: Screen.kSize16,
                             ),
                           ),
-                          onPressed: () {
-                            if (!isLastPage) {
-                              final nextPage = flowState
-                                  .sequence[flowState.currentIndex + 1];
-                              flowCubit.nextPage();
-                              Navigator.pushNamed(
-                                context,
-                                pageRoutes[nextPage]!,
-                              );
-                            } else {
-                              sendTransaksi.setTujuan(nomorTujuan);
-                              Navigator.pushNamed(
-                                context,
-                                '/konfirmasiPembayaran',
-                              );
-                            }
-                          },
-                          child: Text(
-                            isLastPage ? "Selanjutnya" : "Next",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kWhite,
+                              foregroundColor: kOrange,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            onPressed: () {
+                              if (!isLastPage) {
+                                final nextPage = flowState
+                                    .sequence[flowState.currentIndex + 1];
+                                flowCubit.nextPage();
+                                Navigator.pushNamed(
+                                  context,
+                                  pageRoutes[nextPage]!,
+                                );
+                              } else {
+                                sendTransaksi.setTujuan(nomorTujuan);
+                                Navigator.pushNamed(
+                                  context,
+                                  '/konfirmasiPembayaran',
+                                );
+                              }
+                            },
+                            child: Text(
+                              isLastPage ? "Selanjutnya" : "Next",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },

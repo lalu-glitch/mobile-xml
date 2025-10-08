@@ -50,6 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kNeutral20,
       body: BlocBuilder<InfoAkunCubit, InfoAkunState>(
         builder: (context, state) {
           if (state is InfoAkunLoading) {

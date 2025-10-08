@@ -48,7 +48,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: kNeutral20,
         appBar: AppBar(
           title: const Text('Konfirmasi', style: TextStyle(color: kWhite)),
           backgroundColor: kOrange,
@@ -188,60 +188,64 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
     final sendTransaksi = context.read<TransaksiCubit>();
     final totalTransaksi = getTotalTransaksi(transaksi);
 
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: kOrange,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+    return SafeArea(
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kOrange,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            elevation: 5,
+            shadowColor: Colors.orangeAccent.shade100,
           ),
-          elevation: 5,
-          shadowColor: Colors.orangeAccent.shade100,
-        ),
-        onPressed: () {
-          final selected = methods.firstWhere((m) => m.nama == _selectedMethod);
-
-          sendTransaksi.setKodeDompet(selected.kodeDompet!);
-
-          // case khusus SPEEDCASH → buka WebView
-          if (selected.nama == 'SPEEDCASH') {
-            Navigator.pushNamed(
-              context,
-              '/webView',
-              arguments: {
-                'url': 'google.com', // <--- menyusul
-                'title': 'Bayar Speedcash',
-              },
+          onPressed: () {
+            final selected = methods.firstWhere(
+              (m) => m.nama == _selectedMethod,
             );
-            return;
-          }
 
-          final saldo = selected.saldoEwallet ?? 0;
+            sendTransaksi.setKodeDompet(selected.kodeDompet!);
 
-          if (totalTransaksi > saldo) {
-            final msg = saldo <= 0
-                ? "Saldo ${selected.nama} tidak cukup, hubungi CS / admin."
-                : "Saldo ${selected.nama} tidak mencukupi.";
-            showErrorDialog(context, msg);
-          } else {
-            context
-                .read<TransaksiViewModel>()
-                .reset(); // <-- Reset ViewModel dulu untuk bersihkan state lama
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/transaksiProses',
-              (route) => false,
-            );
-          }
-        },
-        child: Text(
-          "SELANJUTNYA",
-          style: TextStyle(
-            fontSize: Screen.kSize16,
-            fontWeight: FontWeight.bold,
-            color: kWhite,
+            // case khusus SPEEDCASH → buka WebView
+            if (selected.nama == 'SPEEDCASH') {
+              Navigator.pushNamed(
+                context,
+                '/webView',
+                arguments: {
+                  'url': 'google.com', // <--- menyusul
+                  'title': 'Bayar Speedcash',
+                },
+              );
+              return;
+            }
+
+            final saldo = selected.saldoEwallet ?? 0;
+
+            if (totalTransaksi > saldo) {
+              final msg = saldo <= 0
+                  ? "Saldo ${selected.nama} tidak cukup, hubungi CS / admin."
+                  : "Saldo ${selected.nama} tidak mencukupi.";
+              showErrorDialog(context, msg);
+            } else {
+              context
+                  .read<TransaksiViewModel>()
+                  .reset(); // <-- Reset ViewModel dulu untuk bersihkan state lama
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/transaksiProses',
+                (route) => false,
+              );
+            }
+          },
+          child: Text(
+            "SELANJUTNYA",
+            style: TextStyle(
+              fontSize: Screen.kSize16,
+              fontWeight: FontWeight.bold,
+              color: kWhite,
+            ),
           ),
         ),
       ),

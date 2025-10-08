@@ -3,8 +3,8 @@ import 'package:xmlapp/core/helper/constant_finals.dart';
 import '../../../core/helper/screen_handler.dart';
 import '../../../core/utils/bottom_sheet.dart';
 
-class TestClip extends StatelessWidget {
-  const TestClip({super.key});
+class KomisiTukarPoin extends StatelessWidget {
+  const KomisiTukarPoin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +77,7 @@ class TestClip extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
-                _buildButton(
-                  label: 'Batal',
-                  color: kBlack,
-                  onPressed: () => Navigator.pop(context),
-                ),
+                _buildButton(label: 'Batal', color: kBlack, onPressed: () {}),
                 const SizedBox(width: 12),
                 _buildButton(
                   label: 'Konfirmasi',
