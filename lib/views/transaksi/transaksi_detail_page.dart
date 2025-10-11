@@ -19,7 +19,7 @@ class DetailTransaksiPage extends StatelessWidget {
     final IconData statusIcon = isSuccess ? Icons.check_circle : Icons.cancel;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: kNeutral20,
       appBar: AppBar(
         backgroundColor: statusColor,
         elevation: 0,

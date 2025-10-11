@@ -22,6 +22,7 @@ class ApiService {
   Future<UserBalance> fetchUserBalance() async {
     try {
       final response = await authService.dio.get("$baseURL/get_user");
+      print(response);
       if (response.statusCode == 200) {
         final dataMap = Map<String, dynamic>.from(response.data);
         return UserBalance.fromJson(dataMap);

@@ -17,7 +17,7 @@ class Data {
   String nama;
   String kodeLevel;
   String kodeReferral;
-  String markupReferral;
+  int markupReferral;
   int saldo;
   List<Ewallet>? ewallet;
   int komisi;

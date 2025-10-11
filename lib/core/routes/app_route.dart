@@ -7,10 +7,13 @@ import '../../main_page.dart';
 import '../../views/auth/pages/SK_page.dart';
 import '../../views/input_nomor/input_nomer_awal.dart';
 import '../../views/input_nomor/input_nomer_mid.dart';
+import '../../views/poin_dan_komisi/pages/detail_tukar_komisi_page.dart';
 import '../../views/poin_dan_komisi/pages/komisi_page.dart';
 import '../../views/multi_sub_kategori_page.dart';
 import '../../views/onboarding/onboarding_screen.dart';
 import '../../views/poin_dan_komisi/pages/poin_page.dart';
+import '../../views/riwayat/pages/detail_riwayat.dart';
+import '../../views/riwayat/pages/riwayat_page.dart';
 import '../../views/settings/pages/detail_akun_page.dart';
 import '../../views/speedcash/pages/speedcash_depo_detail.dart';
 import '../../views/speedcash/pages/speedcash_depo_tiket.dart';
@@ -24,8 +27,6 @@ import '../../views/speedcash/pages/speedcash_depo.dart';
 import '../../views/speedcash/pages/speedcash_register.dart';
 import '../../views/home/page/home_page.dart';
 import '../../views/transaksi/konfirmasi_pembayaran_page.dart';
-import '../../views/riwayat/detail_riwayat.dart';
-import '../../views/riwayat/riwayat_page.dart';
 import '../../views/settings/pages/settings_page.dart';
 import '../../views/shops/shops_page.dart';
 import '../../data/services/auth_guard.dart';
@@ -55,6 +56,8 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/riwayatTransaksi': (context) => authGuardWrapper(RiwayatTransaksiPage()),
   '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
   '/komisiPage': (context) => authGuardWrapper(KomisiPage()),
+  '/detailTukarKomisiPage': (context) =>
+      authGuardWrapper(DetailTukarKomisiPage()),
   '/poinPage': (context) => authGuardWrapper(PoinPage()),
   '/detailRiwayatTransaksi': (context) => authGuardWrapper(DetailRiwayatPage()),
   '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanAkhir()),

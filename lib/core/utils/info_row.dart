@@ -10,10 +10,7 @@ Widget infoRow(String label, String value, {bool isTotal = false}) {
         flex: 4,
         child: Text(
           label,
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(color: kNeutral80, fontWeight: FontWeight.w400),
         ),
       ),
       const SizedBox(width: 8),

@@ -13,7 +13,7 @@ class DetailInfoAkun extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: kNeutral20,
       appBar: AppBar(
         title: const Text(
           'Detail Akun',
@@ -96,7 +96,7 @@ class DetailInfoAkun extends StatelessWidget {
                     _buildDivider(),
                     DetailRow(
                       label: "Markup Referral",
-                      value: data.markupReferral,
+                      value: data.markupReferral.toString(),
                     ),
 
                     const SizedBox(height: 24),

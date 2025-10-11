@@ -67,19 +67,14 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
               return RefreshIndicator(
                 onRefresh: _onRefresh,
                 color: kOrange,
-                child: ListView(
-                  children: [
-                    SizedBox(height: 200),
-                    Center(
-                      child: Text(
-                        "Belum ada transaksi",
-                        style: TextStyle(
-                          fontSize: Screen.kSize16,
-                          color: Colors.grey,
-                        ),
-                      ),
+                child: Center(
+                  child: Text(
+                    "Belum ada transaksi",
+                    style: TextStyle(
+                      fontSize: Screen.kSize16,
+                      color: Colors.grey,
                     ),
-                  ],
+                  ),
                 ),
               );
             }

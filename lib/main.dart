@@ -170,9 +170,10 @@ class _XmlAppState extends State<XmlApp> {
         child: MaterialApp(
           title: "XML App",
           theme: ThemeData(
-            textTheme: GoogleFonts.gabaritoTextTheme(
-              Theme.of(context).textTheme,
-            ),
+            textTheme: Theme.of(
+              context,
+            ).textTheme.apply(fontFamily: 'Gabarito'),
+            fontFamily: 'Gabarito',
             useMaterial3: true,
           ),
           navigatorKey: navigatorKey,
