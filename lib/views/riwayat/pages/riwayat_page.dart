@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../core/helper/constant_finals.dart';
-
-import '../../data/models/transaksi/riwayat_transaksi.dart';
-import 'cubit/riwayat_transaksi_cubit.dart';
-import 'widgets/card_transaksi.dart';
+import '../../../core/helper/constant_finals.dart';
+import '../../../data/models/transaksi/riwayat_transaksi.dart';
+import '../cubit/riwayat_transaksi_cubit.dart';
+import '../widgets/card_transaksi.dart';
 
 class RiwayatTransaksiPage extends StatefulWidget {
   const RiwayatTransaksiPage({super.key});
@@ -100,7 +99,7 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
                             horizontal: 12,
                             vertical: 1,
                           ),
-                          child: TransactionCard(t: t),
+                          child: TransactionCard(transaksi: t),
                         );
                       },
                     ),

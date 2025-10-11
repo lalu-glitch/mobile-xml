@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             // Background orange
             Container(color: kOrange),
-            // Background image di pojok kiri atas
+            // Background image di pojok kiri
             Positioned(
               top: 35,
               left: 0,
@@ -82,6 +83,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
+                    dragStartBehavior: DragStartBehavior.down,
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [

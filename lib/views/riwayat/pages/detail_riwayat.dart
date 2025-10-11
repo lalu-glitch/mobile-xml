@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../core/helper/constant_finals.dart';
-import 'cubit/detail_riwayat_transaksi_cubit.dart';
-import 'widgets/card_detail_item.dart';
+import '../../../../core/helper/constant_finals.dart';
+import '../cubit/detail_riwayat_transaksi_cubit.dart';
+import '../widgets/card_detail_item.dart';
 
 class DetailRiwayatPage extends StatefulWidget {
   const DetailRiwayatPage({super.key});

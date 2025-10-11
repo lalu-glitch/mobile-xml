@@ -3,9 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:xmlapp/core/helper/constant_finals.dart';
 
 class TransactionCard extends StatelessWidget {
-  final dynamic t; // model transaksi
+  final dynamic transaksi; // model transaksi
 
-  const TransactionCard({super.key, required this.t});
+  const TransactionCard({super.key, required this.transaksi});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class TransactionCard extends StatelessWidget {
           Navigator.pushNamed(
             context,
             '/detailRiwayatTransaksi',
-            arguments: {'kode': t.kode},
+            arguments: {'kode': transaksi.kode},
           );
         },
         child: Padding(
@@ -31,10 +31,14 @@ class TransactionCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: _statusColor(t).withOpacity(0.15),
+                  color: _statusColor(transaksi).withOpacity(0.15),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(_statusIcon(t), color: _statusColor(t), size: 28),
+                child: Icon(
+                  _statusIcon(transaksi),
+                  color: _statusColor(transaksi),
+                  size: 28,
+                ),
               ),
               const SizedBox(width: 14),
 
@@ -45,7 +49,7 @@ class TransactionCard extends StatelessWidget {
                   children: [
                     // Tujuan
                     Text(
-                      t.tujuan,
+                      transaksi.tujuan,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -57,7 +61,9 @@ class TransactionCard extends StatelessWidget {
 
                     // Tanggal
                     Text(
-                      DateFormat('dd MMM yyyy, HH:mm').format(t.tglEntri),
+                      DateFormat(
+                        'dd MMM yyyy, HH:mm',
+                      ).format(transaksi.tglEntri),
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.black54,
@@ -80,21 +86,21 @@ class TransactionCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: _statusColor(t).withOpacity(0.1),
+                      color: _statusColor(transaksi).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      t.keterangan,
+                      transaksi.keterangan,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: _statusColor(t),
+                        color: _statusColor(transaksi),
                       ),
                     ),
                   ),
                   // Harga
                   Text(
-                    "Rp ${t.harga.toStringAsFixed(0)}",
+                    "Rp ${transaksi.harga.toStringAsFixed(0)}",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
