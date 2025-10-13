@@ -11,8 +11,8 @@ import '../../../viewmodels/balance_viewmodel.dart';
 import '../../../viewmodels/layanan_vm.dart';
 import '../../../viewmodels/promo_vm.dart';
 import '../../widgets/promo_popup.dart';
+import '../widgets/home_header.dart';
 import '../widgets/saldo_card.dart';
-import '../widgets/header.dart';
 import '../widgets/layanan_section.dart';
 import '../widgets/poin_komisi.dart';
 import '../widgets/promo_section.dart';
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 16,
                               ),
-                              child: Header(balanceVM: balanceVM),
+                              child: HomeHeader(balanceVM: balanceVM),
                             ),
                             const SizedBox(height: 150),
                             Container(

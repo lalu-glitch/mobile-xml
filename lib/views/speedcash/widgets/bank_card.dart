@@ -29,7 +29,7 @@ class BankCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.asset(
-                'assets/icons/bca.png',
+                'assets/icons/bca-icon.png',
                 width: 50,
                 height: 50,
                 fit: BoxFit.cover,
