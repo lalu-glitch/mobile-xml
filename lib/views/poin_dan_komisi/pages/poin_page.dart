@@ -152,7 +152,7 @@ class PoinPage extends StatelessWidget {
                   SizedBox(height: ScreenHandler.h(16)),
 
                   SizedBox(
-                    height: ScreenHandler.h(260),
+                    height: ScreenHandler.h(295),
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: 5,
@@ -161,19 +161,21 @@ class PoinPage extends StatelessWidget {
                           width: ScreenHandler.w(170),
                           margin: const EdgeInsets.only(right: 16),
                           child: Card(
-                            elevation: 4,
+                            elevation: 0,
                             color: kWhite,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
+                                SizedBox(
                                   height: ScreenHandler.h(130),
-                                  color: kNeutral40,
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.card_giftcard,
-                                      size: 50,
-                                      color: kNeutral80,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(16),
+                                      topRight: Radius.circular(16),
+                                    ),
+                                    child: Image.asset(
+                                      'assets/images/iphone_17_pm.png',
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
@@ -184,18 +186,27 @@ class PoinPage extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '1 iPhone 16 Pro Max',
+                                        '23.000.000',
+                                        style: TextStyle(
+                                          fontSize: ScreenHandler.f(14),
+                                          fontWeight: FontWeight.w500,
+                                          color: kBlack,
+                                        ),
+                                      ),
+                                      SizedBox(height: ScreenHandler.h(18)),
+                                      Text(
+                                        'iPhone 17 Pro Max',
                                         style: TextStyle(
                                           fontSize: ScreenHandler.f(14),
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      SizedBox(height: ScreenHandler.h(4)),
                                       Text(
                                         'Stok tersedia: 2',
                                         style: TextStyle(
                                           fontSize: ScreenHandler.f(12),
                                           color: kNeutral80,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                       ),
                                       SizedBox(height: ScreenHandler.h(8)),
