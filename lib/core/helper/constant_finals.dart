@@ -44,7 +44,8 @@ class Screen {
 }
 
 //Colors
-const Color kBackground = Color(0xFFf5f4f2);
+
+const Color kBackground = Color(0xFFF6F7F7);
 const Color kGrey = Color(0xFF7A8089);
 const Color kLightGrey = Color(0XFFF0F1F2);
 
@@ -52,8 +53,6 @@ const Color kWhite = Color(0xFFFFFFFF);
 const Color kBlack = Color(0xFF202124);
 const Color kSupaBlack = Color(0xFF0D0D0D);
 
-const Color kNeutral10 = Color(0xFFFFFFFF);
-const Color kNeutral20 = Color(0xFFF6F7F7);
 const Color kNeutral30 = Color(0xFFF0F1F2);
 const Color kNeutral40 = Color(0xFFE5E6E8);
 const Color kNeutral50 = Color(0xFFCCCED1);

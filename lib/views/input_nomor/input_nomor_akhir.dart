@@ -82,7 +82,7 @@ class _InputNomorTujuanAkhirState
     return WillPopScope(
       onWillPop: onWillPopLogic,
       child: Scaffold(
-        backgroundColor: kNeutral20,
+        backgroundColor: kBackground,
         appBar: AppBar(
           title: const Text(
             "Input Nomor Tujuan",

@@ -73,7 +73,7 @@ class _RupiahTextFieldState extends State<RupiahTextField> {
 
         prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
         filled: true,
-        fillColor: kNeutral20,
+        fillColor: kBackground,
         isDense: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         focusedBorder: OutlineInputBorder(

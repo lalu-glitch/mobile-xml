@@ -27,7 +27,7 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kNeutral20,
+      backgroundColor: kBackground,
       body: SafeArea(
         child: BlocBuilder<RiwayatTransaksiCubit, RiwayatTransaksiState>(
           builder: (context, state) {

@@ -26,7 +26,7 @@ class MultiSubKategoriPage extends StatelessWidget {
         return true;
       },
       child: Scaffold(
-        backgroundColor: kNeutral20,
+        backgroundColor: kBackground,
         appBar: AppBar(
           backgroundColor: kOrange,
           iconTheme: IconThemeData(color: kWhite),

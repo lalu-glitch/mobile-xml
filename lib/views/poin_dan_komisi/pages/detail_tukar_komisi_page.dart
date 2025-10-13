@@ -9,7 +9,7 @@ class DetailTukarKomisiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kNeutral20,
+      backgroundColor: kBackground,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 150, 16, 16),
         child: Center(

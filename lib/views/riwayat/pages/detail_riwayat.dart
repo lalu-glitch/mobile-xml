@@ -34,7 +34,7 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kNeutral20,
+      backgroundColor: kBackground,
       appBar: AppBar(
         title: const Text(
           'Detail Riwayat Transaksi',
@@ -54,7 +54,7 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
                     itemBuilder: (context, index) {
                       return Shimmer.fromColors(
                         baseColor: kNeutral40,
-                        highlightColor: kNeutral20,
+                        highlightColor: kBackground,
                         child: Card(
                           color: kWhite,
                           margin: const EdgeInsets.symmetric(vertical: 6),

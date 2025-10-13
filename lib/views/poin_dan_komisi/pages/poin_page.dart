@@ -14,7 +14,7 @@ class PoinPage extends StatelessWidget {
     ScreenHandler.init(context);
 
     return Scaffold(
-      backgroundColor: kNeutral20,
+      backgroundColor: kBackground,
       appBar: AppBar(
         backgroundColor: kOrange,
         title: const Text('Tukar Poin Agen', style: TextStyle(color: kWhite)),

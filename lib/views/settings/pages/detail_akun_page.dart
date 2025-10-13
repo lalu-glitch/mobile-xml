@@ -13,7 +13,7 @@ class DetailInfoAkun extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: kNeutral20,
+      backgroundColor: kBackground,
       appBar: AppBar(
         title: const Text(
           'Detail Akun',

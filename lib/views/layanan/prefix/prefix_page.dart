@@ -97,7 +97,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: kNeutral20,
+        backgroundColor: kBackground,
         appBar: AppBar(
           title: Text(
             iconItem.title ?? '',

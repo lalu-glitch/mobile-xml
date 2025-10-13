@@ -24,7 +24,6 @@ class ScreenHandler {
     blockWidth = safeWidth / 100;
     blockHeight = safeHeight / 100;
 
-    // ✅ versi baru, pengganti textScaleFactor
     textScaler = MediaQuery.textScalerOf(context);
   }
 

@@ -16,7 +16,7 @@ class KomisiPage extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: kNeutral20,
+        backgroundColor: kBackground,
         appBar: AppBar(
           backgroundColor: kOrange,
           title: Text('Tukar Komisi Agen', style: TextStyle(color: kWhite)),
@@ -43,7 +43,7 @@ class KomisiPage extends StatelessWidget {
                   Expanded(
                     child: Container(
                       width: double.infinity,
-                      color: kNeutral20,
+                      color: kBackground,
                       child: Column(
                         children: [
                           SizedBox(height: ScreenHandler.h(150)),

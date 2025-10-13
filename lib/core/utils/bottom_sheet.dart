@@ -13,7 +13,7 @@ Future<void> _launchUrl(String url) async {
 void showCSBottomSheet(BuildContext context, String title) {
   showModalBottomSheet(
     context: context,
-    backgroundColor: kNeutral20,
+    backgroundColor: kBackground,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),

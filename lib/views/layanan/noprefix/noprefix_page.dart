@@ -63,7 +63,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: kNeutral20,
+        backgroundColor: kBackground,
         appBar: AppBar(
           title: Text(
             iconItem.title ?? '',
@@ -95,7 +95,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                       horizontal: 12,
                       vertical: 8,
                     ),
-                    color: kNeutral10,
+                    color: kWhite,
                     child: ExpansionTile(
                       title: Text(
                         provider.namaProvider,

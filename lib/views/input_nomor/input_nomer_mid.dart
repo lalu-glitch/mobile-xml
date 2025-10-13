@@ -44,7 +44,7 @@ class _InputNomorPageState extends BaseInputNomorState<InputNomorMidPage> {
     return WillPopScope(
       onWillPop: onWillPopLogic,
       child: Scaffold(
-        backgroundColor: kNeutral20,
+        backgroundColor: kBackground,
         appBar: AppBar(
           title: const Text(
             "Input Nomor Tujuan",

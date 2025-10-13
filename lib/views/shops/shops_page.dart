@@ -9,9 +9,10 @@ class ShopsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackground,
       body: Center(
         child: Text(
-          "This is Shops Page",
+          "Halaman shops",
           style: TextStyle(fontSize: Screen.kSize20),
         ),
       ),

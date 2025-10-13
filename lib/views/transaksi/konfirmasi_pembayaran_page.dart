@@ -48,7 +48,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: kNeutral20,
+        backgroundColor: kBackground,
         appBar: AppBar(
           title: const Text('Konfirmasi', style: TextStyle(color: kWhite)),
           backgroundColor: kOrange,
