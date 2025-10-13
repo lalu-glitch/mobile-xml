@@ -53,40 +53,30 @@ class HeaderSaldo extends StatelessWidget {
         const SizedBox(height: 24),
         IntrinsicHeight(
           child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _ActionItem(icon: Icons.add_rounded, label: 'Top Up Saldo'),
-              const SizedBox(width: 24),
-              _ActionItem(icon: Icons.swap_horiz_sharp, label: 'Transfer Stok'),
-              const SizedBox(width: 24),
+              const SizedBox(width: 16),
+              _ActionItem(
+                icon: Icons.swap_horiz_sharp,
+                label: 'Transfer Saldo',
+              ),
+              const SizedBox(width: 16),
               Expanded(
-                flex: 1,
-                child: Container(
-                  height: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: kOrange,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: InkWell(
-                    onTap: () {},
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Icon(
-                          Icons.qr_code_rounded,
-                          color: Colors.white,
-                          size: 26,
-                        ),
+                child: InkWell(
+                  onTap: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: kOrange,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.qr_code_2_outlined, color: kWhite, size: 24),
+                        // SizedBox(height: 8),
                         Text(
-                          'QRIS Member',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
+                          'Tampilkan QRIS',
+                          style: TextStyle(color: kWhite, fontSize: 12),
                         ),
                       ],
                     ),
@@ -121,12 +111,15 @@ class _ActionItem extends StatelessWidget {
           child: Icon(icon, color: Colors.white, size: 24),
         ),
         const SizedBox(height: 8),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w400,
-            color: kNeutral90,
+        Flexible(
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w400,
+              color: kNeutral90,
+            ),
           ),
         ),
       ],

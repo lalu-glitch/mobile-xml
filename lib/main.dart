@@ -12,7 +12,6 @@ import 'views/auth/cubit/request_kode_agen_cubit.dart';
 import 'views/layanan/cubit/flow_cubit.dart';
 import 'core/routes/app_route.dart';
 
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'data/services/api_service.dart';

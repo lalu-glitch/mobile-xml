@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'core/helper/constant_finals.dart';
 
 import 'views/home/page/home_page.dart';
+// import 'views/poin_dan_komisi/pages/widgets/top_bottom_ticket_cut.dart';
 import 'views/riwayat/pages/riwayat_page.dart';
 import 'views/shops/shops_page.dart';
 import 'views/settings/pages/settings_page.dart';
