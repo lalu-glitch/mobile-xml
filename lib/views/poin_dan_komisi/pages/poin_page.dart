@@ -11,6 +11,7 @@ class PoinPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final poinCtrl = TextEditingController();
+    ScreenHandler.init(context);
 
     return Scaffold(
       backgroundColor: kNeutral20,
