@@ -3,8 +3,8 @@ import 'package:xmlapp/core/helper/constant_finals.dart';
 import '../../../core/helper/screen_handler.dart';
 import '../../../core/utils/bottom_sheet.dart';
 
-class KomisiTukarPoin extends StatelessWidget {
-  const KomisiTukarPoin({super.key});
+class KonfirmasiTukarPoin extends StatelessWidget {
+  const KonfirmasiTukarPoin({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -11,6 +11,7 @@ import '../../views/poin_dan_komisi/pages/detail_tukar_komisi_page.dart';
 import '../../views/poin_dan_komisi/pages/komisi_page.dart';
 import '../../views/multi_sub_kategori_page.dart';
 import '../../views/onboarding/onboarding_screen.dart';
+import '../../views/poin_dan_komisi/pages/konfirmasi_tukar_poin.dart';
 import '../../views/poin_dan_komisi/pages/poin_page.dart';
 import '../../views/riwayat/pages/detail_riwayat.dart';
 import '../../views/riwayat/pages/riwayat_page.dart';
@@ -59,6 +60,8 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/detailTukarKomisiPage': (context) =>
       authGuardWrapper(DetailTukarKomisiPage()),
   '/poinPage': (context) => authGuardWrapper(PoinPage()),
+  '/konfirmasiTukarPoinPage': (context) =>
+      authGuardWrapper(KonfirmasiTukarPoin()),
   '/detailRiwayatTransaksi': (context) => authGuardWrapper(DetailRiwayatPage()),
   '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanAkhir()),
   '/inputNomorFirst': (context) => authGuardWrapper(InputNomorPage()),

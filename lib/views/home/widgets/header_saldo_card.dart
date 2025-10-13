@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import 'action_item.dart';
 
 class HeaderSaldo extends StatelessWidget {
   const HeaderSaldo({super.key});
@@ -54,15 +55,12 @@ class HeaderSaldo extends StatelessWidget {
         IntrinsicHeight(
           child: Row(
             children: [
-              _ActionItem(icon: Icons.add_rounded, label: 'Top Up Saldo'),
+              ActionItem(icon: Icons.add_rounded, label: 'Top Up Saldo'),
               const SizedBox(width: 16),
-              _ActionItem(
-                icon: Icons.swap_horiz_sharp,
-                label: 'Transfer Saldo',
-              ),
+              ActionItem(icon: Icons.swap_horiz_sharp, label: 'Transfer Saldo'),
               const SizedBox(width: 16),
               Expanded(
-                child: InkWell(
+                child: GestureDetector(
                   onTap: () {},
                   child: Container(
                     decoration: BoxDecoration(
@@ -84,42 +82,6 @@ class HeaderSaldo extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ActionItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const _ActionItem({required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            color: kOrange,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(icon, color: Colors.white, size: 24),
-        ),
-        const SizedBox(height: 8),
-        Flexible(
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w400,
-              color: kNeutral90,
-            ),
           ),
         ),
       ],

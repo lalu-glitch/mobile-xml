@@ -95,7 +95,10 @@ class PoinPage extends StatelessWidget {
                                 Expanded(
                                   child: GestureDetector(
                                     onTap: () {
-                                      Navigator.pushNamed(context, '');
+                                      Navigator.pushNamed(
+                                        context,
+                                        '/konfirmasiTukarPoinPage',
+                                      );
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
