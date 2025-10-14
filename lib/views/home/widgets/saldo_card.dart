@@ -74,7 +74,7 @@ class SaldoCard extends StatelessWidget {
                       ],
                     ),
                   )
-                : const HeaderSaldo(),
+                : HeaderSaldo(balanceVM: balanceVM),
           ),
         );
       },

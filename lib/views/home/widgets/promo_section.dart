@@ -54,9 +54,7 @@ class PastiPromoSection extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: item.icon ?? '',
                     fit: BoxFit.cover,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
+                    placeholder: (context, url) => _buildShimmerCard(),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.image_not_supported),
                   ),

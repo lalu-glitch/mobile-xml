@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../../../viewmodels/balance_viewmodel.dart';
 import 'action_item.dart';
 
 class HeaderSaldo extends StatelessWidget {
-  const HeaderSaldo({super.key});
+  const HeaderSaldo({required this.balanceVM, super.key});
+  final BalanceViewModel balanceVM;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class HeaderSaldo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Rp 999.999.999',
+              'Rp ${balanceVM.userBalance!.saldo}',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -71,7 +73,7 @@ class HeaderSaldo extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.qr_code_2_outlined, color: kWhite, size: 24),
-                        // SizedBox(height: 8),
+
                         Text(
                           'Tampilkan QRIS',
                           style: TextStyle(color: kWhite, fontSize: 12),

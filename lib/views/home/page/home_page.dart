@@ -138,7 +138,10 @@ class _HomePageState extends State<HomePage> {
                               controller: PageController(viewportFraction: 0.9),
                               padEnds: true,
                               clipBehavior: Clip.none,
-                              itemCount: 2, // jumlah card
+                              itemCount: balanceVM
+                                  .userBalance!
+                                  .ewallet
+                                  .length, // jumlah card
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
