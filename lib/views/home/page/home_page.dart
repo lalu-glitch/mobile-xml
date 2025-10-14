@@ -134,23 +134,42 @@ class _HomePageState extends State<HomePage> {
                           right: 0,
                           child: SizedBox(
                             height: 220,
-                            child: PageView.builder(
-                              controller: PageController(viewportFraction: 0.9),
-                              padEnds: true,
-                              clipBehavior: Clip.none,
-                              itemCount: balanceVM
-                                  .userBalance!
-                                  .ewallet
-                                  .length, // jumlah card
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
+                            child:
+                                (balanceVM.isLoading ||
+                                    balanceVM.userBalance == null)
+                                // Jika loading atau data null, tampilkan satu SaldoCard dengan shimmer-nya
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                    ),
+                                    child: SaldoCard(balanceVM: balanceVM),
+                                  )
+                                // Jika data sudah ada, baru bangun PageView
+                                : PageView.builder(
+                                    controller: PageController(
+                                      viewportFraction: 0.9,
+                                    ),
+                                    padEnds: true,
+                                    clipBehavior: Clip.none,
+                                    // Gunakan ?. dan ?? untuk keamanan
+                                    itemCount:
+                                        (balanceVM
+                                                .userBalance
+                                                ?.ewallet
+                                                .length ??
+                                            0) +
+                                        1, // +1 untuk Saldo XML utama
+                                    itemBuilder: (context, index) {
+                                      // TODO: Buat card terpisah untuk E-Wallet jika desainnya berbeda
+                                      // Untuk sekarang, kita tampilkan SaldoCard yang sama untuk semua
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 4,
+                                        ),
+                                        child: SaldoCard(balanceVM: balanceVM),
+                                      );
+                                    },
                                   ),
-                                  child: SaldoCard(balanceVM: balanceVM),
-                                );
-                              },
-                            ),
                           ),
                         ),
                       ],

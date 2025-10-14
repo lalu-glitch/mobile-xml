@@ -27,7 +27,10 @@ class HeaderSaldo extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(width: 8),
-            Image.asset('assets/images/logo_name.png', height: 16),
+            Image.asset(
+              'assets/images/logo_name.png',
+              height: 16,
+            ), //nanti diganti dari API
           ],
         ),
         const SizedBox(height: 24),
@@ -35,7 +38,7 @@ class HeaderSaldo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Rp ${balanceVM.userBalance!.saldo}',
+              'Rp ${balanceVM.userBalance?.saldo ?? 0}',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,

@@ -1,13 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:xmlapp/views/settings/cubit/unbind_ewallet_cubit.dart';
 
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
+import '../../../data/models/user/info_akun.dart';
 import '../cubit/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
 import '../widgets/custom_list_tile.dart';
 import '../widgets/error_view.dart';
+import '../widgets/new_wallet_item.dart';
 import '../widgets/setting_header.dart';
 import '../widgets/logout_card.dart';
 import '../widgets/settings_shimmer.dart';
@@ -175,6 +179,7 @@ class _SettingsPageState extends State<SettingsPage> {
       backgroundColor: kBackground,
       body: BlocBuilder<InfoAkunCubit, InfoAkunState>(
         builder: (context, state) {
+          print('state saat ini : $state');
           if (state is InfoAkunLoading) {
             return const InfoAkunShimmer();
           }
@@ -192,68 +197,19 @@ class _SettingsPageState extends State<SettingsPage> {
                     children: [
                       /// --- DOMPET APLIKASI ---
                       SizedBox(
-                        height: 120, // tinggi maksimum kontainer ListView
+                        height: (state.data.data.ewallet?.isEmpty ?? true)
+                            ? 0
+                            : 120, // tinggi maksimum kontainer
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 10,
+                          itemCount: state.data.data.ewallet?.length ?? 0,
                           itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.only(right: 16),
-                              width: 200,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.pinkAccent,
-                                  width: 3.5,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                  horizontal: 16,
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize
-                                      .min, // biar tinggi mengikuti isi
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Flexible(
-                                      child: Image.asset(
-                                        'assets/images/logo-speedcash.png',
-                                        scale: 3,
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue[700],
-                                          borderRadius: BorderRadius.circular(
-                                            14,
-                                          ),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Binding',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
+                            final Ewallet currentEwallet = state
+                                .data
+                                .data
+                                .ewallet![index]; // ! aman di sini karena itemCount sudah dicek
+                            // Panggil widget baru: WalletItem (menggantikan WalletCard)
+                            return WalletItem(ewallet: currentEwallet);
                           },
                         ),
                       ),

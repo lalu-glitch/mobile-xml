@@ -23,7 +23,7 @@ class SaldoCard extends StatelessWidget {
           color: kWhite,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child: balanceVM.isLoading
+            child: balanceVM.isLoading || balanceVM.userBalance == null
                 ? Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
                     highlightColor: Colors.grey.shade100,
