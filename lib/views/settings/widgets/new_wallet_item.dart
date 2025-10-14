@@ -99,12 +99,13 @@ class WalletItem extends StatelessWidget {
                 else if (binding == 0)
                   _buildButton(
                     'Belum Terbinding',
-                    Colors
-                        .grey, // Ganti kNeutral60 dengan warna aman jika kodenya tidak ada
-                    () {},
+                    kBlue, // Ganti kNeutral60 dengan warna aman jika kodenya tidak ada
+                    () {
+                      Navigator.pushNamed(context, '/speedcashBindingPage');
+                    },
                   )
                 else
-                  _buildButton('Unbinding', Colors.blue.shade800, () {
+                  _buildButton('Unbinding', kRed, () {
                     showUnbindBottomSheet(
                       context,
                       () => context.read<UnbindEwalletCubit>().unbindEwallet(
