@@ -4,9 +4,16 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import 'action_item.dart';
 
-class HeaderSaldo extends StatelessWidget {
+class HeaderSaldo extends StatefulWidget {
   const HeaderSaldo({required this.balanceVM, super.key});
   final BalanceViewModel balanceVM;
+
+  @override
+  State<HeaderSaldo> createState() => _HeaderSaldoState();
+}
+
+class _HeaderSaldoState extends State<HeaderSaldo> {
+  bool _isSaldoHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +45,9 @@ class HeaderSaldo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Rp ${balanceVM.userBalance?.saldo ?? 0}',
+              _isSaldoHidden
+                  ? 'Rp •••••••'
+                  : 'Rp ${widget.balanceVM.userBalance?.saldo ?? 0}',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -46,12 +55,15 @@ class HeaderSaldo extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.remove_red_eye_outlined,
+            InkWell(
+              onTap: () {
+                setState(() {
+                  _isSaldoHidden = !_isSaldoHidden; // Toggle nilai boolean
+                });
+              },
+              child: Icon(
+                _isSaldoHidden ? Icons.visibility_off : Icons.visibility,
                 color: kBlack,
-                size: 24,
               ),
             ),
           ],

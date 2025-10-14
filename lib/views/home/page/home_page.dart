@@ -154,11 +154,10 @@ class _HomePageState extends State<HomePage> {
                                     // Gunakan ?. dan ?? untuk keamanan
                                     itemCount:
                                         (balanceVM
-                                                .userBalance
-                                                ?.ewallet
-                                                .length ??
-                                            0) +
-                                        1, // +1 untuk Saldo XML utama
+                                            .userBalance
+                                            ?.ewallet
+                                            .length ??
+                                        0),
                                     itemBuilder: (context, index) {
                                       // TODO: Buat card terpisah untuk E-Wallet jika desainnya berbeda
                                       // Untuk sekarang, kita tampilkan SaldoCard yang sama untuk semua
