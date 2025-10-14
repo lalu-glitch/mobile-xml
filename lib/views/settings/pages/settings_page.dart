@@ -185,7 +185,10 @@ class _SettingsPageState extends State<SettingsPage> {
           if (state is InfoAkunLoaded) {
             return Column(
               children: [
-                SettingHeader(state: state), // Header profil user
+                InkWell(
+                  onTap: () => Navigator.pushNamed(context, '/detailInfoAkun'),
+                  child: SettingHeader(state: state),
+                ), // Header profil user
                 Expanded(
                   child: ListView(
                     padding: EdgeInsets.symmetric(
