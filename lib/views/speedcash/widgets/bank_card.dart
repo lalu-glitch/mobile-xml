@@ -34,7 +34,7 @@ class BankCard extends StatelessWidget {
                 height: 50,
                 fit: BoxFit.cover,
               ),
-              SizedBox(width: Screen.kSize16),
+              SizedBox(width: kSize16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

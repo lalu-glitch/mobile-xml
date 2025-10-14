@@ -30,11 +30,11 @@ class HomeHeader extends StatelessWidget {
                         : DateTime.now().hour < 18
                         ? 'Selamat Sore,'
                         : 'Selamat Malam,',
-                    style: TextStyle(color: kWhite, fontSize: Screen.kSize16),
+                    style: TextStyle(color: kWhite, fontSize: kSize16),
                   ),
                   Text(
                     balanceVM.userBalance?.namauser ?? 'Guest',
-                    style: TextStyle(color: kWhite, fontSize: Screen.kSize20),
+                    style: TextStyle(color: kWhite, fontSize: kSize20),
                   ),
                 ],
               ),

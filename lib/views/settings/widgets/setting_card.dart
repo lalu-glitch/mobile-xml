@@ -22,7 +22,7 @@ class SettingCard extends StatelessWidget {
       child: ListTile(
         leading: Icon(icons, color: kOrange),
         title: Text(title),
-        trailing: Icon(Icons.arrow_forward_ios, size: Screen.kSize18),
+        trailing: Icon(Icons.arrow_forward_ios, size: kSize18),
         onTap: onTap,
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/screen_handler.dart';
 
 class ActionButton extends StatelessWidget {
   final String label;
@@ -31,7 +30,7 @@ class ActionButton extends StatelessWidget {
             label,
             style: TextStyle(
               color: kWhite,
-              fontSize: ScreenHandler.f(14),
+              fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
           ),

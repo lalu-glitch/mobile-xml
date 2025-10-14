@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/screen_handler.dart';
+
 import 'text_helper.dart';
 
 class ConfirmationSummary extends StatelessWidget {
@@ -18,10 +18,7 @@ class ConfirmationSummary extends StatelessWidget {
             const TextBody('Total Poin Ditukar'),
             Text(
               '120.000',
-              style: TextStyle(
-                fontSize: ScreenHandler.f(24),
-                fontWeight: FontWeight.w400,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
             ),
           ],
         ),

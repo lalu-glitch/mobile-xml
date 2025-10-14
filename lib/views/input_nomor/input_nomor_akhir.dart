@@ -135,14 +135,14 @@ class _InputNomorTujuanAkhirState
                 onPickContact: pickContact,
               ),
 
-              SizedBox(height: Screen.kSize14),
+              SizedBox(height: kSize14),
               Visibility(
                 visible: transaksi.isBebasNominal == 1,
                 child: const Text("Masukkan Nominal"),
               ),
               Visibility(
                 visible: transaksi.isBebasNominal == 1,
-                child: SizedBox(height: Screen.kSize8),
+                child: SizedBox(height: kSize8),
               ),
               Visibility(
                 visible: transaksi.isBebasNominal == 1,

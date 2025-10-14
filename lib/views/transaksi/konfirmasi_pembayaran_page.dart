@@ -67,7 +67,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                   "METODE PEMBAYARAN",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: Screen.kSize14,
+                    fontSize: kSize14,
                   ),
                 ),
               ),
@@ -155,7 +155,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                 method.nama ?? '-',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: Screen.kSize16,
+                  fontSize: kSize16,
                 ),
               ),
               Row(
@@ -244,7 +244,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
           child: Text(
             "SELANJUTNYA",
             style: TextStyle(
-              fontSize: Screen.kSize16,
+              fontSize: kSize16,
               fontWeight: FontWeight.bold,
               color: kWhite,
             ),

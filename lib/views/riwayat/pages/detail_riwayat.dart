@@ -169,7 +169,7 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
                             child: Text(
                               "Cetak Struk",
                               style: TextStyle(
-                                fontSize: Screen.kSize16,
+                                fontSize: kSize16,
                                 fontWeight: FontWeight.bold,
                                 color: kWhite,
                               ),

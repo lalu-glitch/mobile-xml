@@ -93,7 +93,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                     Text(
                       "Lupa Kode Agen",
                       style: TextStyle(
-                        fontSize: Screen.kSize28,
+                        fontSize: kSize28,
                         fontWeight: FontWeight.bold,
                         color: kBlack,
                       ),
@@ -106,7 +106,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                       "kami akan mengirimkan kode agen ke WhatsApp Anda.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: Screen.kSize14,
+                        fontSize: kSize14,
                         color: kNeutral80,
                         height: 1.4,
                       ),
@@ -138,7 +138,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                         child: Text(
                           "Kirim Permintaan",
                           style: TextStyle(
-                            fontSize: Screen.kSize18,
+                            fontSize: kSize18,
                             fontWeight: FontWeight.bold,
                             color: kWhite,
                           ),
@@ -155,7 +155,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                       child: Text(
                         "← Kembali ke Request OTP",
                         style: TextStyle(
-                          fontSize: Screen.kSize14,
+                          fontSize: kSize14,
                           color: Colors.blue,
                           fontWeight: FontWeight.w500,
                         ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/screen_handler.dart';
 
 class DetailTukarKomisiPage extends StatelessWidget {
   const DetailTukarKomisiPage({super.key});
@@ -34,12 +33,12 @@ class DetailTukarKomisiPage extends StatelessWidget {
 
                 child: Icon(Icons.paid_outlined, color: kWhite, size: 80),
               ),
-              SizedBox(height: ScreenHandler.h(60)),
+              SizedBox(height: kSize60),
               Text(
                 'Selamat',
                 style: TextStyle(
                   color: kOrange,
-                  fontSize: ScreenHandler.f(18),
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -48,16 +47,16 @@ class DetailTukarKomisiPage extends StatelessWidget {
                 'PENUKARAN KOMISI BERHASIL',
                 style: TextStyle(
                   color: kBlack,
-                  fontSize: ScreenHandler.f(18),
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(height: ScreenHandler.h(8)),
+              SizedBox(height: kSize8),
               Text(
                 'Komisimu berhasil ditukar menjadi Saldo XML senilai 1.000.000. Terus kumpulin poinnya dan nikmati lebih banyak keuntungan bareng XML Mobile!',
                 style: TextStyle(
                   color: kNeutral90,
-                  fontSize: ScreenHandler.f(12),
+                  fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
                 textAlign: TextAlign.center,
@@ -82,7 +81,7 @@ class DetailTukarKomisiPage extends StatelessWidget {
                     child: Text(
                       "Lanjut Transaksi",
                       style: TextStyle(
-                        fontSize: ScreenHandler.f(14),
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: kWhite,
                       ),

@@ -15,26 +15,26 @@ class InfoAkunShimmer extends StatelessWidget {
           highlightColor: Colors.grey.shade100,
           child: Container(
             width: double.infinity,
-            height: Screen.kSize64 * 3,
+            height: kSize64 * 3,
             color: Colors.transparent,
             padding: EdgeInsets.symmetric(
-              vertical: Screen.kSize16,
-              horizontal: Screen.kSize16,
+              vertical: kSize16,
+              horizontal: kSize16,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Avatar shimmer
                 Container(
-                  width: Screen.kSize80,
-                  height: Screen.kSize80,
+                  width: kSize80,
+                  height: kSize80,
                   decoration: BoxDecoration(
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),
 
-                SizedBox(width: Screen.kSize24),
+                SizedBox(width: kSize24),
 
                 Expanded(
                   child: Column(
@@ -47,34 +47,34 @@ class InfoAkunShimmer extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Container(
-                              height: Screen.kSize24,
+                              height: kSize24,
                               color: Colors.grey,
                             ),
                           ),
-                          SizedBox(width: Screen.kSize16),
+                          SizedBox(width: kSize16),
                           Container(
-                            width: Screen.kSize20,
-                            height: Screen.kSize20,
+                            width: kSize20,
+                            height: kSize20,
                             color: Colors.grey,
                           ),
                         ],
                       ),
 
-                      SizedBox(height: Screen.kSize8),
+                      SizedBox(height: kSize8),
 
                       // Baris ID shimmer
                       Row(
                         children: [
                           Expanded(
                             child: Container(
-                              height: Screen.kSize18,
+                              height: kSize18,
                               color: Colors.grey,
                             ),
                           ),
-                          SizedBox(width: Screen.kSize16),
+                          SizedBox(width: kSize16),
                           Container(
-                            width: Screen.kSize40,
-                            height: Screen.kSize18,
+                            width: kSize40,
+                            height: kSize18,
                             decoration: BoxDecoration(
                               color: Colors.grey,
                               borderRadius: BorderRadius.circular(100),
@@ -94,8 +94,8 @@ class InfoAkunShimmer extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             padding: EdgeInsets.symmetric(
-              vertical: Screen.kSize32,
-              horizontal: Screen.kSize16,
+              vertical: kSize32,
+              horizontal: kSize16,
             ),
             itemCount: 5, // jumlah dummy card shimmer
             itemBuilder: (context, index) {
@@ -104,7 +104,7 @@ class InfoAkunShimmer extends StatelessWidget {
                 highlightColor: Colors.grey.shade100,
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 12),
-                  height: Screen.kSize64,
+                  height: kSize64,
                   decoration: BoxDecoration(
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(12),

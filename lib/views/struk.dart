@@ -80,7 +80,7 @@ class _StrukPageState extends State<StrukPage> {
                       style: TextStyle(
                         fontFamily: "monospace",
                         fontWeight: FontWeight.bold,
-                        fontSize: Screen.kSize16,
+                        fontSize: kSize16,
                       ),
                     ),
                   ),
@@ -137,7 +137,7 @@ class _StrukPageState extends State<StrukPage> {
                     trx!.outbox,
                     style: TextStyle(
                       fontFamily: "monospace",
-                      fontSize: Screen.kSize14,
+                      fontSize: kSize14,
                     ),
                   ),
                   const Divider(),
@@ -146,7 +146,7 @@ class _StrukPageState extends State<StrukPage> {
                       "--- TERIMA KASIH ---",
                       style: TextStyle(
                         fontFamily: "monospace",
-                        fontSize: Screen.kSize14,
+                        fontSize: kSize14,
                       ),
                     ),
                   ),
@@ -180,10 +180,7 @@ class _StrukPageState extends State<StrukPage> {
                         icon: const Icon(Icons.print, color: kWhite),
                         label: Text(
                           "Cetak",
-                          style: TextStyle(
-                            color: kWhite,
-                            fontSize: Screen.kSize16,
-                          ),
+                          style: TextStyle(color: kWhite, fontSize: kSize16),
                         ),
                       ),
                     ),
@@ -210,10 +207,7 @@ class _StrukPageState extends State<StrukPage> {
                         icon: const Icon(Icons.share, color: kWhite),
                         label: Text(
                           "Share",
-                          style: TextStyle(
-                            color: kWhite,
-                            fontSize: Screen.kSize16,
-                          ),
+                          style: TextStyle(color: kWhite, fontSize: kSize16),
                         ),
                       ),
                     ),
@@ -237,7 +231,7 @@ class _StrukPageState extends State<StrukPage> {
                     child: Text(
                       "Selesai",
                       style: TextStyle(
-                        fontSize: Screen.kSize18,
+                        fontSize: kSize18,
                         fontWeight: FontWeight.bold,
                         color: kWhite,
                       ),

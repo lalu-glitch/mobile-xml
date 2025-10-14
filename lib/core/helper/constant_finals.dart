@@ -5,43 +5,40 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 String baseURL = '${dotenv.env['BASE_URL']}';
 
-class Screen {
-  static final FlutterView view =
-      WidgetsBinding.instance.platformDispatcher.views.first;
-  static final Size size = view.physicalSize / view.devicePixelRatio;
+final FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
+final Size size = view.physicalSize / view.devicePixelRatio;
 
-  static final double width = size.width;
-  static final double height = size.height;
+final double width = size.width;
+final double height = size.height;
 
-  static final double blockSizeHorizontal = width / 100;
-  static final double blockSizeVertical = height / 100;
+final double blockSizeHorizontal = width / 100;
+final double blockSizeVertical = height / 100;
 
-  static final double kSize2 = blockSizeHorizontal * 0.5;
-  static final double kSize4 = blockSizeHorizontal * 1;
-  static final double kSize8 = blockSizeHorizontal * 1.87;
-  static final double kSize10 = blockSizeHorizontal * 2.35;
-  static final double kSize11 = blockSizeHorizontal * 2.5;
-  static final double kSize12 = blockSizeHorizontal * 2.85;
-  static final double kSize14 = blockSizeHorizontal * 3.25;
-  static final double kSize16 = blockSizeHorizontal * 3.75;
-  static final double kSize18 = blockSizeHorizontal * 4.25;
-  static final double kSize20 = blockSizeHorizontal * 4.675;
-  static final double kSize24 = blockSizeHorizontal * 5.5;
-  static final double kSize28 = blockSizeHorizontal * 6.55;
-  static final double kSize32 = blockSizeHorizontal * 7.5;
-  static final double kSize40 = blockSizeHorizontal * 9.35;
+final double kSize2 = blockSizeHorizontal * 0.5;
+final double kSize4 = blockSizeHorizontal * 1;
+final double kSize8 = blockSizeHorizontal * 1.87;
+final double kSize10 = blockSizeHorizontal * 2.35;
+final double kSize11 = blockSizeHorizontal * 2.5;
+final double kSize12 = blockSizeHorizontal * 2.85;
+final double kSize14 = blockSizeHorizontal * 3.25;
+final double kSize16 = blockSizeHorizontal * 3.75;
+final double kSize18 = blockSizeHorizontal * 4.25;
+final double kSize20 = blockSizeHorizontal * 4.675;
+final double kSize24 = blockSizeHorizontal * 5.5;
+final double kSize28 = blockSizeHorizontal * 6.55;
+final double kSize32 = blockSizeHorizontal * 7.5;
+final double kSize40 = blockSizeHorizontal * 9.35;
 
-  //new size
-  static final double kSize44 = blockSizeHorizontal * 10.3;
-  static final double kSize48 = blockSizeHorizontal * 11.2;
-  static final double kSize50 = blockSizeHorizontal * 11.6;
-  static final double kSize56 = blockSizeHorizontal * 13.0;
-  static final double kSize60 = blockSizeHorizontal * 14.0;
-  static final double kSize64 = blockSizeHorizontal * 15.0;
-  static final double kSize72 = blockSizeHorizontal * 17.0;
-  static final double kSize80 = blockSizeHorizontal * 19.0;
-  static final double kSize100 = blockSizeHorizontal * 23.5;
-}
+//new size
+final double kSize44 = blockSizeHorizontal * 10.3;
+final double kSize48 = blockSizeHorizontal * 11.2;
+final double kSize50 = blockSizeHorizontal * 11.6;
+final double kSize56 = blockSizeHorizontal * 13.0;
+final double kSize60 = blockSizeHorizontal * 14.0;
+final double kSize64 = blockSizeHorizontal * 15.0;
+final double kSize72 = blockSizeHorizontal * 17.0;
+final double kSize80 = blockSizeHorizontal * 19.0;
+final double kSize100 = blockSizeHorizontal * 23.5;
 
 //Colors
 

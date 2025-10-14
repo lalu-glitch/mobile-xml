@@ -158,7 +158,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                                   : Text(
                                       "Bind Speedcash",
                                       style: TextStyle(
-                                        fontSize: Screen.kSize18,
+                                        fontSize: kSize18,
                                         fontWeight: FontWeight.w600,
                                         color: kWhite,
                                       ),

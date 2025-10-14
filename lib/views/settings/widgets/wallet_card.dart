@@ -98,10 +98,7 @@ class WalletCard extends StatelessWidget {
                         ),
                         child: Text(
                           'Hubungkan',
-                          style: TextStyle(
-                            color: kWhite,
-                            fontSize: Screen.kSize16,
-                          ),
+                          style: TextStyle(color: kWhite, fontSize: kSize16),
                         ),
                       )
                     : ElevatedButton(
@@ -129,7 +126,7 @@ class WalletCard extends StatelessWidget {
                               'Unbind',
                               style: TextStyle(
                                 color: kWhite,
-                                fontSize: Screen.kSize16,
+                                fontSize: kSize16,
                               ),
                             ),
                             if (isLoading) ...[

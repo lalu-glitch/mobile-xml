@@ -24,7 +24,7 @@ Widget infoRow(String label, String value, {bool isTotal = false}) {
           maxLines: 2,
           style: TextStyle(
             fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
-            fontSize: isTotal ? Screen.kSize16 : Screen.kSize14,
+            fontSize: isTotal ? kSize16 : kSize14,
             color: isTotal ? kOrange : Colors.black,
           ),
         ),

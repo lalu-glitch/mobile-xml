@@ -38,7 +38,7 @@ class WalletSection extends StatelessWidget {
               trailing: AnimatedRotation(
                 turns: isExpanded ? 0.25 : 0,
                 duration: const Duration(milliseconds: 200),
-                child: Icon(Icons.arrow_forward_ios, size: Screen.kSize18),
+                child: Icon(Icons.arrow_forward_ios, size: kSize18),
               ),
             ),
           ),

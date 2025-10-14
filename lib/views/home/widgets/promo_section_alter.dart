@@ -114,7 +114,7 @@ class PromoSection extends StatelessWidget {
                                 child: Text(
                                   "Promo Murah Merdeka Merdeka Merdeka $i",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: Screen.kSize14),
+                                  style: TextStyle(fontSize: kSize14),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   softWrap: false,

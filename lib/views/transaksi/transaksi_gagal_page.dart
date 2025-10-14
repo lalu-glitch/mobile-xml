@@ -33,7 +33,7 @@ class TransaksiGagalPage extends StatelessWidget {
                 "Transaksi Gagal",
                 style: TextStyle(
                   color: kWhite,
-                  fontSize: Screen.kSize24,
+                  fontSize: kSize24,
                   fontWeight: FontWeight.bold,
                 ),
               ),

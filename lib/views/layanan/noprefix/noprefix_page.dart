@@ -229,7 +229,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                         style: TextStyle(
                           color: kWhite,
                           fontWeight: FontWeight.bold,
-                          fontSize: Screen.kSize16,
+                          fontSize: kSize16,
                         ),
                       ),
                       ElevatedButton(

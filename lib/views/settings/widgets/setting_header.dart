@@ -12,12 +12,9 @@ class SettingHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: Screen.kSize64 * 2,
+      height: kSize64 * 2,
       color: kOrange,
-      padding: EdgeInsets.symmetric(
-        vertical: Screen.kSize16,
-        horizontal: Screen.kSize16,
-      ),
+      padding: EdgeInsets.symmetric(vertical: kSize16, horizontal: kSize16),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
@@ -83,8 +80,8 @@ class SettingHeader extends StatelessWidget {
       //   children: [
       //     // Avatar
       //     Container(
-      //       width: Screen.kSize80,
-      //       height: Screen.kSize80,
+      //       width: kSize80,
+      //       height: kSize80,
       //       decoration: BoxDecoration(
       //         color: kWhite,
       //         borderRadius: BorderRadius.circular(100),
@@ -94,7 +91,7 @@ class SettingHeader extends StatelessWidget {
       //       ),
       //     ),
 
-      //     SizedBox(width: Screen.kSize24),
+      //     SizedBox(width: kSize24),
 
       //     Expanded(
       //       child: Column(
@@ -127,7 +124,7 @@ class SettingHeader extends StatelessWidget {
       //                   ),
       //                 ),
       //               ),
-      //               SizedBox(width: Screen.kSize16),
+      //               SizedBox(width: kSize16),
       //               IconButton(
       //                 icon: Icon(Icons.mode_edit_rounded),
       //                 color: kWhite,
@@ -137,7 +134,7 @@ class SettingHeader extends StatelessWidget {
       //             ],
       //           ),
 
-      //           SizedBox(height: Screen.kSize8),
+      //           SizedBox(height: kSize8),
 
       //           // Baris ID + Badge
       //           Row(
@@ -163,7 +160,7 @@ class SettingHeader extends StatelessWidget {
       //                   ),
       //                 ),
       //               ),
-      //               SizedBox(width: Screen.kSize16),
+      //               SizedBox(width: kSize16),
       //               Expanded(
       //                 child: Container(
       //                   padding: const EdgeInsets.symmetric(

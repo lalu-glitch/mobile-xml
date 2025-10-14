@@ -100,18 +100,18 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
             Icon(
               Icons.warning_rounded, // Tambah ikon untuk visualisasi peringatan
               color: kRed,
-              size: Screen.kSize48,
+              size: kSize48,
             ),
             const SizedBox(height: 16),
             Text(
               'Unbind Akun SpeedCash',
-              style: TextStyle(color: Colors.black, fontSize: Screen.kSize20),
+              style: TextStyle(color: Colors.black, fontSize: kSize20),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               'Apakah Anda yakin ingin melepas akun SpeedCash Anda?',
-              style: TextStyle(color: Colors.grey, fontSize: Screen.kSize16),
+              style: TextStyle(color: Colors.grey, fontSize: kSize16),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
@@ -129,7 +129,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
               ),
               child: Text(
                 'Ya, Unbind',
-                style: TextStyle(color: kWhite, fontSize: Screen.kSize16),
+                style: TextStyle(color: kWhite, fontSize: kSize16),
               ),
             ),
             const SizedBox(height: 10),
@@ -139,7 +139,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
               },
               child: Text(
                 'Batal',
-                style: TextStyle(color: Colors.grey, fontSize: Screen.kSize16),
+                style: TextStyle(color: Colors.grey, fontSize: kSize16),
               ),
             ),
           ],
@@ -162,21 +162,17 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Icon(
-              Icons.do_disturb_on_rounded,
-              color: kRed,
-              size: Screen.kSize48,
-            ),
+            Icon(Icons.do_disturb_on_rounded, color: kRed, size: kSize48),
             const SizedBox(height: 16),
             Text(
               'Keluar',
-              style: TextStyle(color: Colors.black, fontSize: Screen.kSize20),
+              style: TextStyle(color: Colors.black, fontSize: kSize20),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               'Apakah Anda yakin ingin Keluar dari aplikasi?',
-              style: TextStyle(color: Colors.grey, fontSize: Screen.kSize16),
+              style: TextStyle(color: Colors.grey, fontSize: kSize16),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
@@ -194,7 +190,7 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
               ),
               child: Text(
                 'Ya, Keluar',
-                style: TextStyle(color: kWhite, fontSize: Screen.kSize16),
+                style: TextStyle(color: kWhite, fontSize: kSize16),
               ),
             ),
             const SizedBox(height: 10),
@@ -204,7 +200,7 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
               },
               child: Text(
                 'Batal',
-                style: TextStyle(color: Colors.grey, fontSize: Screen.kSize16),
+                style: TextStyle(color: Colors.grey, fontSize: kSize16),
               ),
             ),
           ],

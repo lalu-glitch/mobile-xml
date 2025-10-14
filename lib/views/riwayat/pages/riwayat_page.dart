@@ -42,7 +42,7 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
               return Center(
                 child: Text(
                   state.message,
-                  style: TextStyle(fontSize: Screen.kSize16, color: Colors.red),
+                  style: TextStyle(fontSize: kSize16, color: Colors.red),
                 ),
               );
             }
@@ -70,10 +70,7 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
                 child: Center(
                   child: Text(
                     "Belum ada transaksi",
-                    style: TextStyle(
-                      fontSize: Screen.kSize16,
-                      color: Colors.grey,
-                    ),
+                    style: TextStyle(fontSize: kSize16, color: Colors.grey),
                   ),
                 ),
               );
@@ -133,7 +130,7 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
                             : Text(
                                 "Lainnya",
                                 style: TextStyle(
-                                  fontSize: Screen.kSize16,
+                                  fontSize: kSize16,
                                   fontWeight: FontWeight.bold,
                                   color: kWhite,
                                 ),

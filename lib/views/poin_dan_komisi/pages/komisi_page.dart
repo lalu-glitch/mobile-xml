@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/screen_handler.dart';
 import '../../../core/utils/bottom_sheet.dart';
 import '../../auth/widgets/custom_textfield.dart';
 
@@ -11,7 +10,6 @@ class KomisiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final komisiCtrl = TextEditingController();
-    ScreenHandler.init(context);
 
     return DefaultTabController(
       length: 2,
@@ -37,7 +35,7 @@ class KomisiPage extends StatelessWidget {
             SafeArea(
               child: Column(
                 children: [
-                  SizedBox(height: ScreenHandler.h(150)),
+                  SizedBox(height: kSize50 * 3),
 
                   // Body bawah (abu)
                   Expanded(
@@ -46,7 +44,7 @@ class KomisiPage extends StatelessWidget {
                       color: kBackground,
                       child: Column(
                         children: [
-                          SizedBox(height: ScreenHandler.h(150)),
+                          SizedBox(height: kSize50 * 3),
 
                           TabBar(
                             labelColor: kOrange,
@@ -95,7 +93,7 @@ class KomisiPage extends StatelessWidget {
                                         'Tanggal: 2025-10-11',
                                         style: TextStyle(
                                           color: kNeutral80,
-                                          fontSize: ScreenHandler.f(12),
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
@@ -103,7 +101,7 @@ class KomisiPage extends StatelessWidget {
                                         '+Rp25.000',
                                         style: TextStyle(
                                           color: Colors.green,
-                                          fontSize: ScreenHandler.f(14),
+                                          fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
@@ -145,7 +143,7 @@ class KomisiPage extends StatelessWidget {
                                         'Ferry Irwandi',
                                         style: TextStyle(
                                           color: kNeutral80,
-                                          fontSize: ScreenHandler.f(12),
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
@@ -153,7 +151,7 @@ class KomisiPage extends StatelessWidget {
                                         '+Rp99.000.000',
                                         style: TextStyle(
                                           color: Colors.blue,
-                                          fontSize: ScreenHandler.f(14),
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
@@ -188,30 +186,24 @@ class KomisiPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min, // dinamis sesuai konten
                       children: [
-                        Text(
-                          'SEO XMLTRONIK',
-                          style: TextStyle(fontSize: ScreenHandler.f(16)),
-                        ),
+                        Text('SEO XMLTRONIK', style: TextStyle(fontSize: 16)),
                         Text(
                           'Merchant ID : SMS12532',
-                          style: TextStyle(
-                            fontSize: ScreenHandler.f(12),
-                            color: kNeutral80,
-                          ),
+                          style: TextStyle(fontSize: 12, color: kNeutral80),
                         ),
-                        SizedBox(height: ScreenHandler.h(20)),
+                        SizedBox(height: kSize20),
                         Text(
                           '123.456.789',
                           style: TextStyle(
-                            fontSize: ScreenHandler.f(32),
+                            fontSize: 32,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(height: ScreenHandler.h(16)),
+                        SizedBox(height: kSize16),
 
                         // input field
                         SizedBox(
-                          height: ScreenHandler.h(45),
+                          height: kSize44,
                           child: Row(
                             children: [
                               Expanded(
@@ -255,16 +247,16 @@ class KomisiPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: ScreenHandler.h(16)),
+                        SizedBox(height: kSize16),
                         Row(
                           children: [
                             Icon(Icons.warning_rounded, color: kYellow),
-                            SizedBox(width: ScreenHandler.w(8)),
+                            SizedBox(width: kSize8),
                             Expanded(
                               child: Text(
                                 'Setiap akhir bulan akan dilakukan pencairan Margin mitra massal pada jam 23.50 WIB',
                                 style: TextStyle(
-                                  fontSize: ScreenHandler.f(10),
+                                  fontSize: 10,
                                   fontWeight: FontWeight.w400,
                                   color: kNeutral80,
                                 ),

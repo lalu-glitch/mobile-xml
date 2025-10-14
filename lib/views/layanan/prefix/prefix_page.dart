@@ -261,8 +261,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                                       "Gangguan",
                                                       style: TextStyle(
                                                         color: kRed,
-                                                        fontSize:
-                                                            Screen.kSize12,
+                                                        fontSize: kSize12,
                                                       ),
                                                     ),
                                                   ],
@@ -339,7 +338,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                             style: TextStyle(
                               color: kWhite,
                               fontWeight: FontWeight.bold,
-                              fontSize: Screen.kSize16,
+                              fontSize: kSize16,
                             ),
                           ),
                           ElevatedButton(

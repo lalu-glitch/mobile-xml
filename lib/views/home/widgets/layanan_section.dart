@@ -41,10 +41,7 @@ class LayananSection extends StatelessWidget {
           children: [
             Text(
               kategori.toUpperCase(),
-              style: TextStyle(
-                fontSize: Screen.kSize18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: kSize18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             Container(
@@ -115,7 +112,7 @@ class LayananSection extends StatelessWidget {
                         Expanded(
                           child: Text(
                             item.title ?? '-',
-                            style: TextStyle(fontSize: Screen.kSize12),
+                            style: TextStyle(fontSize: kSize12),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,

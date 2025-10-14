@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/screen_handler.dart';
 
 class InfoText extends StatelessWidget {
   final String label;
@@ -31,10 +30,7 @@ class TextTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
-        fontSize: ScreenHandler.f(18),
-        fontWeight: FontWeight.w600,
-      ),
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
     );
   }
 }
@@ -48,7 +44,7 @@ class TextSub extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: ScreenHandler.f(12),
+        fontSize: 12,
         color: kNeutral70,
         fontWeight: FontWeight.w400,
       ),
@@ -65,7 +61,7 @@ class TextLabel extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: ScreenHandler.f(12),
+        fontSize: 12,
         color: kNeutral70,
         fontWeight: FontWeight.w400,
       ),
@@ -81,10 +77,7 @@ class TextBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
-        fontSize: ScreenHandler.f(14),
-        fontWeight: FontWeight.w500,
-      ),
+      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
     );
   }
 }

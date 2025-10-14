@@ -87,7 +87,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
       SizedBox(height: 16),
       Text(
         "Memproses...",
-        style: TextStyle(fontSize: Screen.kSize24, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: kSize24, fontWeight: FontWeight.bold),
       ),
     ],
   );
@@ -116,7 +116,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           (message != null && message.isNotEmpty)
               ? message
               : "Gangguan transaksi, Ulangi beberapa saat lagi.",
-          style: TextStyle(color: kRed, fontSize: Screen.kSize16),
+          style: TextStyle(color: kRed, fontSize: kSize16),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 20),
@@ -142,7 +142,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           Text(
             status!.keterangan,
             style: TextStyle(
-              fontSize: Screen.kSize32,
+              fontSize: kSize32,
               fontWeight: FontWeight.bold,
               color: Colors.green,
             ),
@@ -151,7 +151,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           const SizedBox(height: 20),
           Text(
             status.outbox,
-            style: TextStyle(fontSize: Screen.kSize14, color: Colors.black),
+            style: TextStyle(fontSize: kSize14, color: Colors.black),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
@@ -179,7 +179,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           Text(
             status?.keterangan ?? "GAGAL",
             style: TextStyle(
-              fontSize: Screen.kSize18,
+              fontSize: kSize18,
               fontWeight: FontWeight.bold,
               color: kRed,
             ),
@@ -188,7 +188,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           const SizedBox(height: 20),
           Text(
             status?.outbox ?? "Silahkan Lihat Detail",
-            style: TextStyle(fontSize: Screen.kSize14, color: kBlack),
+            style: TextStyle(fontSize: kSize14, color: kBlack),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
@@ -214,15 +214,12 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           const SizedBox(height: 16),
           Text(
             status?.keterangan ?? "Menunggu Konfirmasi...",
-            style: TextStyle(
-              fontSize: Screen.kSize18,
-              fontWeight: FontWeight.w500,
-            ),
+            style: TextStyle(fontSize: kSize18, fontWeight: FontWeight.w500),
             textAlign: TextAlign.center,
           ),
           Text(
             "Transaksi mungkin memakan waktu lama, Cek history transaksi.",
-            style: TextStyle(color: Colors.black, fontSize: Screen.kSize14),
+            style: TextStyle(color: Colors.black, fontSize: kSize14),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),

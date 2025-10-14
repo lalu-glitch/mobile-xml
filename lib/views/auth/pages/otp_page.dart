@@ -167,7 +167,7 @@ class _KodeOTPState extends State<KodeOTP> {
               Text(
                 "Kode OTP akan kadaluarsa dalam ${formatTime(start)}",
                 style: TextStyle(
-                  fontSize: Screen.kSize14,
+                  fontSize: kSize14,
                   color: start == 0 ? kRed : kNeutral80,
                 ),
               ),

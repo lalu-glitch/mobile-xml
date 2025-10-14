@@ -12,7 +12,7 @@ class AnalyticsPage extends StatelessWidget {
       body: Center(
         child: Text(
           "This is Analytics Page",
-          style: TextStyle(fontSize: Screen.kSize20),
+          style: TextStyle(fontSize: kSize20),
         ),
       ),
     );

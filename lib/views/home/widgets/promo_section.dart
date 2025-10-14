@@ -32,10 +32,7 @@ class PastiPromoSection extends StatelessWidget {
       children: [
         Text(
           'Pasti Promo',
-          style: TextStyle(
-            fontSize: Screen.kSize18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: kSize18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         SizedBox(

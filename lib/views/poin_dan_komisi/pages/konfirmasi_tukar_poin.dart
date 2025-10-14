@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xmlapp/core/helper/constant_finals.dart';
-import '../../../core/helper/screen_handler.dart';
+
 import '../../../core/utils/bottom_sheet.dart';
 import '../widgets/action_buttor.dart';
 import '../widgets/confirmation_card_content.dart';
@@ -11,7 +11,6 @@ class KonfirmasiTukarPoin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenHandler.init(context);
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -20,7 +19,7 @@ class KonfirmasiTukarPoin extends StatelessWidget {
           'Konfirmasi Tukar Poin',
           style: TextStyle(
             color: kWhite,
-            fontSize: ScreenHandler.f(18),
+            fontSize: 18,
             fontWeight: FontWeight.w500,
           ),
         ),

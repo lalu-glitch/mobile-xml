@@ -11,10 +11,7 @@ class ShopsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: kBackground,
       body: Center(
-        child: Text(
-          "Halaman shops",
-          style: TextStyle(fontSize: Screen.kSize20),
-        ),
+        child: Text("Halaman shops", style: TextStyle(fontSize: kSize20)),
       ),
     );
   }

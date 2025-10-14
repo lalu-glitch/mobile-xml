@@ -186,8 +186,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 Expanded(
                   child: ListView(
                     padding: EdgeInsets.symmetric(
-                      vertical: Screen.kSize32,
-                      horizontal: Screen.kSize16,
+                      vertical: kSize32,
+                      horizontal: kSize16,
                     ),
                     children: [
                       /// --- DOMPET APLIKASI ---
