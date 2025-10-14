@@ -40,7 +40,7 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
             ), //nanti diganti dari API
           ],
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 32),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -68,7 +68,8 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
             ),
           ],
         ),
-        const SizedBox(height: 24),
+        Spacer(),
+        // const SizedBox(height: 24),
         IntrinsicHeight(
           child: Row(
             children: [
