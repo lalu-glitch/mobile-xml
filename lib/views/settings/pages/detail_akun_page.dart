@@ -46,7 +46,9 @@ class DetailInfoAkun extends StatelessWidget {
                         horizontal: 20,
                       ),
                       decoration: BoxDecoration(
-                        color: kOrange,
+                        gradient: LinearGradient(
+                          colors: [Color(0xFFf4b95a), Color(0xFFba770c)],
+                        ),
                         borderRadius: BorderRadius.circular(26),
                       ),
                       child: Column(
