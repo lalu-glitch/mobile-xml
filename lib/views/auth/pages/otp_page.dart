@@ -19,64 +19,47 @@ class _KodeOTPState extends State<KodeOTP> {
   final kodeOTPCtrl = TextEditingController();
   final authService = AuthService();
 
-  //state
   bool loading = false;
   Timer? timer;
   int start = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  DateTime? expiresAt;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String expire = args["expiresAt"];
+    expiresAt = DateTime.parse(expire);
 
-    final expiresAt = DateTime.parse(expire);
-    start = expiresAt.difference(DateTime.now()).inSeconds;
-
+    start = expiresAt!.difference(DateTime.now()).inSeconds;
     if (start > 0) {
       startTimer();
     }
   }
 
   void startTimer() {
-    timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-      if (start == 0) {
-        if (mounted) {
-          // Tambahkan check mounted
-          setState(() {
-            timer.cancel();
-          });
-        }
-        ;
-      } else {
-        if (mounted) {
-          // Tambahkan check mounted
-          setState(() {
-            start--;
-          });
-        }
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      if (!mounted) return;
+
+      final remaining = expiresAt!.difference(DateTime.now()).inSeconds;
+
+      setState(() {
+        start = remaining > 0 ? remaining : 0;
+      });
+      if (remaining <= 0) {
+        t.cancel();
       }
     });
   }
 
-  // Methode buat format waktu
   String formatTime(int seconds) {
     int minutes = seconds ~/ 60;
     int remainingSeconds = seconds % 60;
-
-    String minutesStr = minutes.toString().padLeft(2, '0');
-    String secondsStr = remainingSeconds.toString().padLeft(2, '0');
-
-    return '$minutesStr:$secondsStr';
+    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 
-  // Methode request verifikasi OTP ke server
   Future<void> doVerifyOTP(String kodeReseller, String type) async {
     if (kodeOTPCtrl.text.trim().isEmpty) {
       showAppToast(context, 'OTP tidak boleh kosong', ToastType.warning);
@@ -89,14 +72,14 @@ class _KodeOTPState extends State<KodeOTP> {
       kodeOTPCtrl.text.trim(),
       type,
     );
-    if (mounted) {
-      setState(() => loading = false);
-    }
+    if (!mounted) return;
+    setState(() => loading = false);
 
     if (result["success"]) {
       Navigator.pushReplacementNamed(context, '/');
     } else {
-      showErrorDialog(context, result["message"]);
+      // ❗ Timer tetap sinkron karena kita hitung berdasarkan real-time (bukan increment)
+      await showErrorDialog(context, result["message"]);
     }
   }
 
@@ -113,7 +96,7 @@ class _KodeOTPState extends State<KodeOTP> {
       backgroundColor: kWhite,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsetsGeometry.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Row(
@@ -121,15 +104,11 @@ class _KodeOTPState extends State<KodeOTP> {
                 children: [
                   IconButton(
                     icon: Icon(Icons.arrow_back, color: kBlack),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                    onPressed: () => Navigator.pop(context),
                   ),
                   IconButton(
                     icon: Icon(Icons.headset_mic_rounded, color: kOrange),
-                    onPressed: () {
-                      showCSBottomSheet(context, "Hubungi CS");
-                    },
+                    onPressed: () => showCSBottomSheet(context, "Hubungi CS"),
                   ),
                 ],
               ),
@@ -144,12 +123,8 @@ class _KodeOTPState extends State<KodeOTP> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Masukkan kode OTP yang telah kami kirimkan ke akun whatsapp Anda',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: kNeutral80,
-                  fontWeight: FontWeight.normal,
-                ),
+                'Masukkan kode OTP yang telah kami kirimkan ke akun WhatsApp Anda',
+                style: TextStyle(fontSize: 14, color: kNeutral80),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 48),
@@ -181,7 +156,7 @@ class _KodeOTPState extends State<KodeOTP> {
                       ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: start == 0 ? kNeutral40 : kOrange,
-                  minimumSize: Size(double.infinity, 50),
+                  minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),

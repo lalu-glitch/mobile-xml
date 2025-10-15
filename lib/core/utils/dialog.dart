@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 import '../helper/constant_finals.dart';
 
-void showErrorDialog(BuildContext context, String message) {
-  showDialog(
+Future<void> showErrorDialog(BuildContext context, String message) {
+  // Explicit <void> untuk clarity
+  return showDialog<void>(
     context: context,
     builder: (context) {
       return Dialog(
