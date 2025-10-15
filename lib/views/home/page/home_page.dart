@@ -2,6 +2,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/helper/constant_finals.dart';
@@ -11,11 +12,11 @@ import '../../../viewmodels/balance_viewmodel.dart';
 import '../../../viewmodels/layanan_vm.dart';
 import '../../../viewmodels/promo_vm.dart';
 import '../../widgets/promo_popup.dart';
-import '../widgets/home_header.dart';
-import '../widgets/saldo_card.dart';
-import '../widgets/layanan_section.dart';
-import '../widgets/poin_komisi.dart';
-import '../widgets/promo_section.dart';
+import '../widgets/home_header_section.dart';
+import '../widgets/home_content_section.dart';
+import '../widgets/main_saldo_card_carousel.dart';
+import '../widgets/poin_komisi_overlay.dart';
+import '../widgets/home_promo_section.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,12 +30,11 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final balanceVM = Provider.of<BalanceViewModel>(context, listen: false);
-      final layananVM = Provider.of<LayananViewModel>(context, listen: false);
-      final promoVM = Provider.of<PromoViewModel>(context, listen: false);
-      balanceVM.fetchBalance();
-      layananVM.fetchLayanan();
-      promoVM.fetchPromo();
+      // Pindahkan semua fetch data ke sini agar lebih bersih
+      Provider.of<BalanceViewModel>(context, listen: false).fetchBalance();
+      Provider.of<LayananViewModel>(context, listen: false).fetchLayanan();
+      Provider.of<PromoViewModel>(context, listen: false).fetchPromo();
+
       // buat promo
       Future.delayed(const Duration(seconds: 1), () {
         PromoPopup.show(context, "assets/images/promo.jpg");
@@ -44,9 +44,29 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _storage = const FlutterSecureStorage();
     final balanceVM = Provider.of<BalanceViewModel>(context);
     final layananVM = Provider.of<LayananViewModel>(context);
     final promoVM = Provider.of<PromoViewModel>(context);
+
+    Future<void> _logout() async {
+      await _storage.delete(key: 'userData');
+      if (mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/authPage',
+          (route) => false,
+        );
+      }
+    }
+
+    // Cek status logout setiap kali state balanceVM berubah
+    if (balanceVM.userBalance?.isLogout == true) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showForceExitDialog(context, _logout);
+      });
+    }
+
     return WillPopScope(
       onWillPop: () async {
         return await showExitDialog(context);
@@ -94,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 16,
                               ),
-                              child: HomeHeader(balanceVM: balanceVM),
+                              child: HomeHeaderSection(balanceVM: balanceVM),
                             ),
                             const SizedBox(height: 150),
                             Container(
@@ -105,8 +125,8 @@ class _HomePageState extends State<HomePage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const SizedBox(height: 120),
-                                  PastiPromoSection(),
+                                  const SizedBox(height: 100),
+                                  HomePromoSection(),
                                   const SizedBox(height: 24),
                                   layananVM.isLoading
                                       ? ShimmerBox.buildShimmerIcons()
@@ -114,7 +134,9 @@ class _HomePageState extends State<HomePage> {
                                       ? const Center(
                                           child: Text('Gagal memuat icon'),
                                         )
-                                      : LayananSection(layananVM: layananVM),
+                                      : HomeContentSection(
+                                          layananVM: layananVM,
+                                        ),
                                   const SizedBox(height: 24),
 
                                   const SizedBox(height: 24),
@@ -125,52 +147,10 @@ class _HomePageState extends State<HomePage> {
                         ),
 
                         //Poin dan Komisi
-                        PoinKomisi(),
+                        PoinKomisiOverlay(),
 
                         // Main Card
-                        Positioned(
-                          top: 150,
-                          left: 0,
-                          right: 0,
-                          child: SizedBox(
-                            height: 220,
-                            child:
-                                (balanceVM.isLoading ||
-                                    balanceVM.userBalance == null)
-                                // Jika loading atau data null, tampilkan satu SaldoCard dengan shimmer-nya
-                                ? Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0,
-                                    ),
-                                    child: SaldoCard(balanceVM: balanceVM),
-                                  )
-                                // Jika data sudah ada, baru bangun PageView
-                                : PageView.builder(
-                                    controller: PageController(
-                                      viewportFraction: 0.9,
-                                    ),
-                                    padEnds: true,
-                                    clipBehavior: Clip.none,
-                                    // Gunakan ?. dan ?? untuk keamanan
-                                    itemCount:
-                                        (balanceVM
-                                            .userBalance
-                                            ?.ewallet
-                                            .length ??
-                                        0),
-                                    itemBuilder: (context, index) {
-                                      // TODO: Buat card terpisah untuk E-Wallet jika desainnya berbeda
-                                      // Untuk sekarang, kita tampilkan SaldoCard yang sama untuk semua
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 4,
-                                        ),
-                                        child: SaldoCard(balanceVM: balanceVM),
-                                      );
-                                    },
-                                  ),
-                          ),
-                        ),
+                        MainSaldoCardCarousel(balanceVM: balanceVM),
                       ],
                     ),
                   ),

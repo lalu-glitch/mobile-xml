@@ -191,7 +191,7 @@ class AuthService extends ChangeNotifier {
     try {
       final deviceId = await _loadDeviceId();
       final response = await _dio.post(
-        "$baseUrl/register",
+        "$baseUrl/user/register",
         data: {
           "nama": nama,
           "pemilik": pemilik,
@@ -291,7 +291,7 @@ class AuthService extends ChangeNotifier {
   Future<Map<String, dynamic>> requestKodeAgen(String nomor) async {
     try {
       final response = await _dio.post(
-        "$baseUrl/lupa_agen",
+        "$baseUrl/user/lupa_agen",
         data: {"nomor": nomor},
         options: Options(
           headers: {

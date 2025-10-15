@@ -6,7 +6,7 @@ class ActionItem extends StatelessWidget {
   final IconData icon;
   final String label;
 
-  const ActionItem({required this.icon, required this.label});
+  const ActionItem(this.icon, this.label);
 
   @override
   Widget build(BuildContext context) {

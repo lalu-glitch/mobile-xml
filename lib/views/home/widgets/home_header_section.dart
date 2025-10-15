@@ -4,8 +4,8 @@ import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 
-class HomeHeader extends StatelessWidget {
-  const HomeHeader({required this.balanceVM, super.key});
+class HomeHeaderSection extends StatelessWidget {
+  const HomeHeaderSection({required this.balanceVM, super.key});
 
   final BalanceViewModel balanceVM;
 

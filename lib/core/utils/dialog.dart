@@ -302,3 +302,82 @@ Future<bool> showExitDialog(BuildContext context) async {
       ) ??
       false;
 }
+
+Future<bool> showForceExitDialog(
+  BuildContext context,
+  VoidCallback onConfirm,
+) async {
+  return await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Ikon keluar
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    child: const Icon(
+                      Icons.warning_rounded,
+                      color: Colors.red,
+                      size: 48,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Title
+                  const Text(
+                    "Perhatian",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: kRed,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Message
+                  const Text(
+                    "Sesi Anda telah habis, silahkan login ulang",
+                    style: TextStyle(fontSize: 14, color: kBlack),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Tombol
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kRed,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        onConfirm();
+                        Navigator.pushReplacementNamed(context, '/authPage');
+                      },
+                      child: const Text("Ya", style: TextStyle(color: kWhite)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ) ??
+      false;
+}

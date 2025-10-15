@@ -21,8 +21,7 @@ class ApiService {
   /// Ambil saldo user
   Future<UserBalance> fetchUserBalance() async {
     try {
-      final response = await authService.dio.get("$baseURL/get_user");
-      print('response dari fetch user balance : $response');
+      final response = await authService.dio.get("$baseURL/user/balance");
       if (response.statusCode == 200) {
         final dataMap = Map<String, dynamic>.from(response.data);
         return UserBalance.fromJson(dataMap);
@@ -251,7 +250,7 @@ class ApiService {
   //INFO AKUN
   Future<InfoAkunModel> infoAkun() async {
     try {
-      final response = await authService.dio.get("$baseURL/info_akun");
+      final response = await authService.dio.get("$baseURL/user/info");
       if (response.statusCode == 200) {
         return InfoAkunModel.fromJson(response.data);
       } else {

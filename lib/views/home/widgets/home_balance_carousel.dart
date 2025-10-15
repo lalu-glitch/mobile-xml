@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'package:shimmer/shimmer.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
-import 'header_saldo_card.dart';
+import 'saldo_header_card.dart';
 
-class SaldoCard extends StatelessWidget {
-  const SaldoCard({required this.balanceVM, super.key});
+class HomeBalanceCarousel extends StatelessWidget {
+  const HomeBalanceCarousel({required this.balanceVM, super.key});
 
   final BalanceViewModel balanceVM;
 

@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 
 import '../../../viewmodels/promo_vm.dart';
 
-class PastiPromoSection extends StatelessWidget {
-  const PastiPromoSection({super.key});
+class HomePromoSection extends StatelessWidget {
+  const HomePromoSection({super.key});
 
   @override
   Widget build(BuildContext context) {

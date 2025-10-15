@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
-import 'action_item.dart';
+import 'saldo_action_item.dart';
 
 class HeaderSaldo extends StatefulWidget {
   const HeaderSaldo({required this.balanceVM, super.key});
+
   final BalanceViewModel balanceVM;
 
   @override
@@ -73,9 +74,9 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
         IntrinsicHeight(
           child: Row(
             children: [
-              ActionItem(icon: Icons.add_rounded, label: 'Top Up Saldo'),
+              ActionItem(Icons.add_rounded, 'Top Up Saldo'),
               const SizedBox(width: 16),
-              ActionItem(icon: Icons.swap_horiz_sharp, label: 'Transfer Saldo'),
+              ActionItem(Icons.swap_horiz_sharp, 'Transfer Saldo'),
               const SizedBox(width: 16),
               Expanded(
                 child: GestureDetector(

@@ -1,22 +1,25 @@
 class UserBalance {
-  final String namauser;
-  final String kodeReseller;
-  final int saldo;
-  final int poin;
-  final String kodeLevel;
-  final List<EWallet> ewallet;
+  final bool isLogout;
+  final String? namauser;
+  final String? kodeReseller;
+  final int? saldo;
+  final int? poin;
+  final String? kodeLevel;
+  final List<EWallet>? ewallet;
 
   UserBalance({
-    required this.namauser,
-    required this.kodeReseller,
-    required this.saldo,
-    required this.poin,
-    required this.kodeLevel,
-    required this.ewallet,
+    required this.isLogout,
+    this.namauser,
+    this.kodeReseller,
+    this.saldo,
+    this.poin,
+    this.kodeLevel,
+    this.ewallet,
   });
 
   factory UserBalance.fromJson(Map<String, dynamic> json) {
     return UserBalance(
+      isLogout: json['logout'],
       namauser: json['nama'] ?? '',
       kodeReseller: json['kode_reseller'] ?? '',
       saldo: _parseInt(json['saldo']),
