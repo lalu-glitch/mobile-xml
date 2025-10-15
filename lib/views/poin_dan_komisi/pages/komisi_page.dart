@@ -100,7 +100,7 @@ class KomisiPage extends StatelessWidget {
                                       trailing: Text(
                                         '+Rp25.000',
                                         style: TextStyle(
-                                          color: Colors.green,
+                                          color: kGreen,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                         ),

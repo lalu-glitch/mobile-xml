@@ -188,7 +188,7 @@ class _StrukPageState extends State<StrukPage> {
                     Expanded(
                       child: ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: kGreen,
                           padding: const EdgeInsets.symmetric(vertical: 10),
                         ),
                         onPressed: () async {

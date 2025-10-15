@@ -137,14 +137,14 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.check_circle, color: Colors.green, size: 64),
+          const Icon(Icons.check_circle, color: kGreen, size: 64),
           const SizedBox(height: 16),
           Text(
             status!.keterangan,
             style: TextStyle(
               fontSize: kSize32,
               fontWeight: FontWeight.bold,
-              color: Colors.green,
+              color: kGreen,
             ),
             textAlign: TextAlign.center,
           ),

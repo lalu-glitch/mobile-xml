@@ -138,8 +138,6 @@ class _HomePageState extends State<HomePage> {
                                           layananVM: layananVM,
                                         ),
                                   const SizedBox(height: 24),
-
-                                  const SizedBox(height: 24),
                                 ],
                               ),
                             ),

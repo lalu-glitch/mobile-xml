@@ -110,7 +110,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
             ),
             const SizedBox(height: 8),
             Text(
-              'Apakah Anda yakin ingin melepas akun SpeedCash Anda?',
+              'Apakah Anda yakin ingin melepas akun Speedcash Anda?',
               style: TextStyle(color: Colors.grey, fontSize: kSize16),
               textAlign: TextAlign.center,
             ),
@@ -139,7 +139,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
               },
               child: Text(
                 'Batal',
-                style: TextStyle(color: Colors.grey, fontSize: kSize16),
+                style: TextStyle(color: kNeutral80, fontSize: kSize16),
               ),
             ),
           ],
