@@ -86,15 +86,6 @@ class ShopProducts extends StatelessWidget {
                     onTap: () {
                       final sequence = pageSequences[item.flow] ?? [];
 
-                      if (sequence.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Invalid flow ID: ${item.flow}'),
-                          ),
-                        );
-                        return;
-                      }
-
                       context.read<FlowCubit>().startFlow(item.flow!, item);
                       transaksi.setKodeCatatan(item.kodeCatatan);
 

@@ -76,19 +76,10 @@ class HomeContentSection extends StatelessWidget {
                     onTap: () {
                       final sequence = pageSequences[item.flow] ?? [];
 
-                      if (sequence.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Invalid flow ID: ${item.flow}'),
-                          ),
-                        );
-                        return;
-                      }
-
                       // Simpan state awal ke FlowCubit
                       context.read<FlowCubit>().startFlow(item.flow!, item);
 
-                      // // Simpan filename untuk prefix page
+                      // // Simpan kodeCatatan untuk prefix page
                       transaksi.setKodeCatatan(item.kodeCatatan);
 
                       // Navigasi ke halaman pertama dari flow
