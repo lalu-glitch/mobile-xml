@@ -45,14 +45,17 @@ class ActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ActionButton(label: 'Batal', color: kBlack, onPressed: () {}),
+        ActionButton(
+          label: 'Batal',
+          color: kBlack,
+          onPressed: () => Navigator.pop(context),
+        ),
         const SizedBox(width: 12),
         ActionButton(
           label: 'Konfirmasi',
           color: kOrange,
-          onPressed: () {
-            // TODO: Konfirmasi aksi
-          },
+          onPressed: () =>
+              Navigator.pushNamed(context, '/verifikasiTukarPoinPage'),
         ),
       ],
     );

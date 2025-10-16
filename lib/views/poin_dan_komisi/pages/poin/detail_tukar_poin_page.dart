@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:xmlapp/core/helper/constant_finals.dart';
 
-import '../../../core/utils/bottom_sheet.dart';
-import '../widgets/action_buttor.dart';
-import '../widgets/confirmation_card_content.dart';
-import '../widgets/custom_painter_helper.dart';
+import '../../../../core/utils/bottom_sheet.dart';
+import '../../widgets/action_button.dart';
+import '../../widgets/confirmation_card_content.dart';
+import '../../widgets/custom_painter_helper.dart';
 
-class KonfirmasiTukarPoin extends StatelessWidget {
-  const KonfirmasiTukarPoin({super.key});
+class DetailTukarPoin extends StatelessWidget {
+  const DetailTukarPoin({super.key});
 
   @override
   Widget build(BuildContext context) {
