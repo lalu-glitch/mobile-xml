@@ -3,19 +3,20 @@ import 'package:provider/provider.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../viewmodels/layanan_vm.dart';
-import '../../home/widgets/home_content_section.dart';
 import '../widgets/shop_category_chips.dart';
 import '../widgets/shop_app_bar_actions.dart';
+import 'shop_product.dart';
 
-class ShopsPage extends StatefulWidget {
-  const ShopsPage({super.key});
+class ShopPage extends StatefulWidget {
+  const ShopPage({super.key});
 
   @override
-  State<ShopsPage> createState() => _ShopsPageState();
+  State<ShopPage> createState() => _ShopPageState();
 }
 
-class _ShopsPageState extends State<ShopsPage> {
+class _ShopPageState extends State<ShopPage> {
   bool _isSearching = false;
+  String _selectedHeading = 'Semuanya'; // default tampil semua
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _ShopsPageState extends State<ShopsPage> {
   @override
   Widget build(BuildContext context) {
     final layananVM = context.watch<LayananViewModel>();
+
     return Scaffold(
       backgroundColor: kBackground,
       appBar: AppBar(
@@ -41,9 +43,7 @@ class _ShopsPageState extends State<ShopsPage> {
                   hintStyle: TextStyle(color: kWhite.withAlpha(200)),
                   border: InputBorder.none,
                 ),
-                onChanged: (value) {
-                  // Untuk saat ini tidak melakukan apa-apa
-                },
+                onChanged: (value) {},
               )
             : Text('Layanan Toko', style: TextStyle(color: kWhite)),
         iconTheme: IconThemeData(color: kWhite),
@@ -61,13 +61,24 @@ class _ShopsPageState extends State<ShopsPage> {
       ),
       body: Column(
         children: [
-          ShopsCategoryChips(),
+          ShopsCategoryChips(
+            layananVM: layananVM,
+            selectedHeading: _selectedHeading,
+            onHeadingSelected: (heading) {
+              setState(() {
+                _selectedHeading = heading;
+              });
+            },
+          ),
           const Divider(color: kNeutral50, thickness: 4),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: HomeContentSection(layananVM: layananVM),
+                child: ShopProducts(
+                  layananVM: layananVM,
+                  selectedHeading: _selectedHeading,
+                ),
               ),
             ),
           ),

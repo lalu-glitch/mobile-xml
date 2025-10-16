@@ -27,8 +27,6 @@ class LayananViewModel extends ChangeNotifier {
         for (var heading in layananSection.data) heading.heading: heading.list,
       };
 
-      print('layanan by heading ${layananSection.data}');
-
       _error = null;
     } catch (e) {
       _error = e.toString();

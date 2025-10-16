@@ -4,16 +4,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
-
 import '../../../core/utils/shimmer.dart';
-import '../../layanan/cubit/flow_cubit.dart';
 import '../../../viewmodels/layanan_vm.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../layanan/cubit/flow_cubit.dart';
 
-class HomeContentSection extends StatelessWidget {
-  const HomeContentSection({required this.layananVM, super.key});
+class ShopProducts extends StatelessWidget {
+  const ShopProducts({
+    required this.layananVM,
+    required this.selectedHeading,
+    super.key,
+  });
 
   final LayananViewModel layananVM;
+  final String selectedHeading;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +35,18 @@ class HomeContentSection extends StatelessWidget {
       return const Center(child: Text("Tidak ada layanan tersedia."));
     }
 
+    // Tentukan kategori mana yang ditampilkan
+    final entries = selectedHeading == 'Semuanya'
+        ? layananVM.layananByHeading.entries
+        : layananVM.layananByHeading.entries.where(
+            (entry) => entry.key == selectedHeading,
+          );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: layananVM.layananByHeading.entries.map((entry) {
-        final kategori = entry.key; // contoh: "Prabayar", "Tagihan", "E-Wallet"
-        final layananList = entry.value; // List<IconItem>
+      children: entries.map((entry) {
+        final kategori = entry.key;
+        final layananList = entry.value;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,8 +81,7 @@ class HomeContentSection extends StatelessWidget {
                 ),
                 itemCount: layananList.length,
                 itemBuilder: (context, i) {
-                  final item = layananList[i]; // IconItem
-
+                  final item = layananList[i];
                   return GestureDetector(
                     onTap: () {
                       final sequence = pageSequences[item.flow] ?? [];
@@ -85,13 +95,9 @@ class HomeContentSection extends StatelessWidget {
                         return;
                       }
 
-                      // Simpan state awal ke FlowCubit
                       context.read<FlowCubit>().startFlow(item.flow!, item);
-
-                      // // Simpan filename untuk prefix page
                       transaksi.setKodeCatatan(item.kodeCatatan);
 
-                      // Navigasi ke halaman pertama dari flow
                       final firstPage = sequence[0];
                       Navigator.pushNamed(context, pageRoutes[firstPage]!);
                     },
@@ -125,7 +131,6 @@ class HomeContentSection extends StatelessWidget {
                 },
               ),
             ),
-            // const SizedBox(height: 24),
           ],
         );
       }).toList(),

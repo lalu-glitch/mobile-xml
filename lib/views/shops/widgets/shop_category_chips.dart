@@ -1,34 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:xmlapp/core/helper/constant_finals.dart';
 
-import '../../../core/helper/constant_finals.dart';
+import '../../../viewmodels/layanan_vm.dart';
 
-class ShopsCategoryChips extends StatelessWidget {
-  const ShopsCategoryChips({super.key});
+class ShopsCategoryChips extends StatefulWidget {
+  const ShopsCategoryChips({
+    required this.layananVM,
+    required this.selectedHeading,
+    required this.onHeadingSelected,
+    super.key,
+  });
+
+  final LayananViewModel layananVM;
+  final String selectedHeading;
+  final ValueChanged<String> onHeadingSelected;
 
   @override
+  State<ShopsCategoryChips> createState() => _ShopsCategoryChipsState();
+}
+
+class _ShopsCategoryChipsState extends State<ShopsCategoryChips> {
+  @override
   Widget build(BuildContext context) {
+    if (widget.layananVM.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (widget.layananVM.error != null) {
+      return Center(
+        child: Text("Terjadi kesalahan: ${widget.layananVM.error}"),
+      );
+    }
+
+    if (widget.layananVM.layananByHeading.isEmpty) {
+      return const Center(child: Text("Tidak ada layanan tersedia."));
+    }
+
+    // opsi "Semuanya"
+    final headings = ['Semuanya', ...widget.layananVM.layananByHeading.keys];
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: SizedBox(
-        height: 35,
+        height: 40,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 10,
+          itemCount: headings.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 8),
+            final heading = headings[index];
+            final isSelected = heading == widget.selectedHeading;
+
+            return GestureDetector(
+              onTap: () => widget.onHeadingSelected(heading),
               child: Container(
-                width: 100,
-                height: 35,
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: kNeutral40,
-                  borderRadius: BorderRadius.circular(10),
+                  color: isSelected ? kOrange : kNeutral50,
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Center(
                   child: Text(
-                    'Chip $index',
-                    style: const TextStyle(
-                      color: kBlack,
+                    heading,
+                    style: TextStyle(
+                      color: isSelected ? kWhite : kBlack,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

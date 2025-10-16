@@ -21,7 +21,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     AuthGuard(child: HomePage()),
-    AuthGuard(child: ShopsPage()),
+    AuthGuard(child: ShopPage()),
     AuthGuard(child: RiwayatTransaksiPage()),
     AuthGuard(child: SettingsPage()),
   ];
