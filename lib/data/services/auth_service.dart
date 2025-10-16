@@ -144,7 +144,7 @@ class AuthService extends ChangeNotifier {
         data: {
           "kode_reseller": kodeReseller,
           "nomor": nomor,
-          "deviceId": deviceId,
+          "deviceId": 'android-$deviceId',
         },
         options: Options(
           headers: {

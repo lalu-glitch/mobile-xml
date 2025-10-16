@@ -5,7 +5,7 @@ import 'core/helper/constant_finals.dart';
 import 'views/home/page/home_page.dart';
 // import 'views/poin_dan_komisi/pages/widgets/top_bottom_ticket_cut.dart';
 import 'views/riwayat/pages/riwayat_page.dart';
-import 'views/shops/shops_page.dart';
+import 'views/shops/pages/shop_page.dart';
 import 'views/settings/pages/settings_page.dart';
 import 'data/services/auth_guard.dart';
 
@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
-            label: 'Shop',
+            label: 'Toko',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history_rounded),
