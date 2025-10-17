@@ -5,8 +5,13 @@ import '../../../core/helper/constant_finals.dart';
 class ActionItem extends StatelessWidget {
   final IconData icon;
   final String label;
+  final Color color;
 
-  const ActionItem(this.icon, this.label);
+  const ActionItem({
+    required this.icon,
+    required this.label,
+    this.color = kOrange,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,7 @@ class ActionItem extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
-            color: kOrange,
+            color: color,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: Colors.white, size: 24),

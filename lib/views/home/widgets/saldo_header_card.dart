@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:xmlapp/core/helper/currency.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../viewmodels/balance_viewmodel.dart';
 import 'saldo_action_item.dart';
 
 class HeaderSaldo extends StatefulWidget {
-  const HeaderSaldo({required this.balanceVM, super.key});
+  const HeaderSaldo({
+    required this.title,
+    required this.balance,
+    this.themeColor = kOrange,
+    super.key,
+  });
 
-  final BalanceViewModel balanceVM;
+  final String title;
+  final int balance;
+  final Color themeColor;
 
   @override
   State<HeaderSaldo> createState() => _HeaderSaldoState();
@@ -26,7 +33,7 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Saldo XML',
+              widget.title,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
@@ -48,7 +55,7 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
             Text(
               _isSaldoHidden
                   ? 'Rp •••••••'
-                  : 'Rp ${widget.balanceVM.userBalance?.saldo ?? 0}',
+                  : CurrencyUtil.formatCurrency(widget.balance),
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -74,32 +81,46 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
         IntrinsicHeight(
           child: Row(
             children: [
-              ActionItem(Icons.add_rounded, 'Top Up Saldo'),
-              const SizedBox(width: 16),
-              ActionItem(Icons.swap_horiz_sharp, 'Transfer Saldo'),
-              const SizedBox(width: 16),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: kOrange,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.qr_code_2_outlined, color: kWhite, size: 24),
-
-                        Text(
-                          'Tampilkan QRIS',
-                          style: TextStyle(color: kWhite, fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              ActionItem(
+                icon: Icons.add_rounded,
+                label: 'Top Up Saldo',
+                color: widget.themeColor,
               ),
+              const SizedBox(width: 16),
+              ActionItem(
+                icon: Icons.swap_horiz_sharp,
+                label: 'Transfer Saldo',
+                color: widget.themeColor,
+              ),
+              const SizedBox(width: 16),
+              widget.title == 'SPEEDCASH'
+                  ? SizedBox()
+                  : Expanded(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: widget.themeColor,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.qr_code_2_outlined,
+                                color: kWhite,
+                                size: 24,
+                              ),
+
+                              Text(
+                                'Tampilkan QRIS',
+                                style: TextStyle(color: kWhite, fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),

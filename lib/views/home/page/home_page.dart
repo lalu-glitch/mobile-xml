@@ -11,7 +11,7 @@ import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import '../../../viewmodels/layanan_vm.dart';
 import '../../../viewmodels/promo_vm.dart';
-import '../../widgets/promo_popup.dart';
+import '../../popup/promo_popup.dart';
 import '../widgets/home_header_section.dart';
 import '../widgets/home_content_section.dart';
 import '../widgets/main_saldo_card_carousel.dart';
@@ -30,7 +30,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Pindahkan semua fetch data ke sini agar lebih bersih
       Provider.of<BalanceViewModel>(context, listen: false).fetchBalance();
       Provider.of<LayananViewModel>(context, listen: false).fetchLayanan();
       Provider.of<PromoViewModel>(context, listen: false).fetchPromo();
