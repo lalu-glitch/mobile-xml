@@ -1,7 +1,14 @@
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.api.file.Directory
+import org.gradle.api.tasks.Delete
+
 allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+    tasks.withType<JavaCompile> {
+        options.compilerArgs.add("-Xlint:-options")
     }
 }
 

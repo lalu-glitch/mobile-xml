@@ -114,46 +114,83 @@ class KomisiPage extends StatelessWidget {
                                   padding: const EdgeInsets.all(16),
                                   itemCount: 8,
                                   itemBuilder: (context, index) => Card(
-                                    child: ListTile(
-                                      tileColor: kWhite,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadiusGeometry.circular(16),
+                                    color: kWhite,
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
                                       ),
-                                      leading: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            14,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            flex: 0,
+                                            child: Text(
+                                              'SMS0990',
+                                              style: TextStyle(
+                                                color: kBlack,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
                                           ),
-                                          color: kOrange,
-                                        ),
-                                        padding: EdgeInsets.all(12),
-                                        child: const Icon(
-                                          Icons.people_alt,
-                                          color: kWhite,
-                                        ),
-                                      ),
-                                      title: Text(
-                                        'SMS0011-222-333 ',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      subtitle: Text(
-                                        'Ferry Irwandi',
-                                        style: TextStyle(
-                                          color: kNeutral80,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                      trailing: Text(
-                                        '+Rp99.000.000',
-                                        style: TextStyle(
-                                          color: Colors.blue,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                                          SizedBox(width: kSize12),
+                                          Expanded(
+                                            child: Container(
+                                              margin: EdgeInsets.symmetric(
+                                                vertical: 20,
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 2,
+                                                horizontal: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: kYellow.withAlpha(100),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                      kSize8,
+                                                    ),
+                                              ),
+                                              child: Center(
+                                                child: Text('Trx Sukses: 25'),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: kSize12),
+                                          Expanded(
+                                            child: Container(
+                                              margin: EdgeInsets.symmetric(
+                                                vertical: 20,
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 2,
+                                                horizontal: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: kNeutral40,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                      kSize8,
+                                                    ),
+                                              ),
+                                              child: Center(
+                                                child: Text('Trx gagal: 0'),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: kSize12),
+                                          Expanded(
+                                            flex: 0,
+                                            child: Text(
+                                              '+9999999',
+                                              style: TextStyle(
+                                                color: kBlack,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),

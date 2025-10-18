@@ -66,7 +66,7 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
             InkWell(
               onTap: () {
                 setState(() {
-                  _isSaldoHidden = !_isSaldoHidden; // Toggle nilai boolean
+                  _isSaldoHidden = !_isSaldoHidden;
                 });
               },
               child: Icon(
@@ -77,7 +77,6 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
           ],
         ),
         Spacer(),
-        // const SizedBox(height: 24),
         IntrinsicHeight(
           child: Row(
             children: [

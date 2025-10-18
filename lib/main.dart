@@ -82,7 +82,7 @@ class _XmlAppState extends State<XmlApp> {
 
     try {
       // Initial link kalau app dibuka pertama kali via deeplink
-      final initialUri = await _appLinks.getInitialAppLink();
+      final initialUri = await _appLinks.getInitialLink();
       if (initialUri != null) {
         _navigateFromUri(initialUri);
       }
