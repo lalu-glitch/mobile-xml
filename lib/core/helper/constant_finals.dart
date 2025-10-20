@@ -28,8 +28,6 @@ final double kSize24 = blockSizeHorizontal * 5.5;
 final double kSize28 = blockSizeHorizontal * 6.55;
 final double kSize32 = blockSizeHorizontal * 7.5;
 final double kSize40 = blockSizeHorizontal * 9.35;
-
-//new size
 final double kSize44 = blockSizeHorizontal * 10.3;
 final double kSize48 = blockSizeHorizontal * 11.2;
 final double kSize50 = blockSizeHorizontal * 11.6;

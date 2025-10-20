@@ -9,7 +9,7 @@ class TransaksiDownlineTabPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // ListView.builder efisien untuk menampilkan daftar yang panjang
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: kBackground,
       body: ListView.builder(
         padding: const EdgeInsets.all(16.0),
         itemCount: 8, // Jumlah item dalam daftar
