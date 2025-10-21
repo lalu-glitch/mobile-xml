@@ -166,81 +166,86 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kOrange,
-        automaticallyImplyLeading: false,
-        surfaceTintColor: Colors.transparent,
-        title: Text('Akun saya', style: TextStyle(color: kWhite)),
-        actionsPadding: EdgeInsets.only(right: 16),
-        actions: [Icon(Icons.search_rounded, color: kWhite)],
-      ),
-      backgroundColor: kBackground,
-      body: BlocBuilder<InfoAkunCubit, InfoAkunState>(
-        builder: (context, state) {
-          if (state is InfoAkunLoading) {
-            return const InfoAkunShimmer();
-          }
+    return RefreshIndicator(
+      color: kOrange,
+      onRefresh: () => context.read<InfoAkunCubit>().getInfoAkun(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kOrange,
+          automaticallyImplyLeading: false,
+          surfaceTintColor: Colors.transparent,
+          title: Text('Akun saya', style: TextStyle(color: kWhite)),
+          actionsPadding: EdgeInsets.only(right: 16),
+          actions: [Icon(Icons.search_rounded, color: kWhite)],
+        ),
+        backgroundColor: kBackground,
+        body: BlocBuilder<InfoAkunCubit, InfoAkunState>(
+          builder: (context, state) {
+            if (state is InfoAkunLoading) {
+              return const InfoAkunShimmer();
+            }
 
-          if (state is InfoAkunLoaded) {
-            return Column(
-              children: [
-                InkWell(
-                  onTap: () => Navigator.pushNamed(context, '/detailInfoAkun'),
-                  child: SettingHeader(state: state),
-                ), // Header profil user
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.symmetric(
-                      vertical: kSize32,
-                      horizontal: kSize16,
-                    ),
-                    children: [
-                      /// --- DOMPET APLIKASI ---
-                      SizedBox(
-                        height: (state.data.data.ewallet?.isEmpty ?? true)
-                            ? 0
-                            : 120, // tinggi maksimum kontainer
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: state.data.data.ewallet?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            final Ewallet currentEwallet =
-                                state.data.data.ewallet![index];
-                            return WalletItem(ewallet: currentEwallet);
-                          },
+            if (state is InfoAkunLoaded) {
+              return Column(
+                children: [
+                  InkWell(
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/detailInfoAkun'),
+                    child: SettingHeader(state: state),
+                  ), // Header profil user
+                  Expanded(
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(
+                        vertical: kSize32,
+                        horizontal: kSize16,
+                      ),
+                      children: [
+                        /// --- DOMPET APLIKASI ---
+                        SizedBox(
+                          height: (state.data.data.ewallet?.isEmpty ?? true)
+                              ? 0
+                              : 120, // tinggi maksimum kontainer
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.data.data.ewallet?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              final Ewallet currentEwallet =
+                                  state.data.data.ewallet![index];
+                              return WalletItem(ewallet: currentEwallet);
+                            },
+                          ),
                         ),
-                      ),
 
-                      _buildSection(
-                        context,
-                        'Informasi Akun',
-                        accountInfoItems,
-                      ),
-                      _buildSection(context, 'Riwayat', historyItems),
-                      _buildSection(context, 'Transaksi', transactionItems),
-                      _buildSection(context, 'Menu Agen', menuAgenItem),
-                      _buildSection(context, 'Bantuan', bantuanItem),
-                      const Divider(height: 32, thickness: 1),
+                        _buildSection(
+                          context,
+                          'Informasi Akun',
+                          accountInfoItems,
+                        ),
+                        _buildSection(context, 'Riwayat', historyItems),
+                        _buildSection(context, 'Transaksi', transactionItems),
+                        _buildSection(context, 'Menu Agen', menuAgenItem),
+                        _buildSection(context, 'Bantuan', bantuanItem),
+                        const Divider(height: 32, thickness: 1),
 
-                      /// --- LOGOUT --- ///
-                      LogoutCard(onTap: _showLogoutBottomSheet),
-                    ],
+                        /// --- LOGOUT --- ///
+                        LogoutCard(onTap: _showLogoutBottomSheet),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          }
+                ],
+              );
+            }
 
-          if (state is InfoAkunError) {
-            return ErrorView(
-              errorMessage: state.message,
-              onRetry: () => context.read<InfoAkunCubit>().getInfoAkun(),
-            );
-          }
+            if (state is InfoAkunError) {
+              return ErrorView(
+                errorMessage: state.message,
+                onRetry: () => context.read<InfoAkunCubit>().getInfoAkun(),
+              );
+            }
 
-          return const SizedBox();
-        },
+            return const SizedBox();
+          },
+        ),
       ),
     );
   }
