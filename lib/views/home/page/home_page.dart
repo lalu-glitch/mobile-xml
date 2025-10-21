@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,7 @@ import '../../../viewmodels/balance_viewmodel.dart';
 import '../../../viewmodels/layanan_vm.dart';
 import '../../../viewmodels/promo_vm.dart';
 import '../../popup/promo_popup.dart';
+import 'error_handler.dart';
 import '../widgets/home_header_section.dart';
 import '../widgets/home_content_section.dart';
 import '../widgets/main_saldo_card_carousel.dart';
@@ -66,6 +67,15 @@ class _HomePageState extends State<HomePage> {
       });
     }
 
+    // Fungsi gabungan untuk refresh dan retry
+    Future<void> refreshData() async {
+      await Future.wait([
+        balanceVM.fetchBalance(),
+        layananVM.fetchLayanan(),
+        promoVM.fetchPromo(),
+      ]);
+    }
+
     return WillPopScope(
       onWillPop: () async {
         return await showExitDialog(context);
@@ -93,13 +103,7 @@ class _HomePageState extends State<HomePage> {
 
                 child: RefreshIndicator(
                   color: kOrange,
-                  onRefresh: () async {
-                    await Future.wait([
-                      balanceVM.fetchBalance(),
-                      layananVM.fetchLayanan(),
-                      promoVM.fetchPromo(),
-                    ]);
-                  },
+                  onRefresh: refreshData,
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     dragStartBehavior: DragStartBehavior.down,
@@ -117,24 +121,33 @@ class _HomePageState extends State<HomePage> {
                             ),
                             const SizedBox(height: 150),
                             Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                              ),
+                              decoration: BoxDecoration(color: kBackground),
                               padding: const EdgeInsets.all(16),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const SizedBox(height: 100),
-                                  HomePromoSection(),
-                                  const SizedBox(height: 24),
-                                  layananVM.isLoading
-                                      ? ShimmerBox.buildShimmerIcons()
-                                      : layananVM.error != null
-                                      ? const Center(child: Text(''))
-                                      : HomeContentSection(
+                                  // Cek error secara terpusat
+                                  if (layananVM.error != null ||
+                                      promoVM.error != null)
+                                    ErrorHandler(
+                                      error: layananVM.error ?? promoVM.error,
+                                      onRetry: refreshData,
+                                    )
+                                  else
+                                    Column(
+                                      children: [
+                                        promoVM.isLoading
+                                            ? ShimmerBox.buildShimmerPromoList()
+                                            : const HomePromoSection(),
+                                        const SizedBox(height: 24),
+                                        HomeContentSection(
                                           layananVM: layananVM,
                                         ),
-                                  const SizedBox(height: 24),
+                                        const SizedBox(height: 24),
+                                      ],
+                                    ),
+                                  SizedBox(height: 300),
                                 ],
                               ),
                             ),

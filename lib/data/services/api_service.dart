@@ -1,3 +1,4 @@
+import 'package:android_id/android_id.dart';
 import 'package:dio/dio.dart';
 import '../../core/helper/constant_finals.dart';
 import '../models/layanan/layanan_model.dart';
@@ -18,10 +19,24 @@ class ApiService {
     : authService = authService ?? AuthService(),
       logger = logger ?? Logger();
 
+  Future<String> loadDeviceId() async {
+    try {
+      const androidIdPlugin = AndroidId();
+      final androidId = await androidIdPlugin.getId();
+      return androidId ?? "unknown-android-id";
+    } catch (_) {
+      return "unknown-device";
+    }
+  }
+
   /// Ambil saldo user
   Future<UserBalance> fetchUserBalance() async {
     try {
-      final response = await authService.dio.get("$baseURL/user/balance");
+      final deviceID = loadDeviceId();
+      final response = await authService.dio.get(
+        "$baseURL/user/balance",
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
+      );
       if (response.statusCode == 200) {
         final dataMap = Map<String, dynamic>.from(response.data);
         return UserBalance.fromJson(dataMap);
@@ -38,12 +53,13 @@ class ApiService {
   /// Ambil icon dengan kategori (pulsa, ewallet, token, dll)
   Future<IconResponse> fetchIcons() async {
     try {
+      final deviceID = loadDeviceId();
       final response = await authService.dio.get(
         baseURLWEB,
         options: Options(
           headers: {
-            "Authorization": authService
-                .basicAuthHeader, // Secara eksplisit tambahkan Basic Auth
+            "Authorization": authService.basicAuthHeader,
+            "x-device-id": "android-$deviceID",
           },
         ),
       );
@@ -64,8 +80,10 @@ class ApiService {
     String tujuan,
   ) async {
     try {
+      final deviceID = loadDeviceId();
       final response = await authService.dio.post(
         "$baseURL/oto/all_produk/$category",
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {"tujuan": tujuan},
       );
 
@@ -97,13 +115,12 @@ class ApiService {
     String tujuan,
   ) async {
     try {
+      final deviceID = loadDeviceId();
       final response = await authService.dio.post(
         "$baseURL/oto/all_produk_prefix/$category",
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {"tujuan": tujuan},
       );
-
-      print(response);
-
       final jsonData = Map<String, dynamic>.from(response.data);
 
       if (response.statusCode == 200 && jsonData['success'] == true) {
@@ -133,8 +150,10 @@ class ApiService {
     String kodeDompet,
   ) async {
     try {
+      final deviceID = loadDeviceId();
       final response = await authService.dio.post(
         "$baseURL/transaksi",
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {
           "tujuan": tujuan,
           "kode_produk": kodeProduk,
@@ -170,8 +189,10 @@ class ApiService {
   /// Cek status transaksi by kode_inbox
   Future<Map<String, dynamic>> getStatusByInbox(int kodeInbox) async {
     try {
+      final deviceID = loadDeviceId();
       final response = await authService.dio.post(
         "$baseURL/trx_by_inbox/$kodeInbox",
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
 
       if (response.statusCode == 200) {
@@ -203,8 +224,10 @@ class ApiService {
     int limit = 5,
   }) async {
     try {
+      final deviceID = loadDeviceId();
       final response = await authService.dio.get(
         "$baseURL/history_transaksi",
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
         queryParameters: {"page": page, "limit": limit},
       );
 
@@ -226,8 +249,10 @@ class ApiService {
 
   Future<Map<String, dynamic>> historyDetail(String kodeKode) async {
     try {
+      final deviceID = loadDeviceId();
       final response = await authService.dio.post(
         "$baseURL/trx_by_kode/$kodeKode",
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
 
       if (response.statusCode == 200) {
@@ -258,7 +283,11 @@ class ApiService {
   //INFO AKUN
   Future<InfoAkunModel> infoAkun() async {
     try {
-      final response = await authService.dio.get("$baseURL/user/info");
+      final deviceID = loadDeviceId();
+      final response = await authService.dio.get(
+        "$baseURL/user/info",
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
+      );
       if (response.statusCode == 200) {
         return InfoAkunModel.fromJson(response.data);
       } else {

@@ -50,4 +50,44 @@ class ShimmerBox extends StatelessWidget {
       ],
     ),
   );
+
+  static Widget buildShimmerPromoList() {
+    return SizedBox(
+      height: 140, // Sesuaikan dengan tinggi ListView di HomePromoSection
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 3, // Jumlah shimmer item yang ditampilkan
+        itemBuilder: (context, index) {
+          return Container(
+            width: 260,
+            margin: const EdgeInsets.only(right: 16),
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: kWhite,
+                  borderRadius: BorderRadius.circular(18),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  static buildShimmerCardPromo() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        width: 260,
+        decoration: BoxDecoration(
+          color: kWhite,
+          borderRadius: BorderRadius.circular(18),
+        ),
+      ),
+    );
+  }
 }

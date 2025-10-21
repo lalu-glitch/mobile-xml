@@ -20,10 +20,6 @@ class HomeContentSection extends StatelessWidget {
     final transaksi = context.read<TransaksiCubit>();
 
     if (layananVM.isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    if (layananVM.error != null) {
       return ShimmerBox.buildShimmerIcons();
     }
 

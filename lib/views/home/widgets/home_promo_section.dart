@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../core/helper/constant_finals.dart';
 
@@ -7,8 +6,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/helper/dynamic_app_page.dart';
+import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/promo_vm.dart';
 import '../../layanan/cubit/flow_cubit.dart';
+import '../page/error_handler.dart';
 
 class HomePromoSection extends StatelessWidget {
   const HomePromoSection({super.key});
@@ -18,11 +19,14 @@ class HomePromoSection extends StatelessWidget {
     final promoVM = context.watch<PromoViewModel>();
 
     if (promoVM.isLoading) {
-      return _buildShimmerList();
+      return ShimmerBox.buildShimmerCardPromo();
     }
 
     if (promoVM.error != null) {
-      return Center(child: Text("Terjadi kesalahan: ${promoVM.error}"));
+      return ErrorHandler(
+        error: promoVM.error,
+        onRetry: () => context.read<PromoViewModel>().fetchPromo(),
+      );
     }
 
     if (promoVM.promoList.isEmpty) {
@@ -64,7 +68,8 @@ class HomePromoSection extends StatelessWidget {
                     child: CachedNetworkImage(
                       imageUrl: item.icon ?? '',
                       fit: BoxFit.cover,
-                      placeholder: (context, url) => _buildShimmerCard(),
+                      placeholder: (context, url) =>
+                          ShimmerBox.buildShimmerCardPromo(),
                       errorWidget: (context, url, error) =>
                           const Icon(Icons.image_not_supported),
                     ),
@@ -75,53 +80,6 @@ class HomePromoSection extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildShimmerList() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
-          child: Container(
-            height: 22,
-            width: 120,
-            color: Colors.grey.shade300,
-            margin: const EdgeInsets.only(bottom: 12),
-          ),
-        ),
-        SizedBox(
-          height: 140,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 3,
-            itemBuilder: (context, _) => _buildShimmerCard(),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildShimmerCard() {
-    return Container(
-      width: 260,
-      margin: const EdgeInsets.only(right: 24),
-      decoration: BoxDecoration(
-        color: kNeutral40,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Shimmer.fromColors(
-        baseColor: kNeutral40,
-        highlightColor: Colors.grey.shade100,
-        child: Container(
-          decoration: BoxDecoration(
-            color: kNeutral40,
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-      ),
     );
   }
 }
