@@ -6,7 +6,9 @@ import '../../../core/helper/constant_finals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/helper/dynamic_app_page.dart';
 import '../../../viewmodels/promo_vm.dart';
+import '../../layanan/cubit/flow_cubit.dart';
 
 class HomePromoSection extends StatelessWidget {
   const HomePromoSection({super.key});
@@ -42,21 +44,30 @@ class HomePromoSection extends StatelessWidget {
             itemCount: promoVM.promoList.length,
             itemBuilder: (context, i) {
               final item = promoVM.promoList[i];
-              return Container(
-                width: 260,
-                margin: const EdgeInsets.only(right: 24),
-                decoration: BoxDecoration(
-                  color: kWhite,
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
-                  child: CachedNetworkImage(
-                    imageUrl: item.icon ?? '',
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => _buildShimmerCard(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.image_not_supported),
+              return GestureDetector(
+                onTap: () {
+                  final sequence = pageSequences[item.flow] ?? [];
+                  // Simpan state awal ke FlowCubit
+                  context.read<FlowCubit>().startFlow(item.flow!, item);
+                  final firstPage = sequence[0];
+                  Navigator.pushNamed(context, pageRoutes[firstPage]!);
+                },
+                child: Container(
+                  width: 260,
+                  margin: const EdgeInsets.only(right: 24),
+                  decoration: BoxDecoration(
+                    color: kWhite,
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(18),
+                    child: CachedNetworkImage(
+                      imageUrl: item.icon ?? '',
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => _buildShimmerCard(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.image_not_supported),
+                    ),
                   ),
                 ),
               );

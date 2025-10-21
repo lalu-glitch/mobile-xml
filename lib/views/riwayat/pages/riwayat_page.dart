@@ -6,30 +6,18 @@ import '../../../data/models/transaksi/riwayat_transaksi.dart';
 import '../cubit/riwayat_transaksi_cubit.dart';
 import '../widgets/card_transaksi.dart';
 
-class RiwayatTransaksiPage extends StatefulWidget {
+class RiwayatTransaksiPage extends StatelessWidget {
   const RiwayatTransaksiPage({super.key});
 
   @override
-  State<RiwayatTransaksiPage> createState() => _RiwayatTransaksiPageState();
-}
-
-class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<RiwayatTransaksiCubit>().loadRiwayat();
-  }
-
-  Future<void> _onRefresh() async {
-    await context.read<RiwayatTransaksiCubit>().loadRiwayat();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final RiwayatTransaksiCubit riwayatTransaksi = context
+        .read<RiwayatTransaksiCubit>();
     return Scaffold(
       backgroundColor: kBackground,
       body: SafeArea(
         child: BlocBuilder<RiwayatTransaksiCubit, RiwayatTransaksiState>(
+          bloc: riwayatTransaksi..loadRiwayat(),
           builder: (context, state) {
             if (state is RiwayatTransaksiInitial ||
                 state is RiwayatTransaksiLoading) {
@@ -65,7 +53,8 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
 
             if (riwayatList.isEmpty) {
               return RefreshIndicator(
-                onRefresh: _onRefresh,
+                onRefresh: () =>
+                    context.read<RiwayatTransaksiCubit>().loadRiwayat(),
                 color: kOrange,
                 child: Center(
                   child: Text(
@@ -80,7 +69,8 @@ class _RiwayatTransaksiPageState extends State<RiwayatTransaksiPage> {
               children: [
                 Expanded(
                   child: RefreshIndicator(
-                    onRefresh: _onRefresh,
+                    onRefresh: () =>
+                        context.read<RiwayatTransaksiCubit>().loadRiwayat(),
                     color: kOrange,
                     child: ListView.builder(
                       itemCount: riwayatList.length,

@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
     final layananVM = Provider.of<LayananViewModel>(context);
     final promoVM = Provider.of<PromoViewModel>(context);
 
-    Future<void> _logout() async {
+    Future<void> logout() async {
       await _storage.delete(key: 'userData');
       if (mounted) {
         Navigator.pushNamedAndRemoveUntil(
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
     // Cek status logout setiap kali state balanceVM berubah
     if (balanceVM.userBalance?.isLogout == true) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showForceExitDialog(context, _logout);
+        showForceExitDialog(context, logout);
       });
     }
 
@@ -130,9 +130,7 @@ class _HomePageState extends State<HomePage> {
                                   layananVM.isLoading
                                       ? ShimmerBox.buildShimmerIcons()
                                       : layananVM.error != null
-                                      ? const Center(
-                                          child: Text('Gagal memuat icon'),
-                                        )
+                                      ? const Center(child: Text(''))
                                       : HomeContentSection(
                                           layananVM: layananVM,
                                         ),

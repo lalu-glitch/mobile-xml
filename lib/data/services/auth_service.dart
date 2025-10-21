@@ -50,9 +50,18 @@ class AuthService extends ChangeNotifier {
         },
       ),
     );
+    // Tambahkan LogInterceptor untuk melihat detail request/response
+    _dio.interceptors.add(
+      LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+        logPrint: (obj) => logger.d(obj), // Menggunakan logger yang sudah ada
+      ),
+    );
   }
 
   Dio get dio => _dio;
+  String get basicAuthHeader => _basicAuthHeader; // Tambahkan getter ini
   final logger = Logger();
 
   Future<String> _loadDeviceId() async {
@@ -242,9 +251,15 @@ class AuthService extends ChangeNotifier {
     String type,
   ) async {
     try {
+      final deviceId = await _loadDeviceId();
       final response = await _dio.post(
         "$baseUrl/verify-otp",
-        data: {"kode_reseller": kodeReseller, "otp": otp, "type": type},
+        data: {
+          "kode_reseller": kodeReseller,
+          "otp": otp,
+          "type": type,
+          "deviceId": 'android-$deviceId',
+        },
         options: Options(
           headers: {
             "Authorization": _basicAuthHeader,

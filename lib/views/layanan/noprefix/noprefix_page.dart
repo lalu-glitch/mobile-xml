@@ -22,11 +22,6 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
 
   bool _isInitialized = false;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -36,7 +31,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
       final flowState = context.watch<FlowCubit>().state!;
       final iconItem = flowState.layananItem;
       context.read<ProviderNoPrefixCubit>().fetchProviders(
-        iconItem.title ?? '',
+        iconItem.kodeCatatan,
         "",
       );
     }

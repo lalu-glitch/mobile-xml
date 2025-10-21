@@ -169,6 +169,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kOrange,
+        automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
         title: Text('Akun saya', style: TextStyle(color: kWhite)),
         actionsPadding: EdgeInsets.only(right: 16),
@@ -177,7 +178,6 @@ class _SettingsPageState extends State<SettingsPage> {
       backgroundColor: kBackground,
       body: BlocBuilder<InfoAkunCubit, InfoAkunState>(
         builder: (context, state) {
-          print('state saat ini : $state');
           if (state is InfoAkunLoading) {
             return const InfoAkunShimmer();
           }
@@ -205,11 +205,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           scrollDirection: Axis.horizontal,
                           itemCount: state.data.data.ewallet?.length ?? 0,
                           itemBuilder: (context, index) {
-                            final Ewallet currentEwallet = state
-                                .data
-                                .data
-                                .ewallet![index]; // ! aman di sini karena itemCount sudah dicek
-                            // Panggil widget baru: WalletItem (menggantikan WalletCard)
+                            final Ewallet currentEwallet =
+                                state.data.data.ewallet![index];
                             return WalletItem(ewallet: currentEwallet);
                           },
                         ),

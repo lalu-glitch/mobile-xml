@@ -41,7 +41,7 @@ class PoinPage extends StatelessWidget {
                 children: [
                   SizedBox(height: kSize32),
 
-                  // ===== CARD INFO AKUN =====
+                  //card utama
                   Card(
                     elevation: 8,
                     color: kWhite,
@@ -136,13 +136,14 @@ class PoinPage extends StatelessWidget {
 
                   SizedBox(height: kSize32),
 
-                  // ===== HADIAH SPESIAL =====
+                  // hadiah spesial
                   Text(
                     'Hadiah Spesial',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: kSize16),
 
+                  // [KODE ANDA YANG DIPERBAIKI]
                   SizedBox(
                     height: kSize100 * 3,
                     child: ListView.builder(
@@ -155,11 +156,17 @@ class PoinPage extends StatelessWidget {
                           child: Card(
                             elevation: 0,
                             color: kWhite,
+                            // Pastikan Card mengisi ruang vertikal
+                            clipBehavior: Clip
+                                .antiAlias, // Tambahkan ini agar ClipRRect berfungsi baik dengan Card
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: kSize44 * 3,
+                                // --- PERUBAHAN DI SINI ---
+                                // Ganti SizedBox dengan tinggi tetap menjadi Expanded.
+                                // Ini akan membuat gambar mengisi sisa ruang setelah
+                                // blok teks/tombol di bawahnya diukur.
+                                Expanded(
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(16),
@@ -168,14 +175,20 @@ class PoinPage extends StatelessWidget {
                                     child: Image.asset(
                                       'assets/images/iphone_17_pm.png',
                                       fit: BoxFit.cover,
+                                      // Tambahkan ini untuk memastikan gambar mengisi
+                                      // Expanded Box secara penuh
+                                      width: double.infinity,
                                     ),
                                   ),
                                 ),
+                                // --- AKHIR PERUBAHAN ---
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    // Pastikan Column ini tidak memakan ruang ekstra
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
                                         '23.000.000',
@@ -235,7 +248,7 @@ class PoinPage extends StatelessWidget {
 
                   SizedBox(height: kSize32),
 
-                  // ===== HADIAH LAINNYA =====
+                  // Hadiah Lainnya
                   Text(
                     'Hadiah Lainnya',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -246,7 +259,7 @@ class PoinPage extends StatelessWidget {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 10, // contoh data dummy
+                    itemCount: 10, // data dummy
                     itemBuilder: (context, index) {
                       return Card(
                         color: kWhite,

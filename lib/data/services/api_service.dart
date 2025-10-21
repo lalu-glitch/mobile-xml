@@ -38,7 +38,15 @@ class ApiService {
   /// Ambil icon dengan kategori (pulsa, ewallet, token, dll)
   Future<IconResponse> fetchIcons() async {
     try {
-      final response = await authService.dio.get("$baseURL/list-icon");
+      final response = await authService.dio.get(
+        baseURLWEB,
+        options: Options(
+          headers: {
+            "Authorization": authService
+                .basicAuthHeader, // Secara eksplisit tambahkan Basic Auth
+          },
+        ),
+      );
 
       if (response.statusCode == 200) {
         return IconResponse.fromJson(response.data);
