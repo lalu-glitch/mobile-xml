@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/models/icon_models/flow_state_models.dart';
+import '../../../data/models/layanan/flow_state_models.dart';
 
 import '../../../core/helper/dynamic_app_page.dart';
 import '../../../data/models/layanan/layanan_model.dart';

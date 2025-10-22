@@ -99,7 +99,7 @@ class _TransactionCard extends StatelessWidget {
             children: [
               _buildDetailRow('Upline', 'SMS0795632'),
               const SizedBox(height: 8.0),
-              _buildDetailRow('Stok pulsa', '1.020.864'),
+              _buildDetailRow('Stok pulsa', '10.020.864'),
             ],
           ),
         ),
@@ -124,12 +124,16 @@ class _TransactionCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label, style: const TextStyle(fontSize: 14, color: kGrey)),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: kBlack,
+        Flexible(
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: kBlack,
+            ),
+            textAlign: TextAlign.end,
+            overflow: TextOverflow.clip,
           ),
         ),
       ],
