@@ -147,18 +147,15 @@ class AuthService extends ChangeNotifier {
     String nomor,
   ) async {
     try {
-      final deviceId = await _loadDeviceId();
+      final deviceID = await _loadDeviceId();
       final response = await _dio.post(
         "$baseUrl/send-otp",
-        data: {
-          "kode_reseller": kodeReseller,
-          "nomor": nomor,
-          "deviceId": 'android-$deviceId',
-        },
+        data: {"kode_reseller": kodeReseller, "nomor": nomor},
         options: Options(
           headers: {
             "Authorization": _basicAuthHeader,
             "Content-Type": "application/json",
+            "x-device-id": "android-$deviceID",
           },
         ),
       );
@@ -198,7 +195,7 @@ class AuthService extends ChangeNotifier {
     String? referral,
   ) async {
     try {
-      final deviceId = await _loadDeviceId();
+      final deviceID = await _loadDeviceId();
       final response = await _dio.post(
         "$baseUrl/user/register",
         data: {
@@ -210,12 +207,12 @@ class AuthService extends ChangeNotifier {
           "kabupaten": kabupaten,
           "kecamatan": kecamatan,
           "referral": referral,
-          "deviceId": deviceId,
         },
         options: Options(
           headers: {
             "Authorization": _basicAuthHeader,
             "Content-Type": "application/json",
+            "x-device-id": "android-$deviceID",
           },
         ),
       );
@@ -251,19 +248,15 @@ class AuthService extends ChangeNotifier {
     String type,
   ) async {
     try {
-      final deviceId = await _loadDeviceId();
+      final deviceID = await _loadDeviceId();
       final response = await _dio.post(
         "$baseUrl/verify-otp",
-        data: {
-          "kode_reseller": kodeReseller,
-          "otp": otp,
-          "type": type,
-          "deviceId": 'android-$deviceId',
-        },
+        data: {"kode_reseller": kodeReseller, "otp": otp, "type": type},
         options: Options(
           headers: {
             "Authorization": _basicAuthHeader,
             "Content-Type": "application/json",
+            "x-device-id": 'android-$deviceID',
           },
         ),
       );
