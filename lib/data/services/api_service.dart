@@ -32,7 +32,7 @@ class ApiService {
   /// Ambil saldo user
   Future<UserBalance> fetchUserBalance() async {
     try {
-      final deviceID = loadDeviceId();
+      final deviceID = await loadDeviceId();
       final response = await authService.dio.get(
         "$baseURL/user/balance",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
@@ -53,7 +53,7 @@ class ApiService {
   /// Ambil icon dengan kategori (pulsa, ewallet, token, dll)
   Future<IconResponse> fetchIcons() async {
     try {
-      final deviceID = loadDeviceId();
+      final deviceID = await loadDeviceId();
       final response = await authService.dio.get(
         baseURLWEB,
         options: Options(
@@ -80,7 +80,7 @@ class ApiService {
     String tujuan,
   ) async {
     try {
-      final deviceID = loadDeviceId();
+      final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
         "$baseURL/oto/all_produk/$category",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
@@ -115,7 +115,7 @@ class ApiService {
     String tujuan,
   ) async {
     try {
-      final deviceID = loadDeviceId();
+      final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
         "$baseURL/oto/all_produk_prefix/$category",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
@@ -150,7 +150,7 @@ class ApiService {
     String kodeDompet,
   ) async {
     try {
-      final deviceID = loadDeviceId();
+      final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
         "$baseURL/transaksi",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
@@ -189,7 +189,7 @@ class ApiService {
   /// Cek status transaksi by kode_inbox
   Future<Map<String, dynamic>> getStatusByInbox(int kodeInbox) async {
     try {
-      final deviceID = loadDeviceId();
+      final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
         "$baseURL/trx_by_inbox/$kodeInbox",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
@@ -224,7 +224,7 @@ class ApiService {
     int limit = 5,
   }) async {
     try {
-      final deviceID = loadDeviceId();
+      final deviceID = await loadDeviceId();
       final response = await authService.dio.get(
         "$baseURL/history_transaksi",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
@@ -249,7 +249,7 @@ class ApiService {
 
   Future<Map<String, dynamic>> historyDetail(String kodeKode) async {
     try {
-      final deviceID = loadDeviceId();
+      final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
         "$baseURL/trx_by_kode/$kodeKode",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
@@ -283,7 +283,7 @@ class ApiService {
   //INFO AKUN
   Future<InfoAkunModel> infoAkun() async {
     try {
-      final deviceID = loadDeviceId();
+      final deviceID = await loadDeviceId();
       final response = await authService.dio.get(
         "$baseURL/user/info",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
