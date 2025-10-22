@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/helper/constant_finals.dart';
+import '../../../../../core/helper/constant_finals.dart';
 
 class CardDecorationPainter extends CustomPainter {
   // Anda bisa membuat rasio ini bisa diubah jika perlu

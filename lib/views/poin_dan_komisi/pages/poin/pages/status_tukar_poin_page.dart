@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/helper/constant_finals.dart';
+import '../../../../../core/helper/constant_finals.dart';
 
-class StatusTukarKomisiPage extends StatelessWidget {
-  const StatusTukarKomisiPage({super.key});
+class StatusTukarPoinPage extends StatelessWidget {
+  const StatusTukarPoinPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class StatusTukarKomisiPage extends StatelessWidget {
               ),
 
               Text(
-                'PENUKARAN KOMISI BERHASIL',
+                'PENUKARAN POIN BERHASIL',
                 style: TextStyle(
                   color: kBlack,
                   fontSize: 18,
@@ -53,7 +53,7 @@ class StatusTukarKomisiPage extends StatelessWidget {
               ),
               SizedBox(height: kSize8),
               Text(
-                'Komisimu berhasil ditukar menjadi Saldo XML senilai 1.000.000. Terus kumpulin poinnya dan nikmati lebih banyak keuntungan bareng XML Mobile!',
+                'Poinmu berhasil ditukar menjadi [Product]. Terus kumpulin poinnya dan nikmati lebih banyak keuntungan bareng XML Mobile!',
                 style: TextStyle(
                   color: kNeutral90,
                   fontSize: 12,
