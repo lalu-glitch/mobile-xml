@@ -25,121 +25,6 @@ class _SettingsPageState extends State<SettingsPage> {
   final _storage = const FlutterSecureStorage();
   bool isMuncul = false;
 
-  // Sementara definisi data untuk setiap bagian
-  final List<MenuItem> accountInfoItems = [
-    MenuItem(
-      imagePath: 'assets/icons/user-filled-icon.png',
-      title: 'Profil Saya',
-      onTap: () => debugPrint('Navigasi ke Profil Saya'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/verify-icon.png',
-      title: 'Verifikasi Akun',
-      label: 'MITRA VVIP',
-      onTap: () => debugPrint('Navigasi ke Verifikasi Akun'),
-    ),
-  ];
-
-  final List<MenuItem> historyItems = [
-    MenuItem(
-      imagePath: 'assets/icons/transaction-history-icon.png',
-      title: 'Riwayat Transaksi',
-      onTap: () => debugPrint('Navigasi ke Riwayat Transaksi'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/top-up-icon.png',
-      title: 'Riwayat Top Up',
-      onTap: () => debugPrint('Navigasi ke Riwayat Top Up'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/transfer-icon.png',
-      title: 'Riwayat Transfer Saldo',
-      onTap: () => debugPrint('Navigasi ke Riwayat Transfer Saldo'),
-    ),
-  ];
-
-  final List<MenuItem> transactionItems = [
-    MenuItem(
-      imagePath: 'assets/icons/whatsapp-icon.png',
-      title: 'Center Whatsapp',
-      label: 'Baru',
-      onTap: () => debugPrint('Navigasi ke Center Whatsapp'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/message-icon.png',
-      title: 'Center Messenger',
-      onTap: () => debugPrint('Navigasi ke Center Messenger'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/deposit-icon.png',
-      title: 'Tukar Poin',
-      onTap: () => debugPrint('Navigasi ke Tukar Poin'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/coin-bag-icon.png',
-      title: 'Tukar Komisi',
-      onTap: () => debugPrint('Navigasi ke Tukar Komisi'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/calculator-icon.png',
-      title: 'Rekap Piutang',
-      onTap: () => debugPrint('Navigasi ke Rekap Piutang'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/printer-icon.png',
-      title: 'Cetak Struk',
-      label: 'Baru',
-      onTap: () => debugPrint('Navigasi ke Cetak Struk'),
-    ),
-  ];
-
-  final List<MenuItem> menuAgenItem = [
-    MenuItem(
-      imagePath: 'assets/icons/user-with-some-box-icon.png',
-      title: 'List Jaringan',
-      onTap: () => debugPrint('Navigasi ke List Jaringan'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/user-list-icon.png',
-      title: 'List Paralel',
-      onTap: () => debugPrint('Navigasi ke List Paralel'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/user-add-icon.png',
-      title: 'Daftarkan Jaringan',
-      onTap: () => debugPrint('Navigasi ke Daftarkan Jaringan'),
-    ),
-  ];
-
-  final List<MenuItem> bantuanItem = [
-    MenuItem(
-      imagePath: 'assets/icons/user-question-icon.png',
-      title: 'Tutorial Penggunaan',
-      label: 'Baru',
-      onTap: () => debugPrint('Navigasi ke Tutorial Penggunaan'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/whatsapp-icon.png',
-      title: 'CS Whatsapp',
-      onTap: () => debugPrint('Navigasi ke CS Whatsapp'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/telegram-icon.png',
-      title: 'CS Telegram',
-      onTap: () => debugPrint('Navigasi ke CS Telegram'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/wallet-icon.png',
-      title: 'CS Deposit',
-      onTap: () => debugPrint('Navigasi ke CS Deposit'),
-    ),
-    MenuItem(
-      imagePath: 'assets/icons/phone-notification-icon.png',
-      title: 'Channel Telegram',
-      onTap: () => debugPrint('Navigasi ke Channel Telegram'),
-    ),
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -166,6 +51,121 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Pindahkan definisi list ke dalam build method agar 'context' tersedia.
+    final List<MenuItem> accountInfoItems = [
+      MenuItem(
+        imagePath: 'assets/icons/user-filled-icon.png',
+        title: 'Profil Saya',
+        onTap: () => Navigator.pushNamed(context, '/detailInfoAkun'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/verify-icon.png',
+        title: 'Verifikasi Akun',
+        label: 'MITRA VVIP',
+        onTap: () => debugPrint('Navigasi ke Verifikasi Akun'),
+      ),
+    ];
+
+    final List<MenuItem> historyItems = [
+      MenuItem(
+        imagePath: 'assets/icons/transaction-history-icon.png',
+        title: 'Riwayat Transaksi',
+        onTap: () => Navigator.pushNamed(context, '/riwayatTransaksi'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/top-up-icon.png',
+        title: 'Riwayat Top Up',
+        onTap: () => debugPrint('Navigasi ke Riwayat Top Up'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/transfer-icon.png',
+        title: 'Riwayat Transfer Saldo',
+        onTap: () => debugPrint('Navigasi ke Riwayat Transfer Saldo'),
+      ),
+    ];
+
+    final List<MenuItem> transactionItems = [
+      MenuItem(
+        imagePath: 'assets/icons/whatsapp-icon.png',
+        title: 'Center Whatsapp',
+        label: 'Baru',
+        onTap: () => debugPrint('Navigasi ke Center Whatsapp'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/message-icon.png',
+        title: 'Center Messenger',
+        onTap: () => debugPrint('Navigasi ke Center Messenger'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/deposit-icon.png',
+        title: 'Tukar Poin',
+        onTap: () => Navigator.pushNamed(context, '/poinPage'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/coin-bag-icon.png',
+        title: 'Tukar Komisi',
+        onTap: () => Navigator.pushNamed(context, '/komisiPage'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/calculator-icon.png',
+        title: 'Rekap Piutang',
+        onTap: () => debugPrint('Navigasi ke Rekap Piutang'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/printer-icon.png',
+        title: 'Cetak Struk',
+        label: 'Baru',
+        onTap: () => debugPrint('Navigasi ke Cetak Struk'),
+      ),
+    ];
+
+    final List<MenuItem> menuAgenItem = [
+      MenuItem(
+        imagePath: 'assets/icons/user-with-some-box-icon.png',
+        title: 'List Jaringan',
+        onTap: () => debugPrint('Navigasi ke List Jaringan'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/user-list-icon.png',
+        title: 'List Paralel',
+        onTap: () => debugPrint('Navigasi ke List Paralel'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/user-add-icon.png',
+        title: 'Daftarkan Jaringan',
+        onTap: () => debugPrint('Navigasi ke Daftarkan Jaringan'),
+      ),
+    ];
+
+    final List<MenuItem> bantuanItem = [
+      MenuItem(
+        imagePath: 'assets/icons/user-question-icon.png',
+        title: 'Tutorial Penggunaan',
+        label: 'Baru',
+        onTap: () => debugPrint('Navigasi ke Tutorial Penggunaan'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/whatsapp-icon.png',
+        title: 'CS Whatsapp',
+        onTap: () => debugPrint('Navigasi ke CS Whatsapp'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/telegram-icon.png',
+        title: 'CS Telegram',
+        onTap: () => debugPrint('Navigasi ke CS Telegram'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/wallet-icon.png',
+        title: 'CS Deposit',
+        onTap: () => debugPrint('Navigasi ke CS Deposit'),
+      ),
+      MenuItem(
+        imagePath: 'assets/icons/phone-notification-icon.png',
+        title: 'Channel Telegram',
+        onTap: () => debugPrint('Navigasi ke Channel Telegram'),
+      ),
+    ];
+
     return RefreshIndicator(
       color: kOrange,
       onRefresh: () => context.read<InfoAkunCubit>().getInfoAkun(),
@@ -204,7 +204,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         SizedBox(
                           height: (state.data.data.ewallet?.isEmpty ?? true)
                               ? 0
-                              : 120, // tinggi maksimum kontainer
+                              : 120, // tinggi maksimum kontainer kalo ada ewallet
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: state.data.data.ewallet?.length ?? 0,

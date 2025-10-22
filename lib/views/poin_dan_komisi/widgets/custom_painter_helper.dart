@@ -67,7 +67,6 @@ class CardDecorationPainter extends CustomPainter {
 }
 
 // [WIDGET BARU]
-// Tambahkan widget ini ke file Anda.
 class DottedDivider extends StatelessWidget {
   const DottedDivider({
     super.key,
@@ -75,7 +74,7 @@ class DottedDivider extends StatelessWidget {
     this.color = kNeutral80,
     this.dashWidth = 4.0,
     this.dashSpace = 4.0,
-    this.strokeWidth = 1.0,
+    this.strokeWidth = 3.0,
   });
 
   final double height;
