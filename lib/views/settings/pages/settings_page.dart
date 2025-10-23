@@ -10,7 +10,7 @@ import '../helper/menu_item.dart';
 import '../widgets/custom_list_tile.dart';
 import '../widgets/error_view.dart';
 import '../widgets/new_wallet_item.dart';
-import '../widgets/setting_header.dart';
+import '../widgets/setting_user_header.dart';
 import '../widgets/logout_card.dart';
 import '../widgets/settings_shimmer.dart';
 
@@ -51,7 +51,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Pindahkan definisi list ke dalam build method agar 'context' tersedia.
     final List<MenuItem> accountInfoItems = [
       MenuItem(
         imagePath: 'assets/icons/user-filled-icon.png',
@@ -188,11 +187,7 @@ class _SettingsPageState extends State<SettingsPage> {
             if (state is InfoAkunLoaded) {
               return Column(
                 children: [
-                  InkWell(
-                    onTap: () =>
-                        Navigator.pushNamed(context, '/detailInfoAkun'),
-                    child: SettingHeader(state: state),
-                  ), // Header profil user
+                  SettingHeader(state: state), // Header profil user
                   Expanded(
                     child: ListView(
                       padding: EdgeInsets.symmetric(
