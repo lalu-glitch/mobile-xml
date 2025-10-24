@@ -23,26 +23,19 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
     super.initState();
     // Ambil arguments setelah frame pertama selesai dibangun
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args =
-          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      if (mounted) {
+        final args =
+            ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-      if (args != null) {
-        setState(() {
-          _appBarTitle = 'Edit ${args['label']}';
-          _initialValue = args['value'] ?? '';
-          _editCtrl.text = _initialValue;
-        });
-
-        print(_appBarTitle);
-        print(_initialValue);
+        if (args != null) {
+          setState(() {
+            _appBarTitle = 'Edit ${args['label']}';
+            _initialValue = args['value'] ?? '';
+            _editCtrl.text = _initialValue;
+          });
+        }
       }
     });
-  }
-
-  @override
-  void dispose() {
-    _editCtrl.dispose();
-    super.dispose();
   }
 
   Future<void> _saveInfo() async {
@@ -140,7 +133,7 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
                     )
                   // 6. Teks tombol
                   : const Text(
-                      'SIMPAN PERUBAHAN',
+                      'Simpan',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -151,5 +144,11 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _editCtrl.dispose();
+    super.dispose();
   }
 }
