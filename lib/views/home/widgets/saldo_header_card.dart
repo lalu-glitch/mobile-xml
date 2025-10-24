@@ -80,10 +80,17 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
         IntrinsicHeight(
           child: Row(
             children: [
-              ActionItem(
-                icon: Icons.add_rounded,
-                label: 'Top Up Saldo',
-                color: widget.themeColor,
+              InkWell(
+                onTap: widget.title == 'SPEEDCASH'
+                    ? () {
+                        Navigator.pushNamed(context, '/speedcashTopUpPage');
+                      }
+                    : null,
+                child: ActionItem(
+                  icon: Icons.add_rounded,
+                  label: 'Top Up Saldo',
+                  color: widget.themeColor,
+                ),
               ),
               const SizedBox(width: 16),
               ActionItem(

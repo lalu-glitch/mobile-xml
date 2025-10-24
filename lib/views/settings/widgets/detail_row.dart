@@ -4,7 +4,7 @@ import '../../../core/helper/constant_finals.dart';
 class DetailRow extends StatelessWidget {
   final String label;
   final String value;
-  bool isNavigate = false;
+  final bool isNavigate;
 
   DetailRow({
     super.key,

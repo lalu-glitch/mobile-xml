@@ -19,15 +19,15 @@ import '../../views/riwayat/pages/detail_riwayat.dart';
 import '../../views/riwayat/pages/riwayat_page.dart';
 import '../../views/settings/pages/detail_akun_page.dart';
 import '../../views/settings/pages/edit_info_akun.dart';
-import '../../views/speedcash/pages/speedcash_depo_detail.dart';
-import '../../views/speedcash/pages/speedcash_depo_tiket.dart';
+import '../../views/speedcash/pages/speedcash_topup_detail.dart';
+import '../../views/speedcash/pages/speedcash_topup_tiket.dart';
 import '../utils/webview.dart';
 import '../../views/analytics/analytics_page.dart';
 import '../../views/input_nomor/input_nomor_akhir.dart';
 import '../../views/layanan/noprefix/noprefix_page.dart';
 import '../../views/layanan/prefix/prefix_page.dart';
 import '../../views/speedcash/pages/speedcash_binding.dart';
-import '../../views/speedcash/pages/speedcash_depo.dart';
+import '../../views/speedcash/pages/speedcash_topup.dart';
 import '../../views/speedcash/pages/speedcash_register.dart';
 import '../../views/home/page/home_page.dart';
 import '../../views/transaksi/konfirmasi_pembayaran_page.dart';
@@ -83,10 +83,10 @@ final Map<String, WidgetBuilder> appRoutes = {
       authGuardWrapper(SpeedcashBindingPage()),
   '/speedcashRegisterPage': (context) =>
       authGuardWrapper(SpeedcashRegisterPage()),
-  '/speedcashDepositPage': (context) =>
-      authGuardWrapper(const SpeedcashDepositPage()),
-  '/speedcashDetailDepositPage': (context) =>
+  '/speedcashTopUpPage': (context) =>
+      authGuardWrapper(const SpeedcashTopUpPage()),
+  '/speedcashDetailTopUpPage': (context) =>
       authGuardWrapper(const SpeedCashDetailDepo()),
-  '/speedcashTiketDepositPage': (context) => (const SpeedCashTiketDeposit()),
+  '/speedcashTiketTopUpPage': (context) => (const SpeedCashTiketTopUp()),
   '/webView': (context) => authGuardWrapper(WebviewPage(url: '', title: '')),
 };

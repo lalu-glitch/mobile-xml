@@ -48,12 +48,11 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
       left: 0,
       right: 0,
       child: Column(
-        // Wrap PageView and indicator in a Column
         children: [
           SizedBox(
             height: 220,
             child: PageView.builder(
-              controller: _pageController, // Use the stateful controller
+              controller: _pageController,
               padEnds: false,
               clipBehavior: Clip.none,
               // Item pertama adalah Saldo XML, sisanya dari ewallet

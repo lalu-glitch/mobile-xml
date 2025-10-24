@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../widgets/bank_card.dart';
 
-class SpeedcashDepositPage extends StatelessWidget {
-  const SpeedcashDepositPage({super.key});
+class SpeedcashTopUpPage extends StatelessWidget {
+  const SpeedcashTopUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class SpeedcashDepositPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: kBackground,
       appBar: AppBar(
-        title: const Text('Speedcash Deposit', style: TextStyle(color: kWhite)),
+        title: const Text('Speedcash TopUp', style: TextStyle(color: kWhite)),
         backgroundColor: kOrange,
         iconTheme: const IconThemeData(color: kWhite),
       ),
@@ -27,7 +27,7 @@ class SpeedcashDepositPage extends StatelessWidget {
                 title: 'Bank Central Asia ${index + 1}',
                 minimumTopUp: 'Rp. 10.000',
                 klik: () {
-                  Navigator.pushNamed(context, '/speedcashDetailDepositPage');
+                  Navigator.pushNamed(context, '/speedcashDetailTopUpPage');
                 },
               );
             },

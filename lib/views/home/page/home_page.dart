@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const SizedBox(height: 100),
-                                  // Cek error secara terpusat
+                                  // Cek error
                                   if (layananVM.error != null ||
                                       promoVM.error != null)
                                     ErrorHandler(

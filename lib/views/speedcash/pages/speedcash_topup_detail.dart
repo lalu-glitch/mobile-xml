@@ -25,7 +25,7 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      appBar: AppBar(backgroundColor: kWhite),
+      appBar: AppBar(backgroundColor: kWhite, scrolledUnderElevation: 0.0),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
         child: Column(
@@ -131,7 +131,7 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
           ),
           onPressed: () async {
             context.read<TopupDummySpeedcashCubit>().fetchTopup();
-            Navigator.pushNamed(context, '/speedcashTiketDepositPage');
+            Navigator.pushNamed(context, '/speedcashTiketTopUpPage');
           },
           child: const Text(
             "Selanjutnya",
