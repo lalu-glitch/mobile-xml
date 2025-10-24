@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:xmlapp/core/helper/constant_finals.dart';
 
+import '../../../core/helper/constant_finals.dart';
 import '../../../viewmodels/layanan_vm.dart';
 
 class ShopsCategoryChips extends StatefulWidget {
@@ -38,7 +38,6 @@ class _ShopsCategoryChipsState extends State<ShopsCategoryChips> {
 
     // opsi "Semuanya"
     final headings = ['Semuanya', ...widget.layananVM.layananByHeading.keys];
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: SizedBox(
