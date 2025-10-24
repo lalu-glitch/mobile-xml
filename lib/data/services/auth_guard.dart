@@ -30,51 +30,40 @@ class _AuthGuardState extends State<AuthGuard> {
     });
 
     // Timer tetap, tapi sekarang navigasi awal sudah deferred
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
-      if (!mounted) return;
-      final loggedIn = await _authService.isLoggedIn();
-      if (!loggedIn && !_showOnboarding) {
-        // Flag ini sekarang di-set correctly
-        Navigator.pushReplacementNamed(context, '/authPage');
-      }
-    });
+    // _timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
+    //   if (!mounted) return;
+    //   final loggedIn = await _authService.isLoggedIn();
+    //   if (!loggedIn && !_showOnboarding) {
+    //     // Flag ini sekarang di-set correctly
+    //     Navigator.pushReplacementNamed(context, '/authPage');
+    //   }
+    // });
   }
 
   Future<void> _checkAppFlow() async {
     // FIX: Sekarang dipanggil post-frame
     final onboardingSeen = await _storageService.isOnboardingSeen();
+    final loggedIn = await _authService.isLoggedIn();
 
     if (!onboardingSeen) {
-      setState(() {
-        // FIX: Set flag sebelum navigasi
-        _showOnboarding = true;
-      });
-      if (!mounted) return;
-      // FIX: Gunakan post-frame lagi untuk navigasi, double-safe
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          Navigator.pushReplacementNamed(context, '/onboarding');
-        }
-      });
-      return;
-    }
-
-    final loggedIn = await _authService.isLoggedIn();
-    if (!mounted) return;
-
-    if (!loggedIn) {
-      // FIX: Defer juga untuk konsistensi
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          Navigator.pushReplacementNamed(context, '/authPage');
-        }
-      });
-    } else {
+      // Jika onboarding belum pernah dilihat, arahkan ke onboarding.
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/onboarding');
+      }
+    } else if (loggedIn) {
+      // Jika onboarding sudah dilihat DAN pengguna sudah login,
+      // tandai onboarding sebagai selesai (untuk jaga-jaga) dan tampilkan child.
+      await _storageService.setOnboardingSeen();
       if (mounted) {
         setState(() {
-          _isLoggedIn = true;
-          _loading = false;
+          _isLoggedIn = true; // Tampilkan child (halaman utama)
+          _loading = false; // Sembunyikan loading indicator
         });
+      }
+    } else {
+      // Jika onboarding sudah dilihat TAPI pengguna belum login, arahkan ke halaman auth.
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/authPage');
       }
     }
   }
@@ -96,6 +85,12 @@ class _AuthGuardState extends State<AuthGuard> {
       // FIX: Tambah check _showOnboarding di build
       return const SizedBox.shrink();
     }
-    return widget.child;
+    // Jika sudah login, tampilkan halaman yang diproteksi (MainPage).
+    // Jika tidak, loading screen akan terus tampil sampai navigasi terjadi.
+    return _isLoggedIn
+        ? widget.child
+        : const Scaffold(
+            body: Center(child: CircularProgressIndicator(color: kOrange)),
+          );
   }
 }
