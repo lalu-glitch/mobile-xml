@@ -139,7 +139,7 @@ class ShopProducts extends StatelessWidget {
 
                     // Jalankan alur transaksi dan catat kode
                     context.read<FlowCubit>().startFlow(item.flow!, item);
-                    context.read<TransaksiCubit>().setKodeCatatan(
+                    context.read<TransaksiHelperCubit>().setKodeCatatan(
                       item.kodeCatatan,
                     );
 

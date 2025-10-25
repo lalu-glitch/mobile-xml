@@ -292,7 +292,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           const SizedBox(height: 16),
           CustomTextField(
             controller: kodeReferralCtrl,
-            labelText: 'Kode Refferal (opsional)',
+            labelText: 'Kode Referral (opsional)',
             prefixIcon: Icon(Icons.code, color: kOrangeAccent400),
           ),
           const SizedBox(height: 24),

@@ -71,7 +71,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/inputNomorFirst': (context) => authGuardWrapper(InputNomorPage()),
   '/inputNomorMid': (context) => authGuardWrapper(InputNomorMidPage()),
   '/detailInfoAkun': (context) => authGuardWrapper(DetailInfoAkun()),
-  '/editInfoAkun': (context) => authGuardWrapper(EditInfoAkunScreen()),
+  // '/editInfoAkun': (context) => authGuardWrapper(EditInfoAkunScreen()),
   '/konfirmasiPembayaran': (context) =>
       authGuardWrapper(KonfirmasiPembayaranPage()),
   '/transaksiProses': (context) => authGuardWrapper(TransaksiProsesPage()),

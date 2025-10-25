@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../cubit/info_akun_cubit.dart';
+import '../cubit/info_akun/info_akun_cubit.dart';
 
 class SettingHeader extends StatelessWidget {
   final InfoAkunLoaded state;

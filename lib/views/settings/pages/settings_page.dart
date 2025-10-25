@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../data/models/user/info_akun.dart';
-import '../cubit/info_akun_cubit.dart';
+import '../cubit/info_akun/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
 import '../widgets/custom_list_tile.dart';
 import '../widgets/error_view.dart';

@@ -25,7 +25,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isInit) {
-      final transaksi = context.read<TransaksiCubit>().getData();
+      final transaksi = context.read<TransaksiHelperCubit>().getData();
       _isInit = true;
       Future.microtask(() {
         if (mounted) {

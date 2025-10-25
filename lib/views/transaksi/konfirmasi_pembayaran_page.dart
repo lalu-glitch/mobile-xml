@@ -38,7 +38,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   @override
   Widget build(BuildContext context) {
     final balanceVM = Provider.of<BalanceViewModel>(context);
-    final transaksi = context.read<TransaksiCubit>().getData();
+    final transaksi = context.read<TransaksiHelperCubit>().getData();
 
     final methods = _generatePaymentMethods(balanceVM);
 
@@ -187,7 +187,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
   /// Tombol Bayar
   Widget _buildPayButton(List<PaymentMethodModel> methods, dynamic transaksi) {
-    final sendTransaksi = context.read<TransaksiCubit>();
+    final sendTransaksi = context.read<TransaksiHelperCubit>();
     final totalTransaksi = getTotalTransaksi(transaksi);
 
     return SafeArea(

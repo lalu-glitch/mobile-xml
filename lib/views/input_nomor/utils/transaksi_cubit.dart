@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/transaksi/transaksi_helper.dart';
 
-class TransaksiCubit extends Cubit<TransaksiHelperModel> {
-  TransaksiCubit() : super(const TransaksiHelperModel());
+class TransaksiHelperCubit extends Cubit<TransaksiHelperModel> {
+  TransaksiHelperCubit() : super(const TransaksiHelperModel());
 
   void setKodeproduk(String val) {
     emit(state.copyWith(kodeProduk: val));

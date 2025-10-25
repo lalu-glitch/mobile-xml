@@ -17,7 +17,7 @@ class HomeContentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final transaksi = context.read<TransaksiCubit>();
+    final transaksi = context.read<TransaksiHelperCubit>();
 
     if (layananVM.isLoading) {
       return ShimmerBox.buildShimmerIcons();

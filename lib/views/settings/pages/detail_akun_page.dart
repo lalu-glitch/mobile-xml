@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xmlapp/core/helper/constant_finals.dart';
-import 'package:xmlapp/views/settings/cubit/info_akun_cubit.dart';
+import 'package:xmlapp/views/settings/cubit/info_akun/info_akun_cubit.dart';
 
 import '../widgets/detail_row.dart';
 import '../widgets/section_title.dart';
@@ -29,10 +29,8 @@ class DetailInfoAkun extends StatelessWidget {
             if (state is InfoAkunLoading) {
               return const Center(child: CircularProgressIndicator());
             }
-
             if (state is InfoAkunLoaded) {
               final data = state.data.data;
-
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

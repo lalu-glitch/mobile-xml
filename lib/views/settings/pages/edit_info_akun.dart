@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:xmlapp/core/helper/constant_finals.dart';
-import 'package:xmlapp/core/utils/dialog.dart';
+import 'package:flutter/services.dart'; // <-- Impor untuk InputFormatter
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../core/helper/constant_finals.dart';
+import '../cubit/edit_info_akun/edit_info_akun_cubit.dart';
 
 class EditInfoAkunScreen extends StatefulWidget {
-  const EditInfoAkunScreen({super.key});
+  const EditInfoAkunScreen(this.label, this.value, {super.key});
+  final String label;
+  final String value;
 
   @override
   State<EditInfoAkunScreen> createState() => _EditInfoAkunScreenState();
@@ -11,76 +16,44 @@ class EditInfoAkunScreen extends StatefulWidget {
 
 class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _editCtrl = TextEditingController();
-
-  String _appBarTitle = 'Edit Info Akun';
-  String _initialValue = '';
-
-  bool _isLoading = false;
+  final _editCtrl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    // Ambil arguments setelah frame pertama selesai dibangun
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        final args =
-            ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-        if (args != null) {
-          setState(() {
-            _appBarTitle = 'Edit ${args['label']}';
-            _initialValue = args['value'] ?? '';
-            _editCtrl.text = _initialValue;
-          });
-        }
-      }
-    });
-  }
-
-  Future<void> _saveInfo() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    // --- Simulasi Panggilan API ---
-    await Future.delayed(const Duration(seconds: 2));
-    final newValue = _editCtrl.text;
-    // --- Akhir Simulasi ---
-
-    // Penting: Cek 'mounted' sebelum berinteraksi dengan context
-    // setelah operasi async
-    if (!mounted) return;
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    showAppToast(context, 'Info Akun berhasil diperbarui!', ToastType.success);
-    Navigator.of(context).pop(newValue);
+    _editCtrl.text = widget.value;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_appBarTitle),
+        title: Text('Edit ${widget.label}'),
         backgroundColor: kOrange,
         foregroundColor: kWhite,
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(24.0),
-        children: [
-          Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFormField(
+      body: BlocConsumer<EditInfoAkunCubit, EditInfoAkunState>(
+        listener: (context, state) {
+          if (state is EditInfoAkunSuccess) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.data.message)));
+            Navigator.pop(context, true);
+          } else if (state is EditInfoAkunError) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
+          }
+        },
+        builder: (context, state) {
+          final isLoading = state is EditInfoAkunLoading;
+
+          return ListView(
+            padding: const EdgeInsets.all(24.0),
+            children: [
+              Form(
+                key: _formKey,
+                child: TextFormField(
                   controller: _editCtrl,
                   decoration: const InputDecoration(
                     hintText: 'Masukkan info baru',
@@ -92,56 +65,79 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
                       borderSide: BorderSide(color: kOrange, width: 2),
                     ),
                   ),
+                  autofocus: true,
+                  keyboardType: widget.label == 'Markup Referral'
+                      ? TextInputType.number
+                      : TextInputType.text,
+                  inputFormatters: widget.label == 'Markup Referral'
+                      ? [FilteringTextInputFormatter.digitsOnly]
+                      : [],
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return 'Info Akun tidak boleh kosong';
                     }
-                    return null; // Valid
+                    if (widget.label == 'Markup Referral' &&
+                        int.tryParse(value) == null) {
+                      return 'Markup harus berupa angka';
+                    }
+                    return null;
                   },
-                  autofocus: true,
-                ),
-              ],
-            ),
-          ),
-
-          // 2. Beri jarak antara form dan tombol
-          const SizedBox(height: 32),
-
-          // 3. Tombol Simpan sebagai ElevatedButton
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kOrange, // Warna primer
-                foregroundColor: kWhite, // Warna teks
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              // 4. Nonaktifkan tombol saat loading
-              onPressed: _isLoading ? null : _saveInfo,
-              child: _isLoading
-                  // 5. Tampilkan loading indicator di dalam tombol
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: kWhite,
-                        strokeWidth: 2,
-                      ),
-                    )
-                  // 6. Teks tombol
-                  : const Text(
-                      'Simpan',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+              const SizedBox(height: 32),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kOrange,
+                    foregroundColor: kWhite,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-            ),
-          ),
-        ],
+                  ),
+                  onPressed: isLoading
+                      ? null
+                      : () {
+                          if (_formKey.currentState!.validate()) {
+                            if (widget.label == 'Markup Referral') {
+                              final value = int.parse(_editCtrl.text);
+                              context
+                                  .read<EditInfoAkunCubit>()
+                                  .updateMarkupReferral(value);
+                            } else {
+                              // nanti untuk nama / kode referral
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Fitur ini belum tersedia untuk label ini.',
+                                  ),
+                                ),
+                              );
+                            }
+                          }
+                        },
+                  child: isLoading
+                      ? const SizedBox(
+                          height: 22,
+                          width: 22,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2.5,
+                          ),
+                        )
+                      : const Text(
+                          'Simpan',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

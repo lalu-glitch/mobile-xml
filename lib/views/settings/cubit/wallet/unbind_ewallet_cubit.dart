@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../data/services/speedcash_api_service.dart';
+import '../../../../data/services/speedcash_api_service.dart';
 
 part 'unbind_ewallet.dart';
 

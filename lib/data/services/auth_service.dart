@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:logger/logger.dart';
 import '../../core/helper/constant_finals.dart';
 import 'package:android_id/android_id.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -50,19 +49,10 @@ class AuthService extends ChangeNotifier {
         },
       ),
     );
-    // Tambahkan LogInterceptor untuk melihat detail request/response
-    _dio.interceptors.add(
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        logPrint: (obj) => logger.d(obj), // Menggunakan logger yang sudah ada
-      ),
-    );
   }
 
   Dio get dio => _dio;
   String get basicAuthHeader => _basicAuthHeader; // Tambahkan getter ini
-  final logger = Logger();
 
   Future<String> _loadDeviceId() async {
     try {

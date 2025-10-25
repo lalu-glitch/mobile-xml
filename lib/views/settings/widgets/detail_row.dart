@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xmlapp/data/services/api_service.dart';
+import 'package:xmlapp/data/services/auth_guard.dart';
+import 'package:xmlapp/views/settings/cubit/info_akun/info_akun_cubit.dart';
 import '../../../core/helper/constant_finals.dart';
+import '../cubit/edit_info_akun/edit_info_akun_cubit.dart';
+import '../pages/edit_info_akun.dart';
 
 class DetailRow extends StatelessWidget {
   final String label;
@@ -17,12 +23,20 @@ class DetailRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: isNavigate
-          ? () {
-              Navigator.pushNamed(
+          ? () async {
+              final result = await Navigator.push(
                 context,
-                '/editInfoAkun',
-                arguments: {'label': label, 'value': value},
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider(
+                    create: (context) => EditInfoAkunCubit(ApiService()),
+                    child: AuthGuard(child: EditInfoAkunScreen(label, value)),
+                  ),
+                ),
               );
+
+              if (result == true && context.mounted) {
+                context.read<InfoAkunCubit>().getInfoAkun();
+              }
             }
           : null,
       child: Padding(
@@ -52,7 +66,6 @@ class DetailRow extends StatelessWidget {
                 ),
               ),
             ),
-            // Flexible(child: Icon(Icons.navigate_next_rounded)),
             isNavigate ? Icon(Icons.navigate_next_rounded) : SizedBox(),
           ],
         ),

@@ -54,7 +54,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
 
   Future<void> _fetchProvider(String value) async {
     if (value.length >= 4) {
-      final readTransaksi = context.read<TransaksiCubit>().getData();
+      final readTransaksi = context.read<TransaksiHelperCubit>().getData();
       print('transaksi : ${readTransaksi.kodeCatatan}');
       await context.read<ProviderPrefixCubit>().fetchProvidersPrefix(
         readTransaksi.kodeCatatan ?? '-',
@@ -79,7 +79,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   Widget build(BuildContext context) {
     final flowState = context.watch<FlowCubit>().state!;
     final flowCubit = context.read<FlowCubit>();
-    final sendTransaksi = context.read<TransaksiCubit>();
+    final sendTransaksi = context.read<TransaksiHelperCubit>();
     final iconItem = flowState.layananItem;
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;

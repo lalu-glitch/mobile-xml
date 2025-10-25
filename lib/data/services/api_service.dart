@@ -6,6 +6,7 @@ import '../models/produk/provider_kartu.dart';
 import '../models/transaksi/status_transaksi.dart';
 import '../models/transaksi/riwayat_transaksi.dart';
 import '../models/transaksi/transaksi_response.dart';
+import '../models/user/edit_info_akun.dart';
 import '../models/user/info_akun.dart';
 import '../models/user/user_balance.dart';
 import 'auth_service.dart';
@@ -288,6 +289,7 @@ class ApiService {
         "$baseURL/user/info",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
+      print('response: $response');
       if (response.statusCode == 200) {
         return InfoAkunModel.fromJson(response.data);
       } else {
@@ -306,6 +308,34 @@ class ApiService {
       throw Exception(e.toString());
     }
   }
-}
 
-//EDIT USER
+  //EDIT USER
+  Future<UserEditModel> editMarkup(int value) async {
+    try {
+      final deviceID = await loadDeviceId();
+      final response = await authService.dio.post(
+        "$baseURL/user/ganti_markup_ref",
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
+        data: {"markup_referral": value},
+      );
+
+      print(response);
+      if (response.statusCode == 200) {
+        return UserEditModel.fromJson(response.data);
+      } else {
+        throw Exception(
+          "Gagal mengubah markup referral: ${response.statusMessage}",
+        );
+      }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
+          : e.message;
+      logger.e("DioException: $apiMessage");
+      throw Exception(apiMessage);
+    } catch (e) {
+      logger.e("Exception: $e");
+      throw Exception(e.toString());
+    }
+  }
+}

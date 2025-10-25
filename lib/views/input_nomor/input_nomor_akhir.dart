@@ -28,7 +28,7 @@ class _InputNomorTujuanAkhirState
     final flowCubit = context.read<FlowCubit>();
     final flowState = flowCubit.state!;
 
-    final sendTransaksi = context.read<TransaksiCubit>();
+    final sendTransaksi = context.read<TransaksiHelperCubit>();
     final transaksi = sendTransaksi.getData();
 
     final int currentIndex = flowState.currentIndex;
@@ -78,7 +78,7 @@ class _InputNomorTujuanAkhirState
 
   @override
   Widget build(BuildContext context) {
-    final transaksi = context.read<TransaksiCubit>().getData();
+    final transaksi = context.read<TransaksiHelperCubit>().getData();
     return WillPopScope(
       onWillPop: onWillPopLogic,
       child: Scaffold(
