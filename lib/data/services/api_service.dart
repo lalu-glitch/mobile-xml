@@ -219,6 +219,7 @@ class ApiService {
     }
   }
 
+  //HISTORY TRANSAKSI
   Future<RiwayatTransaksiResponseModel?> fetchHistory({
     int page = 1,
     int limit = 5,
@@ -254,7 +255,6 @@ class ApiService {
         "$baseURL/trx_by_kode/$kodeKode",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
-
       if (response.statusCode == 200) {
         final jsonData = Map<String, dynamic>.from(response.data);
         return {
@@ -307,3 +307,5 @@ class ApiService {
     }
   }
 }
+
+//EDIT USER

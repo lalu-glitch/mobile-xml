@@ -16,17 +16,11 @@ class DetailRiwayatTransaksiCubit extends Cubit<DetailRiwayatTransaksiState> {
 
     try {
       final result = await apiService.historyDetail(kode);
-
       if (result['success'] == true) {
         final data = result['data'];
-        StatusTransaksiModel statusTransaksi;
-        if (data is StatusTransaksiModel) {
-          statusTransaksi = data;
-        } else if (data is Map<String, dynamic>) {
-          statusTransaksi = StatusTransaksiModel.fromJson(data);
-        } else {
-          throw Exception("Format data tidak dikenali");
-        }
+        final statusTransaksi = StatusTransaksiModel.fromJson(
+          data as Map<String, dynamic>,
+        );
         emit(DetailRiwayatTransaksiSuccess(statusTransaksi));
       } else {
         emit(

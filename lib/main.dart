@@ -24,8 +24,6 @@ import 'viewmodels/transaksi_viewmodel.dart';
 import 'views/input_nomor/utils/transaksi_cubit.dart';
 import 'views/layanan/noprefix/cubit/provider_noprefix_cubit.dart';
 import 'views/layanan/prefix/cubit/provider_prefix_cubit.dart';
-import 'views/riwayat/cubit/detail_riwayat_transaksi_cubit.dart';
-import 'views/riwayat/cubit/riwayat_transaksi_cubit.dart';
 import 'views/settings/cubit/info_akun_cubit.dart';
 import 'views/settings/cubit/unbind_ewallet_cubit.dart';
 import 'views/speedcash/topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
@@ -134,20 +132,15 @@ class _XmlAppState extends State<XmlApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) =>
-              UnbindEwalletCubit(apiService: SpeedcashApiService()),
-        ),
         BlocProvider(create: (context) => InfoAkunCubit(ApiService())),
         BlocProvider(create: (context) => RequestKodeAgenCubit(AuthService())),
         BlocProvider(create: (context) => ProviderNoPrefixCubit(ApiService())),
         BlocProvider(create: (context) => ProviderPrefixCubit(ApiService())),
-        BlocProvider(create: (context) => RiwayatTransaksiCubit(ApiService())),
-        BlocProvider(
-          create: (context) => DetailRiwayatTransaksiCubit(ApiService()),
-        ),
         BlocProvider(create: (context) => TransaksiCubit()),
         BlocProvider(create: (context) => FlowCubit()),
+        BlocProvider(
+          create: (context) => UnbindEwalletCubit(SpeedcashApiService()),
+        ),
 
         /// dummy
         BlocProvider(

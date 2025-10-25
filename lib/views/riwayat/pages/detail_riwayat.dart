@@ -7,32 +7,17 @@ import '../../../../core/helper/constant_finals.dart';
 import '../cubit/detail_riwayat_transaksi_cubit.dart';
 import '../widgets/card_detail_item.dart';
 
-class DetailRiwayatPage extends StatefulWidget {
-  const DetailRiwayatPage({super.key});
+class DetailRiwayatPage extends StatelessWidget {
+  final String kode;
 
-  @override
-  State<DetailRiwayatPage> createState() => _DetailRiwayatPageState();
-}
-
-class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
-  bool _isInit = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isInit) {
-      final args =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
-      final String kode = args?['kode'] ?? '';
-      if (kode.isNotEmpty) {
-        context.read<DetailRiwayatTransaksiCubit>().loadDetailRiwayat(kode);
-      }
-      _isInit = true;
-    }
-  }
+  const DetailRiwayatPage({super.key, required this.kode});
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<DetailRiwayatTransaksiCubit>().loadDetailRiwayat(kode);
+    });
+
     return Scaffold(
       backgroundColor: kBackground,
       appBar: AppBar(
@@ -143,7 +128,6 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
                         ],
                       ),
                     ),
-                    // Tombol Struk di paling bawah
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: SafeArea(
@@ -181,7 +165,7 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
                   ],
                 );
               }
-              return const SizedBox.shrink(); // Fallback, though unlikely
+              return const SizedBox.shrink(); // Fallback, though unlikely wkwk
             },
           ),
     );

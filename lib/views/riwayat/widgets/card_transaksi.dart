@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:xmlapp/core/helper/constant_finals.dart';
+import 'package:xmlapp/data/services/api_service.dart';
+import 'package:xmlapp/data/services/auth_guard.dart';
+import 'package:xmlapp/views/riwayat/pages/detail_riwayat.dart';
+
+import '../cubit/detail_riwayat_transaksi_cubit.dart';
 
 class TransactionCard extends StatelessWidget {
-  final dynamic transaksi; // model transaksi
+  final dynamic t; // model transaksi
 
-  const TransactionCard({super.key, required this.transaksi});
+  const TransactionCard({super.key, required this.t});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +22,15 @@ class TransactionCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
         onTap: () {
-          Navigator.pushNamed(
+          Navigator.push(
             context,
-            '/detailRiwayatTransaksi',
-            arguments: {'kode': transaksi.kode},
+            MaterialPageRoute(
+              //scoped provider
+              builder: (context) => BlocProvider(
+                create: (context) => DetailRiwayatTransaksiCubit(ApiService()),
+                child: AuthGuard(child: DetailRiwayatPage(kode: t.kode)),
+              ),
+            ),
           );
         },
         child: Padding(
@@ -31,14 +42,10 @@ class TransactionCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: _statusColor(transaksi).withOpacity(0.15),
+                  color: _statusColor(t).withOpacity(0.15),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  _statusIcon(transaksi),
-                  color: _statusColor(transaksi),
-                  size: 28,
-                ),
+                child: Icon(_statusIcon(t), color: _statusColor(t), size: 28),
               ),
               const SizedBox(width: 14),
 
@@ -49,7 +56,7 @@ class TransactionCard extends StatelessWidget {
                   children: [
                     // Tujuan
                     Text(
-                      transaksi.tujuan,
+                      t.tujuan,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -61,9 +68,7 @@ class TransactionCard extends StatelessWidget {
 
                     // Tanggal
                     Text(
-                      DateFormat(
-                        'dd MMM yyyy, HH:mm',
-                      ).format(transaksi.tglEntri),
+                      DateFormat('dd MMM yyyy, HH:mm').format(t.tglEntri),
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.black54,
@@ -86,21 +91,21 @@ class TransactionCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: _statusColor(transaksi).withOpacity(0.1),
+                      color: _statusColor(t).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      transaksi.keterangan,
+                      t.keterangan,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: _statusColor(transaksi),
+                        color: _statusColor(t),
                       ),
                     ),
                   ),
                   // Harga
                   Text(
-                    "Rp ${transaksi.harga.toStringAsFixed(0)}",
+                    "Rp ${t.harga.toStringAsFixed(0)}",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,

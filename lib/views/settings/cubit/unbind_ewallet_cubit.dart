@@ -6,7 +6,7 @@ part 'unbind_ewallet.dart';
 class UnbindEwalletCubit extends Cubit<EwalletState> {
   final SpeedcashApiService apiService;
 
-  UnbindEwalletCubit({required this.apiService}) : super(EwalletInitial());
+  UnbindEwalletCubit(this.apiService) : super(EwalletInitial());
 
   Future<void> unbindEwallet(String kodeDompet) async {
     emit(UnbindLoading(kodeDompet));

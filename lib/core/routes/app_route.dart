@@ -15,7 +15,6 @@ import '../../views/poin_dan_komisi/pages/poin/pages/detail_tukar_poin_page.dart
 import '../../views/poin_dan_komisi/pages/poin/pages/poin_page.dart';
 import '../../views/poin_dan_komisi/pages/poin/pages/status_tukar_poin_page.dart';
 import '../../views/poin_dan_komisi/pages/poin/pages/verifikasi_tukar_poin_page.dart';
-import '../../views/riwayat/pages/detail_riwayat.dart';
 import '../../views/riwayat/pages/riwayat_page.dart';
 import '../../views/settings/pages/detail_akun_page.dart';
 import '../../views/settings/pages/edit_info_akun.dart';
@@ -68,7 +67,6 @@ final Map<String, WidgetBuilder> appRoutes = {
       authGuardWrapper(VerifikasiTukarPoinPage()),
   '/statusTukarPoinPage': (context) =>
       authGuardWrapper(authGuardWrapper(StatusTukarPoinPage())),
-  '/detailRiwayatTransaksi': (context) => authGuardWrapper(DetailRiwayatPage()),
   '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanAkhir()),
   '/inputNomorFirst': (context) => authGuardWrapper(InputNomorPage()),
   '/inputNomorMid': (context) => authGuardWrapper(InputNomorMidPage()),

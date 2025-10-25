@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xmlapp/data/services/api_service.dart';
+import 'package:xmlapp/views/riwayat/cubit/riwayat_transaksi_cubit.dart';
 
 import 'core/helper/constant_finals.dart';
 
@@ -19,12 +22,26 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    AuthGuard(child: HomePage()),
-    AuthGuard(child: ShopPage()),
-    AuthGuard(child: RiwayatTransaksiPage()),
-    AuthGuard(child: SettingsPage()),
-  ];
+  late final List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      AuthGuard(child: HomePage()),
+      AuthGuard(child: ShopPage()),
+      // Scoped provider dibuat sekali di init, child page juga instance tetap
+      AuthGuard(
+        child: BlocProvider<RiwayatTransaksiCubit>(
+          create: (context) => RiwayatTransaksiCubit(ApiService()),
+          child:
+              RiwayatTransaksiPage(), // Instance tetap, tapi dibungkus permanen
+        ),
+      ),
+      // AuthGuard(child: RiwayatTransaksiPage()),
+      AuthGuard(child: SettingsPage()),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

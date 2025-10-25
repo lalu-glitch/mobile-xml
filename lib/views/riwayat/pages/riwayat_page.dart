@@ -81,7 +81,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                             horizontal: 12,
                             vertical: 1,
                           ),
-                          child: TransactionCard(transaksi: t),
+                          child: TransactionCard(t: t),
                         );
                       },
                     ),
