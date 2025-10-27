@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:xmlapp/core/helper/constant_finals.dart';
 import 'package:xmlapp/data/services/api_service.dart';
-import 'package:xmlapp/data/services/auth_guard.dart';
+import 'package:xmlapp/core/helper/auth_guard.dart';
 import 'package:xmlapp/views/riwayat/pages/detail_riwayat.dart';
 
 import '../cubit/detail_riwayat_transaksi_cubit.dart';

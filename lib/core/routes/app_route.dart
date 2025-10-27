@@ -17,9 +17,9 @@ import '../../views/poin_dan_komisi/pages/poin/pages/status_tukar_poin_page.dart
 import '../../views/poin_dan_komisi/pages/poin/pages/verifikasi_tukar_poin_page.dart';
 import '../../views/riwayat/pages/riwayat_page.dart';
 import '../../views/settings/pages/detail_akun_page.dart';
-import '../../views/settings/pages/edit_info_akun.dart';
 import '../../views/speedcash/pages/speedcash_topup_detail.dart';
 import '../../views/speedcash/pages/speedcash_topup_tiket.dart';
+import '../helper/onboarding_guard.dart';
 import '../utils/webview.dart';
 import '../../views/analytics/analytics_page.dart';
 import '../../views/input_nomor/input_nomor_akhir.dart';
@@ -32,7 +32,7 @@ import '../../views/home/page/home_page.dart';
 import '../../views/transaksi/konfirmasi_pembayaran_page.dart';
 import '../../views/settings/pages/settings_page.dart';
 import '../../views/shops/pages/shop_page.dart';
-import '../../data/services/auth_guard.dart';
+import '../helper/auth_guard.dart';
 import '../../views/struk.dart';
 import '../../views/transaksi/transaksi_detail_page.dart';
 import '../../views/transaksi/transaksi_proses_page.dart';
@@ -41,13 +41,17 @@ Widget authGuardWrapper(Widget child) {
   return AuthGuard(child: child);
 }
 
+Widget onboardingGuardWrapper(Widget child) {
+  return OnboardingGuard(child: child);
+}
+
 final Map<String, WidgetBuilder> appRoutes = {
-  '/': (context) => authGuardWrapper(const MainPage()),
+  '/': (context) => onboardingGuardWrapper(authGuardWrapper(const MainPage())),
   '/onboarding': (context) => const OnboardingScreen(),
-  '/lupaKodeAgen': (context) => (LupaKodeAgenPage()),
-  '/authPage': (context) => (AuthPage()),
-  '/kodeOTP': (context) => (KodeOTP()),
-  '/S&KPage': (context) => (SyaratDanKetentuan()),
+  '/lupaKodeAgen': (context) => LupaKodeAgenPage(),
+  '/authPage': (context) => AuthPage(),
+  '/kodeOTP': (context) => KodeOTP(),
+  '/S&KPage': (context) => SyaratDanKetentuan(),
   '/homepage': (context) => authGuardWrapper(HomePage()),
   '/settings': (context) => authGuardWrapper(SettingsPage()),
   '/shops': (context) => authGuardWrapper(const ShopPage()),
@@ -60,18 +64,16 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
   '/komisiPage': (context) => authGuardWrapper(KomisiPage()),
   '/stastusTukarKomisiPage': (context) =>
-      authGuardWrapper(authGuardWrapper(StatusTukarKomisiPage())),
+      authGuardWrapper(StatusTukarKomisiPage()),
   '/poinPage': (context) => authGuardWrapper(PoinPage()),
   '/detailTukarPoinPage': (context) => authGuardWrapper(DetailTukarPoin()),
   '/verifikasiTukarPoinPage': (context) =>
       authGuardWrapper(VerifikasiTukarPoinPage()),
-  '/statusTukarPoinPage': (context) =>
-      authGuardWrapper(authGuardWrapper(StatusTukarPoinPage())),
+  '/statusTukarPoinPage': (context) => authGuardWrapper(StatusTukarPoinPage()),
   '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanAkhir()),
   '/inputNomorFirst': (context) => authGuardWrapper(InputNomorPage()),
   '/inputNomorMid': (context) => authGuardWrapper(InputNomorMidPage()),
   '/detailInfoAkun': (context) => authGuardWrapper(DetailInfoAkun()),
-  // '/editInfoAkun': (context) => authGuardWrapper(EditInfoAkunScreen()),
   '/konfirmasiPembayaran': (context) =>
       authGuardWrapper(KonfirmasiPembayaranPage()),
   '/transaksiProses': (context) => authGuardWrapper(TransaksiProsesPage()),

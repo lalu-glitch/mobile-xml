@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xmlapp/data/services/api_service.dart';
-import 'package:xmlapp/data/services/auth_guard.dart';
+import 'package:xmlapp/core/helper/auth_guard.dart';
 import 'package:xmlapp/views/settings/cubit/info_akun/info_akun_cubit.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../cubit/edit_info_akun/edit_info_akun_cubit.dart';

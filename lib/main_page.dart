@@ -10,7 +10,7 @@ import 'views/home/page/home_page.dart';
 import 'views/riwayat/pages/riwayat_page.dart';
 import 'views/shops/pages/shop_page.dart';
 import 'views/settings/pages/settings_page.dart';
-import 'data/services/auth_guard.dart';
+import 'core/helper/auth_guard.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -30,12 +30,11 @@ class _MainPageState extends State<MainPage> {
     _pages = [
       AuthGuard(child: HomePage()),
       AuthGuard(child: ShopPage()),
-      // Scoped provider dibuat sekali di init, child page juga instance tetap
+      // Scoped provider
       AuthGuard(
         child: BlocProvider<RiwayatTransaksiCubit>(
           create: (context) => RiwayatTransaksiCubit(ApiService()),
-          child:
-              RiwayatTransaksiPage(), // Instance tetap, tapi dibungkus permanen
+          child: RiwayatTransaksiPage(),
         ),
       ),
       // AuthGuard(child: RiwayatTransaksiPage()),

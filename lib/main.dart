@@ -24,7 +24,6 @@ import 'viewmodels/transaksi_viewmodel.dart';
 import 'views/input_nomor/utils/transaksi_cubit.dart';
 import 'views/layanan/noprefix/cubit/provider_noprefix_cubit.dart';
 import 'views/layanan/prefix/cubit/provider_prefix_cubit.dart';
-import 'views/settings/cubit/edit_info_akun/edit_info_akun_cubit.dart';
 import 'views/settings/cubit/info_akun/info_akun_cubit.dart';
 import 'views/settings/cubit/wallet/unbind_ewallet_cubit.dart';
 import 'views/speedcash/topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
