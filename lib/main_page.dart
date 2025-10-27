@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xmlapp/data/services/api_service.dart';
-import 'package:xmlapp/views/riwayat/cubit/riwayat_transaksi_cubit.dart';
-
 import 'core/helper/constant_finals.dart';
-
 import 'views/home/page/home_page.dart';
-// import 'views/poin_dan_komisi/pages/widgets/top_bottom_ticket_cut.dart';
 import 'views/riwayat/pages/riwayat_page.dart';
 import 'views/shops/pages/shop_page.dart';
 import 'views/settings/pages/settings_page.dart';
@@ -28,17 +22,10 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     _pages = [
-      AuthGuard(child: HomePage()),
-      AuthGuard(child: ShopPage()),
-      // Scoped provider
-      AuthGuard(
-        child: BlocProvider<RiwayatTransaksiCubit>(
-          create: (context) => RiwayatTransaksiCubit(ApiService()),
-          child: RiwayatTransaksiPage(),
-        ),
-      ),
-      // AuthGuard(child: RiwayatTransaksiPage()),
-      AuthGuard(child: SettingsPage()),
+      AuthGuard(child: const HomePage()),
+      AuthGuard(child: const ShopPage()),
+      AuthGuard(child: const RiwayatTransaksiPage()),
+      AuthGuard(child: const SettingsPage()),
     ];
   }
 

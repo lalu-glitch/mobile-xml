@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:xmlapp/views/riwayat/cubit/riwayat_transaksi_cubit.dart';
 
 import 'data/services/auth_service.dart';
 import 'viewmodels/promo_vm.dart';
@@ -136,6 +137,7 @@ class _XmlAppState extends State<XmlApp> {
         BlocProvider(create: (context) => RequestKodeAgenCubit(AuthService())),
         BlocProvider(create: (context) => ProviderNoPrefixCubit(ApiService())),
         BlocProvider(create: (context) => ProviderPrefixCubit(ApiService())),
+        BlocProvider(create: (context) => RiwayatTransaksiCubit(ApiService())),
         BlocProvider(create: (context) => TransaksiHelperCubit()),
         BlocProvider(create: (context) => FlowCubit()),
         BlocProvider(

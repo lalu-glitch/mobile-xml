@@ -189,42 +189,68 @@ class _SettingsPageState extends State<SettingsPage> {
                 children: [
                   SettingHeader(state: state), // Header profil user
                   Expanded(
-                    child: ListView(
+                    child: ListView.builder(
                       padding: EdgeInsets.symmetric(
                         vertical: kSize32,
                         horizontal: kSize16,
                       ),
-                      children: [
-                        /// --- DOMPET APLIKASI ---
-                        SizedBox(
-                          height: (state.data.data.ewallet?.isEmpty ?? true)
-                              ? 0
-                              : 120, // tinggi maksimum kontainer kalo ada ewallet
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: state.data.data.ewallet?.length ?? 0,
-                            itemBuilder: (context, index) {
-                              final Ewallet currentEwallet =
-                                  state.data.data.ewallet![index];
-                              return WalletItem(ewallet: currentEwallet);
-                            },
-                          ),
-                        ),
-
-                        _buildSection(
-                          context,
-                          'Informasi Akun',
-                          accountInfoItems,
-                        ),
-                        _buildSection(context, 'Riwayat', historyItems),
-                        _buildSection(context, 'Transaksi', transactionItems),
-                        _buildSection(context, 'Menu Agen', menuAgenItem),
-                        _buildSection(context, 'Bantuan', bantuanItem),
-                        const Divider(height: 32, thickness: 1),
-
-                        /// --- LOGOUT --- ///
-                        LogoutCard(onTap: _showLogoutBottomSheet),
-                      ],
+                      itemCount: 8, // Total sections + other widgets
+                      itemBuilder: (context, index) {
+                        switch (index) {
+                          case 0:
+                            // --- DOMPET APLIKASI ---
+                            return SizedBox(
+                              height: (state.data.data.ewallet?.isEmpty ?? true)
+                                  ? 0
+                                  : 120, // tinggi maksimum kontainer kalo ada ewallet
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: state.data.data.ewallet?.length ?? 0,
+                                itemBuilder: (context, index) {
+                                  final Ewallet currentEwallet =
+                                      state.data.data.ewallet![index];
+                                  return WalletItem(ewallet: currentEwallet);
+                                },
+                              ),
+                            );
+                          case 1:
+                            return _buildSection(
+                              context,
+                              'Informasi Akun',
+                              accountInfoItems,
+                            );
+                          case 2:
+                            return _buildSection(
+                              context,
+                              'Riwayat',
+                              historyItems,
+                            );
+                          case 3:
+                            return _buildSection(
+                              context,
+                              'Transaksi',
+                              transactionItems,
+                            );
+                          case 4:
+                            return _buildSection(
+                              context,
+                              'Menu Agen',
+                              menuAgenItem,
+                            );
+                          case 5:
+                            return _buildSection(
+                              context,
+                              'Bantuan',
+                              bantuanItem,
+                            );
+                          case 6:
+                            return const Divider(height: 32, thickness: 1);
+                          case 7:
+                            return LogoutCard(onTap: _showLogoutBottomSheet);
+                          default:
+                            return const SizedBox.shrink();
+                        }
+                      },
                     ),
                   ),
                 ],

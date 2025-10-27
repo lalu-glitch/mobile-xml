@@ -14,7 +14,7 @@ import '../../../viewmodels/promo_vm.dart';
 import '../../popup/promo_popup.dart';
 import 'error_handler.dart';
 import '../widgets/home_header_section.dart';
-import '../widgets/home_content_section.dart';
+import '../widgets/home_layanan_section.dart';
 import '../widgets/main_saldo_card_carousel.dart';
 import '../widgets/poin_komisi_overlay.dart';
 import '../widgets/home_promo_section.dart';
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                                             ? ShimmerBox.buildShimmerPromoList()
                                             : const HomePromoSection(),
                                         const SizedBox(height: 24),
-                                        HomeContentSection(
+                                        HomeLayananSection(
                                           layananVM: layananVM,
                                         ),
                                         const SizedBox(height: 24),

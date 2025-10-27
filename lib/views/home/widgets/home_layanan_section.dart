@@ -10,8 +10,8 @@ import '../../layanan/cubit/flow_cubit.dart';
 import '../../../viewmodels/layanan_vm.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
 
-class HomeContentSection extends StatelessWidget {
-  const HomeContentSection({required this.layananVM, super.key});
+class HomeLayananSection extends StatelessWidget {
+  const HomeLayananSection({required this.layananVM, super.key});
 
   final LayananViewModel layananVM;
 
