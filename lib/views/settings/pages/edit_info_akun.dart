@@ -3,6 +3,7 @@ import 'package:flutter/services.dart'; // <-- Impor untuk InputFormatter
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../../../core/utils/dialog.dart';
 import '../cubit/edit_info_akun/edit_info_akun_cubit.dart';
 
 class EditInfoAkunScreen extends StatefulWidget {
@@ -35,14 +36,10 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
       body: BlocConsumer<EditInfoAkunCubit, EditInfoAkunState>(
         listener: (context, state) {
           if (state is EditInfoAkunSuccess) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.data.message)));
+            showAppToast(context, state.data.message, ToastType.success);
             Navigator.pop(context, true);
           } else if (state is EditInfoAkunError) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            showAppToast(context, state.message, ToastType.error);
           }
         },
         builder: (context, state) {
@@ -105,14 +102,17 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
                               context
                                   .read<EditInfoAkunCubit>()
                                   .updateMarkupReferral(value);
+                            } else if (widget.label == 'Kode Referral') {
+                              final value = _editCtrl.text.trim();
+                              context
+                                  .read<EditInfoAkunCubit>()
+                                  .updateKodeReferral(value);
                             } else {
-                              // nanti untuk nama / kode referral
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Fitur ini belum tersedia untuk label ini.',
-                                  ),
-                                ),
+                              //kalo fiturnya belum ada
+                              showAppToast(
+                                context,
+                                'Fitur ini belum tersedia',
+                                ToastType.warning,
                               );
                             }
                           }

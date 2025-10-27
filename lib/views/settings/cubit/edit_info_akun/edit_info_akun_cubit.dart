@@ -14,10 +14,20 @@ class EditInfoAkunCubit extends Cubit<EditInfoAkunState> {
   Future<void> updateMarkupReferral(int value) async {
     emit(EditInfoAkunLoading());
     try {
-      final result = await apiService.editMarkup(value);
+      final result = await apiService.editMarkupRef(value);
       emit(EditInfoAkunSuccess(result));
     } catch (e) {
-      emit(EditInfoAkunError(e.toString().replaceAll("Exception:", "").trim()));
+      emit(EditInfoAkunError(e.toString()));
+    }
+  }
+
+  Future<void> updateKodeReferral(String value) async {
+    emit(EditInfoAkunLoading());
+    try {
+      final result = await apiService.editKodeRef(value);
+      emit(EditInfoAkunSuccess(result));
+    } catch (e) {
+      emit(EditInfoAkunError(e.toString()));
     }
   }
 }

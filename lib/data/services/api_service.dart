@@ -310,7 +310,7 @@ class ApiService {
   }
 
   //EDIT USER
-  Future<UserEditModel> editMarkup(int value) async {
+  Future<UserEditModel> editMarkupRef(int value) async {
     try {
       final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
@@ -319,12 +319,39 @@ class ApiService {
         data: {"markup_referral": value},
       );
 
-      print(response);
       if (response.statusCode == 200) {
         return UserEditModel.fromJson(response.data);
       } else {
         throw Exception(
           "Gagal mengubah markup referral: ${response.statusMessage}",
+        );
+      }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
+          : e.message;
+      logger.e("DioException: $apiMessage");
+      throw Exception(apiMessage);
+    } catch (e) {
+      logger.e("Exception: $e");
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<UserEditModel> editKodeRef(String value) async {
+    try {
+      final deviceID = await loadDeviceId();
+      final response = await authService.dio.post(
+        '$baseURL/user/ganti_kode_ref',
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
+        data: {"kode_referral": value},
+      );
+      print('response: $response');
+      if (response.statusCode == 200) {
+        return UserEditModel.fromJson(response.data);
+      } else {
+        throw Exception(
+          "Gagal mengubah kode referral: ${response.statusMessage}",
         );
       }
     } on DioException catch (e) {
