@@ -15,9 +15,9 @@ class AuthService extends ChangeNotifier {
   Dio get dio => _dio;
 
   //singleton
-  AuthService._internal();
-  static final AuthService _instance = AuthService._internal();
-  static AuthService get instance => _instance;
+  // AuthService._internal();
+  // static final AuthService _instance = AuthService._internal();
+  // static AuthService get instance => _instance;
 
   final String _basicAuthHeader =
       "Basic ${base64Encode(utf8.encode("${dotenv.env['BASIC_USER']}:${dotenv.env['BASIC_PASS']}"))}";

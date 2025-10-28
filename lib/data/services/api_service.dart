@@ -289,7 +289,6 @@ class ApiService {
         "$baseURL/user/info",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
-      print('response: $response');
       if (response.statusCode == 200) {
         return InfoAkunModel.fromJson(response.data);
       } else {

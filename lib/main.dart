@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:xmlapp/views/riwayat/cubit/riwayat_transaksi_cubit.dart';
 
 import 'data/services/auth_service.dart';
 import 'viewmodels/promo_vm.dart';
@@ -26,8 +24,10 @@ import 'viewmodels/transaksi_viewmodel.dart';
 import 'views/input_nomor/utils/transaksi_cubit.dart';
 import 'views/layanan/noprefix/cubit/provider_noprefix_cubit.dart';
 import 'views/layanan/prefix/cubit/provider_prefix_cubit.dart';
+import 'views/riwayat/cubit/riwayat_transaksi_cubit.dart';
 import 'views/settings/cubit/info_akun/info_akun_cubit.dart';
 import 'views/settings/cubit/wallet/unbind_ewallet_cubit.dart';
+import 'views/speedcash/cubit/speedcash_bank_cubit.dart';
 import 'views/speedcash/topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
 import 'views/speedcash/topup_dummy/topup_repository.dart';
 
@@ -68,13 +68,11 @@ class _XmlAppState extends State<XmlApp> {
   }
 
   Future<void> _initLocationService() async {
-    log('Main: Starting location init...');
     final locationService = LocationService();
     try {
       await locationService.getCurrentLocation();
-      log('Main: Location success');
     } catch (e) {
-      log('Main: Location error: $e'); // Jangan throw, biar app lanjut
+      return;
     }
   }
 
@@ -135,6 +133,7 @@ class _XmlAppState extends State<XmlApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        //umum
         BlocProvider(create: (context) => InfoAkunCubit(ApiService())),
         BlocProvider(create: (context) => RequestKodeAgenCubit(AuthService())),
         BlocProvider(create: (context) => ProviderNoPrefixCubit(ApiService())),
@@ -142,8 +141,13 @@ class _XmlAppState extends State<XmlApp> {
         BlocProvider(create: (context) => RiwayatTransaksiCubit(ApiService())),
         BlocProvider(create: (context) => TransaksiHelperCubit()),
         BlocProvider(create: (context) => FlowCubit()),
+
+        //speedcash
         BlocProvider(
           create: (context) => UnbindEwalletCubit(SpeedcashApiService()),
+        ),
+        BlocProvider(
+          create: (context) => SpeedcashBankCubit(SpeedcashApiService()),
         ),
 
         /// dummy

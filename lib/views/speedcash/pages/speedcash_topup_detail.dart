@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../../../core/helper/currency.dart';
 import '../topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
 import '../widgets/rupiah_text_field.dart';
 
 class SpeedCashDetailDepo extends StatefulWidget {
-  const SpeedCashDetailDepo({super.key});
+  const SpeedCashDetailDepo(this.title, this.minimumTopUp, {super.key});
+
+  final String title;
+  final String minimumTopUp;
 
   @override
   State<SpeedCashDetailDepo> createState() => _SpeedCashDetailDepoState();
@@ -18,7 +22,7 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
   @override
   void initState() {
     super.initState();
-    controller = TextEditingController(); // ✅ Dibuat di initState
+    controller = TextEditingController();
   }
 
   @override
@@ -43,7 +47,7 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
                 ),
                 const SizedBox(width: 16),
                 Text(
-                  'Bank Central Asia',
+                  widget.title.toUpperCase(),
                   style: TextStyle(
                     color: kNeutral100,
                     fontSize: 16,
@@ -56,7 +60,7 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
             RupiahTextField(controller: controller, fontSize: 25),
             const SizedBox(height: 16),
             Text(
-              ' Minimal top up Rp. 10.000',
+              "Biaya admin ${CurrencyUtil.formatCurrency(double.tryParse(widget.minimumTopUp) ?? 0)}",
               style: TextStyle(color: kNeutral90),
             ),
             const SizedBox(height: 16),

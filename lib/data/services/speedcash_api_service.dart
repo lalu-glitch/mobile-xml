@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../core/helper/constant_finals.dart';
+import '../models/speedcash/speedcash_list_bank.dart';
 import '../models/speedcash/speedcash_response.dart';
 import '../models/speedcash/speedcash_unbind.dart';
 import 'auth_service.dart';
@@ -13,6 +18,9 @@ class SpeedcashApiService {
     : authService = authService ?? AuthService(),
       logger = logger ?? Logger();
 
+  final String _basicAuthSpeedcashHeader =
+      "Basic ${base64Encode(utf8.encode("${dotenv.env['BASIC_USER_SPEEDCASH']}:${dotenv.env['BASIC_PASS_SPEEDCASH']}"))}";
+
   Future<Map<String, dynamic>> speedcashRegister({
     required String nama,
     required String phone,
@@ -20,7 +28,13 @@ class SpeedcashApiService {
   }) async {
     try {
       final response = await authService.dio.post(
-        "$baseURL/speedcash/create_account",
+        "$baseURLIntegration/speedcash/create_account",
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthSpeedcashHeader,
+            "Content-Type": "application/json",
+          },
+        ),
         data: {"nama": nama, "phone": phone, "email": email},
       );
 
@@ -59,7 +73,13 @@ class SpeedcashApiService {
   }) async {
     try {
       final response = await authService.dio.post(
-        "$baseURL/speedcash/account_binding",
+        "$baseURLIntegration/speedcash/account_binding",
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthSpeedcashHeader,
+            "Content-Type": "application/json",
+          },
+        ),
         data: {"phone": phone, "merchantId": merchantId},
       );
 
@@ -95,7 +115,13 @@ class SpeedcashApiService {
   Future<SpeedcashUnbindModel> speedcashUnbind() async {
     try {
       final response = await authService.dio.post(
-        "$baseURL/speedcash/unbind_account",
+        "$baseURLIntegration/speedcash/unbind_account",
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthSpeedcashHeader,
+            "Content-Type": "application/json",
+          },
+        ),
       );
       if (response.statusCode == 200) {
         return SpeedcashUnbindModel.fromJson(
@@ -114,6 +140,37 @@ class SpeedcashApiService {
       throw Exception(apiMessage);
     } catch (e) {
       logger.e("Exception: $e");
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<DataBank> listOfBanks(String kodeReseller) async {
+    try {
+      final response = await authService.dio.get(
+        '$baseURLIntegration/speedcash/list-bank/$kodeReseller',
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthSpeedcashHeader,
+            "Content-Type": "application/json",
+          },
+        ),
+      );
+      log('$response');
+      if (response.statusCode == 200) {
+        return DataBank.fromJson(response.data["data"]);
+      } else {
+        throw Exception(
+          "Gagal mendapatkan list Bank. Status: ${response.statusCode}",
+        );
+      }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
+          : e.message;
+      log("DioException: $apiMessage");
+      throw Exception(apiMessage);
+    } catch (e) {
+      log(e.toString());
       throw Exception(e.toString());
     }
   }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
@@ -5,10 +6,12 @@ import '../../../core/helper/constant_finals.dart';
 class BankCard extends StatelessWidget {
   final String title;
   final String minimumTopUp;
+  final dynamic imageUrl;
   final VoidCallback klik;
   const BankCard({
     required this.title,
     required this.minimumTopUp,
+    this.imageUrl,
     required this.klik,
     super.key,
   });
@@ -28,11 +31,23 @@ class BankCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Image.asset(
-                'assets/icons/bca-icon.png',
+              SizedBox(
                 width: 50,
                 height: 50,
-                fit: BoxFit.cover,
+                child: (imageUrl is String && imageUrl.isNotEmpty)
+                    ? CachedNetworkImage(
+                        imageUrl: imageUrl,
+                        fit: BoxFit.contain,
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.business_rounded),
+                      )
+                    : const Icon(
+                        Icons.business_rounded,
+                        size: 30,
+                        color: kNeutral70,
+                      ),
               ),
               SizedBox(width: kSize16),
               Column(

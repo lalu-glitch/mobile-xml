@@ -17,7 +17,6 @@ import '../../views/poin_dan_komisi/pages/poin/pages/status_tukar_poin_page.dart
 import '../../views/poin_dan_komisi/pages/poin/pages/verifikasi_tukar_poin_page.dart';
 import '../../views/riwayat/pages/riwayat_page.dart';
 import '../../views/settings/pages/detail_akun_page.dart';
-import '../../views/speedcash/pages/speedcash_topup_detail.dart';
 import '../../views/speedcash/pages/speedcash_topup_tiket.dart';
 import '../helper/onboarding_guard.dart';
 import '../utils/webview.dart';
@@ -85,8 +84,6 @@ final Map<String, WidgetBuilder> appRoutes = {
       authGuardWrapper(SpeedcashRegisterPage()),
   '/speedcashTopUpPage': (context) =>
       authGuardWrapper(const SpeedcashTopUpPage()),
-  '/speedcashDetailTopUpPage': (context) =>
-      authGuardWrapper(const SpeedCashDetailDepo()),
   '/speedcashTiketTopUpPage': (context) => (const SpeedCashTiketTopUp()),
   '/webView': (context) => authGuardWrapper(WebviewPage(url: '', title: '')),
 };

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 String baseURL = '${dotenv.env['BASE_URL']}';
+String baseURLIntegration = '${dotenv.env['BASE_URL_INTEGRATION']}';
 String baseURLWEB = '${dotenv.env['BASE_URL_WEB']}';
 
 final FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;

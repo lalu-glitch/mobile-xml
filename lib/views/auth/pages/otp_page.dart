@@ -17,7 +17,7 @@ class KodeOTP extends StatefulWidget {
 
 class _KodeOTPState extends State<KodeOTP> {
   final kodeOTPCtrl = TextEditingController();
-  final authService = AuthService.instance;
+  final authService = AuthService();
 
   bool loading = false;
   Timer? timer;
