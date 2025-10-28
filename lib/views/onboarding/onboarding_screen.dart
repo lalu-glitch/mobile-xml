@@ -16,6 +16,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController pageCtrl = PageController();
   int currentPage = 0;
   final storage = OnboardingScreenService();
+  bool didFinish = false;
 
   @override
   void initState() {
@@ -28,13 +29,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Future<void> _finishOnboarding() async {
-    await storage.setOnboardingSeen();
+    try {
+      await storage.setOnboardingSeen();
+      debugPrint('onboarding: saved flag true');
+    } catch (e, st) {
+      debugPrint('onboarding: failed to save flag: $e\n$st');
+      // fallback: maybe use SharedPreferences as fallback
+    }
     if (!mounted) return;
-    // FIX: Defer jika perlu, tapi button press sudah safe
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        Navigator.pushReplacementNamed(context, '/authPage');
-      }
+    // Navigate after microtask
+    Future.delayed(Duration.zero, () {
+      if (mounted) Navigator.pushReplacementNamed(context, '/authPage');
     });
   }
 

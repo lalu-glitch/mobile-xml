@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,8 +41,7 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
-  runApp(const XmlApp()); // <-- langsung jalankan app
+  runApp(const XmlApp());
 }
 
 class XmlApp extends StatefulWidget {
@@ -68,11 +68,13 @@ class _XmlAppState extends State<XmlApp> {
   }
 
   Future<void> _initLocationService() async {
+    log('Main: Starting location init...');
     final locationService = LocationService();
     try {
       await locationService.getCurrentLocation();
+      log('Main: Location success');
     } catch (e) {
-      debugPrint("Lokasi error: $e");
+      log('Main: Location error: $e'); // Jangan throw, biar app lanjut
     }
   }
 

@@ -11,16 +11,16 @@ class RiwayatTransaksiPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RiwayatTransaksiCubit riwayatTransaksi = context
-        .read<RiwayatTransaksiCubit>();
     return Scaffold(
       backgroundColor: kBackground,
       body: SafeArea(
         child: BlocBuilder<RiwayatTransaksiCubit, RiwayatTransaksiState>(
-          bloc: riwayatTransaksi..loadRiwayat(),
           builder: (context, state) {
-            if (state is RiwayatTransaksiInitial ||
-                state is RiwayatTransaksiLoading) {
+            final cubit = context.read<RiwayatTransaksiCubit>();
+            if (state is RiwayatTransaksiInitial) {
+              cubit.loadRiwayat();
+            }
+            if (state is RiwayatTransaksiLoading) {
               return const Center(
                 child: CircularProgressIndicator(color: kOrange),
               );
@@ -30,7 +30,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
               return Center(
                 child: Text(
                   state.message,
-                  style: TextStyle(fontSize: kSize16, color: Colors.red),
+                  style: TextStyle(fontSize: kSize16, color: kRed),
                 ),
               );
             }

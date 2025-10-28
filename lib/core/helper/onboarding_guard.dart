@@ -14,30 +14,42 @@ class OnboardingGuard extends StatefulWidget {
 
 class _OnboardingGuardState extends State<OnboardingGuard> {
   bool _loading = true;
+  bool _navigated = false;
   final _storageService = OnboardingScreenService();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _checkOnboarding());
+    _checkOnboarding();
   }
 
   Future<void> _checkOnboarding() async {
     try {
       final onboardingSeen = await _storageService.isOnboardingSeen();
-      if (mounted) {
-        setState(() {
-          _loading = false;
+      if (!mounted) return;
+
+      setState(() {
+        _loading = false;
+      });
+
+      if (!onboardingSeen && !_navigated) {
+        _navigated = true;
+        // schedule navigation after current microtask/frame
+        Future.delayed(Duration.zero, () {
+          if (mounted) {
+            Navigator.pushReplacementNamed(context, '/onboarding');
+          }
         });
-        if (!onboardingSeen) {
-          // Navigasi ke onboarding, lalu di akhir onboarding set seen dan pop/replace ke child
-          Navigator.pushReplacementNamed(context, '/onboarding');
-        }
-        // Jika seen, tampilkan child (tidak perlu setState lagi, build akan handle)
       }
+      // jika sudah seen -> biarkan widget.child tampil
     } catch (e) {
-      // Fallback: Asumsikan belum seen
-      if (mounted) Navigator.pushReplacementNamed(context, '/onboarding');
+      if (!mounted) return;
+      if (!_navigated) {
+        _navigated = true;
+        Future.delayed(Duration.zero, () {
+          if (mounted) Navigator.pushReplacementNamed(context, '/onboarding');
+        });
+      }
     }
   }
 
@@ -48,7 +60,6 @@ class _OnboardingGuardState extends State<OnboardingGuard> {
         body: Center(child: CircularProgressIndicator(color: kOrange)),
       );
     }
-    // Selalu return child setelah check—navigasi handle sisanya
     return widget.child;
   }
 }
