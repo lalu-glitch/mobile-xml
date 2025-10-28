@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import '../../../data/models/speedcash/speedcash_topup_guide.dart';
 import '../../../data/services/speedcash_api_service.dart';
 
-part 'panduan_top_up_state.dart';
+part 'panduan_topup_state.dart';
 
 class PanduanTopUpCubit extends Cubit<PanduanTopUpState> {
   final SpeedcashApiService apiService;

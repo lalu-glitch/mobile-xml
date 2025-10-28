@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
-import '../cubit/panduan_top_up_cubit.dart';
+import '../cubit/panduan_topup_cubit.dart';
+import '../cubit/request_topup_cubit.dart';
 import '../topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
 import '../widgets/rupiah_text_field.dart';
 
@@ -38,7 +39,13 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
         kodeReseller,
         widget.title ?? '',
       );
+      context.read<RequestTopUpCubit>().requestTopUp(
+        kodeReseller,
+        50000,
+        widget.title ?? '',
+      );
     }
+
     controller = TextEditingController();
   }
 
@@ -113,8 +120,8 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
                 if (state is PanduanTopError) {
                   return const Center(
                     child: Text(
-                      "Panduan belum tersedia.",
-                      style: TextStyle(color: kNeutral70),
+                      "Terjadi kesalahan, silahkan coba lagi nanti.",
+                      style: TextStyle(color: kRed),
                     ),
                   );
                 }

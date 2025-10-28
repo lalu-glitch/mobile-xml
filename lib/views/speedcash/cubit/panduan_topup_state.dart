@@ -1,4 +1,4 @@
-part of 'panduan_top_up_cubit.dart';
+part of 'panduan_topup_cubit.dart';
 
 @immutable
 sealed class PanduanTopUpState {}

@@ -27,8 +27,9 @@ import 'views/layanan/prefix/cubit/provider_prefix_cubit.dart';
 import 'views/riwayat/cubit/riwayat_transaksi_cubit.dart';
 import 'views/settings/cubit/info_akun/info_akun_cubit.dart';
 import 'views/settings/cubit/wallet/unbind_ewallet_cubit.dart';
-import 'views/speedcash/cubit/panduan_top_up_cubit.dart';
-import 'views/speedcash/cubit/speedcash_bank_cubit.dart';
+import 'views/speedcash/cubit/panduan_topup_cubit.dart';
+import 'views/speedcash/cubit/list_bank_cubit.dart';
+import 'views/speedcash/cubit/request_topup_cubit.dart';
 import 'views/speedcash/topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
 import 'views/speedcash/topup_dummy/topup_repository.dart';
 
@@ -152,6 +153,9 @@ class _XmlAppState extends State<XmlApp> {
         ),
         BlocProvider(
           create: (context) => PanduanTopUpCubit(SpeedcashApiService()),
+        ),
+        BlocProvider(
+          create: (context) => RequestTopUpCubit(SpeedcashApiService()),
         ),
 
         /// dummy

@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 import '../../../data/models/speedcash/speedcash_list_bank.dart';
 import '../../../data/services/speedcash_api_service.dart';
 
-part 'speedcash_bank_state.dart';
+part 'list_bank_state.dart';
 
 class SpeedcashBankCubit extends Cubit<SpeedcashBankState> {
   final SpeedcashApiService apiService;
