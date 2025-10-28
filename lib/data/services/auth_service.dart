@@ -10,8 +10,14 @@ class AuthService extends ChangeNotifier {
   static final String baseUrl = baseURL;
   final Dio _dio = Dio();
   final Dio _refreshDio = Dio(); // <-- DIO khusus refresh token
-
   final FlutterSecureStorage storage = const FlutterSecureStorage();
+
+  Dio get dio => _dio;
+
+  //singleton
+  AuthService._internal();
+  static final AuthService _instance = AuthService._internal();
+  static AuthService get instance => _instance;
 
   final String _basicAuthHeader =
       "Basic ${base64Encode(utf8.encode("${dotenv.env['BASIC_USER']}:${dotenv.env['BASIC_PASS']}"))}";
@@ -51,8 +57,7 @@ class AuthService extends ChangeNotifier {
     );
   }
 
-  Dio get dio => _dio;
-  String get basicAuthHeader => _basicAuthHeader; // Tambahkan getter ini
+  String get basicAuthHeader => _basicAuthHeader;
 
   Future<String> _loadDeviceId() async {
     try {

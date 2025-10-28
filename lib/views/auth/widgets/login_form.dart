@@ -17,7 +17,7 @@ class LoginFormWidget extends StatefulWidget {
 class _LoginFormWidgetState extends State<LoginFormWidget> {
   final nomorCtrl = TextEditingController();
   final kodeAgenCtrl = TextEditingController();
-  final authService = AuthService();
+  final authService = AuthService.instance;
 
   bool isChecked = false;
 

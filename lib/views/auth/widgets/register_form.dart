@@ -15,7 +15,7 @@ class RegisterFormWidget extends StatefulWidget {
 }
 
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
-  final authService = AuthService();
+  final authService = AuthService.instance;
   bool loading = false;
 
   bool isChecked = false;

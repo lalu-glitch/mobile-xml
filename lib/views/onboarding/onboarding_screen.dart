@@ -34,10 +34,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       debugPrint('onboarding: saved flag true');
     } catch (e, st) {
       debugPrint('onboarding: failed to save flag: $e\n$st');
-      // fallback: maybe use SharedPreferences as fallback
     }
     if (!mounted) return;
-    // Navigate after microtask
     Future.delayed(Duration.zero, () {
       if (mounted) Navigator.pushReplacementNamed(context, '/authPage');
     });
