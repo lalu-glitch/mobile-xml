@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../core/helper/constant_finals.dart';
 import '../models/speedcash/speedcash_list_bank.dart';
 import '../models/speedcash/speedcash_response.dart';
+import '../models/speedcash/speedcash_topup_guide.dart';
 import '../models/speedcash/speedcash_unbind.dart';
 import 'auth_service.dart';
 import 'package:logger/logger.dart';
@@ -155,12 +156,42 @@ class SpeedcashApiService {
           },
         ),
       );
-      log('$response');
       if (response.statusCode == 200) {
         return DataBank.fromJson(response.data["data"]);
       } else {
         throw Exception(
           "Gagal mendapatkan list Bank. Status: ${response.statusCode}",
+        );
+      }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
+          : e.message;
+      log("DioException: $apiMessage");
+      throw Exception(apiMessage);
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<GuideTopUpModel> topUpGuide(String kodeReseller, String bank) async {
+    try {
+      final response = await authService.dio.get(
+        '$baseURLIntegration/speedcash/guide-topup?kode_reseller=$kodeReseller&bank=$bank',
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthSpeedcashHeader,
+            "Content-Type": "application/json",
+          },
+        ),
+      );
+      log('$response');
+      if (response.statusCode == 200) {
+        return GuideTopUpModel.fromJson(response.data);
+      } else {
+        throw Exception(
+          "Gagal mendapatkan panduan topup. Status: ${response.statusCode}",
         );
       }
     } on DioException catch (e) {

@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
+import '../../settings/cubit/info_akun/info_akun_cubit.dart';
+import '../cubit/panduan_top_up_cubit.dart';
 import '../topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
 import '../widgets/rupiah_text_field.dart';
 
@@ -29,6 +31,14 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
   @override
   void initState() {
     super.initState();
+    final infoState = context.read<InfoAkunCubit>().state;
+    if (infoState is InfoAkunLoaded) {
+      final kodeReseller = infoState.data.data.kodeReseller;
+      context.read<PanduanTopUpCubit>().fetchPanduan(
+        kodeReseller,
+        widget.title ?? '',
+      );
+    }
     controller = TextEditingController();
   }
 
@@ -93,49 +103,86 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
               ),
             ),
             const SizedBox(height: 8),
-            Card(
-              color: kNeutral30,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 0,
-              child: ExpansionTile(
-                title: const Text(
-                  "Petunjuk top up via ATM",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: kNeutral100,
-                  ),
-                ),
-                tilePadding: const EdgeInsets.symmetric(horizontal: 18),
-                childrenPadding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 8,
-                ),
-                shape: Border(),
-                children: const [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("1. Masukkan kartu ATM dan PIN."),
-                        SizedBox(height: 4),
-                        Text("2. Pilih menu 'Transfer'."),
-                        SizedBox(height: 4),
-                        Text("3. Masukkan nomor rekening tujuan."),
-                        SizedBox(height: 4),
-                        Text("4. Masukkan nominal top up sesuai."),
-                        SizedBox(height: 4),
-                        Text("5. Ko pukul ko punya satpam."),
-                        SizedBox(height: 4),
-                      ],
+            BlocBuilder<PanduanTopUpCubit, PanduanTopUpState>(
+              builder: (context, state) {
+                if (state is PanduanTopUpLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: kOrange),
+                  );
+                }
+                if (state is PanduanTopError) {
+                  return const Center(
+                    child: Text(
+                      "Panduan belum tersedia.",
+                      style: TextStyle(color: kNeutral70),
                     ),
-                  ),
-                ],
-              ),
+                  );
+                }
+                if (state is PanduanTopUpLoaded) {
+                  final panduanList = state.data.data;
+                  if (panduanList.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        "Panduan belum tersedia.",
+                        style: TextStyle(color: kNeutral70),
+                      ),
+                    );
+                  }
+
+                  return ListView.builder(
+                    itemCount: panduanList.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final panduan = panduanList[index];
+                      return Card(
+                        color: kNeutral30,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
+                        child: ExpansionTile(
+                          title: Text(
+                            panduan.label,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: kNeutral100,
+                            ),
+                          ),
+                          tilePadding: const EdgeInsets.symmetric(
+                            horizontal: 18,
+                          ),
+                          childrenPadding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 8,
+                          ),
+                          shape: const Border(),
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: List.generate(
+                                  panduan.data.length,
+                                  (i) => Padding(
+                                    padding: const EdgeInsets.only(bottom: 4),
+                                    child: Text("${i + 1}. ${panduan.data[i]}"),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }
+                // Default state (initial)
+                return const SizedBox.shrink();
+              },
             ),
+
             const SizedBox(height: 80),
           ],
         ),
