@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,9 +8,15 @@ import '../topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
 import '../widgets/rupiah_text_field.dart';
 
 class SpeedCashDetailDepo extends StatefulWidget {
-  const SpeedCashDetailDepo(this.title, this.minimumTopUp, {super.key});
+  const SpeedCashDetailDepo({
+    required this.imageUrl,
+    required this.title,
+    required this.minimumTopUp,
+    super.key,
+  });
 
-  final String title;
+  final String? title;
+  final String? imageUrl;
   final String minimumTopUp;
 
   @override
@@ -37,17 +44,28 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
           children: [
             Row(
               children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: kOrangeAccent500,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Icon(Icons.credit_card_rounded, color: kWhite),
+                SizedBox(
+                  width: 50,
+                  height: 50,
+                  child:
+                      (widget.imageUrl != null && widget.imageUrl!.isNotEmpty)
+                      ? CachedNetworkImage(
+                          imageUrl: widget.imageUrl ?? '-',
+                          fit: BoxFit.contain,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.business_rounded),
+                        )
+                      : const Icon(
+                          Icons.business_rounded,
+                          size: 30,
+                          color: kNeutral70,
+                        ),
                 ),
                 const SizedBox(width: 16),
                 Text(
-                  widget.title.toUpperCase(),
+                  widget.title?.toUpperCase() ?? 'N/A',
                   style: TextStyle(
                     color: kNeutral100,
                     fontSize: 16,

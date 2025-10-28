@@ -82,8 +82,9 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => SpeedCashDetailDepo(
-                                      bank.name,
-                                      bank.minDeposit,
+                                      imageUrl: bank.image,
+                                      title: bank.name,
+                                      minimumTopUp: bank.minDeposit,
                                     ),
                                   ),
                                 );
@@ -112,8 +113,11 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        SpeedCashDetailDepo(va.bank, va.fee),
+                                    builder: (context) => SpeedCashDetailDepo(
+                                      imageUrl: va.image,
+                                      title: va.bank,
+                                      minimumTopUp: va.fee,
+                                    ),
                                   ),
                                 );
                               },
