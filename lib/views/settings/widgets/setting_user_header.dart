@@ -42,31 +42,35 @@ class UserProfileCard extends StatelessWidget {
             size: 50,
           ),
           const SizedBox(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                state.data.data.nama,
-                style: TextStyle(
-                  color: color == kOrange ? kWhite : kBlack,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Lalu Bagoes Putra Ramadhan',
+                  style: TextStyle(
+                    color: color == kOrange ? kWhite : kBlack,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
-              ),
-              Text(
-                state.data.data.kodeReseller,
-                style: TextStyle(
-                  color: color == kOrange ? kWhite : kBlack,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
+                Text(
+                  state.data.data.kodeReseller,
+                  style: TextStyle(
+                    color: color == kOrange ? kWhite : kBlack,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Spacer(),
+          const SizedBox(width: 8),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 18),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             height: 40,
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -75,11 +79,11 @@ class UserProfileCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
             ),
             child: Row(
-              children: [
+              children: const [
                 Icon(Icons.verified_rounded, color: kWhite),
                 const SizedBox(width: 16),
                 Text(
-                  'Mitra VIP',
+                  'Mitra VVIP',
                   style: TextStyle(
                     color: kWhite,
                     fontSize: 12,
