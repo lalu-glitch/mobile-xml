@@ -120,6 +120,7 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                                       minimumTopUp: va.fee,
                                       isBank: false,
                                       kodeVA: va.vaNumber,
+                                      atasNama: va.vaUsername,
                                     ),
                                   ),
                                 );

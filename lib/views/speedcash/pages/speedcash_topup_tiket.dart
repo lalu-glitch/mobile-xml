@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xmlapp/core/utils/dialog.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
+import '../../../core/utils/dialog.dart';
+import '../cubit/request_topup_cubit.dart';
 
 class SpeedCashTiketTopUp extends StatelessWidget {
   const SpeedCashTiketTopUp({super.key});
+
+  DateTime parseDate(String data) {
+    return DateTime.parse(data);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,25 +21,6 @@ class SpeedCashTiketTopUp extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                decoration: BoxDecoration(
-                  color: kOrange,
-                  borderRadius: BorderRadius.circular(100),
-                  boxShadow: [
-                    BoxShadow(
-                      color: kOrange.withAlpha(80),
-                      spreadRadius: 25,
-                      blurRadius: 30,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
-                ),
-
-                child: Icon(Icons.paid_outlined, color: kWhite, size: 80),
-              ),
-              const SizedBox(height: 100),
               Text(
                 'Detail Transfer',
                 style: TextStyle(
@@ -54,15 +39,15 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 24),
-              BlocBuilder<TopupDummySpeedcashCubit, TopupDummySpeedcashState>(
+              const SizedBox(height: 100),
+              BlocBuilder<RequestTopUpCubit, RequestTopUpState>(
                 builder: (context, state) {
-                  if (state is TopupDummySpeedcashLoading) {
+                  if (state is RequestTopUpLoading) {
                     return Center(
                       child: CircularProgressIndicator(color: kOrange),
                     );
                   }
-                  if (state is TopupDummySpeedcashLoaded) {
+                  if (state is RequestTopUpSuccess) {
                     return Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 16,
@@ -84,26 +69,37 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                                 style: TextStyle(color: kBlack, fontSize: 14),
                               ),
                               Text(
-                                state.data.namaBank,
+                                state.data.bank,
                                 style: TextStyle(color: kBlack, fontSize: 14),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 8),
+                          const Divider(color: kOrange),
+                          const SizedBox(height: 8),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Keterangan',
                                 style: TextStyle(color: kBlack, fontSize: 14),
                               ),
-                              Text(
-                                state.data.keterangan,
-                                style: TextStyle(color: kBlack, fontSize: 14),
+                              const SizedBox(width: 16),
+                              Flexible(
+                                child: Text(
+                                  state.data.keterangan,
+                                  style: const TextStyle(
+                                    color: kBlack,
+                                    fontSize: 14,
+                                  ),
+                                  textAlign: TextAlign.right,
+                                ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 8),
+                          const Divider(color: kOrange),
+                          const SizedBox(height: 8),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -117,7 +113,9 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 8),
+                          const Divider(color: kOrange),
+                          const SizedBox(height: 8),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -126,7 +124,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                                 style: TextStyle(color: kBlack, fontSize: 14),
                               ),
                               Text(
-                                state.data.expired,
+                                '${parseDate(state.data.expiredAt.toString())}',
                                 style: TextStyle(color: kBlack, fontSize: 14),
                               ),
                             ],
@@ -142,7 +140,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                                 style: TextStyle(
                                   color: kBlack,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                               Text(
@@ -150,7 +148,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                                 style: TextStyle(
                                   color: kBlack,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ],
@@ -159,10 +157,10 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                       ),
                     );
                   }
-                  if (state is TopupDummySpeedcashError) {
+                  if (state is RequestTopUpError) {
                     return Center(child: Text('Error'));
                   }
-                  return SizedBox();
+                  return SizedBox.shrink();
                 },
               ),
               const SizedBox(height: 16),
@@ -182,7 +180,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            showAppToast(context, 'Success', ToastType.success);
+            showAppToast(context, 'Berhasil TopUp', ToastType.success);
             Navigator.pop(context);
             Navigator.pop(context);
             Navigator.pop(context);

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xmlapp/core/utils/dialog.dart';
 
@@ -14,17 +15,18 @@ class SpeedCashDetailDepo extends StatefulWidget {
   const SpeedCashDetailDepo({
     this.isBank = false,
     this.kodeVA = '',
+    this.atasNama = '',
     required this.imageUrl,
     required this.title,
     required this.minimumTopUp,
     super.key,
   });
-
   final String? title;
   final String? imageUrl;
   final String minimumTopUp;
 
   final String kodeVA;
+  final String atasNama;
   final bool isBank;
 
   @override
@@ -94,10 +96,116 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
             const SizedBox(height: 25),
             widget.isBank
                 ? RupiahTextField(controller: controller, fontSize: 25)
-                : Text(widget.kodeVA),
+                : DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: kOrangeAccent300, width: 2),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Container(
+                      clipBehavior: Clip
+                          .antiAlias, // Ini akan memotong konten di dalamnya
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      width: double.infinity,
+                      height: 150,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              padding: const EdgeInsets.all(16),
+                              width: double.infinity,
+                              color: kOrangeAccent300.withAlpha(50),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Nomor Virtual Account',
+                                    style: TextStyle(
+                                      color: kNeutral80,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          widget.kodeVA,
+                                          style: const TextStyle(
+                                            color: kBlack,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      InkWell(
+                                        onTap: () {
+                                          Clipboard.setData(
+                                            ClipboardData(text: widget.kodeVA),
+                                          );
+                                          showAppToast(
+                                            context,
+                                            'Nomor Virtual Account berhasil disalin',
+                                            ToastType.complete,
+                                          );
+                                        },
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 6,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: kWhite,
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.copy,
+                                                size: 16,
+                                                color: kNeutral80,
+                                              ),
+                                              SizedBox(width: 6),
+                                              Text(
+                                                'Salin',
+                                                style: TextStyle(
+                                                  color: kNeutral80,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(12.0),
+                            child: Text('Atas nama: ${widget.atasNama}'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
             const SizedBox(height: 16),
             Text(
-              "Biaya admin ${CurrencyUtil.formatCurrency(double.tryParse(widget.minimumTopUp) ?? 0)}",
+              "Minimal Top up ${CurrencyUtil.formatCurrency(double.tryParse(widget.minimumTopUp) ?? 0)}",
               style: TextStyle(color: kNeutral90),
             ),
             const SizedBox(height: 16),
@@ -192,36 +300,49 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: kOrange,
-            foregroundColor: kWhite,
-            minimumSize: const Size(double.infinity, 48),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+        child: SafeArea(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kOrange,
+              foregroundColor: kWhite,
+              minimumSize: const Size(double.infinity, 48),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
-          ),
-          onPressed: () async {
-            if (controller.text.isEmpty) {
-              return showAppToast(
-                context,
-                'Nominal tidak boleh kosong',
-                ToastType.error,
-              );
-            }
-            final format = controller.text.replaceAll(RegExp(r'[^0-9]'), '');
-            int nominal = int.parse(format);
-            context.read<RequestTopUpCubit>().requestTopUp(
-              kodeReseller!,
-              nominal,
-              widget.title ?? '',
-            );
+            onPressed: () async {
+              if (widget.isBank == true) {
+                if (controller.text.isEmpty) {
+                  return showAppToast(
+                    context,
+                    'Nominal tidak boleh kosong',
+                    ToastType.error,
+                  );
+                }
+              }
 
-            Navigator.pushNamed(context, '/speedcashTiketTopUpPage');
-          },
-          child: const Text(
-            "Selanjutnya",
-            style: TextStyle(fontWeight: FontWeight.bold),
+              final format = controller.text.replaceAll(RegExp(r'[^0-9]'), '');
+              int nominal = int.parse(format);
+
+              if (nominal < int.parse(widget.minimumTopUp)) {
+                return showAppToast(
+                  context,
+                  'Minimal Top up ${CurrencyUtil.formatCurrency(double.tryParse(widget.minimumTopUp))}',
+                  ToastType.error,
+                );
+              }
+              context.read<RequestTopUpCubit>().requestTopUp(
+                kodeReseller!,
+                nominal,
+                widget.title ?? '',
+              );
+
+              Navigator.pushNamed(context, '/speedcashTiketTopUpPage');
+            },
+            child: const Text(
+              "Selanjutnya",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ),
