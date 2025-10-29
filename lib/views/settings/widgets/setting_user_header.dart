@@ -48,7 +48,7 @@ class UserProfileCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Lalu Bagoes Putra Ramadhan',
+                  state.data.data.nama,
                   style: TextStyle(
                     color: color == kOrange ? kWhite : kBlack,
                     fontSize: 16,

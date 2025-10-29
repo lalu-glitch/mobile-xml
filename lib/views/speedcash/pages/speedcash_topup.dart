@@ -85,6 +85,7 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                                       imageUrl: bank.image,
                                       title: bank.name,
                                       minimumTopUp: bank.minDeposit,
+                                      isBank: true,
                                     ),
                                   ),
                                 );
@@ -117,6 +118,8 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                                       imageUrl: va.image,
                                       title: va.bank,
                                       minimumTopUp: va.fee,
+                                      isBank: false,
+                                      kodeVA: va.vaNumber,
                                     ),
                                   ),
                                 );

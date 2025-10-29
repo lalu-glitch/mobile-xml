@@ -6,12 +6,13 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
 import '../cubit/panduan_topup_cubit.dart';
-import '../cubit/request_topup_cubit.dart';
 import '../topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
 import '../widgets/rupiah_text_field.dart';
 
 class SpeedCashDetailDepo extends StatefulWidget {
   const SpeedCashDetailDepo({
+    this.isBank = false,
+    this.kodeVA = '',
     required this.imageUrl,
     required this.title,
     required this.minimumTopUp,
@@ -21,6 +22,9 @@ class SpeedCashDetailDepo extends StatefulWidget {
   final String? title;
   final String? imageUrl;
   final String minimumTopUp;
+
+  final String kodeVA;
+  final bool isBank;
 
   @override
   State<SpeedCashDetailDepo> createState() => _SpeedCashDetailDepoState();
@@ -33,17 +37,18 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
   void initState() {
     super.initState();
     final infoState = context.read<InfoAkunCubit>().state;
+    print(widget.title);
     if (infoState is InfoAkunLoaded) {
       final kodeReseller = infoState.data.data.kodeReseller;
       context.read<PanduanTopUpCubit>().fetchPanduan(
         kodeReseller,
         widget.title ?? '',
       );
-      context.read<RequestTopUpCubit>().requestTopUp(
-        kodeReseller,
-        50000,
-        widget.title ?? '',
-      );
+      // context.read<RequestTopUpCubit>().requestTopUp(
+      //   kodeReseller,
+      //   50000,
+      //   widget.title ?? '',
+      // );
     }
 
     controller = TextEditingController();
@@ -92,7 +97,9 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
               ],
             ),
             const SizedBox(height: 25),
-            RupiahTextField(controller: controller, fontSize: 25),
+            widget.isBank
+                ? RupiahTextField(controller: controller, fontSize: 25)
+                : Text(widget.kodeVA),
             const SizedBox(height: 16),
             Text(
               "Biaya admin ${CurrencyUtil.formatCurrency(double.tryParse(widget.minimumTopUp) ?? 0)}",
@@ -118,12 +125,7 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
                   );
                 }
                 if (state is PanduanTopError) {
-                  return const Center(
-                    child: Text(
-                      "Terjadi kesalahan, silahkan coba lagi nanti.",
-                      style: TextStyle(color: kRed),
-                    ),
-                  );
+                  return SizedBox.shrink();
                 }
                 if (state is PanduanTopUpLoaded) {
                   final panduanList = state.data.data;
@@ -185,7 +187,6 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
                     },
                   );
                 }
-                // Default state (initial)
                 return const SizedBox.shrink();
               },
             ),
