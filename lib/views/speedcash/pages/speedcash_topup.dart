@@ -83,7 +83,7 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                                   MaterialPageRoute(
                                     builder: (context) => SpeedCashDetailDepo(
                                       imageUrl: bank.image,
-                                      title: bank.name,
+                                      title: bank.code,
                                       minimumTopUp: bank.minDeposit,
                                       isBank: true,
                                     ),

@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xmlapp/core/utils/dialog.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
 import '../cubit/panduan_topup_cubit.dart';
-import '../topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
+import '../cubit/request_topup_cubit.dart';
 import '../widgets/rupiah_text_field.dart';
 
 class SpeedCashDetailDepo extends StatefulWidget {
@@ -32,23 +33,17 @@ class SpeedCashDetailDepo extends StatefulWidget {
 
 class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
   late final TextEditingController controller;
-
+  String? kodeReseller;
   @override
   void initState() {
     super.initState();
     final infoState = context.read<InfoAkunCubit>().state;
-    print(widget.title);
     if (infoState is InfoAkunLoaded) {
-      final kodeReseller = infoState.data.data.kodeReseller;
+      kodeReseller = infoState.data.data.kodeReseller;
       context.read<PanduanTopUpCubit>().fetchPanduan(
-        kodeReseller,
+        kodeReseller ?? '',
         widget.title ?? '',
       );
-      // context.read<RequestTopUpCubit>().requestTopUp(
-      //   kodeReseller,
-      //   50000,
-      //   widget.title ?? '',
-      // );
     }
 
     controller = TextEditingController();
@@ -207,7 +202,21 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
             ),
           ),
           onPressed: () async {
-            context.read<TopupDummySpeedcashCubit>().fetchTopup();
+            if (controller.text.isEmpty) {
+              return showAppToast(
+                context,
+                'Nominal tidak boleh kosong',
+                ToastType.error,
+              );
+            }
+            final format = controller.text.replaceAll(RegExp(r'[^0-9]'), '');
+            int nominal = int.parse(format);
+            context.read<RequestTopUpCubit>().requestTopUp(
+              kodeReseller!,
+              nominal,
+              widget.title ?? '',
+            );
+
             Navigator.pushNamed(context, '/speedcashTiketTopUpPage');
           },
           child: const Text(
