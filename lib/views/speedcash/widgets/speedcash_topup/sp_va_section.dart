@@ -14,13 +14,9 @@ class VASection extends StatelessWidget {
     return InfoCard(
       title: "Nomor Virtual Account",
       value: kodeVA,
-      onCopy: () {
-        Clipboard.setData(ClipboardData(text: kodeVA));
-        showAppToast(
-          context,
-          'Nomor Virtual Account berhasil disalin',
-          ToastType.complete,
-        );
+      onCopy: (value) {
+        Clipboard.setData(ClipboardData(text: value));
+        showAppToast(context, "Nomor VA berhasil disalin", ToastType.success);
       },
       footer: "Atas nama: $atasNama",
     );

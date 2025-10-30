@@ -14,7 +14,7 @@ class InfoCard extends StatelessWidget {
   final String title;
   final String value;
   final String? footer;
-  final VoidCallback? onCopy;
+  final ValueChanged<String>? onCopy;
   final Map<String, String>? additional;
 
   @override
@@ -34,12 +34,22 @@ class InfoCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildRow(context, title, value, onCopy),
+                buildRow(
+                  context,
+                  title,
+                  value,
+                  onCopy != null ? () => onCopy!(value) : null,
+                ),
                 if (additional != null)
                   ...additional!.entries.map(
                     (e) => Padding(
                       padding: const EdgeInsets.only(top: 8),
-                      child: _buildRow(context, e.key, e.value, onCopy),
+                      child: buildRow(
+                        context,
+                        e.key,
+                        e.value,
+                        onCopy != null ? () => onCopy!(e.value) : null,
+                      ),
                     ),
                   ),
               ],
@@ -55,7 +65,7 @@ class InfoCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRow(
+  Widget buildRow(
     BuildContext context,
     String label,
     String value,

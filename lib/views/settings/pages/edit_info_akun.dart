@@ -28,6 +28,7 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackground,
       appBar: AppBar(
         title: Text('Edit ${widget.label}'),
         backgroundColor: kOrange,

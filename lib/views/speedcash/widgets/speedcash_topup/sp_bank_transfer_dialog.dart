@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../core/helper/constant_finals.dart';
 import '../../../../core/helper/currency.dart';
@@ -47,6 +48,14 @@ class BankTransferDialog extends StatelessWidget {
                 'Nominal transfer': CurrencyUtil.formatCurrency(
                   double.tryParse(d.nominal.toString()) ?? 0,
                 ),
+              },
+              onCopy: (val) {
+                if (val == d.rekening) {
+                  Clipboard.setData(ClipboardData(text: val));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Nomor rekening disalin')),
+                  );
+                }
               },
             ),
           ],

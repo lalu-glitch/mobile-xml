@@ -259,7 +259,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
             if (state is InfoAkunError) {
               return ErrorView(
-                errorMessage: state.message,
+                errorMessage: 'Ada yang salah. Silahkan coba lagi.',
                 onRetry: () => context.read<InfoAkunCubit>().getInfoAkun(),
               );
             }

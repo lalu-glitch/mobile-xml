@@ -43,9 +43,12 @@ class _MainPageState extends State<MainPage> {
           setState(() => _selectedIndex = index);
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.home_rounded),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_rounded),
             label: 'Toko',
           ),
           BottomNavigationBarItem(
