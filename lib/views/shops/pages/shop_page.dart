@@ -149,7 +149,6 @@ class _ShopPageState extends State<ShopPage> {
 
   @override
   void dispose() {
-    // Hentikan listener saat widget dibuang untuk mencegah memory leak
     searchController.removeListener(_updateFilteredData);
     searchController.dispose();
     super.dispose();
