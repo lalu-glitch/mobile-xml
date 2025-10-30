@@ -1,150 +1,135 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
+import '../../../core/utils/dialog.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
-import '../cubit/list_bank_cubit.dart';
-import '../widgets/bank_card.dart';
-import 'speedcash_topup_detail.dart';
+import '../cubit/panduan_topup_cubit.dart';
+import '../cubit/request_topup_cubit.dart';
+import '../widgets/speedcash_topup/sp_bank_section.dart';
+import '../widgets/speedcash_topup/sp_bank_transfer_dialog.dart';
+import '../widgets/speedcash_topup/sp_kanjut_button.dart';
+import '../widgets/speedcash_topup/sp_panduan.dart';
+import '../widgets/speedcash_topup/sp_topup_header_section.dart';
+import '../widgets/speedcash_topup/sp_va_section.dart';
 
-class SpeedcashTopUpPage extends StatefulWidget {
-  const SpeedcashTopUpPage({super.key});
+class SpeedcashTopUp extends StatefulWidget {
+  const SpeedcashTopUp({
+    this.isBank = false,
+    this.kodeVA = '',
+    this.atasNama = '',
+    required this.imageUrl,
+    required this.title,
+    required this.minimumTopUp,
+    super.key,
+  });
+
+  final String? title;
+  final String? imageUrl;
+  final String minimumTopUp;
+  final String kodeVA;
+  final String atasNama;
+  final bool isBank;
 
   @override
-  State<SpeedcashTopUpPage> createState() => _SpeedcashTopUpPageState();
+  State<SpeedcashTopUp> createState() => _SpeedcashTopUpState();
 }
 
-class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
+class _SpeedcashTopUpState extends State<SpeedcashTopUp> {
+  late final TextEditingController controller;
+  String? kodeReseller;
+
   @override
   void initState() {
     super.initState();
     final infoState = context.read<InfoAkunCubit>().state;
     if (infoState is InfoAkunLoaded) {
-      final kodeReseller = infoState.data.data.kodeReseller;
-      context.read<SpeedcashBankCubit>().fetchBanks(kodeReseller);
+      kodeReseller = infoState.data.data.kodeReseller;
+      context.read<PanduanTopUpCubit>().fetchPanduan(
+        kodeReseller ?? '',
+        widget.title ?? '',
+      );
     }
+    controller = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackground,
-      appBar: AppBar(
-        title: const Text('Speedcash TopUp', style: TextStyle(color: kWhite)),
-        backgroundColor: kOrange,
-        iconTheme: const IconThemeData(color: kWhite),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-          child: CustomScrollView(
-            slivers: [
-              BlocBuilder<SpeedcashBankCubit, SpeedcashBankState>(
-                builder: (context, state) {
-                  if (state is SpeedcashBankLoading) {
-                    return const SliverFillRemaining(
-                      child: Center(
-                        child: CircularProgressIndicator(color: kOrange),
+      body: BlocListener<RequestTopUpCubit, RequestTopUpState>(
+        listener: (context, state) {
+          log('[state] : $state', name: "reqtopupcubit");
+          if (state is RequestTopUpSuccess) {
+            if (state.data.state == 1) {
+              Navigator.pushNamed(context, '/speedcashTiketTopUpPage');
+            } else if (state.data.state == 2) {
+              showDialog(
+                context: context,
+                builder: (_) => BankTransferDialog(state: state),
+              );
+            }
+          } else if (state is RequestTopUpError) {
+            showAppToast(context, state.message, ToastType.error);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: kWhite,
+          appBar: AppBar(backgroundColor: kWhite, scrolledUnderElevation: 0),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HeaderSection(title: widget.title, imageUrl: widget.imageUrl),
+                const SizedBox(height: 25),
+                widget.isBank
+                    ? BankSection(controller: controller)
+                    : VASection(
+                        kodeVA: widget.kodeVA,
+                        atasNama: widget.atasNama,
                       ),
-                    );
-                  }
-                  if (state is SpeedcashBankError) {
-                    return SliverFillRemaining(
-                      child: Center(child: Text(state.message)),
-                    );
-                  }
-                  if (state is SpeedcashBankLoaded) {
-                    final banks = state.dataBank.bank;
-                    final virtualAccounts = state.dataBank.va;
-
-                    return SliverList(
-                      delegate: SliverChildListDelegate([
-                        if (banks.isNotEmpty) ...[
-                          const Padding(
-                            padding: EdgeInsets.only(top: 16.0, bottom: 8.0),
-                            child: Text(
-                              'Bank',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          ...banks.map((bank) {
-                            return BankCard(
-                              title: bank.name,
-                              minimumTopUp:
-                                  'Min. Top Up ${CurrencyUtil.formatCurrency(double.tryParse(bank.minDeposit) ?? 0)}',
-                              imageUrl: bank.image,
-                              klik: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SpeedCashDetailDepo(
-                                      imageUrl: bank.image,
-                                      title: bank.code,
-                                      minimumTopUp: bank.minDeposit,
-                                      isBank: true,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          }),
-                        ],
-                        if (virtualAccounts.isNotEmpty) ...[
-                          const Padding(
-                            padding: EdgeInsets.only(top: 16.0, bottom: 8.0),
-                            child: Text(
-                              'Virtual Account',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          ...virtualAccounts.map((va) {
-                            return BankCard(
-                              title: va.bank.toUpperCase(),
-                              minimumTopUp:
-                                  'Biaya admin ${CurrencyUtil.formatCurrency(double.tryParse(va.fee) ?? 0)}',
-                              imageUrl: va.image,
-                              klik: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SpeedCashDetailDepo(
-                                      imageUrl: va.image,
-                                      title: va.bank,
-                                      minimumTopUp: va.fee,
-                                      isBank: false,
-                                      kodeVA: va.vaNumber,
-                                      atasNama: va.vaUsername,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          }),
-                        ],
-                        if (banks.isEmpty && virtualAccounts.isEmpty)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 32.0),
-                            child: Center(
-                              child: Text('Tidak ada metode top up tersedia.'),
-                            ),
-                          ),
-                      ]),
-                    );
-                  }
-                  return const SliverToBoxAdapter(child: SizedBox.shrink());
-                },
-              ),
-            ],
+                const SizedBox(height: 16),
+                Text(
+                  widget.isBank
+                      ? "Minimal Top up ${CurrencyUtil.formatCurrency(double.tryParse(widget.minimumTopUp) ?? 0)}"
+                      : "Biaya Admin ${CurrencyUtil.formatCurrency(double.tryParse(widget.minimumTopUp) ?? 0)}",
+                  style: TextStyle(color: kNeutral90),
+                ),
+                const SizedBox(height: 16),
+                const Divider(),
+                const SizedBox(height: 16),
+                const Text(
+                  'Panduan',
+                  style: TextStyle(
+                    color: kNeutral100,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const PanduanSection(),
+                const SizedBox(height: 80),
+              ],
+            ),
           ),
+          bottomNavigationBar: widget.isBank
+              ? ActionButton(
+                  controller: controller,
+                  minimumTopUp: widget.minimumTopUp,
+                  kodeReseller: kodeReseller,
+                  title: widget.title,
+                )
+              : const SizedBox.shrink(),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

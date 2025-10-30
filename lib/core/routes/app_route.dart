@@ -25,7 +25,7 @@ import '../../views/input_nomor/input_nomor_akhir.dart';
 import '../../views/layanan/noprefix/noprefix_page.dart';
 import '../../views/layanan/prefix/prefix_page.dart';
 import '../../views/speedcash/pages/speedcash_binding.dart';
-import '../../views/speedcash/pages/speedcash_topup.dart';
+import '../../views/speedcash/pages/speedcash_topup_list_bank.dart';
 import '../../views/speedcash/pages/speedcash_register.dart';
 import '../../views/home/page/home_page.dart';
 import '../../views/transaksi/konfirmasi_pembayaran_page.dart';

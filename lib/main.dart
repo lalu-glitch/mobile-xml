@@ -30,8 +30,6 @@ import 'views/settings/cubit/wallet/unbind_ewallet_cubit.dart';
 import 'views/speedcash/cubit/panduan_topup_cubit.dart';
 import 'views/speedcash/cubit/list_bank_cubit.dart';
 import 'views/speedcash/cubit/request_topup_cubit.dart';
-import 'views/speedcash/topup_dummy/cubit/topup_dummy_speedcash_cubit.dart';
-import 'views/speedcash/topup_dummy/topup_repository.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
