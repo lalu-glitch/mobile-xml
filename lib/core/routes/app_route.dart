@@ -28,13 +28,13 @@ import '../../views/speedcash/pages/speedcash_binding.dart';
 import '../../views/speedcash/pages/speedcash_topup_list_bank.dart';
 import '../../views/speedcash/pages/speedcash_register.dart';
 import '../../views/home/page/home_page.dart';
-import '../../views/transaksi/konfirmasi_pembayaran_page.dart';
+import '../../views/transaksi/pages/konfirmasi_pembayaran_page.dart';
 import '../../views/settings/pages/settings_page.dart';
 import '../../views/shops/pages/shop_page.dart';
 import '../helper/auth_guard.dart';
 import '../../views/struk.dart';
-import '../../views/transaksi/transaksi_detail_page.dart';
-import '../../views/transaksi/transaksi_proses_page.dart';
+import '../../views/transaksi/pages/transaksi_detail_page.dart';
+import '../../views/transaksi/pages/transaksi_proses_page.dart';
 
 Widget authGuardWrapper(Widget child) {
   return AuthGuard(child: child);

@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../helper/constant_finals.dart';
 
-Widget infoRow(String label, String value, {bool isTotal = false}) {
+Widget infoRow(
+  String label,
+  String value, {
+  bool isTotal = false,
+  Color color = kOrange,
+}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -25,7 +30,7 @@ Widget infoRow(String label, String value, {bool isTotal = false}) {
           style: TextStyle(
             fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
             fontSize: isTotal ? kSize16 : kSize14,
-            color: isTotal ? kOrange : Colors.black,
+            color: isTotal ? color : kBlack,
           ),
         ),
       ),

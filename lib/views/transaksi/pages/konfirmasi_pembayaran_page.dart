@@ -1,17 +1,17 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
-
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
-import 'package:xmlapp/views/input_nomor/utils/transaksi_cubit.dart';
-import '../../core/helper/constant_finals.dart';
-import '../../core/helper/currency.dart';
-import '../../core/utils/dialog.dart';
-import '../../core/utils/info_row.dart';
-import '../../data/models/transaksi/metode_transaksi.dart';
-import '../../viewmodels/balance_viewmodel.dart';
-import '../../viewmodels/transaksi_viewmodel.dart';
+
+import '../../../core/helper/constant_finals.dart';
+import '../../../core/helper/currency.dart';
+import '../../../core/utils/dialog.dart';
+import '../../../core/utils/info_row.dart';
+import '../../../data/models/transaksi/metode_transaksi.dart';
+import '../../../viewmodels/balance_viewmodel.dart';
+import '../../../viewmodels/transaksi_viewmodel.dart';
+import '../../input_nomor/utils/transaksi_cubit.dart';
+import 'konfirmasi_speedcash_page.dart';
 
 class KonfirmasiPembayaranPage extends StatefulWidget {
   const KonfirmasiPembayaranPage({super.key});
@@ -22,7 +22,6 @@ class KonfirmasiPembayaranPage extends StatefulWidget {
 }
 
 class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
-  final logger = Logger();
   String _selectedMethod = "SALDO"; // Default pilihan
 
   double getTotalTransaksi(dynamic transaksi) {
@@ -212,14 +211,20 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
             // case khusus SPEEDCASH → buka WebView
             if (selected.nama == 'SPEEDCASH') {
-              Navigator.pushNamed(
+              Navigator.push(
                 context,
-                '/webView',
-                arguments: {
-                  'url': 'google.com', // <--- menyusul
-                  'title': 'Bayar Speedcash',
-                },
+                MaterialPageRoute(
+                  builder: (context) => KonfirmasiSpeedcashPage(),
+                ),
               );
+              // Navigator.pushNamed(
+              //   context,
+              //   '/webView',
+              //   arguments: {
+              //     'url': 'google.com', // <--- menyusul
+              //     'title': 'Bayar Speedcash',
+              //   },
+              // );
               return;
             }
 
@@ -242,10 +247,10 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             }
           },
           child: Text(
-            "SELANJUTNYA",
+            "Selanjutnya",
             style: TextStyle(
               fontSize: kSize16,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
               color: kWhite,
             ),
           ),
