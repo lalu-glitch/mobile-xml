@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/helper/constant_finals.dart';
@@ -8,9 +9,11 @@ import '../../../core/helper/currency.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../core/utils/info_row.dart';
 import '../../../data/models/transaksi/metode_transaksi.dart';
+import '../../../data/services/speedcash_api_service.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
 import '../../../viewmodels/transaksi_viewmodel.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
 import 'konfirmasi_speedcash_page.dart';
 
 class KonfirmasiPembayaranPage extends StatefulWidget {
@@ -214,7 +217,13 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => KonfirmasiSpeedcashPage(),
+                  builder: (context) => BlocProvider(
+                    // Ambil instance ApiService yang sudah ada dari context
+                    create: (context) => KonfirmasiTransaksiSpeedcashCubit(
+                      context.read<SpeedcashApiService>(),
+                    ),
+                    child: KonfirmasiSpeedcashPage(),
+                  ),
                 ),
               );
               // Navigator.pushNamed(

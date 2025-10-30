@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xmlapp/core/helper/constant_finals.dart';
+import 'package:xmlapp/views/settings/cubit/info_akun/info_akun_cubit.dart';
 
 import '../../../core/helper/currency.dart';
 import '../../../core/utils/info_row.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
 
-class KonfirmasiSpeedcashPage extends StatelessWidget {
+class KonfirmasiSpeedcashPage extends StatefulWidget {
   const KonfirmasiSpeedcashPage({super.key});
 
+  @override
+  State<KonfirmasiSpeedcashPage> createState() =>
+      _KonfirmasiSpeedcashPageState();
+}
+
+class _KonfirmasiSpeedcashPageState extends State<KonfirmasiSpeedcashPage> {
   double getTotalTransaksi(dynamic transaksi) {
     final double baseTotal = transaksi.total ?? 0;
     if (transaksi.isBebasNominal == 1) {
@@ -22,6 +30,15 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>().getData();
+    final String kodeReseller;
+    final dataAkun = context.read<InfoAkunCubit>().state;
+
+    if (dataAkun is InfoAkunLoaded) {
+      kodeReseller = dataAkun.data.data.kodeReseller;
+    } else {
+      kodeReseller = '';
+    }
+
     return Scaffold(
       backgroundColor: kBackground,
       appBar: AppBar(
@@ -35,7 +52,12 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
           children: [
             buildInfoCard(transaksi),
             const Spacer(),
-            buildPayButton(transaksi),
+            buildPayButton(
+              transaksi,
+              kodeReseller,
+              transaksi.kodeProduk!,
+              transaksi.tujuan!,
+            ),
           ],
         ),
       ),
@@ -71,12 +93,23 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
     );
   }
 
-  Widget buildPayButton(dynamic transaksi) {
+  Widget buildPayButton(
+    dynamic transaksi,
+    String kodeReseller,
+    String kodeProduk,
+    String tujuan, {
+    int qty = 0,
+    String endUser = '',
+  }) {
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            context
+                .read<KonfirmasiTransaksiSpeedcashCubit>()
+                .konfirmasiTransaksiSpeedcash(kodeReseller, kodeProduk, tujuan);
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: kBlue,
             padding: const EdgeInsets.symmetric(vertical: 16),
