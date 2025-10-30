@@ -83,7 +83,7 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
-                              color: kNeutral90,
+                              color: kBlack,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -93,7 +93,7 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
-                              color: kNeutral70,
+                              color: kNeutral90,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -129,7 +129,7 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
                                         Text(
                                           'Bank',
                                           style: TextStyle(
-                                            color: kNeutral80,
+                                            color: kNeutral90,
                                             fontSize: 12,
                                           ),
                                         ),
@@ -146,7 +146,7 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
                                         Text(
                                           'Nomor Rekening',
                                           style: TextStyle(
-                                            color: kNeutral80,
+                                            color: kNeutral90,
                                             fontSize: 12,
                                           ),
                                         ),
@@ -179,6 +179,87 @@ class _SpeedCashDetailDepoState extends State<SpeedCashDetailDepo> {
                                                 showAppToast(
                                                   context,
                                                   'Nomor rekening berhasil disalin',
+                                                  ToastType.complete,
+                                                );
+                                              },
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 6,
+                                                    ),
+                                                decoration: BoxDecoration(
+                                                  color: kWhite,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.copy,
+                                                      size: 16,
+                                                      color: kNeutral80,
+                                                    ),
+                                                    SizedBox(width: 6),
+                                                    Text(
+                                                      'Salin',
+                                                      style: TextStyle(
+                                                        color: kNeutral100,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          'Nominal transfer',
+                                          style: TextStyle(
+                                            color: kNeutral90,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Flexible(
+                                              child: Text(
+                                                CurrencyUtil.formatCurrency(
+                                                  double.tryParse(
+                                                        state.data.nominal
+                                                            .toString(),
+                                                      ) ??
+                                                      0,
+                                                ),
+                                                style: const TextStyle(
+                                                  color: kBlack,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            InkWell(
+                                              onTap: () {
+                                                Clipboard.setData(
+                                                  ClipboardData(
+                                                    text: state.data.nominal
+                                                        .toString(),
+                                                  ),
+                                                );
+                                                showAppToast(
+                                                  context,
+                                                  'Nominal transfer berhasil disalin',
                                                   ToastType.complete,
                                                 );
                                               },

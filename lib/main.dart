@@ -157,11 +157,6 @@ class _XmlAppState extends State<XmlApp> {
         BlocProvider(
           create: (context) => RequestTopUpCubit(SpeedcashApiService()),
         ),
-
-        /// dummy
-        BlocProvider(
-          create: (context) => TopupDummySpeedcashCubit(TopupRepository()),
-        ),
       ],
       child: MultiProvider(
         providers: [
