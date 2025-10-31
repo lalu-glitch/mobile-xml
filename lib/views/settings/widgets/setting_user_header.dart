@@ -28,6 +28,7 @@ class UserProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final data = state.data.data;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
@@ -48,7 +49,7 @@ class UserProfileCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  state.data.data.nama,
+                  data.nama,
                   style: TextStyle(
                     color: color == kOrange ? kWhite : kBlack,
                     fontSize: 16,
@@ -58,7 +59,7 @@ class UserProfileCard extends StatelessWidget {
                   maxLines: 2,
                 ),
                 Text(
-                  state.data.data.kodeReseller,
+                  data.kodeReseller,
                   style: TextStyle(
                     color: color == kOrange ? kWhite : kBlack,
                     fontSize: 12,

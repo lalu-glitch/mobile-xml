@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:xmlapp/core/helper/constant_finals.dart';
-import 'package:xmlapp/data/services/api_service.dart';
-import 'package:xmlapp/core/helper/auth_guard.dart';
-import 'package:xmlapp/views/riwayat/pages/detail_riwayat.dart';
 
+import '../../../core/helper/auth_guard.dart';
+import '../../../core/helper/constant_finals.dart';
+import '../../../data/services/api_service.dart';
 import '../cubit/detail_riwayat_transaksi_cubit.dart';
+import '../pages/detail_riwayat.dart';
 
 class TransactionCard extends StatelessWidget {
   final dynamic t; // model transaksi
@@ -16,8 +16,9 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
-      color: Colors.white,
+      elevation: 0,
+      margin: const EdgeInsets.only(top: 14, bottom: 4),
+      color: kWhite,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
@@ -43,7 +44,7 @@ class TransactionCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: _statusColor(t).withOpacity(0.15),
+                  color: _statusColor(t).withAlpha(25),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(_statusIcon(t), color: _statusColor(t), size: 28),
@@ -61,7 +62,7 @@ class TransactionCard extends StatelessWidget {
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: Colors.black87,
+                        color: kBlack,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -70,10 +71,7 @@ class TransactionCard extends StatelessWidget {
                     // Tanggal
                     Text(
                       DateFormat('dd MMM yyyy, HH:mm').format(t.tglEntri),
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.black54,
-                      ),
+                      style: const TextStyle(fontSize: 13, color: kNeutral90),
                     ),
                   ],
                 ),
@@ -92,7 +90,7 @@ class TransactionCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: _statusColor(t).withOpacity(0.1),
+                      color: _statusColor(t).withAlpha(30),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -110,7 +108,7 @@ class TransactionCard extends StatelessWidget {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
-                      color: Colors.black87,
+                      color: kBlack,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -124,7 +122,7 @@ class TransactionCard extends StatelessWidget {
   }
 
   /// Mapping warna berdasarkan status
-  Color _statusColor(dynamic t) {
+  static Color _statusColor(dynamic t) {
     switch (t.status) {
       case 20: // sukses
         return kGreen;
@@ -145,7 +143,7 @@ class TransactionCard extends StatelessWidget {
   }
 
   /// Mapping icon berdasarkan status
-  IconData _statusIcon(dynamic t) {
+  static IconData _statusIcon(dynamic t) {
     switch (t.status) {
       case 20: // sukses
         return Icons.check_circle;

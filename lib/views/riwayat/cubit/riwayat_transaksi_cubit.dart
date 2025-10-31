@@ -15,20 +15,27 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
     int limit = 5,
     bool append = false,
   }) async {
+    List<RiwayatTransaksi> previousList = [];
+
+    // 🧠 Jika mode append, gunakan data lama tanpa membuat copy besar
     if (append) {
       if (state is RiwayatTransaksiSuccess) {
         final current = state as RiwayatTransaksiSuccess;
         if (current.currentPage >= current.totalPages) return;
+
+        previousList = current.riwayatList;
         emit(
           RiwayatTransaksiLoadingMore(
-            riwayatList: current.riwayatList,
+            riwayatList: previousList,
             currentPage: current.currentPage,
             totalPages: current.totalPages,
           ),
         );
       } else if (state is RiwayatTransaksiLoadingMore) {
+        // sudah dalam mode loading more → jangan double trigger
         return;
       } else {
+        // jika bukan success, berarti refresh awal
         append = false;
       }
     }
@@ -50,14 +57,12 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
         newList = response.items;
       }
 
-      if (append && (state is RiwayatTransaksiLoadingMore)) {
-        final current = state as RiwayatTransaksiLoadingMore;
-        newList = List.from(current.riwayatList)..addAll(newList);
-      }
+      // ✅ Gabungkan list lama hanya jika append true
+      final combinedList = append ? [...previousList, ...newList] : newList;
 
       emit(
         RiwayatTransaksiSuccess(
-          riwayatList: newList,
+          riwayatList: combinedList,
           currentPage: newCurrentPage,
           totalPages: newTotalPages,
         ),
@@ -76,7 +81,7 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
         append: true,
       );
     } else if (state is RiwayatTransaksiLoadingMore) {
-      //udah loading, gausah ngapa ngapain
+      return; // Sudah loading, jangan lakukan apa-apa
     }
   }
 }

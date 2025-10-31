@@ -16,11 +16,14 @@ class RiwayatTransaksiPage extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<RiwayatTransaksiCubit, RiwayatTransaksiState>(
           builder: (context, state) {
-            final cubit = context.read<RiwayatTransaksiCubit>();
-            if (state is RiwayatTransaksiInitial) {
-              cubit.loadRiwayat();
-            }
             if (state is RiwayatTransaksiLoading) {
+              return const Center(
+                child: CircularProgressIndicator(color: kOrange),
+              );
+            }
+
+            if (state is RiwayatTransaksiInitial) {
+              context.read<RiwayatTransaksiCubit>().loadRiwayat();
               return const Center(
                 child: CircularProgressIndicator(color: kOrange),
               );
@@ -77,11 +80,8 @@ class RiwayatTransaksiPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         RiwayatTransaksi t = riwayatList[index];
                         return Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 1,
-                          ),
-                          child: TransactionCard(t: t),
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: TransactionCard(key: ValueKey(t.kode), t: t),
                         );
                       },
                     ),
@@ -90,7 +90,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                 if (currentPage < totalPages)
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      vertical: 12,
+                      vertical: 8,
                       horizontal: 16,
                     ),
                     child: SizedBox(
@@ -128,7 +128,6 @@ class RiwayatTransaksiPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                const SizedBox(height: 10),
               ],
             );
           },

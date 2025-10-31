@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xmlapp/views/transaksi/cubit/pembayaran_transaksi_speedcash_cubit.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
@@ -9,6 +8,7 @@ import '../../../core/utils/info_row.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
 import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
+import '../cubit/pembayaran_transaksi_speedcash_cubit.dart';
 
 class KonfirmasiSpeedcashPage extends StatelessWidget {
   const KonfirmasiSpeedcashPage({super.key});
@@ -50,16 +50,6 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
                 // Ambil originalPartnerReferenceNo dari response
                 final resp = state.data;
                 final originalRef = resp.originalPartnerReferenceNo;
-                if (originalRef == null || originalRef.isEmpty) {
-                  showErrorDialog(
-                    context,
-                    'Server tidak mengembalikan reference transaksi.',
-                  );
-                  return;
-                }
-
-                // panggil pembayaran dengan kodeReseller + originalPartnerReferenceNo
-                context
                     .read<PembayaranTransaksiSpeedcashCubit>()
                     .pembayaranTransaksiSpeedcash(kodeReseller, originalRef);
               } else if (state is KonfirmasiTransaksiSpeedcashError) {
@@ -76,13 +66,6 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
             listener: (context, state) {
               if (state is PembayaranTransaksiSpeedcashSuccess) {
                 final url = state.data.url;
-                if (url == null || url.isEmpty) {
-                  showErrorDialog(
-                    context,
-                    'Server tidak mengembalikan URL pembayaran.',
-                  );
-                  return;
-                }
                 Navigator.pushNamed(
                   context,
                   '/webView',
