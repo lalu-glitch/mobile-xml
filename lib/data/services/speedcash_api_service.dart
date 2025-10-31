@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../core/helper/constant_finals.dart';
 import '../models/speedcash/speedcash_konfirmasi_transaksi.dart';
 import '../models/speedcash/speedcash_list_bank.dart';
+import '../models/speedcash/speedcash_payment_transaksi.dart';
 import '../models/speedcash/speedcash_request_topup.dart';
 import '../models/speedcash/speedcash_response.dart';
 import '../models/speedcash/speedcash_topup_guide.dart';
@@ -221,7 +222,6 @@ class SpeedcashApiService {
         ),
         data: {"kode_reseller": kodeReseller, "nominal": nominal, "bank": bank},
       );
-      log('$response');
       if (response.statusCode == 200) {
         return RequestTopUpModel.fromJson(response.data);
       } else {
@@ -266,6 +266,41 @@ class SpeedcashApiService {
       log('$response');
       if (response.statusCode == 200) {
         return SpeedcashKonfirmasiTransaksiModel.fromJson(response.data);
+      } else {
+        throw Exception("Gagal, Status Server ${response.statusCode}");
+      }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
+          : e.message;
+      log("DioException: $apiMessage");
+      throw Exception(apiMessage);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<SpeedcashPaymentTransaksiModel> pembayaranTransaksiSpeedcash(
+    String kodeReseller,
+    String originPartnerReffNumber,
+  ) async {
+    try {
+      final response = await authService.dio.post(
+        '$baseURLIntegration/speedcash/payment',
+        options: Options(
+          headers: {
+            "Authorization": _basicAuthSpeedcashHeader,
+            "Content-Type": "application/json",
+          },
+        ),
+        data: {
+          "kode_reseller": kodeReseller,
+          "originalPartnerReferenceNo": originPartnerReffNumber,
+        },
+      );
+      log('$response');
+      if (response.statusCode == 200) {
+        return SpeedcashPaymentTransaksiModel.fromJson(response.data);
       } else {
         throw Exception("Gagal, Status Server ${response.statusCode}");
       }

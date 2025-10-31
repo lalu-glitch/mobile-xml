@@ -27,36 +27,36 @@ class _AuthGuardState extends State<AuthGuard> {
   @override
   void initState() {
     super.initState();
-    log('[AuthGuard] initState: Scheduling _checkAppFlow.'); // <-- LOG
+    // log('[AuthGuard] initState: Scheduling _checkAppFlow.'); // <-- LOG
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkAppFlow();
     });
   }
 
   Future<void> _checkAppFlow() async {
-    log('[AuthGuard] _checkAppFlow: Starting flow check...'); // <-- LOG
+    // log('[AuthGuard] _checkAppFlow: Starting flow check...'); // <-- LOG
 
     // Pengecekan service akan memunculkan log-nya sendiri
     final onboardingSeen = await _storageService.isOnboardingSeen();
     final loggedIn = await _authService.isLoggedIn();
 
     // Log hasil pengecekan
-    log(
-      '[AuthGuard] _checkAppFlow: Values fetched. onboardingSeen: $onboardingSeen, isLoggedIn: $loggedIn',
-    ); // <-- LOG
+    // log(
+    //   '[AuthGuard] _checkAppFlow: Values fetched. onboardingSeen: $onboardingSeen, isLoggedIn: $loggedIn',
+    // ); // <-- LOG
 
     if (!onboardingSeen) {
-      log(
-        '[AuthGuard] Decision: Onboarding NOT seen. Navigating to /onboarding.',
-      ); // <-- LOG
+      // log(
+      //   '[AuthGuard] Decision: Onboarding NOT seen. Navigating to /onboarding.',
+      // ); // <-- LOG
       if (mounted) {
         // Navigasi tidak perlu menunggu, jadi tidak perlu 'await'
         Navigator.pushReplacementNamed(context, '/onboarding');
       }
     } else if (loggedIn) {
-      log(
-        '[AuthGuard] Decision: Onboarding seen AND user logged in. Showing child.',
-      ); // <-- LOG
+      // log(
+      //   '[AuthGuard] Decision: Onboarding seen AND user logged in. Showing child.',
+      // ); // <-- LOG
 
       // Catatan: Kenapa setOnboardingSeen() dipanggil lagi di sini?
       // Seharusnya tidak perlu karena sudah dicek di 'if' sebelumnya.
@@ -69,9 +69,9 @@ class _AuthGuardState extends State<AuthGuard> {
         });
       }
     } else {
-      log(
-        '[AuthGuard] Decision: Onboarding seen BUT user NOT logged in. Navigating to /authPage.',
-      ); // <-- LOG
+      // log(
+      //   '[AuthGuard] Decision: Onboarding seen BUT user NOT logged in. Navigating to /authPage.',
+      // ); // <-- LOG
       if (mounted) {
         Navigator.pushReplacementNamed(context, '/authPage');
       }
@@ -80,7 +80,7 @@ class _AuthGuardState extends State<AuthGuard> {
 
   @override
   void dispose() {
-    log('[AuthGuard] dispose: Guard is being disposed.'); // <-- LOG
+    // log('[AuthGuard] dispose: Guard is being disposed.'); // <-- LOG
     _timer?.cancel();
     super.dispose();
   }
@@ -88,12 +88,12 @@ class _AuthGuardState extends State<AuthGuard> {
   @override
   Widget build(BuildContext context) {
     // Log state saat ini setiap kali build dipanggil
-    log(
-      '[AuthGuard] build: Rendering with state: _loading: $_loading, _isLoggedIn: $_isLoggedIn, _showOnboarding: $_showOnboarding',
-    ); // <-- LOG
+    // log(
+    //   '[AuthGuard] build: Rendering with state: _loading: $_loading, _isLoggedIn: $_isLoggedIn, _showOnboarding: $_showOnboarding',
+    // ); // <-- LOG
 
     if (_loading) {
-      log('[AuthGuard] build: Showing Loading Indicator (main)'); // <-- LOG
+      // log('[AuthGuard] build: Showing Loading Indicator (main)'); // <-- LOG
       return const Scaffold(
         body: Center(child: CircularProgressIndicator(color: kOrange)),
       );
@@ -102,20 +102,20 @@ class _AuthGuardState extends State<AuthGuard> {
     // Kondisi ini (SizedBox.shrink()) mungkin akan menyebabkan layar putih singkat
     // sebelum navigasi ke /authPage selesai.
     if (!_isLoggedIn && !_showOnboarding) {
-      log(
-        '[AuthGuard] build: Showing SizedBox.shrink() (blank screen)',
-      ); // <-- LOG
+      // log(
+      //   '[AuthGuard] build: Showing SizedBox.shrink() (blank screen)',
+      // ); // <-- LOG
       return const SizedBox.shrink();
     }
 
     // Ternary ini sekarang lebih sederhana
     if (_isLoggedIn) {
-      log('[AuthGuard] build: Showing widget.child (App Content)'); // <-- LOG
+      // log('[AuthGuard] build: Showing widget.child (App Content)'); // <-- LOG
       return widget.child;
     } else {
       // Bagian 'else' ini kemungkinan tidak akan pernah tercapai
       // karena sudah ditangani oleh 'if (_loading)' atau 'if (!_isLoggedIn ...)'
-      log('[AuthGuard] build: Showing Loading Indicator (fallback)'); // <-- LOG
+      // log('[AuthGuard] build: Showing Loading Indicator (fallback)'); // <-- LOG
       return const Scaffold(
         body: Center(child: CircularProgressIndicator(color: kOrange)),
       );

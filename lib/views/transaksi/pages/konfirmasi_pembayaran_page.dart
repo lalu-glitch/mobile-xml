@@ -14,6 +14,7 @@ import '../../../viewmodels/balance_viewmodel.dart';
 import '../../../viewmodels/transaksi_viewmodel.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
 import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
+import '../cubit/pembayaran_transaksi_speedcash_cubit.dart';
 import 'konfirmasi_speedcash_page.dart';
 
 class KonfirmasiPembayaranPage extends StatefulWidget {
@@ -217,11 +218,19 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => BlocProvider(
-                    // Ambil instance ApiService yang sudah ada dari context
-                    create: (context) => KonfirmasiTransaksiSpeedcashCubit(
-                      context.read<SpeedcashApiService>(),
-                    ),
+                  builder: (context) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (context) => KonfirmasiTransaksiSpeedcashCubit(
+                          context.read<SpeedcashApiService>(),
+                        ),
+                      ),
+                      BlocProvider(
+                        create: (context) => PembayaranTransaksiSpeedcashCubit(
+                          context.read<SpeedcashApiService>(),
+                        ),
+                      ),
+                    ],
                     child: KonfirmasiSpeedcashPage(),
                   ),
                 ),
