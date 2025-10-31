@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -66,6 +68,7 @@ class _WebviewPageState extends State<WebviewPage> {
               }
 
               final uri = Uri.tryParse(_currentUrl);
+              log('URI: $uri');
               if (uri != null && uri.queryParameters.containsKey('isActive')) {
                 final isActive = uri.queryParameters['isActive'];
                 if (!_hasRedirected && isActive == 'true') {
@@ -77,6 +80,17 @@ class _WebviewPageState extends State<WebviewPage> {
                   });
                 }
               }
+              if (uri != null && uri.path.contains('success')) {
+                if (!_hasRedirected) {
+                  _hasRedirected = true;
+                  Future.delayed(const Duration(seconds: 2), () {
+                    if (mounted) {
+                      Navigator.pushReplacementNamed(context, '/');
+                    }
+                  });
+                }
+              }
+              return;
             },
           ),
         )
@@ -95,7 +109,7 @@ class _WebviewPageState extends State<WebviewPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: kOrange,
+        backgroundColor: kBlue,
         iconTheme: const IconThemeData(color: Colors.white),
         leading: IconButton(
           icon: const Icon(Icons.close),
@@ -108,7 +122,7 @@ class _WebviewPageState extends State<WebviewPage> {
         children: [
           if (_controller != null) WebViewWidget(controller: _controller!),
           if (isLoading)
-            const Center(child: CircularProgressIndicator(color: kOrange)),
+            const Center(child: CircularProgressIndicator(color: kBlue)),
           if (_isActiveFailed)
             Container(
               color: Colors.white,

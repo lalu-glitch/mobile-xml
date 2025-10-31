@@ -132,54 +132,84 @@ class _XmlAppState extends State<XmlApp> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
+      //dependency injection
       providers: [
-        //umum
-        BlocProvider(create: (context) => InfoAkunCubit(ApiService())),
-        BlocProvider(create: (context) => RequestKodeAgenCubit(AuthService())),
-        BlocProvider(create: (context) => ProviderNoPrefixCubit(ApiService())),
-        BlocProvider(create: (context) => ProviderPrefixCubit(ApiService())),
-        BlocProvider(create: (context) => RiwayatTransaksiCubit(ApiService())),
-        BlocProvider(create: (context) => TransaksiHelperCubit()),
-        BlocProvider(create: (context) => FlowCubit()),
-
-        //speedcash
-        BlocProvider(
-          create: (context) => UnbindEwalletCubit(SpeedcashApiService()),
+        RepositoryProvider<ApiService>(create: (context) => ApiService()),
+        RepositoryProvider<SpeedcashApiService>(
+          create: (context) => SpeedcashApiService(),
         ),
-        BlocProvider(
-          create: (context) => SpeedcashBankCubit(SpeedcashApiService()),
-        ),
-        BlocProvider(
-          create: (context) => PanduanTopUpCubit(SpeedcashApiService()),
-        ),
-        BlocProvider(
-          create: (context) => RequestTopUpCubit(SpeedcashApiService()),
-        ),
+        RepositoryProvider<AuthService>(create: (context) => AuthService()),
       ],
-      child: MultiProvider(
+      child: MultiBlocProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => BalanceViewModel()),
-          ChangeNotifierProvider(create: (_) => LayananViewModel()),
-          ChangeNotifierProvider(create: (_) => PromoViewModel()),
-          ChangeNotifierProvider(
-            create: (_) => SpeedcashVM(apiService: SpeedcashApiService()),
+          //umum
+          BlocProvider(
+            create: (context) => InfoAkunCubit(context.read<ApiService>()),
           ),
-          ChangeNotifierProvider(
-            create: (_) => TransaksiViewModel(service: ApiService()),
+          BlocProvider(
+            create: (context) =>
+                RequestKodeAgenCubit(context.read<AuthService>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                ProviderNoPrefixCubit(context.read<ApiService>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                ProviderPrefixCubit(context.read<ApiService>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                RiwayatTransaksiCubit(context.read<ApiService>()),
+          ),
+          BlocProvider(create: (context) => TransaksiHelperCubit()),
+          BlocProvider(create: (context) => FlowCubit()),
+
+          //speedcash
+          BlocProvider(
+            create: (context) =>
+                UnbindEwalletCubit(context.read<SpeedcashApiService>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                SpeedcashBankCubit(context.read<SpeedcashApiService>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                PanduanTopUpCubit(context.read<SpeedcashApiService>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                RequestTopUpCubit(context.read<SpeedcashApiService>()),
           ),
         ],
-        child: MaterialApp(
-          title: "XML App",
-          theme: ThemeData(
-            textTheme: Theme.of(
-              context,
-            ).textTheme.apply(fontFamily: 'Gabarito'),
-            fontFamily: 'Gabarito',
-            useMaterial3: true,
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => BalanceViewModel()),
+            ChangeNotifierProvider(create: (_) => LayananViewModel()),
+            ChangeNotifierProvider(create: (_) => PromoViewModel()),
+            ChangeNotifierProvider(
+              create: (context) =>
+                  SpeedcashVM(apiService: context.read<SpeedcashApiService>()),
+            ),
+            ChangeNotifierProvider(
+              create: (context) =>
+                  TransaksiViewModel(service: context.read<ApiService>()),
+            ),
+          ],
+          child: MaterialApp(
+            title: "XML App",
+            theme: ThemeData(
+              textTheme: Theme.of(
+                context,
+              ).textTheme.apply(fontFamily: 'Gabarito'),
+              fontFamily: 'Gabarito',
+              useMaterial3: true,
+            ),
+            navigatorKey: navigatorKey,
+            initialRoute: '/',
+            routes: appRoutes,
           ),
-          navigatorKey: navigatorKey,
-          initialRoute: '/',
-          routes: appRoutes,
         ),
       ),
     );

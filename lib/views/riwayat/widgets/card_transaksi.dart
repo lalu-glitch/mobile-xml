@@ -27,7 +27,8 @@ class TransactionCard extends StatelessWidget {
             MaterialPageRoute(
               //scoped provider
               builder: (context) => BlocProvider(
-                create: (context) => DetailRiwayatTransaksiCubit(ApiService()),
+                create: (context) =>
+                    DetailRiwayatTransaksiCubit(context.read<ApiService>()),
                 child: AuthGuard(child: DetailRiwayatPage(kode: t.kode)),
               ),
             ),

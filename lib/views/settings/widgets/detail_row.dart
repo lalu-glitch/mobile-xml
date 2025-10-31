@@ -28,7 +28,8 @@ class DetailRow extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => BlocProvider(
-                    create: (context) => EditInfoAkunCubit(ApiService()),
+                    create: (context) =>
+                        EditInfoAkunCubit(context.read<ApiService>()),
                     child: AuthGuard(child: EditInfoAkunScreen(label, value)),
                   ),
                 ),

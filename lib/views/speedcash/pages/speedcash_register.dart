@@ -20,7 +20,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => SpeedcashVM(
         apiService: SpeedcashApiService(
-          authService: AuthService(),
+          authService: context.read<AuthService>(),
           logger: Logger(),
         ),
       ),
