@@ -27,6 +27,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _isForceLogoutDialogShown = false;
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     final promoVM = Provider.of<PromoViewModel>(context);
 
     Future<void> logout() async {
-      await _storage.delete(key: 'userData');
+      await _storage.deleteAll();
       if (mounted) {
         Navigator.pushNamedAndRemoveUntil(
           context,
@@ -60,10 +62,10 @@ class _HomePageState extends State<HomePage> {
       }
     }
 
-    // Cek status logout setiap kali state balanceVM berubah
-    if (balanceVM.userBalance?.isLogout == true) {
+    if (balanceVM.userBalance?.isLogout == true && !_isForceLogoutDialogShown) {
+      _isForceLogoutDialogShown = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showForceExitDialog(context, logout);
+        if (mounted) showForceExitDialog(context, logout);
       });
     }
 
