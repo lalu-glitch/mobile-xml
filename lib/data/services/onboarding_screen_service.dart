@@ -7,15 +7,15 @@ class OnboardingScreenService {
   final String _onBoardingKey = 'onboarding_seen';
 
   Future<void> setOnboardingSeen() async {
-    log('[OnboardingService] Setting onboarding as seen...'); // <-- LOG
+    // log('[OnboardingService] Setting onboarding as seen...'); // <-- LOG
     await _storage.write(key: _onBoardingKey, value: 'true');
-    log('[OnboardingService] Onboarding successfully set.'); // <-- LOG
+    // log('[OnboardingService] Onboarding successfully set.'); // <-- LOG
   }
 
   Future<bool> isOnboardingSeen() async {
     final value = await _storage.read(key: _onBoardingKey);
     // Log di bawah ini sudah ada dari kode Anda
-    log('[OnboardingService] isOnboardingSeen check: $value');
+    // log('[OnboardingService] isOnboardingSeen check: $value');
     return value == 'true';
   }
 }
