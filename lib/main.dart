@@ -55,14 +55,13 @@ class XmlApp extends StatefulWidget {
 class _XmlAppState extends State<XmlApp> {
   StreamSubscription<Uri>? _sub;
   late final AppLinks _appLinks;
-  bool isAppReady = false; // FIX: Flag untuk track readiness
+  bool isAppReady = false;
 
   @override
   void initState() {
     super.initState();
-    _initDeepLinks(); // Tetap di initState, karena non-nav
+    _initDeepLinks();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // FIX: Defer location setelah frame pertama
       _initLocationService();
       setState(() => isAppReady = true);
     });

@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../data/models/user/info_akun.dart';
+import '../../../viewmodels/balance_viewmodel.dart';
 import '../cubit/info_akun/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
 import '../widgets/custom_list_tile.dart';
@@ -38,8 +39,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
   /// Fungsi logout (hapus semua data lalu arahkan ke halaman login)
   Future<void> logout() async {
-    await _storage.delete(key: 'userData');
+    await _storage.deleteAll();
     if (mounted) {
+      context.read<BalanceViewModel>().reset();
       Navigator.pushNamedAndRemoveUntil(context, '/authPage', (route) => false);
     }
   }

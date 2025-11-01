@@ -371,7 +371,6 @@ Future<bool> showForceExitDialog(
                         ),
                         onPressed: () {
                           onConfirm();
-                          Navigator.pushReplacementNamed(context, '/authPage');
                         },
                         child: const Text(
                           "Ya",

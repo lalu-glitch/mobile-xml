@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> {
 
     Future<void> logout() async {
       await _storage.deleteAll();
+      balanceVM.reset();
       if (mounted) {
         Navigator.pushNamedAndRemoveUntil(
           context,
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
       });
     }
 
-    // Fungsi gabungan untuk refresh dan retry
+    // Fungsi gabungan buat refresh dan retry
     Future<void> refreshData() async {
       await Future.wait([
         balanceVM.fetchBalance(),
@@ -93,7 +94,7 @@ class _HomePageState extends State<HomePage> {
               left: 0,
               child: Image.asset(
                 'assets/images/bg-header.png',
-                width: 300, // sesuaikan ukuran
+                width: 300,
                 height: 300,
                 fit: BoxFit.cover,
               ),

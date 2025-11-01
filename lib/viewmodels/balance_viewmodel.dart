@@ -27,4 +27,12 @@ class BalanceViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  /// Membersihkan state viewmodel ke kondisi awal.
+  void reset() {
+    _userBalance = null;
+    _isLoading = false;
+    _error = null;
+    notifyListeners();
+  }
 }
