@@ -1,19 +1,15 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreenService {
-  final FlutterSecureStorage _storage = const FlutterSecureStorage();
   final String _onBoardingKey = 'onboarding_seen';
 
   Future<void> setOnboardingSeen() async {
-    // log('[OnboardingService] Setting onboarding as seen...'); // <-- LOG
-    await _storage.write(key: _onBoardingKey, value: 'true');
-    // log('[OnboardingService] Onboarding successfully set.'); // <-- LOG
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_onBoardingKey, true);
   }
 
   Future<bool> isOnboardingSeen() async {
-    final value = await _storage.read(key: _onBoardingKey);
-    // Log di bawah ini sudah ada dari kode Anda
-    // log('[OnboardingService] isOnboardingSeen check: $value');
-    return value == 'true';
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_onBoardingKey) ?? false;
   }
 }

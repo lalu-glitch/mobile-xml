@@ -50,6 +50,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
                 // Ambil originalPartnerReferenceNo dari response
                 final resp = state.data;
                 final originalRef = resp.originalPartnerReferenceNo;
+                context
                     .read<PembayaranTransaksiSpeedcashCubit>()
                     .pembayaranTransaksiSpeedcash(kodeReseller, originalRef);
               } else if (state is KonfirmasiTransaksiSpeedcashError) {

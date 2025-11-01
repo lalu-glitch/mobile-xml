@@ -355,26 +355,22 @@ Future<bool> showForceExitDialog(
                   ),
                   const SizedBox(height: 24),
 
-                    // Tombol
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: kRed,
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        onPressed: () {
-                          onConfirm();
-                          Navigator.pushReplacementNamed(context, '/authPage');
-                        },
-                        child: const Text(
-                          "Ya",
-                          style: TextStyle(color: kWhite),
+                  // Tombol
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kRed,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
+                      onPressed: () {
+                        onConfirm();
+                        Navigator.pushReplacementNamed(context, '/authPage');
+                      },
+                      child: const Text("Ya", style: TextStyle(color: kWhite)),
                     ),
                   ),
                 ],

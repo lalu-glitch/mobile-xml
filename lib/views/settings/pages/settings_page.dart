@@ -38,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   /// Fungsi logout (hapus semua data lalu arahkan ke halaman login)
-  Future<void> logout() async {
+  Future<void> _logout() async {
     await _storage.delete(key: 'userData');
     if (mounted) {
       context.read<BalanceViewModel>().reset();
