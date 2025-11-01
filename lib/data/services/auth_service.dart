@@ -6,6 +6,8 @@ import '../../core/helper/constant_finals.dart';
 import 'package:android_id/android_id.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import '../models/user/region.dart';
+
 class AuthService {
   static final String baseUrl = baseURL;
   final Dio _dio = Dio();
@@ -376,5 +378,59 @@ class AuthService {
       return false;
     }
     return false;
+  }
+
+  Future<RegionModel> fetchProvinsi() async {
+    try {
+      final response = await _dio.get('$baseUrl/wilayah');
+      log('[WilayahService] fetchProvinsi: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        return RegionModel.fromJson(response.data);
+      } else {
+        throw Exception('Ada yang salah');
+      }
+    } catch (e) {
+      log('[WilayahService] Error fetchProvinsi: $e');
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<RegionModel> fetchKabupaten(String kodeProvinsi) async {
+    try {
+      final response = await _dio.get('$baseUrl/wilayah/$kodeProvinsi');
+      log(
+        '[WilayahService] fetchKabupaten($kodeProvinsi): ${response.statusCode}',
+      );
+      if (response.statusCode == 200) {
+        return RegionModel.fromJson(response.data);
+      } else {
+        throw Exception('Ada yang salah');
+      }
+    } catch (e) {
+      log('[WilayahService] Error fetchKabupaten: $e');
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<RegionModel> fetchKecamatan(
+    String kodeProvinsi,
+    String kodeKabupaten,
+  ) async {
+    try {
+      final response = await _dio.get(
+        '$baseUrl/wilayah/$kodeProvinsi/$kodeKabupaten',
+      );
+      log(
+        '[WilayahService] fetchKecamatan($kodeProvinsi, $kodeKabupaten): ${response.statusCode}',
+      );
+      if (response.statusCode == 200) {
+        return RegionModel.fromJson(response.data);
+      } else {
+        throw Exception('Ada yang salah');
+      }
+    } catch (e) {
+      log('[WilayahService] Error fetchKecamatan: $e');
+      throw Exception(e.toString());
+    }
   }
 }
