@@ -1,12 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../core/helper/constant_finals.dart';
 import 'package:android_id/android_id.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class AuthService extends ChangeNotifier {
+class AuthService {
   static final String baseUrl = baseURL;
   final Dio _dio = Dio();
   final Dio _refreshDio = Dio(); // <-- DIO khusus refresh token
@@ -293,6 +293,7 @@ class AuthService extends ChangeNotifier {
 
   Future<Map<String, dynamic>> requestKodeAgen(String nomor) async {
     try {
+      final deviceID = await _loadDeviceId();
       final response = await _dio.post(
         "$baseUrl/user/lupa_agen",
         data: {"nomor": nomor},
@@ -300,12 +301,13 @@ class AuthService extends ChangeNotifier {
           headers: {
             "Authorization": _basicAuthHeader,
             "Content-Type": "application/json",
+            "x-device-id": 'android-$deviceID',
           },
         ),
       );
 
       final isSuccess = response.statusCode == 200;
-      return {
+      final result = {
         "success": isSuccess,
         "data": response.data,
         "message":
@@ -314,16 +316,20 @@ class AuthService extends ChangeNotifier {
                 ? "Permintaan kode agen berhasil, cek WhatsApp."
                 : "Gagal kirim permintaan (${response.data["message"]})"),
       };
+      log('$result');
+      return result;
     } on DioException catch (e) {
       final serverMsg = (e.response?.data is Map)
           ? e.response?.data["message"]
           : e.response?.data?.toString();
-      return {
+      final exception = {
         "success": false,
         "message": serverMsg ?? "Error dari server (${e.response?.statusCode})",
       };
+      log('$exception');
+      return exception;
     } catch (e) {
-      return {"success": false, "message": e.toString()};
+      throw Exception(e.toString());
     }
   }
 
@@ -358,7 +364,7 @@ class AuthService extends ChangeNotifier {
       if (newAccess != null) {
         userData["accessToken"] = newAccess;
         await storage.write(key: "userData", value: jsonEncode(userData));
-        notifyListeners(); // biar UI refresh
+        // notifyListeners(); // biar UI refresh
 
         return true;
       }
