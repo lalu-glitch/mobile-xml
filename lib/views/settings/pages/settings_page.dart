@@ -39,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   /// Fungsi logout (hapus semua data lalu arahkan ke halaman login)
   Future<void> logout() async {
-    await _storage.deleteAll();
+    await _storage.delete(key: 'userData');
     if (mounted) {
       context.read<BalanceViewModel>().reset();
       Navigator.pushNamedAndRemoveUntil(context, '/authPage', (route) => false);
@@ -48,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   /// Menampilkan konfirmasi logout
   void _showLogoutBottomSheet() {
-    verifyLogOut(context, logout);
+    verifyLogOut(context, _logout);
   }
 
   @override

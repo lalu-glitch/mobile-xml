@@ -308,55 +308,52 @@ Future<bool> showForceExitDialog(
   VoidCallback onConfirm,
 ) async {
   return await showDialog<bool>(
-        barrierDismissible: false,
         context: context,
         builder: (context) {
-          return WillPopScope(
-            onWillPop: () async => false,
-            child: Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              insetPadding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Ikon keluar
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
-                        shape: BoxShape.circle,
-                      ),
-                      padding: const EdgeInsets.all(16),
-                      child: const Icon(
-                        Icons.warning_rounded,
-                        color: Colors.red,
-                        size: 48,
-                      ),
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Ikon keluar
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.1),
+                      shape: BoxShape.circle,
                     ),
-                    const SizedBox(height: 16),
+                    padding: const EdgeInsets.all(16),
+                    child: const Icon(
+                      Icons.warning_rounded,
+                      color: Colors.red,
+                      size: 48,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
 
-                    // Title
-                    const Text(
-                      "Perhatian",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: kRed,
-                      ),
-                      textAlign: TextAlign.center,
+                  // Title
+                  const Text(
+                    "Perhatian",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: kRed,
                     ),
-                    const SizedBox(height: 12),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
 
-                    // Message
-                    const Text(
-                      "Sesi Anda telah habis, silahkan login ulang",
-                      style: TextStyle(fontSize: 14, color: kBlack),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 24),
+                  // Message
+                  const Text(
+                    "Sesi Anda telah habis, silahkan login ulang",
+                    style: TextStyle(fontSize: 14, color: kBlack),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
 
                     // Tombol
                     SizedBox(
@@ -371,6 +368,7 @@ Future<bool> showForceExitDialog(
                         ),
                         onPressed: () {
                           onConfirm();
+                          Navigator.pushReplacementNamed(context, '/authPage');
                         },
                         child: const Text(
                           "Ya",
@@ -378,8 +376,8 @@ Future<bool> showForceExitDialog(
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );
