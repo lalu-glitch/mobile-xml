@@ -123,11 +123,13 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       });
       if (result == true) {
         // Optional: Show success toast if agreed
-        showAppToast(
-          context,
-          'Syarat dan Ketentuan telah disetujui.',
-          ToastType.success,
-        );
+        if (mounted) {
+          showAppToast(
+            context,
+            'Syarat dan Ketentuan telah disetujui.',
+            ToastType.success,
+          );
+        }
       }
     }
   }

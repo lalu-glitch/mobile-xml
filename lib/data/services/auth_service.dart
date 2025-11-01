@@ -214,7 +214,7 @@ class AuthService {
 
       final isSuccess =
           response.statusCode == 200 || response.statusCode == 201;
-      return {
+      final result = {
         "success": isSuccess,
         "data": response.data,
         "message":
@@ -223,14 +223,18 @@ class AuthService {
                 ? "Pendaftaran berhasil, silakan cek WhatsApp untuk kode OTP Anda."
                 : "Gagal mendaftar (${response.data["message"]})"),
       };
+      log('$result');
+      return result;
     } on DioException catch (e) {
       final serverMsg = (e.response?.data is Map)
           ? e.response?.data["message"]
           : e.response?.data?.toString();
-      return {
+      final exception = {
         "success": false,
         "message": serverMsg ?? "Error dari server (${e.response?.statusCode})",
       };
+      log('$exception');
+      return exception;
     } catch (e) {
       return {"success": false, "message": e.toString()};
     }
