@@ -1,10 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/dialog.dart';
+import '../../../data/models/user/region.dart';
 import '../../../data/services/auth_service.dart';
+import '../cubit/wilayah_cubit.dart';
 import 'custom_textfield.dart';
 
 class RegisterFormWidget extends StatefulWidget {
@@ -17,77 +20,61 @@ class RegisterFormWidget extends StatefulWidget {
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   final authService = AuthService();
   bool loading = false;
-
   bool isChecked = false;
+
   String? selectedProvinsi;
   String? selectedKabupaten;
   String? selectedKecamatan;
 
-  //controller
   final namaCtrl = TextEditingController();
   final namaUsahaCtrl = TextEditingController();
   final alamatLengkapCtrl = TextEditingController();
   final nomorCtrl = TextEditingController();
   final kodeReferralCtrl = TextEditingController();
 
-  // Placeholder data  dropdown
-  final List<String> provinsi = ['Jawa Barat', 'Jawa Tengah', 'Jawa Timur'];
-  final List<String> kabupaten = ['Bandung', 'Cimahi', 'Garut'];
-  final List<String> kecamatan = [
-    'Cibaduyut',
-    'Cihampelas',
-    'Cicalengka',
-    'Ciamis',
-  ];
+  List<Region> provinsi = [];
+  List<Region> kabupaten = [];
+  List<Region> kecamatan = [];
 
-  void toggleRegisterCheckbox(bool? value) {
-    setState(() {
-      isChecked = value ?? false;
-    });
+  @override
+  void initState() {
+    super.initState();
+    context.read<WilayahCubit>().fetchProvinsi();
+  }
+
+  void toggleRegisterCheckbox(bool? value) =>
+      setState(() => isChecked = value ?? false);
+
+  void navigateToSnKPage() async {
+    final result = await Navigator.pushNamed(context, '/S&KPage');
+    if (result is bool) {
+      setState(() => isChecked = result);
+      if (result) {
+        showAppToast(
+          context,
+          'Syarat dan Ketentuan telah disetujui.',
+          ToastType.success,
+        );
+      }
+    }
   }
 
   void doRegister(String provinsi, String kabupaten, String kecamatan) async {
-    final nama = namaCtrl.text.trim();
-    final namaUsaha = namaUsahaCtrl.text.trim();
-    final alamat = alamatLengkapCtrl.text.trim();
-    final nomor = nomorCtrl.text.trim();
-    final referral = kodeReferralCtrl.text.trim();
-
-    if (namaCtrl.text.trim().isEmpty ||
-        alamatLengkapCtrl.text.trim().isEmpty ||
-        nomorCtrl.text.trim().isEmpty ||
-        selectedProvinsi == null ||
-        selectedKabupaten == null ||
-        selectedKecamatan == null) {
-      showAppToast(
-        context,
-        'Semua data wajib diisi, kecuali kode referral',
-        ToastType.warning,
-      );
-      return;
-    }
-
-    if (!isChecked) {
-      showAppToast(
-        context,
-        'Anda harus menyetujui syarat dan ketentuan',
-        ToastType.error,
-      );
-      return;
-    }
+    if (_isFormInvalid()) return;
 
     setState(() => loading = true);
-
     try {
       final result = await authService.onRegisterUser(
-        namaUsaha,
-        nama,
-        nomor,
-        alamat,
+        namaUsahaCtrl.text.trim(),
+        namaCtrl.text.trim(),
+        nomorCtrl.text.trim(),
+        alamatLengkapCtrl.text.trim(),
         provinsi,
         kabupaten,
         kecamatan,
-        referral.isEmpty ? 'DAFTAR' : referral,
+        kodeReferralCtrl.text.trim().isEmpty
+            ? 'DAFTAR'
+            : kodeReferralCtrl.text.trim(),
       );
 
       if (!mounted) return;
@@ -99,261 +86,217 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             "kodeAgen": result["data"]["data"]["kode_reseller"],
             "type": result["data"]["data"]["type"],
             "nomor": result["data"]["data"]["nomor"],
-            "expiresAt": result["data"]['data']["expiresAt"],
+            "expiresAt": result["data"]["data"]["expiresAt"],
           },
         );
       }
     } catch (e) {
-      if (!mounted) return;
-      showErrorDialog(context, "Terjadi kesalahan register: $e");
+      if (mounted) showErrorDialog(context, "Terjadi kesalahan register: $e");
     } finally {
       if (mounted) setState(() => loading = false);
     }
   }
 
-  void navigateToSnKPage() async {
-    // Use the route name you have defined, e.g., '/S&KPage'
-    final result = await Navigator.pushNamed(context, '/S&KPage');
-
-    // Check if a boolean result was returned (true if agreed, false if declined/back)
-    if (result is bool) {
-      setState(() {
-        // Update isChecked state directly with the result from the T&C page
-        isChecked = result;
-      });
-      if (result == true) {
-        // Optional: Show success toast if agreed
-        showAppToast(
-          context,
-          'Syarat dan Ketentuan telah disetujui.',
-          ToastType.success,
-        );
-      }
+  bool _isFormInvalid() {
+    if (namaCtrl.text.trim().isEmpty ||
+        alamatLengkapCtrl.text.trim().isEmpty ||
+        nomorCtrl.text.trim().isEmpty ||
+        selectedProvinsi == null ||
+        selectedKabupaten == null ||
+        selectedKecamatan == null) {
+      showAppToast(
+        context,
+        'Semua data wajib diisi, kecuali kode referral',
+        ToastType.warning,
+      );
+      return true;
     }
+    if (!isChecked) {
+      showAppToast(
+        context,
+        'Anda harus menyetujui syarat dan ketentuan',
+        ToastType.error,
+      );
+      return true;
+    }
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          CustomTextField(
-            controller: namaUsahaCtrl,
-            labelText: 'Nama usaha',
-            prefixIcon: Icon(Icons.store, color: kOrangeAccent400),
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            controller: namaCtrl,
-            labelText: 'Nama lengkap',
-            prefixIcon: Icon(Icons.person, color: kOrangeAccent400),
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            controller: alamatLengkapCtrl,
-            labelText: 'Alamat',
-            prefixIcon: Icon(Icons.location_on, color: kOrangeAccent400),
-          ),
-          const SizedBox(height: 16),
-          DropdownButtonFormField<String>(
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.map, color: kOrangeAccent400, size: 20),
-              labelText: 'Provinsi',
-              labelStyle: TextStyle(color: kNeutral80),
-              floatingLabelStyle: TextStyle(color: kOrange),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: kOrangeAccent500),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: kOrangeAccent500),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: kOrangeAccent500, width: 2),
-              ),
-            ),
-            initialValue: selectedProvinsi,
-            items: provinsi.map((String province) {
-              return DropdownMenuItem<String>(
-                value: province,
-                child: Text(province),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedProvinsi = newValue;
-              });
-            },
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    labelText: 'Kecamatan',
-                    labelStyle: TextStyle(color: kNeutral80),
-                    floatingLabelStyle: TextStyle(color: kOrange),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 12,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: kOrangeAccent500),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: kOrangeAccent500),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: kOrangeAccent500, width: 2),
-                    ),
-                  ),
-                  initialValue: selectedKecamatan,
-                  items: kecamatan.map((String district) {
-                    return DropdownMenuItem<String>(
-                      value: district,
-                      child: Text(
-                        district,
-                        style: TextStyle(fontSize: 14),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedKecamatan = newValue;
-                    });
-                  },
-                  isDense: true,
-                  isExpanded: true,
-                  menuMaxHeight: 200,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    labelText: 'Kabupaten',
-                    labelStyle: TextStyle(color: kNeutral80),
-                    floatingLabelStyle: TextStyle(color: kOrange),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 12,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: kOrangeAccent500),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: kOrangeAccent500),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: kOrangeAccent500, width: 2),
-                    ),
-                  ),
-                  initialValue: selectedKabupaten,
-                  items: kabupaten.map((String regency) {
-                    return DropdownMenuItem<String>(
-                      value: regency,
-                      child: Text(
-                        regency,
-                        style: TextStyle(fontSize: 14),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedKabupaten = newValue;
-                    });
-                  },
-                  isDense: true,
-                  isExpanded: true,
-                  menuMaxHeight: 200,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            controller: nomorCtrl,
-            labelText: 'Nomor Whatsapp',
-            textFormater: [FilteringTextInputFormatter.digitsOnly],
-            prefixIcon: Icon(Icons.phone, color: kOrangeAccent400),
-            keyboardType: TextInputType.phone,
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            controller: kodeReferralCtrl,
-            labelText: 'Kode Referral (opsional)',
-            prefixIcon: Icon(Icons.code, color: kOrangeAccent400),
-          ),
-          const SizedBox(height: 24),
-          Row(
-            children: [
-              Checkbox(
-                value: isChecked,
-                onChanged: toggleRegisterCheckbox,
-                activeColor: kOrange,
-                checkColor: kWhite,
-              ),
-              Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Dengan mendaftar, Anda telah setuju dengan ',
-                    style: TextStyle(color: Colors.black, fontSize: 14),
-                    children: [
-                      TextSpan(
-                        text: 'syarat dan ketentuan',
-                        style: TextStyle(
-                          color: kOrange,
-                          decoration: TextDecoration.underline,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            navigateToSnKPage();
-                          },
-                      ),
+    return BlocListener<WilayahCubit, WilayahState>(
+      listener: (context, state) {
+        if (state is WilayahLoaded) {
+          setState(() {
+            if (selectedProvinsi == null)
+              provinsi = state.data;
+            else if (selectedKabupaten == null)
+              kabupaten = state.data;
+            else
+              kecamatan = state.data;
+          });
+        } else if (state is WilayahError) {
+          showAppToast(context, state.message, ToastType.error);
+        }
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildTextField(namaUsahaCtrl, 'Nama usaha', Icons.store),
+            _gap(),
+            _buildTextField(namaCtrl, 'Nama lengkap', Icons.person),
+            _gap(),
+            _buildTextField(alamatLengkapCtrl, 'Alamat', Icons.location_on),
+            _gap(),
 
-                      TextSpan(text: ' yang berlaku.'),
-                    ],
+            // Provinsi
+            _WilayahDropdown(
+              label: 'Provinsi',
+              value: selectedProvinsi,
+              items: provinsi,
+              onChanged: (value) {
+                setState(() {
+                  selectedProvinsi = value;
+                  selectedKabupaten = null;
+                  selectedKecamatan = null;
+                  kabupaten.clear();
+                  kecamatan.clear();
+                });
+                if (value != null) {
+                  context.read<WilayahCubit>().fetchKabupaten(value);
+                }
+              },
+            ),
+            _gap(),
+
+            // Kabupaten & Kecamatan
+            Row(
+              children: [
+                Expanded(
+                  child: _WilayahDropdown(
+                    label: 'Kabupaten',
+                    value: selectedKabupaten,
+                    items: kabupaten,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedKabupaten = value;
+                        selectedKecamatan = null;
+                        kecamatan.clear();
+                      });
+                      if (selectedProvinsi != null && value != null) {
+                        context.read<WilayahCubit>().getKecamatan(
+                          selectedProvinsi!,
+                          value,
+                        );
+                      }
+                    },
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: loading
-                ? null
-                : () {
-                    doRegister(
-                      selectedProvinsi ?? '',
-                      selectedKabupaten ?? '',
-                      selectedKecamatan ?? '',
-                    );
-                  },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: isChecked ? kOrange : kNeutral40,
-              minimumSize: Size(double.infinity, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _WilayahDropdown(
+                    label: 'Kecamatan',
+                    value: selectedKecamatan,
+                    items: kecamatan,
+                    onChanged: (value) {
+                      setState(() => selectedKecamatan = value);
+                    },
+                  ),
+                ),
+              ],
             ),
-            child: Text(
-              'Daftar',
-              style: TextStyle(color: kWhite, fontSize: 16),
+            _gap(),
+            _buildTextField(
+              nomorCtrl,
+              'Nomor Whatsapp',
+              Icons.phone,
+              keyboardType: TextInputType.phone,
+              formatter: [FilteringTextInputFormatter.digitsOnly],
+            ),
+            _gap(),
+            _buildTextField(
+              kodeReferralCtrl,
+              'Kode Referral (opsional)',
+              Icons.code,
+            ),
+            const SizedBox(height: 24),
+            _buildAgreementSection(),
+            const SizedBox(height: 24),
+            _buildSubmitButton(),
+            const SizedBox(height: 50),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _gap() => const SizedBox(height: 16);
+
+  Widget _buildTextField(
+    TextEditingController ctrl,
+    String label,
+    IconData icon, {
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? formatter,
+  }) {
+    return CustomTextField(
+      controller: ctrl,
+      labelText: label,
+      prefixIcon: Icon(icon, color: kOrangeAccent400),
+      keyboardType: keyboardType,
+      textFormater: formatter,
+    );
+  }
+
+  Widget _buildAgreementSection() {
+    return Row(
+      children: [
+        Checkbox(
+          value: isChecked,
+          onChanged: toggleRegisterCheckbox,
+          activeColor: kOrange,
+          checkColor: kWhite,
+        ),
+        Expanded(
+          child: RichText(
+            text: TextSpan(
+              text: 'Dengan mendaftar, Anda telah setuju dengan ',
+              style: const TextStyle(color: Colors.black, fontSize: 14),
+              children: [
+                TextSpan(
+                  text: 'syarat dan ketentuan',
+                  style: const TextStyle(
+                    color: kOrange,
+                    decoration: TextDecoration.underline,
+                  ),
+                  recognizer: TapGestureRecognizer()..onTap = navigateToSnKPage,
+                ),
+                const TextSpan(text: ' yang berlaku.'),
+              ],
             ),
           ),
-          const SizedBox(height: 50),
-        ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    return ElevatedButton(
+      onPressed: loading
+          ? null
+          : () => doRegister(
+              selectedProvinsi ?? '',
+              selectedKabupaten ?? '',
+              selectedKecamatan ?? '',
+            ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isChecked ? kOrange : kNeutral40,
+        minimumSize: const Size(double.infinity, 50),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      ),
+      child: const Text(
+        'Daftar',
+        style: TextStyle(color: kWhite, fontSize: 16),
       ),
     );
   }
@@ -366,5 +309,54 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     nomorCtrl.dispose();
     kodeReferralCtrl.dispose();
     super.dispose();
+  }
+}
+
+// Widget Reusable Dropdown Wilayah
+class _WilayahDropdown extends StatelessWidget {
+  const _WilayahDropdown({
+    required this.label,
+    required this.value,
+    required this.items,
+    required this.onChanged,
+  });
+
+  final String label;
+  final String? value;
+  final List<Region> items;
+  final ValueChanged<String?> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<String>(
+      initialValue: value,
+      isExpanded: true,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: const TextStyle(color: kNeutral80),
+        floatingLabelStyle: const TextStyle(color: kOrange),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: kOrangeAccent500),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: kOrangeAccent500),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: kOrangeAccent500, width: 2),
+        ),
+      ),
+      items: items
+          .map(
+            (e) => DropdownMenuItem(
+              value: e.kode,
+              child: Text(e.nama, overflow: TextOverflow.ellipsis),
+            ),
+          )
+          .toList(),
+      onChanged: onChanged,
+    );
   }
 }
