@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,7 @@ class _KodeOTPState extends State<KodeOTP> {
 
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    log('$args');
     final String expire = args["expiresAt"];
     expiresAt = DateTime.parse(expire);
 
@@ -87,9 +89,12 @@ class _KodeOTPState extends State<KodeOTP> {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    final kodeAgen = args["kodeAgen"];
+    final kodeResellerRegister = args["kode_reseller_register"];
     final type = args["type"];
     final kodeReseller = args["kode_reseller"];
+
+    log('KODE RESELLER LOGIN: $kodeReseller');
+    log('KODE RESELLER REGISTER: $kodeResellerRegister');
 
     return Scaffold(
       backgroundColor: kWhite,
@@ -154,8 +159,10 @@ class _KodeOTPState extends State<KodeOTP> {
                   onPressed: loading || start == 0
                       ? null
                       : () => doVerifyOTP(
-                          type == "register" ? kodeReseller : kodeAgen,
-                          type,
+                          type == "register"
+                              ? kodeResellerRegister
+                              : kodeReseller,
+                          type ?? '',
                         ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: start == 0 ? kNeutral40 : kOrange,
