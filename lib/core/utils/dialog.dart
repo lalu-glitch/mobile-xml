@@ -77,12 +77,14 @@ class SuccessDialog extends StatelessWidget {
   final String title;
   final String message;
   final VoidCallback? onOk;
+  final bool isSuccess;
 
   const SuccessDialog({
     super.key,
-    this.title = "Berhasil",
+    required this.title,
     required this.message,
     this.onOk,
+    required this.isSuccess,
   });
 
   @override
@@ -93,11 +95,15 @@ class SuccessDialog extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(8),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: kGreenComplete,
+              color: isSuccess ? kGreen : kRed,
             ),
-            child: const Icon(Icons.check, color: Colors.white, size: 55),
+            child: Icon(
+              isSuccess ? Icons.check : Icons.warning_rounded,
+              color: Colors.white,
+              size: 55,
+            ),
           ),
           const SizedBox(height: 25),
           Text(
@@ -123,7 +129,7 @@ class SuccessDialog extends StatelessWidget {
               if (onOk != null) onOk!();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: kGreen,
+              backgroundColor: isSuccess ? kGreen : kRed,
               foregroundColor: kWhite,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),

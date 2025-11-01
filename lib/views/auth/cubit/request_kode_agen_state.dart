@@ -7,7 +7,11 @@ final class RequestKodeAgenInitial extends RequestKodeAgenState {}
 
 final class RequestKodeAgenLoading extends RequestKodeAgenState {}
 
-final class RequestKodeAgenLoaded extends RequestKodeAgenState {}
+final class RequestKodeAgenLoaded extends RequestKodeAgenState {
+  final Map<String, dynamic> data;
+
+  RequestKodeAgenLoaded(this.data);
+}
 
 final class RequestKodeAgenError extends RequestKodeAgenState {
   final String message;

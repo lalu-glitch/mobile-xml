@@ -12,8 +12,8 @@ class RequestKodeAgenCubit extends Cubit<RequestKodeAgenState> {
   Future<void> requestKodeAgen(String nomor) async {
     emit(RequestKodeAgenLoading());
     try {
-      await apiService.requestKodeAgen(nomor);
-      emit(RequestKodeAgenLoaded());
+      final data = await apiService.requestKodeAgen(nomor);
+      emit(RequestKodeAgenLoaded(data));
     } catch (e) {
       emit(RequestKodeAgenError(e.toString()));
     }
