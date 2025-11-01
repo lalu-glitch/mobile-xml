@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> {
 
     Future<void> logout() async {
       await _storage.deleteAll();
+      balanceVM.reset();
       if (mounted) {
         Navigator.pushNamedAndRemoveUntil(
           context,
