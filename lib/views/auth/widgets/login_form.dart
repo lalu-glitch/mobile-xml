@@ -56,7 +56,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         context,
         '/kodeOTP',
         arguments: {
-          "kodeAgen": kodeAgen,
+          "kode_reseller": kodeAgen,
           "type": result["data"]["type"],
           "expiresAt": result["data"]["expiresAt"],
         },
