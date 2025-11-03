@@ -71,7 +71,7 @@ class WilayahDropdowns extends StatelessWidget {
     required ValueChanged<String?> onChanged,
   }) {
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       isExpanded: true,
       decoration: InputDecoration(
         labelText: label,
@@ -95,7 +95,15 @@ class WilayahDropdowns extends StatelessWidget {
           .map(
             (e) => DropdownMenuItem<String>(
               value: e.kode,
-              child: Text(e.nama, overflow: TextOverflow.ellipsis),
+              child: Text(
+                e.nama,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  letterSpacing: 0,
+                ),
+              ),
             ),
           )
           .toList(),

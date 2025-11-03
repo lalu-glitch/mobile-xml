@@ -124,7 +124,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
 
   void navigateToSnKPage() async {
     final result = await Navigator.pushNamed(context, '/S&KPage');
-    if (result is bool && result) {
+    if (result is bool && result && mounted) {
       setState(() => isChecked = result);
       showAppToast(
         context,
@@ -157,18 +157,33 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               controller: namaUsahaCtrl,
               labelText: 'Nama usaha',
               prefixIcon: Icon(Icons.store, color: kOrangeAccent400),
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                letterSpacing: 0,
+              ),
             ),
             const SizedBox(height: 16),
             CustomTextField(
               controller: namaCtrl,
               labelText: 'Nama lengkap',
               prefixIcon: Icon(Icons.person, color: kOrangeAccent400),
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                letterSpacing: 0,
+              ),
             ),
             const SizedBox(height: 16),
             CustomTextField(
               controller: alamatCtrl,
               labelText: 'Alamat lengkap',
               prefixIcon: Icon(Icons.location_on, color: kOrangeAccent400),
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                letterSpacing: 0,
+              ),
             ),
             const SizedBox(height: 16),
 
@@ -213,12 +228,22 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               keyboardType: TextInputType.phone,
               textFormater: [FilteringTextInputFormatter.digitsOnly],
               prefixIcon: Icon(Icons.phone, color: kOrangeAccent400),
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                letterSpacing: 0,
+              ),
             ),
             const SizedBox(height: 16),
             CustomTextField(
               controller: referralCtrl,
               labelText: 'Kode Referral (opsional)',
               prefixIcon: Icon(Icons.code, color: kOrangeAccent400),
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                letterSpacing: 0,
+              ),
             ),
             const SizedBox(height: 24),
 
