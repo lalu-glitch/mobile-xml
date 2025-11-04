@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/info_row.dart';
-import '../../../data/models/transaksi/status_transaksi.dart';
 import 'package:intl/intl.dart';
+
+import '../../../data/models/transaksi/websocket_transaksi.dart';
 
 class DetailTransaksiPage extends StatelessWidget {
   const DetailTransaksiPage({super.key});
@@ -11,7 +12,8 @@ class DetailTransaksiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status =
-        ModalRoute.of(context)!.settings.arguments as StatusTransaksiModel;
+        ModalRoute.of(context)!.settings.arguments
+            as TransaksiResponse; // <-- bug disini
 
     final bool isSuccess = status.statusTrx == 20;
 
@@ -84,7 +86,7 @@ class DetailTransaksiPage extends StatelessWidget {
                     ),
                     infoRow("Keterangan", status.keterangan),
                     const Divider(height: 32),
-                    infoRow("Serial Number", status.sn),
+                    infoRow("Serial Number", status.sn ?? ''),
                     const Divider(height: 32),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -99,7 +101,7 @@ class DetailTransaksiPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      status.outbox,
+                      status.outbox ?? '',
                       style: TextStyle(color: Colors.grey[700], height: 1.4),
                     ),
                   ],

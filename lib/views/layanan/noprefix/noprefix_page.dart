@@ -118,6 +118,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     transaksi.isBebasNominal(
                                       produk.bebasNominal,
                                     );
+                                    transaksi.isEndUser(produk.endUser);
                                   },
                             child: Container(
                               margin: const EdgeInsets.symmetric(

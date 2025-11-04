@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
@@ -31,7 +29,6 @@ class _KodeOTPState extends State<KodeOTP> {
 
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    log('$args');
     final String expire = args["expiresAt"];
     expiresAt = DateTime.parse(expire);
 
@@ -92,9 +89,6 @@ class _KodeOTPState extends State<KodeOTP> {
     final kodeResellerRegister = args["kode_reseller_register"];
     final type = args["type"];
     final kodeReseller = args["kode_reseller"];
-
-    log('KODE RESELLER LOGIN: $kodeReseller');
-    log('KODE RESELLER REGISTER: $kodeResellerRegister');
 
     return Scaffold(
       backgroundColor: kWhite,

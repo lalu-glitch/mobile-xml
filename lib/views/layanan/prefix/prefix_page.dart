@@ -359,7 +359,12 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                   pageRoutes[nextPage]!,
                                 );
                               } else {
+                                //helper
                                 sendTransaksi.setTujuan(nomorTujuan);
+                                sendTransaksi.isBebasNominal(
+                                  selectedProduk.bebasNominal,
+                                );
+                                sendTransaksi.isEndUser(selectedProduk.endUser);
                                 Navigator.pushNamed(
                                   context,
                                   '/konfirmasiPembayaran',

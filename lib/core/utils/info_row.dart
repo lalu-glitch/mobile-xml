@@ -26,7 +26,7 @@ Widget infoRow(
           textAlign: TextAlign.right,
           softWrap: true,
           overflow: TextOverflow.ellipsis,
-          maxLines: 2,
+          maxLines: 4,
           style: TextStyle(
             fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
             fontSize: isTotal ? kSize16 : kSize14,

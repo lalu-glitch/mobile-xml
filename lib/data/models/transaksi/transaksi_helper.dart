@@ -6,6 +6,8 @@ class TransaksiHelperModel {
   final double? total;
   final int? isBebasNominal;
   final int? bebasNominalValue;
+  final int? isEndUser;
+  final String? endUserValue;
   final String? kodeDompet;
 
   const TransaksiHelperModel({
@@ -16,6 +18,8 @@ class TransaksiHelperModel {
     this.total,
     this.isBebasNominal,
     this.bebasNominalValue,
+    this.isEndUser,
+    this.endUserValue,
     this.kodeDompet,
   });
 
@@ -28,6 +32,8 @@ class TransaksiHelperModel {
     double? total,
     int? isBebasNominal,
     final int? bebasNominalValue,
+    int? isendUser,
+    String? endUserValue,
     String? kodeDompet,
   }) {
     return TransaksiHelperModel(
@@ -38,6 +44,8 @@ class TransaksiHelperModel {
       total: total ?? this.total,
       isBebasNominal: isBebasNominal ?? this.isBebasNominal,
       bebasNominalValue: bebasNominalValue ?? this.bebasNominalValue,
+      isEndUser: isendUser ?? this.isEndUser,
+      endUserValue: endUserValue ?? this.endUserValue,
       kodeDompet: kodeDompet ?? this.kodeDompet,
     );
   }
