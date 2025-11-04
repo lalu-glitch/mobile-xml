@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:android_id/android_id.dart';
 import 'package:dio/dio.dart';
 import '../../core/helper/constant_finals.dart';
@@ -88,7 +90,7 @@ class ApiService {
       );
 
       final jsonData = Map<String, dynamic>.from(response.data);
-
+      print('${response.data}');
       if (response.statusCode == 200 && jsonData['success'] == true) {
         final providers = (jsonData['data'] as List? ?? [])
             .map(
@@ -122,7 +124,7 @@ class ApiService {
         data: {"tujuan": tujuan},
       );
       final jsonData = Map<String, dynamic>.from(response.data);
-
+      print('${response.data}');
       if (response.statusCode == 200 && jsonData['success'] == true) {
         return (jsonData['data'] as List? ?? [])
             .map(
@@ -231,7 +233,7 @@ class ApiService {
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         queryParameters: {"page": page, "limit": limit},
       );
-
+      log('$response');
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = Map<String, dynamic>.from(
           response.data,
@@ -255,6 +257,7 @@ class ApiService {
         "$baseURL/trx_by_kode/$kodeKode",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
+      log('$response');
       if (response.statusCode == 200) {
         final jsonData = Map<String, dynamic>.from(response.data);
         return {

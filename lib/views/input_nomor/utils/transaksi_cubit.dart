@@ -21,12 +21,22 @@ class TransaksiHelperCubit extends Cubit<TransaksiHelperModel> {
     emit(state.copyWith(total: val.toDouble()));
   }
 
+  //bebas nominal
   void isBebasNominal(int val) {
     emit(state.copyWith(isBebasNominal: val));
   }
 
   void bebasNominalValue(int val) {
     emit(state.copyWith(bebasNominalValue: val));
+  }
+
+  //kode voucher ini mah aslinya
+  void isEndUser(int val) {
+    emit(state.copyWith(isendUser: val));
+  }
+
+  void setEndUserValue(String val) {
+    emit(state.copyWith(endUserValue: val));
   }
 
   void setKodeDompet(String val) {

@@ -128,17 +128,22 @@ class TransactionCard extends StatelessWidget {
         return kGreen;
       case 40: // gagal
       case 43: // saldo tidak cukup
+      case 45: // sotk kosong
       case 47: // produk gangguan
       case 50: // dibatalkan
       case 52: // tujuan salah
       case 53: // luar wilayah
       case 55: // timeout
+      case 56: // nomor blacklist
+      case 58: // nomor tidak aktif
         return kRed;
+      case 0: // menunggu jawaban
       case 1: // belum diproses
-      case 2: // sedang diproses
+      case 2: // sedang proses
+      case 4: // sedang proses
         return kYellow;
       default:
-        return kNeutral40;
+        return kNeutral90;
     }
   }
 

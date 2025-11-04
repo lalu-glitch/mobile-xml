@@ -107,7 +107,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           context,
           '/kodeOTP',
           arguments: {
-            "kode_reseller_register": result["data"]["kode_reseller"],
+            "kode_reseller_register": result["kode_reseller"],
             "type": result["data"]["type"],
             "nomor": result["data"]["nomor"],
             "expiresAt": result["data"]["expiresAt"],

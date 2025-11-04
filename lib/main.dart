@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'data/services/auth_service.dart';
+import 'data/services/websocket_service.dart';
 import 'viewmodels/promo_vm.dart';
 import 'views/auth/cubit/request_kode_agen_cubit.dart';
 import 'views/layanan/cubit/flow_cubit.dart';
@@ -30,6 +31,7 @@ import 'views/settings/cubit/wallet/unbind_ewallet_cubit.dart';
 import 'views/speedcash/cubit/panduan_topup_cubit.dart';
 import 'views/speedcash/cubit/list_bank_cubit.dart';
 import 'views/speedcash/cubit/request_topup_cubit.dart';
+import 'views/transaksi/cubit/websocket_transaksi_cubit.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -139,6 +141,9 @@ class _XmlAppState extends State<XmlApp> {
           create: (context) => SpeedcashApiService(),
         ),
         RepositoryProvider<AuthService>(create: (context) => AuthService()),
+        RepositoryProvider<WebSocketService>(
+          create: (context) => WebSocketService(AuthService()),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -164,6 +169,12 @@ class _XmlAppState extends State<XmlApp> {
           ),
           BlocProvider(create: (context) => TransaksiHelperCubit()),
           BlocProvider(create: (context) => FlowCubit()),
+
+          //transaksi umum
+          BlocProvider(
+            create: (context) =>
+                WebsocketTransaksiCubit(context.read<WebSocketService>()),
+          ),
 
           //speedcash
           BlocProvider(
