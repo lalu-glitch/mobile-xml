@@ -1,8 +1,10 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:xmlapp/views/auth/widgets/custom_textfield.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
@@ -11,8 +13,8 @@ import '../../../core/utils/info_row.dart';
 import '../../../data/models/transaksi/metode_transaksi.dart';
 import '../../../data/services/speedcash_api_service.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
-import '../../../viewmodels/transaksi_viewmodel.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../speedcash/widgets/rupiah_text_field.dart';
 import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
 import '../cubit/pembayaran_transaksi_speedcash_cubit.dart';
 import 'konfirmasi_speedcash_page.dart';
@@ -27,6 +29,7 @@ class KonfirmasiPembayaranPage extends StatefulWidget {
 
 class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   String _selectedMethod = "SALDO"; // Default pilihan
+  final TextEditingController textController = TextEditingController();
 
   double getTotalTransaksi(dynamic transaksi) {
     final double baseTotal = transaksi.total ?? 0;
@@ -42,7 +45,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   Widget build(BuildContext context) {
     final balanceVM = Provider.of<BalanceViewModel>(context);
     final transaksi = context.read<TransaksiHelperCubit>().getData();
-
     final methods = _generatePaymentMethods(balanceVM);
 
     return WillPopScope(
@@ -60,14 +62,66 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildInfoCard(transaksi),
               const SizedBox(height: 24),
+              //bebas nominal
+              Visibility(
+                visible: transaksi.isBebasNominal == 1,
+                child: Text(
+                  "Masukkan Nominal",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: kSize14,
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: transaksi.isBebasNominal == 1,
+                child: SizedBox(height: kSize8),
+              ),
+              Visibility(
+                visible: transaksi.isBebasNominal == 1,
+                child: RupiahTextField(
+                  controller: textController,
+                  fontSize: 20,
+                ),
+              ),
 
+              //endUser
+              Visibility(
+                visible: transaksi.isEndUser == 1,
+                child: Text(
+                  "Masukan Nomer Voucher",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: kSize14,
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: transaksi.isEndUser == 1,
+                child: SizedBox(height: kSize8),
+              ),
+              Visibility(
+                visible: transaksi.isEndUser == 1,
+                child: CustomTextField(
+                  controller: textController,
+                  keyboardType: TextInputType.phone,
+                  textFormater: [FilteringTextInputFormatter.digitsOnly],
+                ),
+              ),
+              SizedBox(
+                height:
+                    transaksi.isBebasNominal == 1 || transaksi.isEndUser == 1
+                    ? 24
+                    : 0,
+              ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "METODE PEMBAYARAN",
+                  "Metode Pembayaran",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: kSize14,
@@ -213,6 +267,12 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
             sendTransaksi.setKodeDompet(selected.kodeDompet!);
 
+            //hilangkan tanda titik pada textController
+
+            sendTransaksi.bebasNominalValue(
+              int.tryParse(textController.text.replaceAll('.', '')) ?? 0,
+            );
+            sendTransaksi.setEndUserValue(textController.text.trim());
             // case khusus SPEEDCASH → buka WebView
             if (selected.nama == 'SPEEDCASH') {
               Navigator.push(
@@ -254,9 +314,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                   : "Saldo ${selected.nama} tidak mencukupi.";
               showErrorDialog(context, msg);
             } else {
-              context
-                  .read<TransaksiViewModel>()
-                  .reset(); // <-- Reset ViewModel dulu untuk bersihkan state lama
+              // context
+              //     .read<TransaksiViewModel>()
+              //     .reset(); // <-- Reset ViewModel dulu untuk bersihkan state lama
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 '/transaksiProses',
@@ -275,5 +335,11 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 }

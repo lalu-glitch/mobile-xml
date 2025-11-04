@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +40,6 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
         backgroundColor: kWhite,
         body: BlocConsumer<RequestKodeAgenCubit, RequestKodeAgenState>(
           listener: (context, state) async {
-            log('state lupa kode agen: $state');
             if (state is RequestKodeAgenLoaded) {
               await showDialog<bool>(
                 context: context,
@@ -63,7 +60,6 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
             }
           },
           builder: (context, state) {
-            log('state lupa kode agen: $state');
             if (state is RequestKodeAgenLoading) {
               return const Center(
                 child: CircularProgressIndicator(color: kOrange),

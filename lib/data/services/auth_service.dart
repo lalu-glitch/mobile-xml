@@ -271,6 +271,8 @@ class AuthService {
           "accessToken": response.data["accessToken"],
           "refreshToken": response.data["refreshToken"],
         });
+        log(response.data["accessToken"]);
+        log(deviceID);
         await storage.write(key: "userData", value: jsonString);
         return {
           "success": true,
@@ -322,7 +324,6 @@ class AuthService {
                 ? "Permintaan kode agen berhasil, cek WhatsApp."
                 : "Gagal kirim permintaan (${response.data["message"]})"),
       };
-      log('$result');
       return result;
     } on DioException catch (e) {
       final serverMsg = (e.response?.data is Map)
@@ -332,7 +333,6 @@ class AuthService {
         "success": false,
         "message": serverMsg ?? "Error dari server (${e.response?.statusCode})",
       };
-      log('$exception');
       return exception;
     } catch (e) {
       throw Exception(e.toString());
@@ -383,14 +383,12 @@ class AuthService {
   Future<RegionModel> fetchProvinsi() async {
     try {
       final response = await _dio.get('$baseUrl/wilayah');
-      log('[WilayahService] fetchProvinsi: ${response.statusCode}');
       if (response.statusCode == 200) {
         return RegionModel.fromJson(response.data);
       } else {
         throw Exception('Ada yang salah');
       }
     } catch (e) {
-      log('[WilayahService] Error fetchProvinsi: $e');
       throw Exception(e.toString());
     }
   }
@@ -398,16 +396,13 @@ class AuthService {
   Future<RegionModel> fetchKabupaten(String kodeProvinsi) async {
     try {
       final response = await _dio.get('$baseUrl/wilayah/$kodeProvinsi');
-      log(
-        '[WilayahService] fetchKabupaten($kodeProvinsi): ${response.statusCode}',
-      );
+
       if (response.statusCode == 200) {
         return RegionModel.fromJson(response.data);
       } else {
         throw Exception('Ada yang salah');
       }
     } catch (e) {
-      log('[WilayahService] Error fetchKabupaten: $e');
       throw Exception(e.toString());
     }
   }
@@ -420,16 +415,13 @@ class AuthService {
       final response = await _dio.get(
         '$baseUrl/wilayah/$kodeProvinsi/$kodeKabupaten',
       );
-      log(
-        '[WilayahService] fetchKecamatan($kodeProvinsi, $kodeKabupaten): ${response.statusCode}',
-      );
+
       if (response.statusCode == 200) {
         return RegionModel.fromJson(response.data);
       } else {
         throw Exception('Ada yang salah');
       }
     } catch (e) {
-      log('[WilayahService] Error fetchKecamatan: $e');
       throw Exception(e.toString());
     }
   }
