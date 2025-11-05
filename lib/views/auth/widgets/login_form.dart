@@ -67,22 +67,20 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   }
 
   void navigateToSnKPage() async {
-    // Use the route name you have defined, e.g., '/S&KPage'
     final result = await Navigator.pushNamed(context, '/S&KPage');
 
-    // Check if a boolean result was returned (true if agreed, false if declined/back)
     if (result is bool) {
       setState(() {
-        // Update isChecked state directly with the result from the T&C page
         isChecked = result;
       });
       if (result == true) {
-        // Optional: Show success toast if agreed
-        showAppToast(
-          context,
-          'Syarat dan Ketentuan telah disetujui.',
-          ToastType.success,
-        );
+        if (mounted) {
+          showAppToast(
+            context,
+            'Syarat dan Ketentuan telah disetujui.',
+            ToastType.success,
+          );
+        }
       }
     }
   }
@@ -98,7 +96,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           capitalization: TextCapitalization.characters,
           prefixIcon: Icon(Icons.person, color: kOrangeAccent400),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         CustomTextField(
           controller: nomorCtrl,
           labelText: 'Nomer Whatsapp',
@@ -106,7 +104,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           prefixIcon: Icon(Icons.phone, color: kOrangeAccent400),
           keyboardType: TextInputType.phone,
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         GestureDetector(
           child: Text(
             'Lupa Kode Agen?',
@@ -116,7 +114,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             Navigator.pushNamed(context, '/lupaKodeAgen');
           },
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         Row(
           children: [
             Checkbox(
@@ -150,7 +148,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             ),
           ],
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         ElevatedButton(
           onPressed: isChecked || loading
               ? doOTP
@@ -170,7 +168,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           ),
           child: Text('Login', style: TextStyle(color: kWhite, fontSize: 16)),
         ),
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
       ],
     );
   }
