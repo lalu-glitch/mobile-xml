@@ -73,7 +73,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _storage = const FlutterSecureStorage();
     final balanceVM = Provider.of<BalanceViewModel>(context);
     final layananVM = Provider.of<LayananViewModel>(context);
     final promoVM = Provider.of<PromoViewModel>(context);

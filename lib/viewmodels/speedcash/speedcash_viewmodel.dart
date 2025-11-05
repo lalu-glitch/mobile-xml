@@ -52,20 +52,14 @@ class SpeedcashVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> speedcashBinding({
-    required String phone,
-    required String merchantId,
-  }) async {
+  Future<void> speedcashBinding({required String phone}) async {
     isLoading = true;
     error = null;
     response = null;
     notifyListeners();
 
     try {
-      final result = await _apiService.speedcashBinding(
-        phone: phone,
-        merchantId: merchantId,
-      );
+      final result = await _apiService.speedcashBinding(phone: phone);
 
       if (result['success'] == true) {
         final data = result['data'];

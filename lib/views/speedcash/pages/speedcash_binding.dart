@@ -13,7 +13,6 @@ class SpeedcashBindingPage extends StatelessWidget {
   SpeedcashBindingPage({super.key});
 
   final _phoneCtrl = TextEditingController();
-  final _merchantIdCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +27,13 @@ class SpeedcashBindingPage extends StatelessWidget {
         builder: (context, vm, _) {
           Future<void> bindSpeedcash() async {
             final phone = _phoneCtrl.text.trim();
-            final merchantId = _merchantIdCtrl.text.trim();
 
-            if (phone.isEmpty || merchantId.isEmpty) {
-              showErrorDialog(
-                context,
-                'Phone dan Merchant ID tidak boleh kosong',
-              );
+            if (phone.isEmpty) {
+              showErrorDialog(context, 'Nomor HP tidak boleh kosong');
               return;
             }
 
-            await vm.speedcashBinding(phone: phone, merchantId: merchantId);
+            await vm.speedcashBinding(phone: phone);
 
             Logger().d("Result binding: ${vm.response}");
 
@@ -97,7 +92,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                             controller: _phoneCtrl,
                             keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
-                              labelText: "Phone",
+                              labelText: "Nomor HP",
                               prefixIcon: const Icon(
                                 Icons.phone,
                                 color: kOrange,
@@ -110,25 +105,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 16),
 
-                          // Merchant ID
-                          TextField(
-                            controller: _merchantIdCtrl,
-                            decoration: InputDecoration(
-                              labelText: "Merchant ID",
-                              prefixIcon: const Icon(
-                                Icons.account_balance,
-                                color: kOrange,
-                              ),
-                              filled: true,
-                              fillColor: kOrange.withOpacity(0.1),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(16),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
                           const SizedBox(height: 28),
 
                           // Button

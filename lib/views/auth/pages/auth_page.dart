@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xmlapp/views/auth/cubit/wilayah_cubit.dart';
+import 'package:xmlapp/views/auth/widgets/login_form.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../data/services/auth_service.dart';
-import '../cubit/wilayah_cubit.dart';
-import '../widgets/login_form.dart';
 import '../widgets/register_form.dart';
 
 class AuthPage extends StatefulWidget {
@@ -81,7 +81,7 @@ class _AuthPageState extends State<AuthPage> {
                             child: Column(
                               children: [
                                 Text(
-                                  'Log in',
+                                  'Masuk',
                                   style: TextStyle(
                                     color: isLoginSelected
                                         ? kOrange

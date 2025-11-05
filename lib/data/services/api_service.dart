@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:android_id/android_id.dart';
 import 'package:dio/dio.dart';
 import '../../core/helper/constant_finals.dart';

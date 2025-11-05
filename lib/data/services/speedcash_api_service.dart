@@ -71,10 +71,7 @@ class SpeedcashApiService {
     }
   }
 
-  Future<Map<String, dynamic>> speedcashBinding({
-    required String phone,
-    required String merchantId,
-  }) async {
+  Future<Map<String, dynamic>> speedcashBinding({required String phone}) async {
     try {
       final response = await authService.dio.post(
         "$baseURLIntegration/speedcash/account_binding",
@@ -84,7 +81,7 @@ class SpeedcashApiService {
             "Content-Type": "application/json",
           },
         ),
-        data: {"phone": phone, "merchantId": merchantId},
+        data: {"phone": phone},
       );
 
       if (response.statusCode == 200) {
@@ -110,7 +107,7 @@ class SpeedcashApiService {
       final apiMessage = e.response?.data is Map
           ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
           : e.message;
-      return {"success": false, "data": null, "message": apiMessage};
+      return {"success": false, "data": null, "message": 'Ada kesalahan'};
     } catch (e) {
       return {"success": false, "data": null, "message": e.toString()};
     }
