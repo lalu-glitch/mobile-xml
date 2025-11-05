@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../core/helper/constant_finals.dart';
@@ -168,12 +167,9 @@ class AuthService {
                 : "Gagal kirim OTP (${response.data["message"]})"),
       };
     } on DioException catch (e) {
-      final serverMsg = (e.response?.data is Map)
-          ? e.response?.data["message"]
-          : e.response?.data?.toString();
       return {
         "success": false,
-        "message": serverMsg ?? "Error dari server (${e.response?.statusCode})",
+        "message": "Error dari server (${e.response?.statusCode})",
       };
     } catch (e) {
       return {"success": false, "message": e.toString()};
@@ -271,8 +267,6 @@ class AuthService {
           "accessToken": response.data["accessToken"],
           "refreshToken": response.data["refreshToken"],
         });
-        log(response.data["accessToken"]);
-        log(deviceID);
         await storage.write(key: "userData", value: jsonString);
         return {
           "success": true,

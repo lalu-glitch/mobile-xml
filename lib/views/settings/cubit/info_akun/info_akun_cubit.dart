@@ -17,7 +17,7 @@ class InfoAkunCubit extends Cubit<InfoAkunState> {
       final result = await apiService.infoAkun();
       emit(InfoAkunLoaded(result));
     } catch (e) {
-      emit(InfoAkunError(e.toString()));
+      emit(InfoAkunError('Ada yang salah'));
     }
   }
 }

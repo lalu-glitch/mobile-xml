@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
 
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -27,6 +29,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _isLogoutDialogShown = false;
   @override
   void initState() {
     super.initState();
@@ -43,30 +46,37 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final balanceVM = Provider.of<BalanceViewModel>(context);
+
+    // Cek status logout dan pastikan dialog hanya muncul sekali
+    if (balanceVM.userBalance?.isLogout == true && !_isLogoutDialogShown) {
+      _isLogoutDialogShown = true; // Tandai bahwa dialog akan ditampilkan
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          log('dialog logout akan ditampilkan');
+          showForceExitDialog(context, () async {
+            log('fungsi log out diambil');
+            await const FlutterSecureStorage().deleteAll();
+            balanceVM.reset();
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/authPage',
+              (route) => false,
+            );
+          });
+        }
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _storage = const FlutterSecureStorage();
     final balanceVM = Provider.of<BalanceViewModel>(context);
     final layananVM = Provider.of<LayananViewModel>(context);
     final promoVM = Provider.of<PromoViewModel>(context);
-
-    Future<void> logout() async {
-      await _storage.deleteAll();
-      balanceVM.reset();
-      if (mounted) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          '/authPage',
-          (route) => false,
-        );
-      }
-    }
-
-    // Cek status logout setiap kali state balanceVM berubah
-    if (balanceVM.userBalance?.isLogout == true) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showForceExitDialog(context, logout);
-      });
-    }
 
     // Fungsi gabungan buat refresh dan retry
     Future<void> refreshData() async {
