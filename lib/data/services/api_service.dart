@@ -90,7 +90,6 @@ class ApiService {
       );
 
       final jsonData = Map<String, dynamic>.from(response.data);
-      print('${response.data}');
       if (response.statusCode == 200 && jsonData['success'] == true) {
         final providers = (jsonData['data'] as List? ?? [])
             .map(
@@ -100,15 +99,14 @@ class ApiService {
         return providers;
       }
 
-      throw Exception(
-        jsonData["message"] ??
-            "Gagal memuat provider. Status: ${response.statusCode}",
-      );
+      throw Exception("Gagal memuat provider. Status: ${response.statusCode}");
     } on DioException catch (e) {
       final apiMessage = e.response?.data is Map
           ? e.response?.data["message"] ?? "Terjadi kesalahan pada server."
           : e.message;
       throw Exception(apiMessage);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
@@ -124,7 +122,6 @@ class ApiService {
         data: {"tujuan": tujuan},
       );
       final jsonData = Map<String, dynamic>.from(response.data);
-      print('${response.data}');
       if (response.statusCode == 200 && jsonData['success'] == true) {
         return (jsonData['data'] as List? ?? [])
             .map(
@@ -233,7 +230,6 @@ class ApiService {
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         queryParameters: {"page": page, "limit": limit},
       );
-      log('$response');
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = Map<String, dynamic>.from(
           response.data,
@@ -242,11 +238,9 @@ class ApiService {
       }
       return null;
     } on DioException catch (e) {
-      print("Dio Error: ${e.response?.data ?? e.message}");
-      return null;
+      throw Exception("Error fetchHistory: ${e.response?.data ?? e.message}");
     } catch (e) {
-      print("Other Error: $e");
-      return null;
+      throw Exception(e.toString());
     }
   }
 
@@ -257,7 +251,6 @@ class ApiService {
         "$baseURL/trx_by_kode/$kodeKode",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
-      log('$response');
       if (response.statusCode == 200) {
         final jsonData = Map<String, dynamic>.from(response.data);
         return {
@@ -347,7 +340,6 @@ class ApiService {
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {"kode_referral": value},
       );
-      print('response: $response');
       if (response.statusCode == 200) {
         return UserEditModel.fromJson(response.data);
       } else {

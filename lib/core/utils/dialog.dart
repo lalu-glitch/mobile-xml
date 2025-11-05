@@ -231,15 +231,11 @@ Future<bool> showExitDialog(BuildContext context) async {
                   // Ikon keluar
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.1),
+                      color: kRed.withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(16),
-                    child: const Icon(
-                      Icons.exit_to_app,
-                      color: Colors.red,
-                      size: 48,
-                    ),
+                    child: const Icon(Icons.exit_to_app, color: kRed, size: 48),
                   ),
                   const SizedBox(height: 16),
 
@@ -332,13 +328,13 @@ Future<bool> showForceExitDialog(
                     // Ikon keluar
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
+                        color: kRed.withOpacity(0.1),
                         shape: BoxShape.circle,
                       ),
                       padding: const EdgeInsets.all(16),
                       child: const Icon(
                         Icons.warning_rounded,
-                        color: Colors.red,
+                        color: kRed,
                         size: 48,
                       ),
                     ),

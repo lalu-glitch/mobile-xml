@@ -147,7 +147,11 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             setState(() => kecamatan = state.data);
           }
         } else if (state is WilayahError) {
-          showAppToast(context, state.message, ToastType.error);
+          showAppToast(
+            context,
+            'Terjadi kesalahan dari server',
+            ToastType.error,
+          );
         }
       },
       child: SingleChildScrollView(
