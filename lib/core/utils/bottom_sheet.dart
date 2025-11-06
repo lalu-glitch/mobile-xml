@@ -171,7 +171,7 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
             ),
             const SizedBox(height: 8),
             Text(
-              'Apakah Anda yakin ingin Keluar dari aplikasi?',
+              'Apakah Anda yakin ingin keluar dari aplikasi?',
               style: TextStyle(color: Colors.grey, fontSize: kSize16),
               textAlign: TextAlign.center,
             ),

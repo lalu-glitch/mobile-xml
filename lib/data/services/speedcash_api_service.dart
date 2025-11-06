@@ -110,7 +110,11 @@ class SpeedcashApiService {
       final apiMessage = e.response?.data is Map
           ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
           : e.message;
-      return {"success": false, "data": null, "message": 'Ada kesalahan'};
+      return {
+        "success": false,
+        "data": null,
+        "message": 'Ada kesalahan $apiMessage',
+      };
     } catch (e) {
       return {"success": false, "data": null, "message": e.toString()};
     }

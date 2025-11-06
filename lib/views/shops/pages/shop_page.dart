@@ -64,16 +64,24 @@ class _ShopPageState extends State<ShopPage> {
         filteredLayanan = {
           for (final entry in allData.entries)
             if (entry.value.any(
-              (item) => item.title?.toLowerCase().contains(query) ?? false,
+              (item) =>
+                  item.title?.toLowerCase().trim().contains(query) ?? false,
             ))
               entry.key: entry.value
                   .where(
                     (item) =>
-                        item.title?.toLowerCase().contains(query) ?? false,
+                        item.title?.toLowerCase().trim().contains(query) ??
+                        false,
                   )
                   .toList(),
         };
       }
+    });
+  }
+
+  void onClearText() {
+    setState(() {
+      searchController.clear();
     });
   }
 
@@ -109,6 +117,7 @@ class _ShopPageState extends State<ShopPage> {
           ShopsAppBarActions(
             isSearching: isSearching,
             onSearchChanged: (value) => setState(() => isSearching = value),
+            onClear: onClearText,
           ),
         ],
       ),

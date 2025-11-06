@@ -15,7 +15,7 @@ class LogoutCard extends StatelessWidget {
       child: ListTile(
         leading: const Icon(Icons.logout, color: Colors.redAccent),
         title: const Text(
-          "Logout",
+          "Keluar",
           style: TextStyle(
             color: Colors.redAccent,
             fontWeight: FontWeight.bold,
