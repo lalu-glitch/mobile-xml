@@ -8,8 +8,8 @@ class ErrorHandler extends StatelessWidget {
 
   const ErrorHandler({
     super.key,
-    required this.error,
     required this.onRetry,
+    required this.error,
     this.message = 'Gagal memuat data',
   });
 

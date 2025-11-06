@@ -7,7 +7,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../data/models/user/info_akun.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
-import '../../home/page/error_handler.dart';
+import '../../../core/helper/error_handler.dart';
 import '../cubit/info_akun/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
 import '../widgets/custom_list_tile.dart';

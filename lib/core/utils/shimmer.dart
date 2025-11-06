@@ -234,7 +234,7 @@ class ShimmerBox extends StatelessWidget {
                   width: kSize80,
                   height: kSize80,
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: kNeutral40,
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),
@@ -253,14 +253,20 @@ class ShimmerBox extends StatelessWidget {
                           Expanded(
                             child: Container(
                               height: kSize24,
-                              color: Colors.grey,
+                              decoration: BoxDecoration(
+                                color: kNeutral40,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
                             ),
                           ),
                           SizedBox(width: kSize16),
                           Container(
                             width: kSize20,
                             height: kSize20,
-                            color: Colors.grey,
+                            decoration: BoxDecoration(
+                              color: kNeutral40,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
                           ),
                         ],
                       ),
@@ -273,7 +279,10 @@ class ShimmerBox extends StatelessWidget {
                           Expanded(
                             child: Container(
                               height: kSize18,
-                              color: Colors.grey,
+                              decoration: BoxDecoration(
+                                color: kNeutral40,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
                             ),
                           ),
                           SizedBox(width: kSize16),
@@ -281,7 +290,7 @@ class ShimmerBox extends StatelessWidget {
                             width: kSize40,
                             height: kSize18,
                             decoration: BoxDecoration(
-                              color: Colors.grey,
+                              color: kNeutral40,
                               borderRadius: BorderRadius.circular(100),
                             ),
                           ),

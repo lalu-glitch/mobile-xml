@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
+import 'package:xmlapp/core/helper/error_handler.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
@@ -55,7 +56,6 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   Future<void> _fetchProvider(String value) async {
     if (value.length >= 4) {
       final readTransaksi = context.read<TransaksiHelperCubit>().getData();
-      print('transaksi : ${readTransaksi.kodeCatatan}');
       await context.read<ProviderPrefixCubit>().fetchProvidersPrefix(
         readTransaksi.kodeCatatan ?? '-',
         value,
@@ -161,11 +161,11 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                   if (state is ProviderPrefixError) {
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        state.message,
-                        style: TextStyle(color: Colors.red[400]),
-                      ),
+                      child: Text(state.message, style: TextStyle(color: kRed)),
                     );
+
+                    // will implement
+                    // return ErrorHandler(error: state.message, onRetry: () {});
                   }
                   if (state is ProviderPrefixSuccess) {
                     if (state.providers.isEmpty) {
