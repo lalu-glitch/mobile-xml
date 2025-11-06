@@ -8,27 +8,34 @@ class UnbindEwalletCubit extends Cubit<EwalletState> {
 
   UnbindEwalletCubit(this.apiService) : super(EwalletInitial());
 
-  Future<void> unbindEwallet(String kodeDompet) async {
-    emit(UnbindLoading(kodeDompet));
+  // Future<void> unbindSpeedcash(String kodeReseller) async {
+  //   emit(UnbindLoading(kodeReseller));
+
+  //   try {
+
+  //       final result = await apiService.speedcashUnbind(kodeReseller);
+  //       if (result.success == true) {
+  //         emit(UnbindSuccess(result.message, kodeReseller));
+  //       } else {
+  //         emit(UnbindError(result.message, kodeReseller));
+  //       }
+  //     }
+  //   } catch (e) {
+  //     emit(UnbindError('Gagal unbind: $e', kodeDompet ?? 'N/A'));
+  //   }
+  // }
+
+  Future<void> unbindSpeedcash(String kodeReseller) async {
+    emit(UnbindLoading(kodeReseller));
     try {
-      if (kodeDompet == 'SP') {
-        final result = await apiService.speedcashUnbind();
-        if (result.success == true) {
-          emit(UnbindSuccess(result.message, kodeDompet));
-        } else {
-          emit(UnbindError(result.message, kodeDompet));
-        }
+      final result = await apiService.speedcashUnbind(kodeReseller);
+      if (result.success == true) {
+        emit(UnbindSuccess(result.message, kodeReseller));
       } else {
-        // TODO: Implement unbind for other e-wallets (e.g., Nobu Bank)
-        emit(
-          UnbindError(
-            'Unbind untuk $kodeDompet belum diimplementasikan',
-            kodeDompet,
-          ),
-        );
+        emit(UnbindError(result.message, kodeReseller));
       }
     } catch (e) {
-      emit(UnbindError('Gagal unbind: $e', kodeDompet));
+      emit(UnbindError('Gagal unbind: $e', kodeReseller));
     }
   }
 }

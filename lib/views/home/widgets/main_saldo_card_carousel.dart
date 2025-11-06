@@ -61,10 +61,7 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
                 // Tampilkan shimmer jika data belum siap
                 if (widget.balanceVM.isLoading ||
                     widget.balanceVM.userBalance == null) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: HomeBalanceCarousel(balanceVM: widget.balanceVM),
-                  );
+                  return HomeBalanceCarousel(balanceVM: widget.balanceVM);
                 }
 
                 // Item pertama (index 0) adalah Saldo XML

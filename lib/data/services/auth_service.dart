@@ -167,10 +167,10 @@ class AuthService {
                 : "Gagal kirim OTP (${response.data["message"]})"),
       };
     } on DioException catch (e) {
-      return {
-        "success": false,
-        "message": "Error dari server (${e.response?.statusCode})",
-      };
+      final serverMsg = (e.response?.data is Map)
+          ? e.response?.data["message"]
+          : e.response?.data?.toString();
+      return {"success": false, "message": "$serverMsg"};
     } catch (e) {
       return {"success": false, "message": e.toString()};
     }
@@ -221,7 +221,6 @@ class AuthService {
                 ? "Pendaftaran berhasil, silakan cek WhatsApp untuk kode OTP Anda."
                 : "Gagal mendaftar (${response.data["message"]})"),
       };
-      log('$result');
       return result;
     } on DioException catch (e) {
       final serverMsg = (e.response?.data is Map)
@@ -231,7 +230,6 @@ class AuthService {
         "success": false,
         "message": serverMsg ?? "Error dari server (${e.response?.statusCode})",
       };
-      log('$exception');
       return exception;
     } catch (e) {
       return {"success": false, "message": e.toString()};
