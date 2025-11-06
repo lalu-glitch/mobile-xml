@@ -31,7 +31,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildMainShimmerCard() {
+  static Widget buildMainShimmerCard() {
     return Shimmer.fromColors(
       baseColor: kNeutral40,
       highlightColor: Colors.grey.shade100,
@@ -82,7 +82,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildShimmerIcons() => GridView.builder(
+  static Widget buildShimmerIcons() => GridView.builder(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -128,7 +128,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildShimmerCardPromo() {
+  static Widget buildShimmerCardPromo() {
     return Shimmer.fromColors(
       baseColor: kNeutral40,
       highlightColor: kNeutral20,
@@ -142,7 +142,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildShimmerChips() {
+  static Widget buildShimmerChips() {
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(vertical: 16),
       child: SizedBox(
@@ -168,7 +168,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildShimmerRiwayatTransaksi() {
+  static Widget buildShimmerRiwayatTransaksi() {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ListView.builder(
@@ -211,7 +211,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildShimmerSettings() {
+  static Widget buildShimmerSettings() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
