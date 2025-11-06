@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../data/models/user/user_balance.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
+import '../../../core/helper/constant_finals.dart';
 import 'home_balance_carousel.dart';
-import '../../../core/helper/constant_finals.dart'; // Import kOrange
 
 class MainSaldoCardCarousel extends StatefulWidget {
-  // Changed to StatefulWidget
   const MainSaldoCardCarousel({super.key, required this.balanceVM});
 
   final BalanceViewModel balanceVM;
@@ -58,7 +57,6 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
               // Item pertama adalah Saldo XML, sisanya dari ewallet
               itemCount: itemCount,
               itemBuilder: (context, index) {
-                // Tampilkan shimmer jika data belum siap
                 if (widget.balanceVM.isLoading ||
                     widget.balanceVM.userBalance == null) {
                   return HomeBalanceCarousel(balanceVM: widget.balanceVM);
@@ -85,20 +83,17 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
               },
             ),
           ),
-          const SizedBox(height: 16), // Spacing between carousel and indicator
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(itemCount, (index) {
               return AnimatedContainer(
-                // Use AnimatedContainer for smooth transitions
                 duration: const Duration(milliseconds: 300),
                 margin: const EdgeInsets.symmetric(horizontal: 4.0),
                 height: 8.0,
-                width: _currentPage == index
-                    ? 24.0
-                    : 8.0, // Active indicator is wider
+                width: _currentPage == index ? 24.0 : 8.0,
                 decoration: BoxDecoration(
-                  color: kOrange, // All indicators are kOrange
+                  color: kOrange,
                   borderRadius: BorderRadius.circular(4.0),
                 ),
               );

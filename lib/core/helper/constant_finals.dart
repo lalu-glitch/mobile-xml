@@ -51,6 +51,7 @@ const Color kWhite = Color(0xFFFFFFFF);
 const Color kBlack = Color(0xFF202124);
 const Color kSupaBlack = Color(0xFF0D0D0D);
 
+const Color kNeutral20 = Color(0xFFF5F5F5);
 const Color kNeutral30 = Color(0xFFF0F1F2);
 const Color kNeutral40 = Color(0xFFE5E6E8);
 const Color kNeutral50 = Color(0xFFCCCED1);

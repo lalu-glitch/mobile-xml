@@ -38,7 +38,7 @@ class ShopProducts extends StatelessWidget {
     // === 1️⃣ Tampilan Loading & Error ===
     if (isLoading) {
       // Saat data sedang dimuat
-      return const Center(child: CircularProgressIndicator());
+      return ShimmerBox.buildShimmerIcons();
     }
 
     if (error != null) {
@@ -65,17 +65,6 @@ class ShopProducts extends StatelessWidget {
     if (layananDataToDisplay.isEmpty) {
       // Tidak ada layanan sama sekali
       return const Center(child: Text("Tidak ada layanan tersedia."));
-    }
-
-    if (entries.isEmpty) {
-      // Tidak ada hasil dari filter/pencarian
-      return Center(
-        child: Text(
-          isSearchingActive
-              ? "Hasil pencarian tidak ditemukan."
-              : "Tidak ada layanan dalam kategori ini.",
-        ),
-      );
     }
 
     // === 4️⃣ Tampilan Daftar Layanan ===

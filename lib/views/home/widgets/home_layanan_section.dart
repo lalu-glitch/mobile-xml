@@ -24,7 +24,7 @@ class HomeLayananSection extends StatelessWidget {
     }
 
     if (layananVM.layananByHeading.isEmpty) {
-      return const Center(child: Text("Tidak ada layanan tersedia."));
+      return ShimmerBox.buildShimmerIcons();
     }
 
     return Column(

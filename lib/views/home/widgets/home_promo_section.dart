@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../../core/helper/constant_finals.dart';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/promo_vm.dart';
@@ -30,7 +28,7 @@ class HomePromoSection extends StatelessWidget {
     }
 
     if (promoVM.promoList.isEmpty) {
-      return const Center(child: Text("Belum ada promo tersedia."));
+      return ShimmerBox.buildShimmerCardPromo();
     }
 
     return Column(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/helper/constant_finals.dart';
+import '../../../core/utils/shimmer.dart';
 import '../cubit/detail_riwayat_transaksi_cubit.dart';
 import '../widgets/card_detail_item.dart';
 
@@ -32,46 +32,7 @@ class DetailRiwayatPage extends StatelessWidget {
           BlocBuilder<DetailRiwayatTransaksiCubit, DetailRiwayatTransaksiState>(
             builder: (context, state) {
               if (state is DetailRiwayatTransaksiLoading) {
-                return Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: ListView.builder(
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return Shimmer.fromColors(
-                        baseColor: kNeutral40,
-                        highlightColor: kBackground,
-                        child: Card(
-                          color: kWhite,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: ListTile(
-                            leading: Container(
-                              width: 36,
-                              height: 36,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            title: Container(
-                              width: double.infinity,
-                              height: 14,
-                              color: Colors.white,
-                              margin: const EdgeInsets.symmetric(vertical: 4),
-                            ),
-                            subtitle: Container(
-                              width: double.infinity,
-                              height: 12,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
+                return ShimmerBox.buildShimmerRiwayatTransaksi();
               }
 
               if (state is DetailRiwayatTransaksiError) {

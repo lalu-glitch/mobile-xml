@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/layanan_vm.dart';
 
 class ShopsCategoryChips extends StatefulWidget {
@@ -23,17 +24,17 @@ class _ShopsCategoryChipsState extends State<ShopsCategoryChips> {
   @override
   Widget build(BuildContext context) {
     if (widget.layananVM.isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return ShimmerBox.buildShimmerChips();
     }
 
     if (widget.layananVM.error != null) {
-      return Center(
-        child: Text("Terjadi kesalahan: ${widget.layananVM.error}"),
-      );
+      return ShimmerBox.buildShimmerChips();
     }
 
     if (widget.layananVM.layananByHeading.isEmpty) {
-      return const Center(child: Text("Tidak ada layanan tersedia."));
+      return Expanded(
+        child: const Center(child: Text("Tidak ada layanan tersedia.")),
+      );
     }
 
     // opsi "Semuanya"
