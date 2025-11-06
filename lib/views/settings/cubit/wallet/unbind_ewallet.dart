@@ -5,18 +5,18 @@ abstract class EwalletState {}
 class EwalletInitial extends EwalletState {}
 
 class UnbindLoading extends EwalletState {
-  final String kodeDompet;
-  UnbindLoading(this.kodeDompet);
+  final String kode;
+  UnbindLoading(this.kode);
 }
 
 class UnbindSuccess extends EwalletState {
   final String message;
-  final String kodeDompet;
-  UnbindSuccess(this.message, this.kodeDompet);
+  final String kode;
+  UnbindSuccess(this.message, this.kode);
 }
 
 class UnbindError extends EwalletState {
   final String message;
-  final String kodeDompet;
-  UnbindError(this.message, this.kodeDompet);
+  final String kode;
+  UnbindError(this.message, this.kode);
 }

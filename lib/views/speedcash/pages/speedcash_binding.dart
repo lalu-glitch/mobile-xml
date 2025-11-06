@@ -8,10 +8,10 @@ import '../../../core/utils/dialog.dart';
 import '../../../data/services/speedcash_api_service.dart';
 import '../../../data/services/auth_service.dart';
 import '../../../viewmodels/speedcash/speedcash_viewmodel.dart';
+import '../../settings/cubit/info_akun/info_akun_cubit.dart';
 
 class SpeedcashBindingPage extends StatelessWidget {
   SpeedcashBindingPage({super.key});
-
   final _phoneCtrl = TextEditingController();
 
   @override
@@ -32,8 +32,14 @@ class SpeedcashBindingPage extends StatelessWidget {
               showErrorDialog(context, 'Nomor HP tidak boleh kosong');
               return;
             }
-
-            await vm.speedcashBinding(phone: phone);
+            final kodeReseller =
+                context.read<InfoAkunCubit>().state is InfoAkunLoaded
+                ? (context.read<InfoAkunCubit>().state as InfoAkunLoaded)
+                      .data
+                      .data
+                      .kodeReseller
+                : '';
+            await vm.speedcashBinding(kodeReseller, phone);
 
             Logger().d("Result binding: ${vm.response}");
 

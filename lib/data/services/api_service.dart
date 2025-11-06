@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:android_id/android_id.dart';
 import 'package:dio/dio.dart';
 import '../../core/helper/constant_finals.dart';
@@ -65,6 +67,7 @@ class ApiService {
         ),
       );
       if (response.statusCode == 200) {
+        log('${response.data}');
         return IconResponse.fromJson(response.data);
       } else {
         throw Exception("Failed to load icons. Status: ${response.statusCode}");

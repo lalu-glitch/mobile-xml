@@ -71,17 +71,20 @@ class SpeedcashApiService {
     }
   }
 
-  Future<Map<String, dynamic>> speedcashBinding({required String phone}) async {
+  Future<Map<String, dynamic>> speedcashBinding(
+    String kodeReseller,
+    String phone,
+  ) async {
     try {
       final response = await authService.dio.post(
-        "$baseURLIntegration/speedcash/account_binding",
+        "$baseURLIntegration/speedcash/bind_account",
         options: Options(
           headers: {
             "Authorization": _basicAuthSpeedcashHeader,
             "Content-Type": "application/json",
           },
         ),
-        data: {"phone": phone},
+        data: {"kode_reseller": kodeReseller, "phone": phone},
       );
 
       if (response.statusCode == 200) {
@@ -113,7 +116,7 @@ class SpeedcashApiService {
     }
   }
 
-  Future<SpeedcashUnbindModel> speedcashUnbind() async {
+  Future<SpeedcashUnbindModel> speedcashUnbind(String kodeReseller) async {
     try {
       final response = await authService.dio.post(
         "$baseURLIntegration/speedcash/unbind_account",
@@ -123,6 +126,7 @@ class SpeedcashApiService {
             "Content-Type": "application/json",
           },
         ),
+        data: {"kode_reseller": kodeReseller},
       );
       if (response.statusCode == 200) {
         return SpeedcashUnbindModel.fromJson(

@@ -10,7 +10,7 @@ import '../cubit/info_akun/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
 import '../widgets/custom_list_tile.dart';
 import '../widgets/error_view.dart';
-import '../widgets/new_wallet_item.dart';
+import '../widgets/wallet_item_settings.dart';
 import '../widgets/setting_user_header.dart';
 import '../widgets/logout_card.dart';
 import '../widgets/settings_shimmer.dart';

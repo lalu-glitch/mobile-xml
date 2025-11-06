@@ -68,7 +68,6 @@ class _WebviewPageState extends State<WebviewPage> {
               }
 
               final uri = Uri.tryParse(_currentUrl);
-              log('URI: $uri');
               if (uri != null && uri.queryParameters.containsKey('isActive')) {
                 final isActive = uri.queryParameters['isActive'];
                 if (!_hasRedirected && isActive == 'true') {

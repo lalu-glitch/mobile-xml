@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xmlapp/core/helper/constant_finals.dart';
 
+import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../data/models/user/info_akun.dart';
 import '../cubit/info_akun/info_akun_cubit.dart';
@@ -39,7 +39,13 @@ class WalletItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String kodeReseller = '';
     // BlocConsumer sudah tepat untuk listener (snackbar) dan builder (UI)
+    final cubit = context.read<InfoAkunCubit>();
+    final cubitState = context.read<InfoAkunCubit>().state;
+    if (cubitState is InfoAkunLoaded) {
+      kodeReseller = cubitState.data.data.kodeReseller;
+    }
     return BlocConsumer<UnbindEwalletCubit, EwalletState>(
       listener: (context, state) {
         if (state is UnbindSuccess) {
@@ -47,7 +53,7 @@ class WalletItem extends StatelessWidget {
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
           // Panggil ulang data Info Akun agar status binding di-rebuild
-          context.read<InfoAkunCubit>().getInfoAkun();
+          cubit.getInfoAkun();
         } else if (state is UnbindError) {
           ScaffoldMessenger.of(
             context,
@@ -60,8 +66,7 @@ class WalletItem extends StatelessWidget {
         final String iconUrl = ewallet.icon;
 
         // Cek status loading untuk ewallet ini
-        bool isUnbinding =
-            (state is UnbindLoading && state.kodeDompet == kodeDompet);
+        bool isUnbinding = (state is UnbindLoading && state.kode == kodeDompet);
 
         return Container(
           margin: const EdgeInsets.only(right: 16),
@@ -108,8 +113,8 @@ class WalletItem extends StatelessWidget {
                   _buildButton('Unbinding', kRed, () {
                     showUnbindBottomSheet(
                       context,
-                      () => context.read<UnbindEwalletCubit>().unbindEwallet(
-                        kodeDompet,
+                      () => context.read<UnbindEwalletCubit>().unbindSpeedcash(
+                        kodeReseller,
                       ),
                     );
                   }),
