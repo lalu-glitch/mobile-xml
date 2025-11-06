@@ -4,16 +4,16 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
+import '../../../core/utils/shimmer.dart';
 import '../../../data/models/user/info_akun.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
+import '../../home/page/error_handler.dart';
 import '../cubit/info_akun/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
 import '../widgets/custom_list_tile.dart';
-import '../widgets/error_view.dart';
 import '../widgets/wallet_item_settings.dart';
 import '../widgets/setting_user_header.dart';
 import '../widgets/logout_card.dart';
-import '../widgets/settings_shimmer.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -49,6 +49,11 @@ class _SettingsPageState extends State<SettingsPage> {
   /// Menampilkan konfirmasi logout
   void _showLogoutBottomSheet() {
     verifyLogOut(context, _logout);
+  }
+
+  /// buat refresh
+  void refresh() async {
+    await context.read<InfoAkunCubit>().getInfoAkun();
   }
 
   @override
@@ -183,7 +188,7 @@ class _SettingsPageState extends State<SettingsPage> {
         body: BlocBuilder<InfoAkunCubit, InfoAkunState>(
           builder: (context, state) {
             if (state is InfoAkunLoading) {
-              return const InfoAkunShimmer();
+              return ShimmerBox.buildShimmerSettings();
             }
 
             if (state is InfoAkunLoaded) {
@@ -260,13 +265,13 @@ class _SettingsPageState extends State<SettingsPage> {
             }
 
             if (state is InfoAkunError) {
-              return ErrorView(
-                errorMessage: 'Ada yang salah. Silahkan coba lagi.',
-                onRetry: () => context.read<InfoAkunCubit>().getInfoAkun(),
+              return ErrorHandler(
+                error: 'Ada yang salah. Silahkan coba lagi.',
+                onRetry: refresh,
               );
             }
 
-            return const SizedBox();
+            return const SizedBox.shrink();
           },
         ),
       ),

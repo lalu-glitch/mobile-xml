@@ -210,4 +210,148 @@ class ShimmerBox extends StatelessWidget {
       ),
     );
   }
+
+  static buildShimmerSettings() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Shimmer.fromColors(
+          baseColor: kNeutral40,
+          highlightColor: kNeutral20,
+          child: Container(
+            width: double.infinity,
+            height: kSize64 * 3,
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(
+              vertical: kSize16,
+              horizontal: kSize16,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Avatar shimmer
+                Container(
+                  width: kSize80,
+                  height: kSize80,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+
+                SizedBox(width: kSize24),
+
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Baris nama shimmer
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: kSize24,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(width: kSize16),
+                          Container(
+                            width: kSize20,
+                            height: kSize20,
+                            color: Colors.grey,
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: kSize8),
+
+                      // Baris ID shimmer
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: kSize18,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(width: kSize16),
+                          Container(
+                            width: kSize40,
+                            height: kSize18,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Shimmer.fromColors(
+            baseColor: kNeutral40,
+            highlightColor: kNeutral20,
+            child: Container(
+              width: double.infinity,
+              height: kSize64 * 2,
+              decoration: BoxDecoration(
+                color: kNeutral40,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ),
+
+        SizedBox(height: kSize32),
+
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Shimmer.fromColors(
+            baseColor: kNeutral40,
+            highlightColor: kNeutral20,
+            child: Container(
+              width: kSize100,
+              height: kSize20,
+              decoration: BoxDecoration(
+                color: kNeutral40,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ),
+        // List shimmer
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(
+              vertical: kSize32,
+              horizontal: kSize16,
+            ),
+            itemCount: 5, // jumlah dummy card shimmer
+            itemBuilder: (context, index) {
+              return Shimmer.fromColors(
+                baseColor: kNeutral40,
+                highlightColor: kNeutral20,
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  height: kSize64,
+                  decoration: BoxDecoration(
+                    color: kNeutral40,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
 }

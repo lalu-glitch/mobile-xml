@@ -25,23 +25,23 @@ class ErrorView extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               "Terjadi kesalahan",
-              style: TextStyle(fontSize: 20, color: Colors.black87),
+              style: TextStyle(fontSize: 20, color: kBlack),
             ),
             const SizedBox(height: 8),
             Text(
               errorMessage,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              style: TextStyle(fontSize: 16, color: kNeutral80),
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () async {
                 await onRetry();
               },
-              icon: const Icon(Icons.refresh, color: Colors.white),
+              icon: const Icon(Icons.refresh, color: kWhite),
               label: Text(
                 "Coba Lagi",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: kWhite, fontSize: 16),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: kOrange,
