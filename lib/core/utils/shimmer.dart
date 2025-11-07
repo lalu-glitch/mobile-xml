@@ -31,7 +31,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildMainShimmerCard() {
+  static Widget buildMainShimmerCard() {
     return Shimmer.fromColors(
       baseColor: kNeutral40,
       highlightColor: Colors.grey.shade100,
@@ -82,7 +82,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildShimmerIcons() => GridView.builder(
+  static Widget buildShimmerIcons() => GridView.builder(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -128,7 +128,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildShimmerCardPromo() {
+  static Widget buildShimmerCardPromo() {
     return Shimmer.fromColors(
       baseColor: kNeutral40,
       highlightColor: kNeutral20,
@@ -142,7 +142,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildShimmerChips() {
+  static Widget buildShimmerChips() {
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(vertical: 16),
       child: SizedBox(
@@ -168,7 +168,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildShimmerRiwayatTransaksi() {
+  static Widget buildShimmerRiwayatTransaksi() {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ListView.builder(
@@ -211,7 +211,7 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static buildShimmerSettings() {
+  static Widget buildShimmerSettings() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -234,7 +234,7 @@ class ShimmerBox extends StatelessWidget {
                   width: kSize80,
                   height: kSize80,
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: kNeutral40,
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),
@@ -253,14 +253,20 @@ class ShimmerBox extends StatelessWidget {
                           Expanded(
                             child: Container(
                               height: kSize24,
-                              color: Colors.grey,
+                              decoration: BoxDecoration(
+                                color: kNeutral40,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
                             ),
                           ),
                           SizedBox(width: kSize16),
                           Container(
                             width: kSize20,
                             height: kSize20,
-                            color: Colors.grey,
+                            decoration: BoxDecoration(
+                              color: kNeutral40,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
                           ),
                         ],
                       ),
@@ -273,7 +279,10 @@ class ShimmerBox extends StatelessWidget {
                           Expanded(
                             child: Container(
                               height: kSize18,
-                              color: Colors.grey,
+                              decoration: BoxDecoration(
+                                color: kNeutral40,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
                             ),
                           ),
                           SizedBox(width: kSize16),
@@ -281,7 +290,7 @@ class ShimmerBox extends StatelessWidget {
                             width: kSize40,
                             height: kSize18,
                             decoration: BoxDecoration(
-                              color: Colors.grey,
+                              color: kNeutral40,
                               borderRadius: BorderRadius.circular(100),
                             ),
                           ),
