@@ -8,20 +8,12 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../data/models/user/info_akun.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import '../../../core/helper/error_handler.dart';
-=======
->>>>>>> dev
-=======
-import '../../../core/helper/error_handler.dart';
->>>>>>> a4e471ca29b2722faa153a4d90e8ba731166cc0a
 import '../cubit/info_akun/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
 import '../widgets/custom_list_tile.dart';
-import '../widgets/wallet_item_settings.dart';
-import '../widgets/setting_user_header.dart';
 import '../widgets/logout_card.dart';
+import '../widgets/setting_user_header.dart';
+import '../widgets/wallet_item_settings.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
