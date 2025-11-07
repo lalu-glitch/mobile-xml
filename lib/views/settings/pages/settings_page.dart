@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/shimmer.dart';
@@ -52,8 +53,8 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   /// buat refresh
-  void refresh() async {
-    await context.read<InfoAkunCubit>().getInfoAkun();
+  void refresh() {
+    context.read<InfoAkunCubit>().getInfoAkun();
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:xmlapp/core/helper/constant_finals.dart';
+
+import 'constant_finals.dart';
 
 class ErrorHandler extends StatelessWidget {
   final String? error;

@@ -1,4 +1,6 @@
-class InfoAkunModel {
+import 'package:equatable/equatable.dart';
+
+class InfoAkunModel extends Equatable {
   String message;
   Data data;
 
@@ -10,9 +12,12 @@ class InfoAkunModel {
   );
 
   Map<String, dynamic> toJson() => {"message": message, "data": data.toJson()};
+
+  @override
+  List<Object?> get props => [message, data];
 }
 
-class Data {
+class Data extends Equatable {
   String kodeReseller;
   String nama;
   String kodeLevel;
@@ -82,9 +87,27 @@ class Data {
     "total_trx": totalTrx,
     "total_pemakaian": totalPemakaian,
   };
+
+  @override
+  List<Object?> get props => [
+    kodeReseller,
+    nama,
+    kodeLevel,
+    kodeReferral,
+    markupReferral,
+    saldo,
+    ewallet,
+    komisi,
+    poin,
+    piutang,
+    downline,
+    trx,
+    totalTrx,
+    totalPemakaian,
+  ];
 }
 
-class Ewallet {
+class Ewallet extends Equatable {
   int id;
   String icon;
   String nama;
@@ -114,4 +137,7 @@ class Ewallet {
     "kode_dompet": kodeDompet,
     "binding": binding,
   };
+
+  @override
+  List<Object?> get props => [id, icon, nama, kodeDompet, binding];
 }

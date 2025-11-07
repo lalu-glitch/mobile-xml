@@ -8,6 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
