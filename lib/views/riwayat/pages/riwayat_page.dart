@@ -76,10 +76,13 @@ class RiwayatTransaksiPage extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: riwayatList.length,
                       itemBuilder: (context, index) {
-                        RiwayatTransaksi t = riwayatList[index];
+                        RiwayatTransaksi transaksi = riwayatList[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: TransactionCard(key: ValueKey(t.kode), t: t),
+                          child: TransactionCard(
+                            key: ValueKey(transaksi.kode),
+                            t: transaksi,
+                          ),
                         );
                       },
                     ),
@@ -119,7 +122,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                                 "Lainnya",
                                 style: TextStyle(
                                   fontSize: kSize16,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w700,
                                   color: kWhite,
                                 ),
                               ),

@@ -1,7 +1,10 @@
 part of 'riwayat_transaksi_cubit.dart';
 
 @immutable
-sealed class RiwayatTransaksiState {}
+sealed class RiwayatTransaksiState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 final class RiwayatTransaksiInitial extends RiwayatTransaksiState {}
 
@@ -17,6 +20,9 @@ class RiwayatTransaksiLoadingMore extends RiwayatTransaksiState {
     required this.currentPage,
     required this.totalPages,
   });
+
+  @override
+  List<Object?> get props => [riwayatList, currentPage, totalPages];
 }
 
 class RiwayatTransaksiSuccess extends RiwayatTransaksiState {
@@ -29,10 +35,16 @@ class RiwayatTransaksiSuccess extends RiwayatTransaksiState {
     required this.currentPage,
     required this.totalPages,
   });
+
+  @override
+  List<Object?> get props => [currentPage, totalPages]; //jangan bandingin list
 }
 
 class RiwayatTransaksiError extends RiwayatTransaksiState {
   final String message;
 
   RiwayatTransaksiError(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }
