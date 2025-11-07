@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../data/models/transaksi/riwayat_transaksi.dart';
@@ -8,6 +11,8 @@ part 'riwayat_transaksi_state.dart';
 
 class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
   final ApiService apiService;
+  bool _isLoadingMore = false;
+
   RiwayatTransaksiCubit(this.apiService) : super(RiwayatTransaksiInitial());
 
   Future<void> loadRiwayat({
@@ -17,12 +22,10 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
   }) async {
     List<RiwayatTransaksi> previousList = [];
 
-    // 🧠 Jika mode append, gunakan data lama tanpa membuat copy besar
     if (append) {
       if (state is RiwayatTransaksiSuccess) {
         final current = state as RiwayatTransaksiSuccess;
         if (current.currentPage >= current.totalPages) return;
-
         previousList = current.riwayatList;
         emit(
           RiwayatTransaksiLoadingMore(
@@ -32,33 +35,34 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
           ),
         );
       } else if (state is RiwayatTransaksiLoadingMore) {
-        // sudah dalam mode loading more → jangan double trigger
         return;
       } else {
-        // jika bukan success, berarti refresh awal
         append = false;
       }
     }
 
-    if (!append) {
-      emit(RiwayatTransaksiLoading());
-    }
+    if (!append) emit(RiwayatTransaksiLoading());
 
     try {
       final response = await apiService.fetchHistory(page: page, limit: limit);
 
-      List<RiwayatTransaksi> newList = [];
-      int newCurrentPage = 1;
-      int newTotalPages = 1;
+      final newList = response?.items ?? [];
+      final newCurrentPage = response?.currentPage ?? 1;
+      final newTotalPages = response?.totalPages ?? 1;
 
-      if (response != null) {
-        newCurrentPage = response.currentPage;
-        newTotalPages = response.totalPages;
-        newList = response.items;
+      final combinedList = append
+          ? UnmodifiableListView([...previousList, ...newList])
+          : UnmodifiableListView(newList);
+
+      // Hindari emit berulang
+      if (state is RiwayatTransaksiSuccess) {
+        final current = state as RiwayatTransaksiSuccess;
+        if (current.currentPage == newCurrentPage &&
+            current.totalPages == newTotalPages &&
+            current.riwayatList.length == combinedList.length) {
+          return;
+        }
       }
-
-      // ✅ Gabungkan list lama hanya jika append true
-      final combinedList = append ? [...previousList, ...newList] : newList;
 
       emit(
         RiwayatTransaksiSuccess(
@@ -73,15 +77,20 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
   }
 
   Future<void> loadNextPage({int limit = 5}) async {
-    if (state is RiwayatTransaksiSuccess) {
-      final current = state as RiwayatTransaksiSuccess;
-      await loadRiwayat(
-        page: current.currentPage + 1,
-        limit: limit,
-        append: true,
-      );
-    } else if (state is RiwayatTransaksiLoadingMore) {
-      return; // Sudah loading, jangan lakukan apa-apa
+    if (_isLoadingMore) return;
+    _isLoadingMore = true;
+
+    try {
+      if (state is RiwayatTransaksiSuccess) {
+        final current = state as RiwayatTransaksiSuccess;
+        await loadRiwayat(
+          page: current.currentPage + 1,
+          limit: limit,
+          append: true,
+        );
+      }
+    } finally {
+      _isLoadingMore = false;
     }
   }
 }
