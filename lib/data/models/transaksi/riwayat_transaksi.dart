@@ -1,4 +1,6 @@
-class RiwayatTransaksiResponseModel {
+import 'package:equatable/equatable.dart';
+
+class RiwayatTransaksiResponseModel extends Equatable {
   final int total;
   final int totalPages;
   final int currentPage;
@@ -25,9 +27,12 @@ class RiwayatTransaksiResponseModel {
           .toList(),
     );
   }
+
+  @override
+  List<Object?> get props => [total, totalPages, currentPage, perPage, items];
 }
 
-class RiwayatTransaksi {
+class RiwayatTransaksi extends Equatable {
   final String kode;
   final String tujuan;
   final int status;
@@ -51,6 +56,7 @@ class RiwayatTransaksi {
       harga: double.tryParse(json['harga']?.toString() ?? '0') ?? 0,
     );
   }
+
   String get keterangan {
     switch (status) {
       case 1:
@@ -77,4 +83,9 @@ class RiwayatTransaksi {
         return "Status Tidak Diketahui";
     }
   }
+
+  @override
+  List<Object?> get props => [
+    kode, //cukup kodenya aja
+  ];
 }
