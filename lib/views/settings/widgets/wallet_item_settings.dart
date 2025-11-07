@@ -40,7 +40,7 @@ class WalletItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String kodeReseller = '';
-    // BlocConsumer sudah tepat untuk listener (snackbar) dan builder (UI)
+
     final cubit = context.read<InfoAkunCubit>();
     final cubitState = context.read<InfoAkunCubit>().state;
     if (cubitState is InfoAkunLoaded) {
@@ -52,7 +52,6 @@ class WalletItem extends StatelessWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));
-          // Panggil ulang data Info Akun agar status binding di-rebuild
           cubit.getInfoAkun();
         } else if (state is UnbindError) {
           ScaffoldMessenger.of(
@@ -100,7 +99,9 @@ class WalletItem extends StatelessWidget {
 
                 // Tampilkan loading saat proses unbind
                 if (isUnbinding)
-                  const Center(child: CircularProgressIndicator())
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ) //will change to shimmer
                 else if (binding == 0)
                   _buildButton(
                     'Belum Terbinding',

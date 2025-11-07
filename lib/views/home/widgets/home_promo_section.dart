@@ -7,7 +7,7 @@ import '../../../core/helper/dynamic_app_page.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../viewmodels/promo_vm.dart';
 import '../../layanan/cubit/flow_cubit.dart';
-import '../page/error_handler.dart';
+import '../../../core/helper/error_handler.dart';
 
 class HomePromoSection extends StatelessWidget {
   const HomePromoSection({super.key});
