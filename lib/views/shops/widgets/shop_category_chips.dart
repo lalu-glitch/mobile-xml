@@ -32,9 +32,7 @@ class _ShopsCategoryChipsState extends State<ShopsCategoryChips> {
     }
 
     if (widget.layananVM.layananByHeading.isEmpty) {
-      return Expanded(
-        child: const Center(child: Text("Tidak ada layanan tersedia.")),
-      );
+      return const Center(child: Text("Tidak ada layanan tersedia."));
     }
 
     // opsi "Semuanya"
