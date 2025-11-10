@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class InfoAkunModel extends Equatable {
-  String message;
-  Data data;
+  final String message;
+  final Data data;
 
-  InfoAkunModel({required this.message, required this.data});
+  const InfoAkunModel({required this.message, required this.data});
 
   factory InfoAkunModel.fromJson(Map<String, dynamic> json) => InfoAkunModel(
     message: json["message"],
@@ -18,31 +18,31 @@ class InfoAkunModel extends Equatable {
 }
 
 class Data extends Equatable {
-  String kodeReseller;
-  String nama;
-  String kodeLevel;
-  String kodeReferral;
-  int markupReferral;
-  int saldo;
-  List<Ewallet>? ewallet;
-  int komisi;
-  int poin;
-  int piutang;
-  int downline;
-  int trx;
-  int totalTrx;
-  int totalPemakaian;
+  final String kodeReseller;
+  final String? nama;
+  final String? kodeLevel;
+  final String kodeReferral;
+  final int markupReferral;
+  final int? saldo;
+  final List<Ewallet>? ewallet;
+  final int? komisi;
+  final int? poin;
+  final int piutang;
+  final int downline;
+  final int trx;
+  final int totalTrx;
+  final int totalPemakaian;
 
-  Data({
+  const Data({
     required this.kodeReseller,
-    required this.nama,
-    required this.kodeLevel,
+    this.nama,
+    this.kodeLevel,
     required this.kodeReferral,
     required this.markupReferral,
-    required this.saldo,
+    this.saldo,
     this.ewallet,
-    required this.komisi,
-    required this.poin,
+    this.komisi,
+    this.poin,
     required this.piutang,
     required this.downline,
     required this.trx,
@@ -108,13 +108,13 @@ class Data extends Equatable {
 }
 
 class Ewallet extends Equatable {
-  int id;
-  String icon;
-  String nama;
-  String kodeDompet;
-  int binding;
+  final int id;
+  final String icon;
+  final String nama;
+  final String kodeDompet;
+  final int binding;
 
-  Ewallet({
+  const Ewallet({
     required this.id,
     required this.icon,
     required this.nama,
