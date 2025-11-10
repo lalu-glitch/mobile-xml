@@ -209,7 +209,6 @@ class AuthService {
           },
         ),
       );
-
       final isSuccess =
           response.statusCode == 200 || response.statusCode == 201;
       final result = {
@@ -255,7 +254,6 @@ class AuthService {
           },
         ),
       );
-
       final isSuccess = response.statusCode == 200;
 
       if (isSuccess &&

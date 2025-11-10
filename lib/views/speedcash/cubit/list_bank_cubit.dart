@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -18,7 +16,6 @@ class SpeedcashBankCubit extends Cubit<SpeedcashBankState> {
       final dataBank = await apiService.listOfBanks(kodeReseller);
       emit(SpeedcashBankLoaded(dataBank));
     } catch (e) {
-      log(e.toString());
       emit(SpeedcashBankError(e.toString()));
     }
   }

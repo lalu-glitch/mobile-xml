@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:xmlapp/data/models/user/user_balance.dart';
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/utils/shimmer.dart';
-import '../../../viewmodels/balance_viewmodel.dart';
 import 'saldo_header_card.dart';
 
 class HomeBalanceCarousel extends StatelessWidget {
-  const HomeBalanceCarousel({required this.balanceVM, this.ewallet, super.key});
-
-  final BalanceViewModel balanceVM;
-  final EWallet? ewallet;
+  const HomeBalanceCarousel({this.userBalance, this.ewallet, super.key});
+  final UserBalance? userBalance;
+  final BalanceWallet? ewallet;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +20,7 @@ class HomeBalanceCarousel extends StatelessWidget {
           color: kWhite,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child:
-                (balanceVM.isLoading && ewallet == null) ||
-                    balanceVM.userBalance == null
-                ? ShimmerBox.buildMainShimmerCard()
-                : ewallet != null
+            child: ewallet != null
                 ? HeaderSaldo(
                     title: ewallet!.nama,
                     balance: ewallet!.saldoEwallet,
@@ -35,7 +28,7 @@ class HomeBalanceCarousel extends StatelessWidget {
                   )
                 : HeaderSaldo(
                     title: 'Saldo XML',
-                    balance: balanceVM.userBalance?.saldo ?? 0,
+                    balance: userBalance?.saldo ?? 0,
                   ),
           ),
         );

@@ -55,11 +55,14 @@ class DetailInfoAkun extends StatelessWidget {
                         children: [
                           DetailRow(
                             label: "Nama",
-                            value: data.nama,
+                            value: data.nama ?? '-',
                             isNavigate: true,
                           ),
                           _buildDivider(),
-                          DetailRow(label: "Kode Level", value: data.kodeLevel),
+                          DetailRow(
+                            label: "Kode Level",
+                            value: data.kodeLevel ?? 'N/A',
+                          ),
                           _buildDivider(),
                           DetailRow(
                             label: "Kode Referral",
