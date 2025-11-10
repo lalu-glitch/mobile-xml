@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import '../data/models/layanan/layanan_model.dart';
 import '../data/services/api_service.dart';
@@ -30,6 +32,7 @@ class LayananViewModel extends ChangeNotifier {
       _error = null;
     } catch (e) {
       _error = e.toString();
+      log('$e');
     } finally {
       _isLoading = false;
       notifyListeners();

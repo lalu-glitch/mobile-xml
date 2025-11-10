@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,13 +5,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/dialog.dart';
-import '../../../core/utils/shimmer.dart';
-import '../../../viewmodels/layanan_vm.dart';
 import '../../../viewmodels/promo_vm.dart';
 import '../../popup/promo_popup.dart';
 import '../cubit/balance_cubit.dart';
+import '../cubit/layanan_cubit.dart';
 import '../widgets/home_header_section.dart';
 import '../widgets/home_layanan_section.dart';
 import '../widgets/home_promo_section.dart';
@@ -34,9 +30,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<BalanceCubit>().fetchUserBalance();
-      Provider.of<LayananViewModel>(context, listen: false).fetchLayanan();
-      Provider.of<PromoViewModel>(context, listen: false).fetchPromo();
+      context.read<LayananCubit>().fetchLayanan();
 
+      // will be replace
+      Provider.of<PromoViewModel>(context, listen: false).fetchPromo();
       // buat promo
       Future.delayed(const Duration(seconds: 1), () {
         PromoPopup.show(context, "assets/images/promo.jpg");
@@ -47,14 +44,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final cubitBalance = context.read<BalanceCubit>();
-    final layananVM = Provider.of<LayananViewModel>(context);
+    final cubitLayanan = context.read<LayananCubit>();
+
+    // final layananVM = Provider.of<LayananViewModel>(context);
     final promoVM = Provider.of<PromoViewModel>(context);
 
     // Fungsi gabungan buat refresh dan retry
     Future<void> refreshData() async {
       await Future.wait([
         cubitBalance.fetchUserBalance(),
-        layananVM.fetchLayanan(),
+        cubitLayanan.fetchLayanan(),
         promoVM.fetchPromo(),
       ]);
     }
@@ -121,33 +120,40 @@ class _HomePageState extends State<HomePage> {
                               ),
                               const SizedBox(height: 150),
                               Container(
+                                width: double.infinity,
                                 decoration: BoxDecoration(color: kBackground),
                                 padding: const EdgeInsets.all(16),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(height: 100),
-                                    // Cek error
-                                    if (layananVM.error != null ||
-                                        promoVM.error != null)
-                                      ErrorHandler(
-                                        error: layananVM.error ?? promoVM.error,
-                                        onRetry: refreshData,
-                                      )
-                                    else
-                                      Column(
-                                        children: [
-                                          promoVM.isLoading
-                                              ? ShimmerBox.buildShimmerPromoList()
-                                              : const HomePromoSection(),
-                                          const SizedBox(height: 24),
-                                          HomeLayananSection(
-                                            layananVM: layananVM,
-                                          ),
-                                          const SizedBox(height: 24),
-                                        ],
-                                      ),
-                                    SizedBox(height: 300),
+                                    const SizedBox(height: 120),
+                                    // kode yang menggunakan provider
+                                    // if (layananVM.error != null ||
+                                    //     promoVM.error != null)
+                                    //   ErrorHandler(
+                                    //     error: layananVM.error ?? promoVM.error,
+                                    //     onRetry: refreshData,
+                                    //   )
+                                    // else
+                                    //   Column(
+                                    //     children: [
+                                    //       promoVM.isLoading
+                                    //           ? ShimmerBox.buildShimmerPromoList()
+                                    //           : const HomePromoSection(),
+                                    //       const SizedBox(height: 24),
+                                    //       HomeLayananSection(
+                                    //         layananVM: layananVM,
+                                    //       ),
+                                    //       const SizedBox(height: 24),
+                                    //     ],
+                                    //   ),
+
+                                    //todo
+                                    HomePromoSection(),
+                                    const SizedBox(height: 24),
+                                    //kode yang menggunakan cubit
+                                    HomeLayananSection(),
+                                    const SizedBox(height: 300),
                                   ],
                                 ),
                               ),

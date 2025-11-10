@@ -50,9 +50,9 @@ class HeadingItem {
 
 class IconItem {
   final String? icon; // digunakan di Promo
-  final String? title; // digunakan di Layanan
+  final String? title; // digunakan di Promo-Layanan
   final String? url; // digunakan di Layanan
-  final String kodeCatatan;
+  final String kodeCatatan; //dipake di Promo-Layanan
   final int? flow; // digunakan di Layanan
 
   IconItem({
