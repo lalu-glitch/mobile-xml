@@ -6,6 +6,7 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:xmlapp/views/home/cubit/layanan_cubit.dart';
 
 import 'data/services/auth_service.dart';
 import 'data/services/websocket_service.dart';
@@ -171,6 +172,9 @@ class _XmlAppState extends State<XmlApp> {
           BlocProvider(
             create: (context) => BalanceCubit(context.read<ApiService>()),
           ),
+          BlocProvider(
+            create: (context) => LayananCubit(context.read<ApiService>()),
+          ),
 
           //helper
           BlocProvider(create: (context) => TransaksiHelperCubit()),
@@ -202,9 +206,6 @@ class _XmlAppState extends State<XmlApp> {
         ],
         child: MultiProvider(
           providers: [
-            ChangeNotifierProvider(
-              create: (_) => BalanceViewModel(),
-            ), // -- yang mau di migrasi ke cubit
             ChangeNotifierProvider(
               create: (_) =>
                   LayananViewModel(), // -- yang mau di migrasi ke cubit
