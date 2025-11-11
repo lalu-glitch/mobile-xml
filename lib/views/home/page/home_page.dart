@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -119,10 +117,8 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.all(16),
                                 child: BlocBuilder<LayananCubit, LayananState>(
                                   builder: (context, layananState) {
-                                    log('Layanan State: $layananState');
                                     return BlocBuilder<PromoCubit, PromoState>(
                                       builder: (context, promoState) {
-                                        log('Promo State: $promoState');
                                         final isErrorLayanan =
                                             layananState is LayananError;
                                         final isErrorPromo =

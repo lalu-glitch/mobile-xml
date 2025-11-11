@@ -44,7 +44,7 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
     if (!append) emit(RiwayatTransaksiLoading());
 
     try {
-      final response = await apiService.fetchHistory(page: page, limit: limit);
+      final response = await apiService.fetchRiwayat(page: page, limit: limit);
 
       final newList = response?.items ?? [];
       final newCurrentPage = response?.currentPage ?? 1;
@@ -73,6 +73,13 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
       );
     } catch (e) {
       emit(RiwayatTransaksiError(e.toString()));
+      if (e is Exception) {
+        emit(
+          RiwayatTransaksiError(e.toString().replaceFirst('Exception: ', '')),
+        );
+      } else {
+        emit(RiwayatTransaksiError(e.toString()));
+      }
     }
   }
 

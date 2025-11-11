@@ -219,7 +219,7 @@ class ApiService {
   }
 
   //HISTORY TRANSAKSI
-  Future<RiwayatTransaksiResponseModel?> fetchHistory({
+  Future<RiwayatTransaksiResponseModel?> fetchRiwayat({
     int page = 1,
     int limit = 5,
   }) async {
@@ -230,6 +230,7 @@ class ApiService {
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         queryParameters: {"page": page, "limit": limit},
       );
+      log('${response.data}');
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = Map<String, dynamic>.from(
           response.data,
@@ -238,6 +239,12 @@ class ApiService {
       }
       return null;
     } on DioException catch (e) {
+      if (e.response?.data is Map<String, dynamic>) {
+        final data = e.response!.data as Map<String, dynamic>;
+        if (data.containsKey('message')) {
+          throw Exception(data['message']);
+        }
+      }
       throw Exception("Error fetchHistory: ${e.response?.data ?? e.message}");
     } catch (e) {
       throw Exception(e.toString());

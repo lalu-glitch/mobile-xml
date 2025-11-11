@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../data/models/transaksi/riwayat_transaksi.dart';
-import '../../../core/helper/error_handler.dart';
+
 import '../cubit/riwayat_transaksi_cubit.dart';
 import '../widgets/card_transaksi.dart';
 
@@ -33,7 +33,16 @@ class RiwayatTransaksiPage extends StatelessWidget {
             }
 
             if (state is RiwayatTransaksiError) {
-              return ErrorHandler(error: state.message, onRetry: refresh);
+              return Center(
+                child: Text(
+                  state.message,
+                  style: TextStyle(
+                    color: kNeutral60,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                ),
+              );
             }
 
             List<RiwayatTransaksi> riwayatList = [];
@@ -70,8 +79,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: RefreshIndicator(
-                    onRefresh: () =>
-                        context.read<RiwayatTransaksiCubit>().loadRiwayat(),
+                    onRefresh: () async => refresh(),
                     color: kOrange,
                     child: ListView.builder(
                       itemCount: riwayatList.length,
