@@ -1,42 +1,29 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/utils/shimmer.dart';
-import '../../../viewmodels/layanan_vm.dart';
+import '../../home/cubit/layanan_cubit.dart';
 
-class ShopsCategoryChips extends StatefulWidget {
+class ShopsCategoryChips extends StatelessWidget {
   const ShopsCategoryChips({
-    required this.layananVM,
+    required this.cubit,
     required this.selectedHeading,
     required this.onHeadingSelected,
     super.key,
   });
 
-  final LayananViewModel layananVM;
+  final LayananCubit cubit;
   final String selectedHeading;
   final ValueChanged<String> onHeadingSelected;
 
   @override
-  State<ShopsCategoryChips> createState() => _ShopsCategoryChipsState();
-}
-
-class _ShopsCategoryChipsState extends State<ShopsCategoryChips> {
-  @override
   Widget build(BuildContext context) {
-    if (widget.layananVM.isLoading) {
-      return ShimmerBox.buildShimmerChips();
-    }
+    final layananByHeading = cubit.layananByHeading;
 
-    if (widget.layananVM.error != null) {
-      return ShimmerBox.buildShimmerChips();
-    }
-
-    if (widget.layananVM.layananByHeading.isEmpty) {
+    if (layananByHeading.isEmpty) {
       return const Center(child: Text("Tidak ada layanan tersedia."));
     }
 
-    // opsi "Semuanya"
-    final headings = ['Semuanya', ...widget.layananVM.layananByHeading.keys];
+    final headings = ['Semuanya', ...layananByHeading.keys];
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: SizedBox(
@@ -46,10 +33,10 @@ class _ShopsCategoryChipsState extends State<ShopsCategoryChips> {
           itemCount: headings.length,
           itemBuilder: (context, index) {
             final heading = headings[index];
-            final isSelected = heading == widget.selectedHeading;
+            final isSelected = heading == selectedHeading;
 
             return GestureDetector(
-              onTap: () => widget.onHeadingSelected(heading),
+              onTap: () => onHeadingSelected(heading),
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
