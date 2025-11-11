@@ -5,20 +5,20 @@ import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:xmlapp/views/home/cubit/layanan_cubit.dart';
 
 import 'data/services/auth_service.dart';
 import 'data/services/websocket_service.dart';
 import 'viewmodels/promo_vm.dart';
 import 'views/auth/cubit/request_kode_agen_cubit.dart';
+import 'views/home/cubit/balance_cubit.dart';
+import 'views/home/cubit/promo_cubit.dart';
 import 'views/layanan/cubit/flow_cubit.dart';
 import 'core/routes/app_route.dart';
-
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'data/services/api_service.dart';
 import 'data/services/location_service.dart';
 import 'data/services/speedcash_api_service.dart';
-import 'viewmodels/balance_viewmodel.dart';
 import 'viewmodels/layanan_vm.dart';
 import 'viewmodels/speedcash/speedcash_viewmodel.dart';
 import 'viewmodels/transaksi_viewmodel.dart';
@@ -167,6 +167,19 @@ class _XmlAppState extends State<XmlApp> {
             create: (context) =>
                 RiwayatTransaksiCubit(context.read<ApiService>()),
           ),
+
+          //new -- comment will be delete soon
+          BlocProvider(
+            create: (context) => BalanceCubit(context.read<ApiService>()),
+          ),
+          BlocProvider(
+            create: (context) => LayananCubit(context.read<ApiService>()),
+          ),
+          BlocProvider(
+            create: (context) => PromoCubit(context.read<ApiService>()),
+          ),
+
+          //helper
           BlocProvider(create: (context) => TransaksiHelperCubit()),
           BlocProvider(create: (context) => FlowCubit()),
 
@@ -196,9 +209,14 @@ class _XmlAppState extends State<XmlApp> {
         ],
         child: MultiProvider(
           providers: [
-            ChangeNotifierProvider(create: (_) => BalanceViewModel()),
-            ChangeNotifierProvider(create: (_) => LayananViewModel()),
-            ChangeNotifierProvider(create: (_) => PromoViewModel()),
+            ChangeNotifierProvider(
+              create: (_) =>
+                  LayananViewModel(), // -- yang mau di migrasi ke cubit
+            ),
+            ChangeNotifierProvider(
+              create: (_) =>
+                  PromoViewModel(), // -- yang mau di migrasi ke cubit
+            ),
             ChangeNotifierProvider(
               create: (context) =>
                   SpeedcashVM(apiService: context.read<SpeedcashApiService>()),

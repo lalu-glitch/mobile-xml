@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -101,16 +103,20 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         referralCtrl.text.trim().isEmpty ? 'DAFTAR' : referralCtrl.text.trim(),
       );
 
+      log('type : ${result['data']['type']}');
+      log('kodeReseller : ${result['data']['kode_reseller']}');
+      log('expiresAt : ${result['data']['expiresAt']}');
+
       if (!mounted) return;
       if (result["success"]) {
         Navigator.pushReplacementNamed(
           context,
           '/kodeOTP',
           arguments: {
-            "kode_reseller_register": result["kode_reseller"],
+            "kode_reseller_register": result['data']["kode_reseller"],
             "type": result["data"]["type"],
             "nomor": result["data"]["nomor"],
-            "expiresAt": result["data"]["expiresAt"],
+            "expiresAt": result["data"]["expiresAt"], //bugnya disini
           },
         );
       }

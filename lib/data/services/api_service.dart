@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:android_id/android_id.dart';
 import 'package:dio/dio.dart';
 import '../../core/helper/constant_finals.dart';
@@ -39,8 +41,7 @@ class ApiService {
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
       if (response.statusCode == 200) {
-        final dataMap = Map<String, dynamic>.from(response.data);
-        return UserBalance.fromJson(dataMap);
+        return UserBalance.fromJson(response.data);
       } else {
         throw Exception("Failed to load user balance");
       }
@@ -70,6 +71,7 @@ class ApiService {
         throw Exception("Failed to load icons. Status: ${response.statusCode}");
       }
     } on DioException catch (e) {
+      log("Error fetchIcons: ${e.response?.data ?? e.message}");
       throw Exception("Error fetchIcons: ${e.response?.data ?? e.message}");
     }
   }

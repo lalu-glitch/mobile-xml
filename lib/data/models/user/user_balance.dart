@@ -5,7 +5,7 @@ class UserBalance {
   final int? saldo;
   final int? poin;
   final String? kodeLevel;
-  final List<EWallet>? ewallet;
+  final List<BalanceWallet>? ewallet;
 
   UserBalance({
     required this.isLogout,
@@ -26,7 +26,7 @@ class UserBalance {
       poin: _parseInt(json['poin']),
       kodeLevel: json['kode_level'] ?? '',
       ewallet: (json['ewallet'] as List<dynamic>? ?? [])
-          .map((e) => EWallet.fromJson(e))
+          .map((e) => BalanceWallet.fromJson(e))
           .toList(),
     );
   }
@@ -40,19 +40,19 @@ class UserBalance {
   }
 }
 
-class EWallet {
+class BalanceWallet {
   final String nama; // maps from 'nama'
   final String kodeDompet; // maps from 'kode_dompet'
   final int saldoEwallet; // maps from 'saldo_ewallet'
 
-  EWallet({
+  BalanceWallet({
     required this.nama,
     required this.kodeDompet,
     required this.saldoEwallet,
   });
 
-  factory EWallet.fromJson(Map<String, dynamic> json) {
-    return EWallet(
+  factory BalanceWallet.fromJson(Map<String, dynamic> json) {
+    return BalanceWallet(
       nama: json['nama'] ?? '',
       kodeDompet: json['kode_dompet'] ?? '',
       saldoEwallet: UserBalance._parseInt(json['saldo_ewallet']),
