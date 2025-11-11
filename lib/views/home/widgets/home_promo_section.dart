@@ -18,7 +18,7 @@ class HomePromoSection extends StatelessWidget {
     return BlocBuilder<PromoCubit, PromoState>(
       builder: (context, state) {
         if (state is PromoLoading) {
-          return ShimmerBox.buildShimmerCardPromo();
+          return ShimmerBox.buildShimmerPromoList();
         }
         if (state is PromoLoaded) {
           return Column(
@@ -71,9 +71,6 @@ class HomePromoSection extends StatelessWidget {
               ),
             ],
           );
-        }
-        if (state is PromoError) {
-          return ShimmerBox.buildShimmerCardPromo();
         }
         return SizedBox.shrink();
       },

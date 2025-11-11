@@ -126,9 +126,6 @@ class HomeLayananSection extends StatelessWidget {
             }).toList(),
           );
         }
-        if (state is LayananError) {
-          return ShimmerBox.buildShimmerIcons();
-        }
         return SizedBox.shrink();
       },
     );

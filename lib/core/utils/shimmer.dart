@@ -68,7 +68,7 @@ class ShimmerBox extends StatelessWidget {
                 fit: FlexFit.tight,
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 4),
-                  height: 20,
+                  height: 50,
                   decoration: BoxDecoration(
                     color: kWhite,
                     borderRadius: BorderRadius.circular(10),
@@ -103,28 +103,48 @@ class ShimmerBox extends StatelessWidget {
   );
 
   static Widget buildShimmerPromoList() {
-    return SizedBox(
-      height: 140,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return Container(
-            width: 260,
-            margin: const EdgeInsets.only(right: 16),
-            child: Shimmer.fromColors(
-              baseColor: kNeutral40,
-              highlightColor: kNeutral20,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: kWhite,
-                  borderRadius: BorderRadius.circular(18),
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 20,
+          width: 100,
+          child: Shimmer.fromColors(
+            baseColor: kNeutral40,
+            highlightColor: kNeutral20,
+            child: Container(
+              decoration: BoxDecoration(
+                color: kWhite,
+                borderRadius: BorderRadius.circular(18),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        SizedBox(
+          height: 140,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return Container(
+                width: 260,
+                margin: const EdgeInsets.only(right: 16),
+                child: Shimmer.fromColors(
+                  baseColor: kNeutral40,
+                  highlightColor: kNeutral20,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: kWhite,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
