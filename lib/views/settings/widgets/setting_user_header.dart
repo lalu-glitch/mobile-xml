@@ -49,7 +49,7 @@ class UserProfileCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  data.nama,
+                  data.nama ?? '-',
                   style: TextStyle(
                     color: color == kOrange ? kWhite : kBlack,
                     fontSize: 16,
