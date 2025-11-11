@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:xmlapp/views/auth/widgets/custom_textfield.dart';
 
 import '../../../core/helper/constant_finals.dart';
@@ -12,7 +11,7 @@ import '../../../core/utils/dialog.dart';
 import '../../../core/utils/info_row.dart';
 import '../../../data/models/transaksi/metode_transaksi.dart';
 import '../../../data/services/speedcash_api_service.dart';
-import '../../../viewmodels/balance_viewmodel.dart';
+import '../../home/cubit/balance_cubit.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
 import '../../speedcash/widgets/rupiah_text_field.dart';
 import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
@@ -28,7 +27,7 @@ class KonfirmasiPembayaranPage extends StatefulWidget {
 }
 
 class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
-  String _selectedMethod = "SALDO"; // Default pilihan
+  String _selectedMethod = "SALDO"; // default pilihan
   final TextEditingController textController = TextEditingController();
 
   double getTotalTransaksi(dynamic transaksi) {
@@ -38,14 +37,12 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
       final total = baseTotal + nominalTambahan;
       return total;
     }
-    return baseTotal; // Return as double untuk konsistensi
+    return baseTotal;
   }
 
   @override
   Widget build(BuildContext context) {
-    final balanceVM = Provider.of<BalanceViewModel>(context);
     final transaksi = context.read<TransaksiHelperCubit>().getData();
-    final methods = _generatePaymentMethods(balanceVM);
 
     return WillPopScope(
       onWillPop: () async {
@@ -59,99 +56,100 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
           backgroundColor: kOrange,
           iconTheme: const IconThemeData(color: kWhite),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildInfoCard(transaksi),
-              const SizedBox(height: 24),
-              //bebas nominal
-              Visibility(
-                visible: transaksi.isBebasNominal == 1,
-                child: Text(
-                  "Masukkan Nominal",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: kSize14,
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: transaksi.isBebasNominal == 1,
-                child: SizedBox(height: kSize8),
-              ),
-              Visibility(
-                visible: transaksi.isBebasNominal == 1,
-                child: RupiahTextField(
-                  controller: textController,
-                  fontSize: 20,
-                ),
-              ),
+        body: BlocBuilder<BalanceCubit, BalanceState>(
+          builder: (context, state) {
+            if (state is BalanceLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-              //endUser
-              Visibility(
-                visible: transaksi.isEndUser == 1,
-                child: Text(
-                  "Masukan Nomer Voucher",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: kSize14,
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: transaksi.isEndUser == 1,
-                child: SizedBox(height: kSize8),
-              ),
-              Visibility(
-                visible: transaksi.isEndUser == 1,
-                child: CustomTextField(
-                  controller: textController,
-                  keyboardType: TextInputType.phone,
-                  textFormater: [FilteringTextInputFormatter.digitsOnly],
-                ),
-              ),
-              SizedBox(
-                height:
-                    transaksi.isBebasNominal == 1 || transaksi.isEndUser == 1
-                    ? 24
-                    : 0,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Metode Pembayaran",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: kSize14,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
+            if (state is BalanceError) {
+              return Text('Gagal memuat saldo: ${state.message}');
+            }
 
-              Column(
-                children: methods
-                    .map((m) => _paymentOption(m, _selectedMethod == m.nama))
-                    .toList(),
-              ),
+            if (state is BalanceLoaded) {
+              final methods = _generatePaymentMethods(state);
 
-              const Spacer(),
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildInfoCard(transaksi),
+                    const SizedBox(height: 24),
 
-              _buildPayButton(methods, transaksi),
-            ],
-          ),
+                    // --- BEBAS NOMINAL ---
+                    if (transaksi.isBebasNominal == 1) ...[
+                      Text(
+                        "Masukkan Nominal",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: kSize14,
+                        ),
+                      ),
+                      SizedBox(height: kSize8),
+                      RupiahTextField(controller: textController, fontSize: 20),
+                      const SizedBox(height: 24),
+                    ],
+
+                    // --- END USER ---
+                    if (transaksi.isEndUser == 1) ...[
+                      Text(
+                        "Masukan Nomor Voucher",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: kSize14,
+                        ),
+                      ),
+                      SizedBox(height: kSize8),
+                      CustomTextField(
+                        controller: textController,
+                        keyboardType: TextInputType.phone,
+                        textFormater: [FilteringTextInputFormatter.digitsOnly],
+                      ),
+                      const SizedBox(height: 24),
+                    ],
+
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Metode Pembayaran",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: kSize14,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+
+                    Column(
+                      children: methods
+                          .map(
+                            (m) => _paymentOption(m, _selectedMethod == m.nama),
+                          )
+                          .toList(),
+                    ),
+
+                    const Spacer(),
+                    _buildPayButton(methods, transaksi),
+                  ],
+                ),
+              );
+            }
+
+            return const SizedBox.shrink();
+          },
         ),
       ),
     );
   }
 
-  /// Generate daftar metode pembayaran
-  List<PaymentMethodModel> _generatePaymentMethods(BalanceViewModel balanceVM) {
-    final saldo = balanceVM.userBalance?.saldo ?? 0;
-    final eWallets = balanceVM.userBalance?.ewallet ?? [];
+  /// Generate daftar metode pembayaran dari BalanceCubit
+  List<PaymentMethodModel> _generatePaymentMethods(BalanceState state) {
+    if (state is! BalanceLoaded) return [];
 
-    final methods = <PaymentMethodModel>[
+    final saldo = state.data.saldo ?? 0;
+    final eWallets = state.data.ewallet ?? [];
+    return [
       PaymentMethodModel(nama: "SALDO", kodeDompet: "", saldoEwallet: saldo),
       ...eWallets.map(
         (ewallet) => PaymentMethodModel(
@@ -161,7 +159,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
         ),
       ),
     ];
-    return methods;
   }
 
   /// Card informasi transaksi
@@ -265,15 +262,23 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               (m) => m.nama == _selectedMethod,
             );
 
-            sendTransaksi.setKodeDompet(selected.kodeDompet!);
-
-            //hilangkan tanda titik pada textController
-
+            sendTransaksi.setKodeDompet(selected.kodeDompet ?? "");
             sendTransaksi.bebasNominalValue(
               int.tryParse(textController.text.replaceAll('.', '')) ?? 0,
             );
             sendTransaksi.setEndUserValue(textController.text.trim());
-            // case khusus SPEEDCASH → buka WebView
+
+            // Cek saldo cukup atau tidak
+            final saldo = selected.saldoEwallet ?? 0;
+            if (totalTransaksi > saldo) {
+              final msg = saldo <= 0
+                  ? "Saldo ${selected.nama} tidak cukup, hubungi CS / admin."
+                  : "Saldo ${selected.nama} tidak mencukupi.";
+              showErrorDialog(context, msg);
+              return;
+            }
+
+            // Jika metode Speedcash
             if (selected.nama == 'SPEEDCASH') {
               Navigator.push(
                 context,
@@ -295,34 +300,15 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                   ),
                 ),
               );
-              // Navigator.pushNamed(
-              //   context,
-              //   '/webView',
-              //   arguments: {
-              //     'url': 'google.com', // <--- menyusul
-              //     'title': 'Bayar Speedcash',
-              //   },
-              // );
               return;
             }
 
-            final saldo = selected.saldoEwallet ?? 0;
-
-            if (totalTransaksi > saldo) {
-              final msg = saldo <= 0
-                  ? "Saldo ${selected.nama} tidak cukup, hubungi CS / admin."
-                  : "Saldo ${selected.nama} tidak mencukupi.";
-              showErrorDialog(context, msg);
-            } else {
-              // context
-              //     .read<TransaksiViewModel>()
-              //     .reset(); // <-- Reset ViewModel dulu untuk bersihkan state lama
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/transaksiProses',
-                (route) => false,
-              );
-            }
+            // Jika cukup saldo, lanjut ke proses transaksi
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/transaksiProses',
+              (route) => false,
+            );
           },
           child: Text(
             "Selanjutnya",
