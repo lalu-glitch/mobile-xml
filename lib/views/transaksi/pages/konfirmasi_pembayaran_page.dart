@@ -1,9 +1,10 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xmlapp/views/auth/widgets/custom_textfield.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
@@ -11,6 +12,7 @@ import '../../../core/utils/dialog.dart';
 import '../../../core/utils/info_row.dart';
 import '../../../data/models/transaksi/metode_transaksi.dart';
 import '../../../data/services/speedcash_api_service.dart';
+import '../../auth/widgets/custom_textfield.dart';
 import '../../home/cubit/balance_cubit.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
 import '../../speedcash/widgets/rupiah_text_field.dart';
@@ -32,17 +34,14 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
   double getTotalTransaksi(dynamic transaksi) {
     final double baseTotal = transaksi.total ?? 0;
-    if (transaksi.isBebasNominal == 1) {
-      final int nominalTambahan = transaksi.bebasNominalValue ?? 0;
-      final total = baseTotal + nominalTambahan;
-      return total;
-    }
     return baseTotal;
   }
 
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>().getData();
+    log('bebas nominal value di Build: ${transaksi.bebasNominalValue}');
+    log('isBebas nominal value di Build: ${transaksi.isBebasNominal}');
 
     return WillPopScope(
       onWillPop: () async {
@@ -63,7 +62,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             }
 
             if (state is BalanceError) {
-              return Text('Gagal memuat saldo: ${state.message}');
+              return Center(
+                child: Text('Gagal memuat saldo: ${state.message}'),
+              );
             }
 
             if (state is BalanceLoaded) {
