@@ -13,12 +13,12 @@ import 'data/services/websocket_service.dart';
 import 'viewmodels/promo_vm.dart';
 import 'views/auth/cubit/request_kode_agen_cubit.dart';
 import 'views/home/cubit/balance_cubit.dart';
+import 'views/home/cubit/promo_cubit.dart';
 import 'views/layanan/cubit/flow_cubit.dart';
 import 'core/routes/app_route.dart';
 import 'data/services/api_service.dart';
 import 'data/services/location_service.dart';
 import 'data/services/speedcash_api_service.dart';
-import 'viewmodels/balance_viewmodel.dart';
 import 'viewmodels/layanan_vm.dart';
 import 'viewmodels/speedcash/speedcash_viewmodel.dart';
 import 'viewmodels/transaksi_viewmodel.dart';
@@ -174,6 +174,9 @@ class _XmlAppState extends State<XmlApp> {
           ),
           BlocProvider(
             create: (context) => LayananCubit(context.read<ApiService>()),
+          ),
+          BlocProvider(
+            create: (context) => PromoCubit(context.read<ApiService>()),
           ),
 
           //helper

@@ -10,6 +10,7 @@ import '../../../viewmodels/promo_vm.dart';
 import '../../popup/promo_popup.dart';
 import '../cubit/balance_cubit.dart';
 import '../cubit/layanan_cubit.dart';
+import '../cubit/promo_cubit.dart';
 import '../widgets/home_header_section.dart';
 import '../widgets/home_layanan_section.dart';
 import '../widgets/home_promo_section.dart';
@@ -31,9 +32,7 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<BalanceCubit>().fetchUserBalance();
       context.read<LayananCubit>().fetchLayanan();
-
-      // will be replace
-      Provider.of<PromoViewModel>(context, listen: false).fetchPromo();
+      context.read<PromoCubit>().fetchPromo();
       // buat promo
       Future.delayed(const Duration(seconds: 1), () {
         PromoPopup.show(context, "assets/images/promo.jpg");
@@ -45,16 +44,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final cubitBalance = context.read<BalanceCubit>();
     final cubitLayanan = context.read<LayananCubit>();
-
-    // final layananVM = Provider.of<LayananViewModel>(context);
-    final promoVM = Provider.of<PromoViewModel>(context);
+    final cubitPromo = context.read<PromoCubit>();
 
     // Fungsi gabungan buat refresh dan retry
     Future<void> refreshData() async {
       await Future.wait([
         cubitBalance.fetchUserBalance(),
         cubitLayanan.fetchLayanan(),
-        promoVM.fetchPromo(),
+        cubitPromo.fetchPromo(),
       ]);
     }
 
