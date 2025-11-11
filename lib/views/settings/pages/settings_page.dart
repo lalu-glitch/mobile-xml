@@ -8,6 +8,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../data/models/user/info_akun.dart';
 import '../../../viewmodels/balance_viewmodel.dart';
+import '../../home/cubit/balance_cubit.dart';
 import '../cubit/info_akun/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
 import '../widgets/custom_list_tile.dart';
@@ -29,19 +30,20 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
+    Future.microtask(() => context.read<InfoAkunCubit>().getInfoAkun());
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    context.read<InfoAkunCubit>().getInfoAkun();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   context.read<InfoAkunCubit>().getInfoAkun();
+  // }
 
   /// Fungsi logout (hapus semua data lalu arahkan ke halaman login)
   Future<void> _logout() async {
     await _storage.delete(key: 'userData');
     if (mounted) {
-      context.read<BalanceViewModel>().reset();
+      context.read<BalanceCubit>().reset();
       Navigator.pushNamedAndRemoveUntil(context, '/authPage', (route) => false);
     }
   }

@@ -1,13 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:provider/provider.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/dialog.dart';
-import '../../../viewmodels/promo_vm.dart';
-import '../../popup/promo_popup.dart';
+// import '../../popup/promo_popup.dart';
 import '../cubit/balance_cubit.dart';
 import '../cubit/layanan_cubit.dart';
 import '../cubit/promo_cubit.dart';
@@ -34,9 +35,9 @@ class _HomePageState extends State<HomePage> {
       context.read<LayananCubit>().fetchLayanan();
       context.read<PromoCubit>().fetchPromo();
       // buat promo
-      Future.delayed(const Duration(seconds: 1), () {
-        PromoPopup.show(context, "assets/images/promo.jpg");
-      });
+      // Future.delayed(const Duration(seconds: 1), () {
+      //   PromoPopup.show(context, "assets/images/promo.jpg");
+      // });
     });
   }
 
@@ -46,7 +47,6 @@ class _HomePageState extends State<HomePage> {
     final cubitLayanan = context.read<LayananCubit>();
     final cubitPromo = context.read<PromoCubit>();
 
-    // Fungsi gabungan buat refresh dan retry
     Future<void> refreshData() async {
       await Future.wait([
         cubitBalance.fetchUserBalance(),
@@ -79,9 +79,7 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
           body: Stack(
             children: [
-              // Background orange
               Container(color: kOrange),
-              // Background image di pojok kiri
               Positioned(
                 top: 35,
                 left: 0,
@@ -92,7 +90,6 @@ class _HomePageState extends State<HomePage> {
                   fit: BoxFit.cover,
                 ),
               ),
-              // Konten utama
               SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 16.0),
@@ -120,47 +117,42 @@ class _HomePageState extends State<HomePage> {
                                 width: double.infinity,
                                 decoration: BoxDecoration(color: kBackground),
                                 padding: const EdgeInsets.all(16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 120),
-                                    // kode yang menggunakan provider
-                                    // if (layananVM.error != null ||
-                                    //     promoVM.error != null)
-                                    //   ErrorHandler(
-                                    //     error: layananVM.error ?? promoVM.error,
-                                    //     onRetry: refreshData,
-                                    //   )
-                                    // else
-                                    //   Column(
-                                    //     children: [
-                                    //       promoVM.isLoading
-                                    //           ? ShimmerBox.buildShimmerPromoList()
-                                    //           : const HomePromoSection(),
-                                    //       const SizedBox(height: 24),
-                                    //       HomeLayananSection(
-                                    //         layananVM: layananVM,
-                                    //       ),
-                                    //       const SizedBox(height: 24),
-                                    //     ],
-                                    //   ),
+                                child: BlocBuilder<LayananCubit, LayananState>(
+                                  builder: (context, layananState) {
+                                    log('Layanan State: $layananState');
+                                    return BlocBuilder<PromoCubit, PromoState>(
+                                      builder: (context, promoState) {
+                                        log('Promo State: $promoState');
+                                        final isErrorLayanan =
+                                            layananState is LayananError;
+                                        final isErrorPromo =
+                                            promoState is PromoError;
 
-                                    //todo
-                                    HomePromoSection(),
-                                    const SizedBox(height: 24),
-                                    //kode yang menggunakan cubit
-                                    HomeLayananSection(),
-                                    const SizedBox(height: 300),
-                                  ],
+                                        if (isErrorLayanan || isErrorPromo) {
+                                          return ErrorHandler(
+                                            error: 'Ada yang salah',
+                                            onRetry: refreshData,
+                                          );
+                                        }
+                                        return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(height: 120),
+                                            HomePromoSection(),
+                                            const SizedBox(height: 24),
+                                            HomeLayananSection(),
+                                            const SizedBox(height: 300),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
                                 ),
                               ),
                             ],
                           ),
-
-                          //Poin dan Komisi
                           PoinKomisiOverlay(),
-
-                          // Main Card
                           MainSaldoCardCarousel(),
                         ],
                       ),
