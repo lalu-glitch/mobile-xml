@@ -28,15 +28,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
       final cubit = context.read<WebsocketTransaksiCubit>();
       _isInit = true;
       Future.microtask(() async {
-        // if (mounted) {
-        //   context.read<TransaksiViewModel>().prosesTransaksi(
-        //     transaksi.tujuan!,
-        //     transaksi.kodeProduk!,
-        //     transaksi.kodeDompet
-        //   );
-        // }
-        print('VALUE DARI NOMINAL : ${transaksi.bebasNominalValue}}');
-        print('VALUE DARI ENDUSER : ${transaksi.endUserValue}}');
+        cubit.reset(); // <-- TAMBAHKAN BARIS INI
         cubit.startTransaksi(
           transaksi.tujuan ?? '',
           transaksi.kodeProduk ?? '',
@@ -51,8 +43,6 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final vm = context.watch<TransaksiViewModel>();
-
     return Scaffold(
       backgroundColor: kWhite,
       appBar: AppBar(
@@ -74,7 +64,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
         child: Center(
           child: BlocBuilder<WebsocketTransaksiCubit, WebsocketTransaksiState>(
             builder: (context, state) {
-              print(state);
+              debugPrint('TransaksiProsesPage State: $state');
               if (state is WebSocketTransaksiLoading) {
                 return _loadingWidget();
               } else if (state is WebSocketTransaksiPending) {
@@ -90,34 +80,8 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           ),
         ),
       ),
-      // Center(
-      //   child: Padding(
-      //     padding: const EdgeInsets.all(24.0),
-      //     child: vm.isLoading
-      //         ? _loadingWidget()
-      //         : vm.error != null
-      //         ? _errorWidget(vm.error!)
-      //         : vm.statusTransaksi != null
-      //         ? _statusWidget(vm)
-      //         : _waitingResponseWidget(vm),
-      //   ),
-      // ),
     );
   }
-
-  // /// Widget ketika transaksi pertama kali dikirim, menunggu response awal
-  // Widget _waitingResponseWidget(TransaksiViewModel vm) => Column(
-  //   mainAxisAlignment: MainAxisAlignment.center,
-  //   children: [
-  //     CircularProgressIndicator(color: kOrange, strokeWidth: 5),
-  //     SizedBox(height: 16),
-  //     Text(
-  //       "Mengirim Permintaan...",
-  //       style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-  //     ),
-  //     Text("Mohon tunggu sebentar...", textAlign: TextAlign.center),
-  //   ],
-  // );
 
   Widget _waitingWidget() => Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -172,33 +136,6 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
       ),
     );
   }
-
-  // Widget _failedWidget(TransaksiResponse data) => Center(
-  //   child: Column(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       const Icon(Icons.error_outline, color: kRed, size: 64),
-  //       const SizedBox(height: 16),
-  //       Text(
-  //         "Transaksi Gagal",
-  //         style: TextStyle(
-  //           fontSize: 22,
-  //           color: kRed,
-  //           fontWeight: FontWeight.bold,
-  //         ),
-  //       ),
-  //       const SizedBox(height: 10),
-  //       Text(data.outbox ?? "Silahkan coba lagi.", textAlign: TextAlign.center),
-  //       const SizedBox(height: 20),
-  //       ElevatedButton(
-  //         onPressed: () {
-  //           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-  //         },
-  //         child: const Text("Ke Menu Utama"),
-  //       ),
-  //     ],
-  //   ),
-  // );
 
   /// Widget ketika status transaksi masih pending (1 atau 2)
   Widget _pendingWidget(TransaksiResponse status) {

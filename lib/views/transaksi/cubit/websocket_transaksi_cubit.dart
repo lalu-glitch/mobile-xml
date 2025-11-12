@@ -106,4 +106,9 @@ class WebsocketTransaksiCubit extends Cubit<WebsocketTransaksiState> {
     webSocketService.disconnect();
     return super.close();
   }
+
+  void reset() {
+    emit(WebsocketTransaksiInitial());
+    _pendingCount = 0;
+  }
 }

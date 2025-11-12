@@ -182,11 +182,13 @@ class _SettingsPageState extends State<SettingsPage> {
         backgroundColor: kBackground,
         body: BlocBuilder<InfoAkunCubit, InfoAkunState>(
           builder: (context, state) {
+            debugPrint('$state');
             if (state is InfoAkunLoading) {
               return ShimmerBox.buildShimmerSettings();
             }
 
             if (state is InfoAkunLoaded) {
+              debugPrint('${state.data.data}');
               return Column(
                 children: [
                   SettingHeader(state: state), // Header profil user
@@ -261,7 +263,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
             if (state is InfoAkunError) {
               return ErrorHandler(
-                error: 'Ada yang salah. Silahkan coba lagi.',
+                message: 'Ada yang salah. Silahkan coba lagi.',
                 onRetry: refresh,
               );
             }

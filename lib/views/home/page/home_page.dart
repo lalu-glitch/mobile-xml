@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    Future.microtask(() {
       context.read<BalanceCubit>().fetchUserBalance();
       context.read<LayananCubit>().fetchLayanan();
       context.read<PromoCubit>().fetchPromo();
@@ -78,9 +78,8 @@ class _HomePageState extends State<HomePage> {
               final img =
                   promos.firstOrNull?.icon ??
                   'assets/images/fallback_promo.png';
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                PromoPopup.show(context, img);
-              });
+
+              PromoPopup.show(context, img);
             }
           },
         ),
@@ -126,26 +125,43 @@ class _HomePageState extends State<HomePage> {
                                 child: HomeHeaderSection(),
                               ),
                               const SizedBox(height: 150),
-                              Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(color: kBackground),
-                                padding: const EdgeInsets.all(16),
-                                child: BlocBuilder<LayananCubit, LayananState>(
-                                  builder: (context, layananState) {
-                                    return BlocBuilder<PromoCubit, PromoState>(
-                                      builder: (context, promoState) {
-                                        final isErrorLayanan =
-                                            layananState is LayananError;
-                                        final isErrorPromo =
-                                            promoState is PromoError;
-
-                                        if (isErrorLayanan || isErrorPromo) {
-                                          return ErrorHandler(
-                                            error: 'Ada yang salah',
-                                            onRetry: refreshData,
-                                          );
-                                        }
-                                        return Column(
+                              BlocBuilder<LayananCubit, LayananState>(
+                                builder: (context, layananState) {
+                                  return BlocBuilder<PromoCubit, PromoState>(
+                                    builder: (context, promoState) {
+                                      if (layananState is LayananInitial ||
+                                          promoState is PromoInitial) {
+                                        return SizedBox.shrink();
+                                      }
+                                      if (layananState is LayananError ||
+                                          promoState is PromoError) {
+                                        return Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: kBackground,
+                                          ),
+                                          padding: const EdgeInsets.all(16),
+                                          child: Column(
+                                            children: [
+                                              const SizedBox(height: 120),
+                                              SizedBox(
+                                                child: ErrorHandler(
+                                                  message: 'Ada yang salah',
+                                                  onRetry: refreshData,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 120),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                      return Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: kBackground,
+                                        ),
+                                        padding: const EdgeInsets.all(16),
+                                        child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
@@ -153,13 +169,12 @@ class _HomePageState extends State<HomePage> {
                                             HomePromoSection(),
                                             const SizedBox(height: 24),
                                             HomeLayananSection(),
-                                            const SizedBox(height: 300),
                                           ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                               ),
                             ],
                           ),
