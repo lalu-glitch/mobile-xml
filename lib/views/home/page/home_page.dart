@@ -6,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/dialog.dart';
-// import '../../popup/promo_popup.dart';
+import '../../popup/promo_popup.dart';
 import '../cubit/balance_cubit.dart';
 import '../cubit/layanan_cubit.dart';
 import '../cubit/promo_cubit.dart';
@@ -25,6 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isLogoutDialogShown = false;
+
   @override
   void initState() {
     super.initState();
@@ -32,10 +33,6 @@ class _HomePageState extends State<HomePage> {
       context.read<BalanceCubit>().fetchUserBalance();
       context.read<LayananCubit>().fetchLayanan();
       context.read<PromoCubit>().fetchPromo();
-      // buat promo
-      // Future.delayed(const Duration(seconds: 1), () {
-      //   PromoPopup.show(context, "assets/images/promo.jpg");
-      // });
     });
   }
 
@@ -53,23 +50,41 @@ class _HomePageState extends State<HomePage> {
       ]);
     }
 
-    return BlocListener<BalanceCubit, BalanceState>(
-      listener: (context, state) async {
-        if (state is BalanceLogout && !_isLogoutDialogShown) {
-          _isLogoutDialogShown = true;
-          await showForceExitDialog(context, () async {
-            await const FlutterSecureStorage().deleteAll();
-            if (context.mounted) {
-              context.read<BalanceCubit>().reset();
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/authPage',
-                (_) => false,
-              );
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<BalanceCubit, BalanceState>(
+          listener: (context, state) async {
+            if (state is BalanceLogout && !_isLogoutDialogShown) {
+              _isLogoutDialogShown = true;
+              await showForceExitDialog(context, () async {
+                await const FlutterSecureStorage().deleteAll();
+                if (context.mounted) {
+                  context.read<BalanceCubit>().reset();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/authPage',
+                    (_) => false,
+                  );
+                }
+              });
             }
-          });
-        }
-      },
+          },
+        ),
+        BlocListener<PromoCubit, PromoState>(
+          listener: (context, state) {
+            if (state is PromoLoaded && !cubitPromo.hasShownPopUp) {
+              cubitPromo.hasShownPopUp = true;
+              final promos = cubitPromo.promoList;
+              final img =
+                  promos.firstOrNull?.icon ??
+                  'assets/images/fallback_promo.png';
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                PromoPopup.show(context, img);
+              });
+            }
+          },
+        ),
+      ],
       child: WillPopScope(
         onWillPop: () async {
           return await showExitDialog(context);
@@ -82,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                 top: 35,
                 left: 0,
                 child: Image.asset(
-                  'assets/images/bg-header.png',
+                  'assets/images/bg_header.png',
                   width: 300,
                   height: 300,
                   fit: BoxFit.cover,

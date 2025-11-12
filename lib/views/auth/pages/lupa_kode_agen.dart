@@ -21,7 +21,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
     final nomor = _nomorCtrl.text.trim();
 
     if (nomor.isEmpty) {
-      showErrorDialog(context, "Nomor WhatsApp tidak boleh kosong");
+      showErrorDialog(context, "Nomor tidak boleh kosong");
       return;
     }
 
@@ -72,22 +72,6 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Logo
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: kOrange.withOpacity(0.1),
-                      ),
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        width: 120,
-                        height: 120,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-
                     // Title
                     Text(
                       "Lupa Kode Agen",
@@ -101,7 +85,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
 
                     // Subtitle
                     Text(
-                      "Masukkan nomor WhatsApp yang terdaftar, "
+                      "Masukkan nomor yang terdaftar, "
                       "kami akan mengirimkan kode agen ke WhatsApp Anda.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -114,7 +98,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
 
                     CustomTextField(
                       controller: _nomorCtrl,
-                      labelText: 'Nomer Whatsapp',
+                      labelText: 'Masukan Nomor',
                       textFormater: [FilteringTextInputFormatter.digitsOnly],
                       prefixIcon: Icon(Icons.phone, color: kOrangeAccent400),
                       keyboardType: TextInputType.phone,
@@ -152,11 +136,14 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                         Navigator.pushReplacementNamed(context, "/authPage");
                       },
                       child: Text(
-                        "← Kembali ke Request OTP",
+                        "← Kembali ke Halaman Login",
                         style: TextStyle(
                           fontSize: kSize14,
-                          color: Colors.blue,
+                          color: kBlue,
                           fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
+                          decorationColor: kBlue,
+                          decorationThickness: 2.0,
                         ),
                       ),
                     ),

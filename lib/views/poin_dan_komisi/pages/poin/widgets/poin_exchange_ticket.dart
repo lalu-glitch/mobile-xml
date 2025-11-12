@@ -55,7 +55,7 @@ class PoinExchangeTicket extends StatelessWidget {
                   Row(
                     children: [
                       Image.asset(
-                        'assets/images/promo.jpg',
+                        '-',
                         width: 88,
                         height: 88,
                         // Placeholder jika gambar tidak ada

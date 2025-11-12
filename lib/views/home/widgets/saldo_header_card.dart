@@ -43,7 +43,7 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
             ),
             const SizedBox(width: 8),
             Image.asset(
-              'assets/images/logo_name.png',
+              'assets/images/logo_with_name.png',
               height: 16,
             ), //nanti diganti dari API
           ],

@@ -17,14 +17,20 @@ class PromoPopup {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: Image.asset(imagePath, fit: BoxFit.cover),
+                child: _buildPromoImage(imagePath),
               ),
-              // Tombol close di pojok kanan atas
               Positioned(
-                top: 8,
-                right: 8,
+                top: 0,
+                right: 0,
                 child: IconButton(
-                  icon: const Icon(Icons.close, color: kWhite),
+                  icon: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: kBackground,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: const Icon(Icons.close_rounded, color: kRed),
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -35,5 +41,32 @@ class PromoPopup {
         );
       },
     );
+  }
+
+  // helper fallback image
+  static Widget _buildPromoImage(String imagePath) {
+    // Jika path diawali "http", berarti itu URL network
+    if (imagePath.startsWith('http')) {
+      return Image.network(
+        imagePath,
+        fit: BoxFit.cover,
+        // Builder untuk loading progress
+        loadingBuilder: (context, child, progress) {
+          if (progress == null) return child;
+          return const SizedBox.shrink();
+        },
+        // Fallback jika gagal load network image
+        errorBuilder: (context, error, stackTrace) {
+          debugPrint('Gagal load promo: $error');
+          return Image.asset(
+            'assets/images/fallback_promo.png',
+            fit: BoxFit.cover,
+          );
+        },
+      );
+    } else {
+      // Kalau bukan URL (misalnya asset lokal)
+      return Image.asset(imagePath, fit: BoxFit.cover);
+    }
   }
 }

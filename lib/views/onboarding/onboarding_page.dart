@@ -15,10 +15,7 @@ class OnboardingPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/logo_onboarding.png',
-              width: kSize50 * 3,
-            ),
+            Image.asset('assets/images/logo_with_name.png', width: kSize50 * 3),
 
             const Spacer(flex: 1),
             Expanded(

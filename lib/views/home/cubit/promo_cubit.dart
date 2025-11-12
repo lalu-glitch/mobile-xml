@@ -10,6 +10,7 @@ class PromoCubit extends Cubit<PromoState> {
   final ApiService apiService;
   PromoCubit(this.apiService) : super(PromoInitial());
 
+  bool hasShownPopUp = false;
   List<IconItem> _promoList = [];
   List<IconItem> get promoList => _promoList;
 

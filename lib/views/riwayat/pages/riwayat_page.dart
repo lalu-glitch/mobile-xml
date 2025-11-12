@@ -38,8 +38,8 @@ class RiwayatTransaksiPage extends StatelessWidget {
                   state.message,
                   style: TextStyle(
                     color: kNeutral60,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
                   ),
                 ),
               );
