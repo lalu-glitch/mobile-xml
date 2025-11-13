@@ -104,7 +104,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                                 color: kOrange,
                               ),
                               filled: true,
-                              fillColor: kOrange.withOpacity(0.1),
+                              fillColor: kOrange.withAlpha(25),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide.none,

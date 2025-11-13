@@ -100,7 +100,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
                               color: kOrange,
                             ),
                             filled: true,
-                            fillColor: kOrange.withOpacity(0.1),
+                            fillColor: kOrange.withAlpha(25),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
@@ -116,7 +116,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
                             labelText: "Phone",
                             prefixIcon: const Icon(Icons.phone, color: kOrange),
                             filled: true,
-                            fillColor: kOrange.withOpacity(0.1),
+                            fillColor: kOrange.withAlpha(25),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
@@ -132,7 +132,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
                             labelText: "Email",
                             prefixIcon: const Icon(Icons.email, color: kOrange),
                             filled: true,
-                            fillColor: kOrange.withOpacity(0.1),
+                            fillColor: kOrange.withAlpha(25),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,

@@ -68,7 +68,7 @@ class ShimmerBox extends StatelessWidget {
                 fit: FlexFit.tight,
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 4),
-                  height: 50,
+                  height: 35,
                   decoration: BoxDecoration(
                     color: kWhite,
                     borderRadius: BorderRadius.circular(10),

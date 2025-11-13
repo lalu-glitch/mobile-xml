@@ -22,7 +22,7 @@ class TransaksiGagalPage extends StatelessWidget {
                 width: 120,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: kWhite.withOpacity(0.9),
+                  color: kWhite.withAlpha(230),
                 ),
                 child: const Center(
                   child: Icon(Icons.close, size: 80, color: Colors.redAccent),

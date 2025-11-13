@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/helper/constant_finals.dart';
 
 class HeaderSection extends StatelessWidget {
-  const HeaderSection({required this.title, required this.imageUrl});
+  const HeaderSection({required this.title, required this.imageUrl, super.key});
 
   final String? title;
   final String? imageUrl;
@@ -20,10 +20,9 @@ class HeaderSection extends StatelessWidget {
               ? CachedNetworkImage(
                   imageUrl: imageUrl!,
                   fit: BoxFit.contain,
-                  placeholder: (_, __) =>
+                  placeholder: (_, _) =>
                       const Center(child: CircularProgressIndicator()),
-                  errorWidget: (_, __, ___) =>
-                      const Icon(Icons.business_rounded),
+                  errorWidget: (_, _, _) => const Icon(Icons.business_rounded),
                 )
               : const Icon(Icons.business_rounded, size: 30, color: kNeutral70),
         ),

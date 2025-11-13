@@ -44,7 +44,7 @@ class TransaksiHelperModel {
       total: total ?? this.total,
       isBebasNominal: isBebasNominal ?? this.isBebasNominal,
       bebasNominalValue: bebasNominalValue ?? this.bebasNominalValue,
-      isEndUser: isendUser ?? this.isEndUser,
+      isEndUser: isendUser ?? isEndUser,
       endUserValue: endUserValue ?? this.endUserValue,
       kodeDompet: kodeDompet ?? this.kodeDompet,
     );

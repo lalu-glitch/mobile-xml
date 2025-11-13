@@ -23,7 +23,7 @@ class CustomListTile extends StatelessWidget {
         ListTile(
           // Menggunakan CircleAvatar untuk latar belakang icon yang lebih rapi
           leading: CircleAvatar(
-            backgroundColor: kOrange.withOpacity(0.05),
+            backgroundColor: kOrange.withAlpha(15),
             foregroundColor: kOrange,
             radius: 20,
             child: Image.asset(imagePath, width: 20, height: 20),

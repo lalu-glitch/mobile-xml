@@ -21,8 +21,6 @@ class NavigationHandler {
       // Selalu pop Navigator (jika currentIndex == 0, Navigator tetap di-pop)
       Navigator.pop(context);
     } catch (e) {
-      // Jika Cubit tidak ditemukan, tetap pop untuk mencegah stuck
-      print('Error accessing FlowCubit: $e');
       Navigator.pop(context);
     }
   }

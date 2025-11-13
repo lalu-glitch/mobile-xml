@@ -22,7 +22,6 @@ class CustomTextField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
 
   const CustomTextField({
-    Key? key,
     required this.controller,
     this.style,
     this.labelText,
@@ -39,7 +38,8 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.textFormater,
     this.contentPadding,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

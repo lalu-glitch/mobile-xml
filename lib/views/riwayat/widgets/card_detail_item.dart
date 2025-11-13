@@ -17,7 +17,7 @@ Widget buildInfoTile(
     child: ListTile(
       leading: Container(
         decoration: BoxDecoration(
-          color: kOrangeAccent500.withOpacity(0.1),
+          color: kOrangeAccent500.withAlpha(25),
           shape: BoxShape.circle,
         ),
         padding: const EdgeInsets.all(8),

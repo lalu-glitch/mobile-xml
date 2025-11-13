@@ -9,6 +9,7 @@ class InfoCard extends StatelessWidget {
     this.footer,
     this.onCopy,
     this.additional,
+    super.key,
   });
 
   final String title;

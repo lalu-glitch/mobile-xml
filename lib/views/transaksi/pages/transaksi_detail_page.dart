@@ -48,7 +48,7 @@ class DetailTransaksiPage extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundColor: statusColor.withOpacity(0.15),
+                  backgroundColor: statusColor.withAlpha(40),
                   child: Icon(statusIcon, color: statusColor, size: 60),
                 ),
                 const SizedBox(height: 16),

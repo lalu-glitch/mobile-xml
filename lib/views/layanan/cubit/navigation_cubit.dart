@@ -47,7 +47,7 @@ class NavigationCubit extends Cubit<NavigationState> {
       emit(state.copyWith(currentIndex: state.currentIndex + 1));
     } else {
       // Flow selesai, bisa emit event atau handle di page terakhir
-      print('Flow selesai');
+      return;
     }
   }
 

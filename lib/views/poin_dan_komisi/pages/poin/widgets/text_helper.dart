@@ -6,7 +6,7 @@ class InfoText extends StatelessWidget {
   final String label;
   final String value;
 
-  const InfoText(this.label, this.value);
+  const InfoText(this.label, this.value, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class InfoText extends StatelessWidget {
 
 class TextTitle extends StatelessWidget {
   final String text;
-  const TextTitle(this.text);
+  const TextTitle(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class TextTitle extends StatelessWidget {
 
 class TextSub extends StatelessWidget {
   final String text;
-  const TextSub(this.text);
+  const TextSub(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class TextSub extends StatelessWidget {
 
 class TextLabel extends StatelessWidget {
   final String text;
-  const TextLabel(this.text);
+  const TextLabel(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class TextLabel extends StatelessWidget {
 
 class TextBody extends StatelessWidget {
   final String text;
-  const TextBody(this.text);
+  const TextBody(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {

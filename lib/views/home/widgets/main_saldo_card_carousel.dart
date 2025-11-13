@@ -118,6 +118,7 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
       left: 0,
       right: 0,
       child: Card(
+        elevation: 20,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         color: kWhite,
         child: Padding(

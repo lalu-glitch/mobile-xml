@@ -12,6 +12,7 @@ class ActionButton extends StatelessWidget {
     required this.minimumTopUp,
     required this.kodeReseller,
     required this.title,
+    super.key,
   });
 
   final TextEditingController controller;

@@ -20,7 +20,7 @@ Future<void> showErrorDialog(BuildContext context, String message) {
               // Icon error
               Container(
                 decoration: BoxDecoration(
-                  color: kRed.withOpacity(0.1),
+                  color: kRed.withAlpha(25),
                   shape: BoxShape.circle,
                 ),
                 padding: const EdgeInsets.all(16),
@@ -182,15 +182,8 @@ void showAppToast(BuildContext context, String message, ToastType type) {
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     margin: const EdgeInsets.symmetric(horizontal: 12),
     decoration: BoxDecoration(
-      color: bgColor.withOpacity(0.95),
+      color: bgColor,
       borderRadius: BorderRadius.circular(12),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.1),
-          blurRadius: 6,
-          offset: const Offset(0, 3),
-        ),
-      ],
     ),
     child: Row(
       mainAxisSize: MainAxisSize.min,
@@ -231,7 +224,7 @@ Future<bool> showExitDialog(BuildContext context) async {
                   // Ikon keluar
                   Container(
                     decoration: BoxDecoration(
-                      color: kRed.withOpacity(0.1),
+                      color: kRed.withAlpha(25),
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(16),
@@ -313,8 +306,8 @@ Future<bool> showForceExitDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          return WillPopScope(
-            onWillPop: () async => false,
+          return PopScope(
+            canPop: false,
             child: Dialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -328,7 +321,7 @@ Future<bool> showForceExitDialog(
                     // Ikon keluar
                     Container(
                       decoration: BoxDecoration(
-                        color: kRed.withOpacity(0.1),
+                        color: kRed.withAlpha(25),
                         shape: BoxShape.circle,
                       ),
                       padding: const EdgeInsets.all(16),

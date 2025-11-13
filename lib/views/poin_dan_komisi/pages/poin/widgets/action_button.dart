@@ -8,6 +8,7 @@ class ActionButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const ActionButton({
+    super.key,
     required this.label,
     required this.color,
     required this.onPressed,
@@ -41,6 +42,8 @@ class ActionButton extends StatelessWidget {
 }
 
 class ActionButtons extends StatelessWidget {
+  const ActionButtons({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(

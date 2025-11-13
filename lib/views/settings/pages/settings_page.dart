@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:xmlapp/core/utils/dialog.dart';
 
 import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/bottom_sheet.dart';
@@ -198,7 +199,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         vertical: kSize32,
                         horizontal: kSize16,
                       ),
-                      itemCount: 8, // Total sections + other widgets
+                      itemCount: 9, // Total sections + other widgets
                       itemBuilder: (context, index) {
                         switch (index) {
                           case 0:
@@ -251,6 +252,17 @@ class _SettingsPageState extends State<SettingsPage> {
                             return const Divider(height: 32, thickness: 1);
                           case 7:
                             return LogoutCard(onTap: _showLogoutBottomSheet);
+                          case 8:
+                            return ElevatedButton(
+                              onPressed: () {
+                                showAppToast(
+                                  context,
+                                  'TEST TOAST',
+                                  ToastType.complete,
+                                );
+                              },
+                              child: Text('click me'),
+                            );
                           default:
                             return const SizedBox.shrink();
                         }

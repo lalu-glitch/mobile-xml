@@ -5,7 +5,7 @@ import '../../../../core/utils/dialog.dart';
 import 'sp_info_card.dart';
 
 class VASection extends StatelessWidget {
-  const VASection({required this.kodeVA, required this.atasNama});
+  const VASection({required this.kodeVA, required this.atasNama, super.key});
   final String kodeVA;
   final String atasNama;
 

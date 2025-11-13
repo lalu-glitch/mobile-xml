@@ -7,7 +7,7 @@ class RiwayatTransaksiResponseModel extends Equatable {
   final int perPage;
   final List<RiwayatTransaksi> items;
 
-  RiwayatTransaksiResponseModel({
+  const RiwayatTransaksiResponseModel({
     required this.total,
     required this.totalPages,
     required this.currentPage,
@@ -39,7 +39,7 @@ class RiwayatTransaksi extends Equatable {
   final DateTime tglEntri;
   final double harga;
 
-  RiwayatTransaksi({
+  const RiwayatTransaksi({
     required this.kode,
     required this.tujuan,
     required this.status,

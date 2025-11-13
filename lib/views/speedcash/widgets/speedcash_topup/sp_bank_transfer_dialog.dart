@@ -7,7 +7,7 @@ import '../../cubit/request_topup_cubit.dart';
 import 'sp_info_card.dart';
 
 class BankTransferDialog extends StatelessWidget {
-  const BankTransferDialog({required this.state});
+  const BankTransferDialog({required this.state, super.key});
   final RequestTopUpSuccess state;
 
   @override

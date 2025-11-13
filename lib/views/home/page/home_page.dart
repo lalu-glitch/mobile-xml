@@ -127,8 +127,10 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(height: 150),
                               BlocBuilder<LayananCubit, LayananState>(
                                 builder: (context, layananState) {
+                                  debugPrint('$layananState');
                                   return BlocBuilder<PromoCubit, PromoState>(
                                     builder: (context, promoState) {
+                                      debugPrint('$promoState');
                                       if (layananState is LayananInitial ||
                                           promoState is PromoInitial) {
                                         return SizedBox.shrink();
@@ -169,6 +171,7 @@ class _HomePageState extends State<HomePage> {
                                             HomePromoSection(),
                                             const SizedBox(height: 24),
                                             HomeLayananSection(),
+                                            const SizedBox(height: 120),
                                           ],
                                         ),
                                       );

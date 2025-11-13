@@ -8,6 +8,7 @@ class ActionItem extends StatelessWidget {
   final Color color;
 
   const ActionItem({
+    super.key,
     required this.icon,
     required this.label,
     this.color = kOrange,

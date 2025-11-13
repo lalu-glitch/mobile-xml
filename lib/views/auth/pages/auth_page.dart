@@ -40,9 +40,16 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return await showExitDialog(context);
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) {
+          return;
+        }
+        final shouldPop = await showExitDialog(context);
+        if (shouldPop && context.mounted) {
+          Navigator.pop(context);
+        }
       },
       child: Scaffold(
         backgroundColor: kWhite,

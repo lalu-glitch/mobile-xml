@@ -82,7 +82,7 @@ class UserProfileCard extends StatelessWidget {
             child: Row(
               children: const [
                 Icon(Icons.verified_rounded, color: kWhite),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Text(
                   'Mitra VVIP',
                   style: TextStyle(

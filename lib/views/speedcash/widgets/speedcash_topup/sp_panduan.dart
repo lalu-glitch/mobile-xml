@@ -5,7 +5,7 @@ import '../../../../core/helper/constant_finals.dart';
 import '../../cubit/panduan_topup_cubit.dart';
 
 class PanduanSection extends StatelessWidget {
-  const PanduanSection();
+  const PanduanSection({super.key});
 
   @override
   Widget build(BuildContext context) {

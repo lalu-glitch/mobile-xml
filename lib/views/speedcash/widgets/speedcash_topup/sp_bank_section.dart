@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../rupiah_text_field.dart';
 
 class BankSection extends StatelessWidget {
-  const BankSection({required this.controller});
+  const BankSection({required this.controller, super.key});
   final TextEditingController controller;
 
   @override
