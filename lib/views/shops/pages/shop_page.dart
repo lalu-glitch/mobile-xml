@@ -7,7 +7,7 @@ import '../../../core/utils/shimmer.dart';
 import '../../../data/models/layanan/layanan_model.dart';
 import '../../home/cubit/layanan_cubit.dart';
 import '../widgets/shop_category_chips.dart';
-import '../widgets/shop_app_bar_actions.dart';
+import '../../../core/utils/search_appbar_actions.dart';
 import 'shop_product.dart';
 
 class ShopPage extends StatefulWidget {
@@ -88,7 +88,7 @@ class _ShopPageState extends State<ShopPage> {
         backgroundColor: kOrange,
         iconTheme: IconThemeData(color: kWhite),
         actions: [
-          ShopsAppBarActions(
+          SearchAppBar(
             isSearching: isSearching,
             onSearchChanged: (value) => setState(() => isSearching = value),
             onClear: onClearText,
