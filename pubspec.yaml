@@ -62,7 +62,6 @@ flutter:
     - assets/images/
     - assets/icons/
     - .env
-    - assets/topup_dummy.json
 
   fonts:
     - family: Gabarito

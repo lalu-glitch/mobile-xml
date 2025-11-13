@@ -111,7 +111,7 @@ class _ShopPageState extends State<ShopPage> {
 
           if (state is LayananError) {
             return ErrorHandler(
-              error: 'Gagal memuat layanan',
+              message: 'Gagal memuat layanan',
               onRetry: () => context.read<LayananCubit>().fetchLayanan(),
             );
           }

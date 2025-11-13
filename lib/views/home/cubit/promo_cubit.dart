@@ -16,6 +16,7 @@ class PromoCubit extends Cubit<PromoState> {
 
   Future<void> fetchPromo() async {
     emit(PromoLoading());
+
     try {
       final response = await apiService.fetchIcons();
       final promoSection = response.data.firstWhere(

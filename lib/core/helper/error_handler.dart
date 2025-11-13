@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'constant_finals.dart';
 
 class ErrorHandler extends StatelessWidget {
-  final String? error;
   final VoidCallback onRetry;
   final String message;
 
   const ErrorHandler({
     super.key,
     required this.onRetry,
-    required this.error,
     this.message = 'Gagal memuat data',
   });
 
@@ -23,6 +21,7 @@ class ErrorHandler extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // const SizedBox(height: 120),
             Icon(Icons.cloud_off_rounded, color: kNeutral60, size: kSize64),
             SizedBox(height: kSize16),
             Text(
