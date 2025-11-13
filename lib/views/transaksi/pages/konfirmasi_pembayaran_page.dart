@@ -1,7 +1,4 @@
 // ignore_for_file: unnecessary_null_comparison
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,8 +37,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>().getData();
-    log('bebas nominal value di Build: ${transaksi.bebasNominalValue}');
-    log('isBebas nominal value di Build: ${transaksi.isBebasNominal}');
 
     return WillPopScope(
       onWillPop: () async {

@@ -125,7 +125,7 @@ class _SettingsPageState extends State<SettingsPage> {
       MenuItem(
         imagePath: 'assets/icons/user-with-some-box-icon.png',
         title: 'List Jaringan',
-        onTap: () => debugPrint('Navigasi ke List Jaringan'),
+        onTap: () => Navigator.pushNamed(context, '/jaringanMitra'),
       ),
       MenuItem(
         imagePath: 'assets/icons/user-list-icon.png',

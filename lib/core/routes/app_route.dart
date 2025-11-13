@@ -7,6 +7,7 @@ import '../../main_page.dart';
 import '../../views/auth/pages/SK_page.dart';
 import '../../views/input_nomor/input_nomer_awal.dart';
 import '../../views/input_nomor/input_nomer_mid.dart';
+import '../../views/jaringan_mitra/pages/jaringan_mitra_page.dart';
 import '../../views/onboarding/onboarding_screen.dart';
 import '../../views/poin_dan_komisi/pages/komisi/pages/status_tukar_komisi_page.dart';
 import '../../views/poin_dan_komisi/pages/komisi/pages/komisi_page.dart';
@@ -20,7 +21,6 @@ import '../../views/settings/pages/detail_akun_page.dart';
 import '../../views/speedcash/pages/speedcash_topup_tiket.dart';
 import '../helper/onboarding_guard.dart';
 import '../utils/webview.dart';
-import '../../views/analytics/analytics_page.dart';
 import '../../views/input_nomor/input_nomor_akhir.dart';
 import '../../views/layanan/noprefix/noprefix_page.dart';
 import '../../views/layanan/prefix/prefix_page.dart';
@@ -45,22 +45,32 @@ Widget onboardingGuardWrapper(Widget child) {
 }
 
 final Map<String, WidgetBuilder> appRoutes = {
+  //ROOT
   '/': (context) => onboardingGuardWrapper(authGuardWrapper(const MainPage())),
   '/onboarding': (context) => const OnboardingScreen(),
+
+  ///AUTH
   '/lupaKodeAgen': (context) => LupaKodeAgenPage(),
   '/authPage': (context) => AuthPage(),
   '/kodeOTP': (context) => KodeOTP(),
   '/S&KPage': (context) => SyaratDanKetentuan(),
+
+  ///MAIN
   '/homepage': (context) => authGuardWrapper(HomePage()),
   '/settings': (context) => authGuardWrapper(SettingsPage()),
   '/shops': (context) => authGuardWrapper(const ShopPage()),
-  '/analytics': (context) => authGuardWrapper(const AnalyticsPage()),
+  '/riwayatTransaksi': (context) => authGuardWrapper(RiwayatTransaksiPage()),
+
+  ///LAYANAN
   '/detailPrefix': (context) => authGuardWrapper(DetailPrefixPage()),
   '/detailNoPrefix': (context) => authGuardWrapper(DetailNoPrefixPage()),
   '/multiSubKategori': (context) =>
       authGuardWrapper(const MultiSubKategoriPage()),
-  '/riwayatTransaksi': (context) => authGuardWrapper(RiwayatTransaksiPage()),
-  '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
+  '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanAkhir()),
+  '/inputNomorFirst': (context) => authGuardWrapper(InputNomorPage()),
+  '/inputNomorMid': (context) => authGuardWrapper(InputNomorMidPage()),
+
+  //POIN & KOMISI
   '/komisiPage': (context) => authGuardWrapper(KomisiPage()),
   '/stastusTukarKomisiPage': (context) =>
       authGuardWrapper(StatusTukarKomisiPage()),
@@ -69,10 +79,8 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/verifikasiTukarPoinPage': (context) =>
       authGuardWrapper(VerifikasiTukarPoinPage()),
   '/statusTukarPoinPage': (context) => authGuardWrapper(StatusTukarPoinPage()),
-  '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanAkhir()),
-  '/inputNomorFirst': (context) => authGuardWrapper(InputNomorPage()),
-  '/inputNomorMid': (context) => authGuardWrapper(InputNomorMidPage()),
-  '/detailInfoAkun': (context) => authGuardWrapper(DetailInfoAkun()),
+
+  //TRANSAKSI
   '/konfirmasiPembayaran': (context) =>
       authGuardWrapper(KonfirmasiPembayaranPage()),
   '/transaksiProses': (context) => authGuardWrapper(TransaksiProsesPage()),
@@ -86,4 +94,11 @@ final Map<String, WidgetBuilder> appRoutes = {
       authGuardWrapper(const SpeedcashTopUpPage()),
   '/speedcashTiketTopUpPage': (context) => (const SpeedCashTiketTopUp()),
   '/webView': (context) => authGuardWrapper(WebviewPage(url: '', title: '')),
+
+  ///MENU SETTINGS
+  '/jaringanMitra': (context) => authGuardWrapper(JaringanMitraPage()),
+
+  ///MISCELLANEOUS
+  '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
+  '/detailInfoAkun': (context) => authGuardWrapper(DetailInfoAkun()),
 };
