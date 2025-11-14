@@ -34,8 +34,8 @@ class DataListHeader extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade300),
-              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: kNeutral50),
+              borderRadius: BorderRadius.circular(16),
             ),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
@@ -44,7 +44,7 @@ class DataListHeader extends StatelessWidget {
                 items: sortOptions.map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value),
+                    child: Text(value, style: TextStyle(fontSize: 14)),
                   );
                 }).toList(),
                 onChanged: onSortChanged,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:xmlapp/core/utils/dialog.dart';
 
 import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/bottom_sheet.dart';
@@ -254,14 +253,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             return LogoutCard(onTap: _showLogoutBottomSheet);
                           case 8:
                             return ElevatedButton(
-                              onPressed: () {
-                                showAppToast(
-                                  context,
-                                  'TEST TOAST',
-                                  ToastType.complete,
-                                );
-                              },
-                              child: Text('click me'),
+                              onPressed: () {},
+                              child: Text('TEST CASE BUTTON'),
                             );
                           default:
                             return const SizedBox.shrink();
@@ -287,7 +280,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // Fungsi helper untuk membangun setiap bagian secara dinamis
   Widget _buildSection(
     BuildContext context,
     String title,
@@ -298,7 +290,6 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header Judul Bagian
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
             child: Text(
@@ -310,7 +301,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
           ),
-          // Kartu (Card) yang membungkus semua item di bagian ini
           Card(
             color: kWhite,
             shape: RoundedRectangleBorder(
@@ -318,7 +308,6 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             child: Column(
               children: items.map((item) {
-                // Widget CustomListTile yang dapat digunakan kembali
                 return CustomListTile(
                   imagePath: item.imagePath,
                   title: item.title,
