@@ -18,6 +18,11 @@ final class WebSocketTransaksiSuccess extends WebsocketTransaksiState {
   WebSocketTransaksiSuccess(this.data);
 }
 
+final class WebSocketTransaksiFailed extends WebsocketTransaksiState {
+  final TransaksiResponse data;
+  WebSocketTransaksiFailed(this.data);
+}
+
 final class WebSocketTransaksiError extends WebsocketTransaksiState {
   final String message;
   WebSocketTransaksiError(this.message);

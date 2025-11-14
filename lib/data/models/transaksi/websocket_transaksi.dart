@@ -69,13 +69,13 @@ class TransaksiResponse {
       case 1:
         return "Sedang Proses";
       case 2:
-        return "Menunggu Jawaban";
+        return "Transaksi Pending";
       case 4:
         return "Sedang Proses";
       case 20:
-        return "SUKSES";
+        return "Sukses";
       case 40:
-        return "GAGAL";
+        return "Gagal";
       case 43:
         return "Saldo Tidak Cukup";
       case 45:
