@@ -29,7 +29,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       context.read<BalanceCubit>().fetchUserBalance();
       context.read<LayananCubit>().fetchLayanan();
       context.read<PromoCubit>().fetchPromo();
@@ -58,14 +59,13 @@ class _HomePageState extends State<HomePage> {
               _isLogoutDialogShown = true;
               await showForceExitDialog(context, () async {
                 await const FlutterSecureStorage().deleteAll();
-                if (context.mounted) {
-                  context.read<BalanceCubit>().reset();
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/authPage',
-                    (_) => false,
-                  );
-                }
+                if (!context.mounted) return;
+                context.read<BalanceCubit>().reset();
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/authPage',
+                  (_) => false,
+                );
               });
             }
           },
@@ -127,10 +127,8 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(height: 150),
                               BlocBuilder<LayananCubit, LayananState>(
                                 builder: (context, layananState) {
-                                  debugPrint('$layananState');
                                   return BlocBuilder<PromoCubit, PromoState>(
                                     builder: (context, promoState) {
-                                      debugPrint('$promoState');
                                       if (layananState is LayananInitial ||
                                           promoState is PromoInitial) {
                                         return SizedBox.shrink();
