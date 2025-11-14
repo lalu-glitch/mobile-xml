@@ -9,12 +9,10 @@ environment:
 
 dependencies:
   android_id: ^0.4.0
-  animated_check: null
   app_links: ^6.4.1
   bloc: ^9.0.0
   cached_network_image: ^3.4.1
   cupertino_icons: ^1.0.8
-  device_info_plus: null
   dio: ^5.9.0
   equatable: ^2.0.7
   flutter:
@@ -48,7 +46,7 @@ flutter_native_splash:
 flutter_icons:
   android: true
   ios: false
-  image_path: "assets/images/logo.png" # path icon kamu
+  image_path: "assets/images/logo.png"
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4
