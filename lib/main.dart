@@ -9,7 +9,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'data/services/auth_service.dart';
 import 'data/services/websocket_service.dart';
-import 'viewmodels/balance_viewmodel.dart';
 import 'views/auth/cubit/request_kode_agen_cubit.dart';
 import 'views/home/cubit/balance_cubit.dart';
 import 'views/home/cubit/layanan_cubit.dart';
@@ -20,7 +19,6 @@ import 'data/services/api_service.dart';
 import 'data/services/location_service.dart';
 import 'data/services/speedcash_api_service.dart';
 import 'viewmodels/speedcash/speedcash_viewmodel.dart';
-import 'viewmodels/transaksi_viewmodel.dart';
 import 'views/input_nomor/utils/transaksi_cubit.dart';
 import 'views/layanan/noprefix/cubit/provider_noprefix_cubit.dart';
 import 'views/layanan/prefix/cubit/provider_prefix_cubit.dart';
@@ -208,14 +206,9 @@ class _XmlAppState extends State<XmlApp> {
         ],
         child: MultiProvider(
           providers: [
-            ChangeNotifierProvider(create: (context) => BalanceViewModel()),
             ChangeNotifierProvider(
               create: (context) =>
                   SpeedcashVM(apiService: context.read<SpeedcashApiService>()),
-            ),
-            ChangeNotifierProvider(
-              create: (context) =>
-                  TransaksiViewModel(service: context.read<ApiService>()),
             ),
           ],
           child: MaterialApp(
