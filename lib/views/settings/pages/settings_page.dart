@@ -252,10 +252,10 @@ class _SettingsPageState extends State<SettingsPage> {
                           case 7:
                             return LogoutCard(onTap: _showLogoutBottomSheet);
                           case 8:
-                            return ElevatedButton(
-                              onPressed: () {},
-                              child: Text('TEST CASE BUTTON'),
-                            );
+                          // return ElevatedButton(
+                          //   onPressed: () {},
+                          //   child: Text('TEST CASE BUTTON'),
+                          // );
                           default:
                             return const SizedBox.shrink();
                         }

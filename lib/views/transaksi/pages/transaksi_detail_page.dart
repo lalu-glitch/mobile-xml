@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
@@ -12,13 +14,13 @@ class DetailTransaksiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status =
-        ModalRoute.of(context)!.settings.arguments
-            as TransaksiResponse; // <-- bug disini
+        ModalRoute.of(context)!.settings.arguments as TransaksiResponse;
 
-    final bool isSuccess = status.statusTrx == 20;
+    log('${status.toJson()}');
 
-    final Color statusColor = isSuccess ? Colors.green : Colors.red;
-    final IconData statusIcon = isSuccess ? Icons.check_circle : Icons.cancel;
+    final int trxStatus = status.statusTrx;
+    final Color statusColor = getStatusColor(trxStatus);
+    final IconData statusIcon = getStatusIcon(trxStatus);
 
     return Scaffold(
       backgroundColor: kBackground,
@@ -27,7 +29,7 @@ class DetailTransaksiPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          isSuccess ? "Transaksi Sukses" : "Transaksi Gagal",
+          'Transaksi ${status.keterangan}',
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w600,
@@ -53,7 +55,7 @@ class DetailTransaksiPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  isSuccess ? "Transaksi Berhasil" : "Transaksi Gagal",
+                  status.keterangan, // langsung pakai getter
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -62,6 +64,7 @@ class DetailTransaksiPage extends StatelessWidget {
                 ),
               ],
             ),
+
             const SizedBox(height: 28),
 
             // Card Detail
@@ -77,7 +80,7 @@ class DetailTransaksiPage extends StatelessWidget {
                 child: Column(
                   children: [
                     infoRow("Kode Transaksi", status.kode.toString()),
-                    infoRow("Status", status.statusTrx.toString()),
+                    infoRow("Status", trxStatus.toString()),
                     infoRow("Produk", status.kodeProduk),
                     infoRow("Tujuan", status.tujuan),
                     infoRow(
@@ -175,4 +178,29 @@ class DetailTransaksiPage extends StatelessWidget {
       ),
     );
   }
+}
+
+// HELPER WARNA STATUS
+Color getStatusColor(int statusTrx) {
+  if ([0, 1, 2, 4].contains(statusTrx)) {
+    return kOrange; // Kuning
+  }
+  if (statusTrx == 20) {
+    return kGreen; // Hijau
+  }
+  if ([40, 43, 45, 47, 50, 52, 53, 55, 56, 58].contains(statusTrx)) {
+    return kRed; // Merah
+  }
+  return kGrey; // Default
+}
+
+// HELPER ICON STATUS
+IconData getStatusIcon(int statusTrx) {
+  if ([0, 1, 2, 4].contains(statusTrx)) {
+    return Icons.hourglass_bottom_rounded; // icon kuning
+  }
+  if (statusTrx == 20) {
+    return Icons.check_circle_outline_rounded; // icon berhasil
+  }
+  return Icons.cancel_rounded; // icon gagal (merah)
 }

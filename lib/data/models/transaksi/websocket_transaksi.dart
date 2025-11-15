@@ -61,7 +61,7 @@ class TransaksiResponse {
     'outbox': outbox,
   };
 
-  // ✅ Getter tambahan
+  // Getter tambahan
   String get keterangan {
     switch (statusTrx) {
       case 0:

@@ -213,7 +213,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
             text:
                 'Proses Transaksi sedikit tertunda. Mohon bersabar ya, kamu bisa cek statusnya secara berkala di ',
             style: TextStyle(
-              color: kNeutral80,
+              color: kNeutral60,
               fontSize: kSize12,
               fontWeight: FontWeight.w500,
             ),
@@ -221,8 +221,8 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
               TextSpan(
                 text: 'Riwayat Transaksi',
                 style: TextStyle(
-                  color: kBlack,
-                  fontSize: kSize14,
+                  color: kNeutral100,
+                  fontSize: kSize12,
                   fontWeight: FontWeight.w600,
                 ),
               ),
