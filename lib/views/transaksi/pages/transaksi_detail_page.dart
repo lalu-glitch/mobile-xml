@@ -16,8 +16,6 @@ class DetailTransaksiPage extends StatelessWidget {
     final status =
         ModalRoute.of(context)!.settings.arguments as TransaksiResponse;
 
-    log('${status.toJson()}');
-
     final int trxStatus = status.statusTrx;
     final Color statusColor = getStatusColor(trxStatus);
     final IconData statusIcon = getStatusIcon(trxStatus);
@@ -148,6 +146,7 @@ class DetailTransaksiPage extends StatelessWidget {
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: () {
+                      log('[DATA YANG DIKIRIM]: $status');
                       Navigator.pushNamed(
                         context,
                         '/struk',

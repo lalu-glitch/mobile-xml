@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../views/auth/pages/lupa_kode_agen.dart';
 import '../../views/auth/pages/otp_page.dart';
 import '../../views/auth/pages/auth_page.dart';
-import '../../main_page.dart';
+import '../../initial_page.dart';
 import '../../views/auth/pages/SK_page.dart';
 import '../../views/input_nomor/input_nomer_awal.dart';
 import '../../views/input_nomor/input_nomer_mid.dart';
@@ -46,7 +46,8 @@ Widget onboardingGuardWrapper(Widget child) {
 
 final Map<String, WidgetBuilder> appRoutes = {
   //ROOT
-  '/': (context) => onboardingGuardWrapper(authGuardWrapper(const MainPage())),
+  '/': (context) =>
+      onboardingGuardWrapper(authGuardWrapper(const InitialPage())),
   '/onboarding': (context) => const OnboardingScreen(),
 
   ///AUTH

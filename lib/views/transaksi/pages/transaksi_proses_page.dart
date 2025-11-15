@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,7 +50,6 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
       body: Center(
         child: BlocConsumer<WebsocketTransaksiCubit, WebsocketTransaksiState>(
           listener: (context, state) {
-            log('listener state saat ini: $state');
             if (state is WebSocketTransaksiSuccess) {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -79,7 +76,6 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
             }
           },
           builder: (context, state) {
-            log('builder state saat ini: $state');
             if (state is WebSocketTransaksiLoading) {
               return _loadingWidget();
             } else if (state is WebSocketTransaksiPending) {

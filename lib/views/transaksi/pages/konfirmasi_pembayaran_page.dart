@@ -12,7 +12,7 @@ import '../../../data/services/speedcash_api_service.dart';
 import '../../auth/widgets/custom_textfield.dart';
 import '../../home/cubit/balance_cubit.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
-import '../../speedcash/widgets/rupiah_text_field.dart';
+import '../../../core/utils/rupiah_text_field.dart';
 import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
 import '../cubit/pembayaran_transaksi_speedcash_cubit.dart';
 import 'konfirmasi_speedcash_page.dart';

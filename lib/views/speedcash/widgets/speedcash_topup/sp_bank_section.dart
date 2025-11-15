@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../rupiah_text_field.dart';
+import '../../../../core/utils/rupiah_text_field.dart';
 
 class BankSection extends StatelessWidget {
   const BankSection({required this.controller, super.key});

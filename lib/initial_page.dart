@@ -6,14 +6,14 @@ import 'views/shops/pages/shop_page.dart';
 import 'views/settings/pages/settings_page.dart';
 import 'core/helper/auth_guard.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+class InitialPage extends StatefulWidget {
+  const InitialPage({super.key});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<InitialPage> createState() => _InitialPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _InitialPageState extends State<InitialPage> {
   int _selectedIndex = 0;
 
   late final List<Widget> _pages;

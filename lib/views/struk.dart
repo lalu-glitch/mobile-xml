@@ -1,4 +1,3 @@
-// struk_page.dart
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
@@ -8,14 +7,15 @@ import 'package:pdf/pdf.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
-import '../core/helper/constant_finals.dart';
 
+import '../core/helper/constant_finals.dart';
 import '../core/helper/currency.dart';
-import '../data/models/transaksi/status_transaksi.dart';
-import '../viewmodels/balance_viewmodel.dart';
+import '../data/models/transaksi/websocket_transaksi.dart';
+import 'home/cubit/balance_cubit.dart';
+import '../core/utils/rupiah_text_field.dart';
 
 class StrukPage extends StatefulWidget {
-  final StatusTransaksiModel? transaksi;
+  final TransaksiResponse? transaksi;
   const StrukPage({super.key, this.transaksi});
 
   @override
@@ -24,9 +24,10 @@ class StrukPage extends StatefulWidget {
 
 class _StrukPageState extends State<StrukPage> {
   late TextEditingController _hargaController;
-  StatusTransaksiModel? trx;
+  TransaksiResponse? trx;
+
   String namaUser = "KONTER PULSA";
-  bool _isInit = false; // biar cuma sekali eksekusi
+  bool _isInit = false;
 
   @override
   void initState() {
@@ -37,25 +38,23 @@ class _StrukPageState extends State<StrukPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (!_isInit) {
-      final args =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      trx = args['transaksi'] as StatusTransaksiModel;
+    if (_isInit) return;
 
-      final balanceVM = Provider.of<BalanceViewModel>(context, listen: false);
-      namaUser = balanceVM.userBalance?.namauser ?? "KONTER PULSA";
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    trx = args['transaksi'] as TransaksiResponse;
 
-      // set default harga
-      _hargaController.text = trx?.harga.toString() ?? "0";
+    final balanceState = context.read<BalanceCubit>().state;
 
-      _isInit = true; // biar gak dipanggil berkali2
+    if (balanceState is BalanceLoaded) {
+      namaUser = balanceState.data.namauser ?? "KONTER PULSA";
+    } else {
+      namaUser = "KONTER PULSA"; // fallback
     }
-  }
 
-  @override
-  void dispose() {
-    _hargaController.dispose();
-    super.dispose();
+    _hargaController.text = trx?.harga.toString() ?? "0";
+
+    _isInit = true;
   }
 
   @override
@@ -94,7 +93,7 @@ class _StrukPageState extends State<StrukPage> {
                   ),
                   _line("Status", trx?.keterangan),
 
-                  // Kolom Harga pakai TextField
+                  // Input Harga
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Row(
@@ -113,28 +112,21 @@ class _StrukPageState extends State<StrukPage> {
                         ),
                         const Text(" : "),
                         Expanded(
-                          child: TextField(
+                          child: RupiahTextField(
                             controller: _hargaController,
-                            keyboardType: TextInputType.number,
-                            style: const TextStyle(
-                              fontFamily: "monospace",
-                              color: Colors.black87,
-                            ),
-                            decoration: const InputDecoration(
-                              isDense: true,
-                              border: OutlineInputBorder(),
-                            ),
+                            fontSize: 16,
                           ),
                         ),
                       ],
                     ),
                   ),
 
-                  if (trx!.sn.isNotEmpty) _line("SN", trx?.sn),
+                  if (trx?.sn != null && trx!.sn!.trim().isNotEmpty)
+                    _line("SN", trx?.sn ?? '-'),
                   const Divider(),
                   _line("OUTBOX", ''),
                   Text(
-                    trx!.outbox,
+                    trx?.outbox ?? '-',
                     style: TextStyle(
                       fontFamily: "monospace",
                       fontSize: kSize14,
@@ -154,6 +146,8 @@ class _StrukPageState extends State<StrukPage> {
               ),
             ),
           ),
+
+          // Tombol Cetak & Share
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -246,6 +240,7 @@ class _StrukPageState extends State<StrukPage> {
     );
   }
 
+  // Line builder
   Widget _line(String label, String? value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
@@ -280,7 +275,7 @@ class _StrukPageState extends State<StrukPage> {
 
   /// PDF generator menerima harga input
   Future<Uint8List> _generatePdf(
-    StatusTransaksiModel trx,
+    TransaksiResponse trx,
     String namaUser,
     String hargaInput,
   ) async {
@@ -326,7 +321,8 @@ class _StrukPageState extends State<StrukPage> {
                 ),
                 _pdfLine("Status", trx.keterangan),
                 _pdfLine("Harga", hargaFormatted), // <- ambil dari TextField
-                if (trx.sn.isNotEmpty) _pdfLine("SN", trx.sn),
+                if (trx.sn != null && trx.sn!.trim().isNotEmpty)
+                  _pdfLine("SN", trx.sn),
                 pw.Divider(),
                 pw.Text(
                   "OUTBOX:",
@@ -337,7 +333,7 @@ class _StrukPageState extends State<StrukPage> {
                 ),
                 pw.SizedBox(height: 2),
                 pw.Text(
-                  trx.outbox,
+                  trx.outbox ?? '-',
                   style: pw.TextStyle(font: pw.Font.courier(), fontSize: 12),
                 ),
                 pw.Divider(),
@@ -388,5 +384,11 @@ class _StrukPageState extends State<StrukPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _hargaController.dispose();
+    super.dispose();
   }
 }
