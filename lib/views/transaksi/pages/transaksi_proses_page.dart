@@ -15,27 +15,23 @@ class TransaksiProsesPage extends StatefulWidget {
 }
 
 class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
-  bool _isInit = false;
-
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isInit) {
-      final transaksi = context.read<TransaksiHelperCubit>().getData();
-      final cubit = context.read<WebsocketTransaksiCubit>();
-      _isInit = true;
-      Future.microtask(() async {
-        cubit.reset();
-        cubit.startTransaksi(
-          transaksi.tujuan ?? '',
-          transaksi.kodeProduk ?? '',
-          nominal: transaksi.isBebasNominal == 1
-              ? transaksi.bebasNominalValue ?? 0
-              : 0,
-          endUser: transaksi.isEndUser == 1 ? transaksi.endUserValue ?? '' : '',
-        );
-      });
-    }
+  void initState() {
+    super.initState();
+    // Memindahkan logika dari didChangeDependencies ke initState
+    // untuk memastikan state direset sebelum build pertama.
+    final transaksi = context.read<TransaksiHelperCubit>().getData();
+    final cubit = context.read<WebsocketTransaksiCubit>();
+
+    cubit.reset();
+    cubit.startTransaksi(
+      transaksi.tujuan ?? '',
+      transaksi.kodeProduk ?? '',
+      nominal: transaksi.isBebasNominal == 1
+          ? transaksi.bebasNominalValue ?? 0
+          : 0,
+      endUser: transaksi.isEndUser == 1 ? transaksi.endUserValue ?? '' : '',
+    );
   }
 
   @override

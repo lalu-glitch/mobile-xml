@@ -31,9 +31,10 @@ class WebsocketTransaksiCubit extends Cubit<WebsocketTransaksiState> {
     int nominal = 0,
     String endUser = '',
   }) async {
-    emit(WebSocketTransaksiLoading());
-
-    _pendingCount = 0;
+    // [PERBAIKAN] Panggil reset di awal untuk memastikan state selalu bersih
+    // sebelum memulai transaksi baru.
+    reset();
+    emit(WebSocketTransaksiLoading()); // Emit loading setelah reset
     try {
       await webSocketService.connect();
       if (_subscription != null) return; // udah connected
