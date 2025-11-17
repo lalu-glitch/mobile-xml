@@ -102,12 +102,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         namaKecamatan,
         referralCtrl.text.trim().isEmpty ? 'DAFTAR' : referralCtrl.text.trim(),
       );
-      log('result: $result');
-      log('data: ${result['data']}');
-      log('type : ${result['data']['type']}');
-      log('kodeReseller : ${result['data']['kode_reseller']}');
-      log('expiresAt : ${result['data']['expiresAt']}');
-
       if (!mounted) return;
       if (result["success"]) {
         Navigator.pushReplacementNamed(

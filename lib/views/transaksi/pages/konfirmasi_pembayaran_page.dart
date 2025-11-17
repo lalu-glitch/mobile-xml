@@ -9,10 +9,8 @@ import '../../../core/utils/dialog.dart';
 import '../../../core/utils/info_row.dart';
 import '../../../data/models/transaksi/metode_transaksi.dart';
 import '../../../data/services/speedcash_api_service.dart';
-import '../../auth/widgets/custom_textfield.dart';
 import '../../home/cubit/balance_cubit.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
-import '../../../core/utils/rupiah_text_field.dart';
 import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
 import '../cubit/pembayaran_transaksi_speedcash_cubit.dart';
 import 'konfirmasi_speedcash_page.dart';
@@ -31,6 +29,11 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
   double getTotalTransaksi(dynamic transaksi) {
     final double baseTotal = transaksi.total ?? 0;
+    if (transaksi.isBebasNominal == 1) {
+      final int nominalTambahan = transaksi.bebasNominalValue ?? 0;
+      final total = baseTotal + nominalTambahan;
+      return total;
+    }
     return baseTotal;
   }
 
@@ -72,39 +75,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                   children: [
                     _buildInfoCard(transaksi),
                     const SizedBox(height: 24),
-
-                    // --- BEBAS NOMINAL ---
-                    if (transaksi.isBebasNominal == 1) ...[
-                      Text(
-                        "Masukkan Nominal",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: kSize14,
-                        ),
-                      ),
-                      SizedBox(height: kSize8),
-                      RupiahTextField(controller: textController, fontSize: 20),
-                      const SizedBox(height: 24),
-                    ],
-
-                    // --- END USER ---
-                    if (transaksi.isEndUser == 1) ...[
-                      Text(
-                        "Masukan Nomor Voucher",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: kSize14,
-                        ),
-                      ),
-                      SizedBox(height: kSize8),
-                      CustomTextField(
-                        controller: textController,
-                        keyboardType: TextInputType.phone,
-                        textFormater: [FilteringTextInputFormatter.digitsOnly],
-                      ),
-                      const SizedBox(height: 24),
-                    ],
-
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(

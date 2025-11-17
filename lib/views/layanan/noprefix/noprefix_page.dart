@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -119,6 +121,9 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                       produk.bebasNominal,
                                     );
                                     transaksi.isEndUser(produk.endUser);
+                                    log(
+                                      '[PREFIX PAGE BEBAS NOMINAL VALUE]: ${produk.bebasNominal}',
+                                    );
                                   },
                             child: Container(
                               margin: const EdgeInsets.symmetric(

@@ -73,7 +73,6 @@ class HomeLayananSection extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             final sequence = pageSequences[iconItem.flow] ?? [];
-
                             // simpan state awal ke FlowCubit
                             context.read<FlowCubit>().startFlow(
                               iconItem.flow!,
@@ -95,7 +94,7 @@ class HomeLayananSection extends StatelessWidget {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(18),
                                 child: CachedNetworkImage(
-                                  imageUrl: iconItem.url ?? '',
+                                  imageUrl: iconItem.icon ?? '',
                                   width: 50,
                                   height: 50,
                                   fit: BoxFit.cover,

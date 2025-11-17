@@ -88,7 +88,6 @@ class ApiService {
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {"tujuan": tujuan},
       );
-
       final jsonData = Map<String, dynamic>.from(response.data);
       if (response.statusCode == 200 && jsonData['success'] == true) {
         final providers = (jsonData['data'] as List? ?? [])
@@ -230,7 +229,6 @@ class ApiService {
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         queryParameters: {"page": page, "limit": limit},
       );
-      log('${response.data}');
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = Map<String, dynamic>.from(
           response.data,

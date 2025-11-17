@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xmlapp/core/utils/dialog.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
+import '../../../core/utils/dialog.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
 import '../cubit/panduan_topup_cubit.dart';
 import '../cubit/request_topup_cubit.dart';
@@ -61,7 +59,6 @@ class _SpeedcashTopUpState extends State<SpeedcashTopUp> {
     return Scaffold(
       body: BlocListener<RequestTopUpCubit, RequestTopUpState>(
         listener: (context, state) {
-          log('[state] : $state', name: "reqtopupcubit");
           if (state is RequestTopUpSuccess) {
             if (state.data.state == 1) {
               Navigator.pushNamed(context, '/speedcashTiketTopUpPage');

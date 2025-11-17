@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
@@ -146,7 +144,6 @@ class DetailTransaksiPage extends StatelessWidget {
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: () {
-                      log('[DATA YANG DIKIRIM]: $status');
                       Navigator.pushNamed(
                         context,
                         '/struk',

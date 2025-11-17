@@ -100,74 +100,76 @@ class _InputNomorTujuanAkhirState
           backgroundColor: kOrange,
           iconTheme: const IconThemeData(color: kWhite),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Card(
-                color: kWhite,
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      infoRow("Nama Produk", transaksi.namaProduk ?? ''),
-                      const Divider(height: 24),
-                      infoRow(
-                        "Total Pembayaran",
-                        CurrencyUtil.formatCurrency(transaksi.total),
-                        isTotal: true,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text("Masukkan Nomor Tujuan"),
-              const SizedBox(height: 8),
-
-              buildNomorTextField(
-                controller: nomorController,
-                onPickContact: pickContact,
-              ),
-
-              SizedBox(height: kSize14),
-              Visibility(
-                visible: transaksi.isBebasNominal == 1,
-                child: const Text("Masukkan Nominal"),
-              ),
-              Visibility(
-                visible: transaksi.isBebasNominal == 1,
-                child: SizedBox(height: kSize8),
-              ),
-              Visibility(
-                visible: transaksi.isBebasNominal == 1,
-                child: RupiahTextField(
-                  controller: _bebasNominalController,
-                  fontSize: 20,
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: kOrange,
-                  foregroundColor: kWhite,
-                  minimumSize: const Size(double.infinity, 48),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Card(
+                  color: kWhite,
+                  elevation: 3,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        infoRow("Nama Produk", transaksi.namaProduk ?? ''),
+                        const Divider(height: 24),
+                        infoRow(
+                          "Total Pembayaran",
+                          CurrencyUtil.formatCurrency(transaksi.total),
+                          isTotal: true,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                onPressed: handleNextButtonPress,
-                child: const Text(
-                  "Selanjutnya",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                const SizedBox(height: 20),
+                const Text("Masukkan Nomor Tujuan"),
+                const SizedBox(height: 8),
+
+                buildNomorTextField(
+                  controller: nomorController,
+                  onPickContact: pickContact,
                 ),
-              ),
-            ],
+
+                SizedBox(height: kSize14),
+                Visibility(
+                  visible: transaksi.isBebasNominal == 1,
+                  child: const Text("Masukkan Nominal"),
+                ),
+                Visibility(
+                  visible: transaksi.isBebasNominal == 1,
+                  child: SizedBox(height: kSize8),
+                ),
+                Visibility(
+                  visible: transaksi.isBebasNominal == 1,
+                  child: RupiahTextField(
+                    controller: _bebasNominalController,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kOrange,
+                    foregroundColor: kWhite,
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: handleNextButtonPress,
+                  child: const Text(
+                    "Selanjutnya",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
