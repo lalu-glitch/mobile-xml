@@ -1,21 +1,21 @@
 // ignore_for_file: unused_import, unnecessary_string_interpolations
 
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
-import 'package:xmlapp/core/helper/error_handler.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../../../core/utils/dialog.dart';
-import '../../input_nomor/utils/contact_handler.dart';
+import '../../input_transaksi/utils/contact_handler.dart';
 import '../cubit/flow_cubit.dart';
 import '../../../data/models/layanan/flow_state_models.dart';
 import '../../../core/helper/currency.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../input_transaksi/utils/transaksi_cubit.dart';
 import '../../transaksi/pages/konfirmasi_pembayaran_page.dart';
 import 'cubit/provider_prefix_cubit.dart';
 
@@ -350,6 +350,8 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                               ),
                             ),
                             onPressed: () {
+                              //cek value dari bebasNominal
+
                               if (!isLastPage) {
                                 final nextPage = flowState
                                     .sequence[flowState.currentIndex + 1];
@@ -361,9 +363,6 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                               } else {
                                 //helper
                                 sendTransaksi.setTujuan(nomorTujuan);
-                                sendTransaksi.isBebasNominal(
-                                  selectedProduk.bebasNominal,
-                                );
                                 sendTransaksi.isEndUser(selectedProduk.endUser);
                                 Navigator.pushNamed(
                                   context,
@@ -372,7 +371,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                               }
                             },
                             child: Text(
-                              isLastPage ? "Selanjutnya" : "Next",
+                              isLastPage ? "Selanjutnya" : "Selanjutnya",
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),

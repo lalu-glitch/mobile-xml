@@ -7,7 +7,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../cubit/flow_cubit.dart';
 import '../../../core/helper/currency.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../input_transaksi/utils/transaksi_cubit.dart';
 import 'cubit/provider_noprefix_cubit.dart';
 
 class DetailNoPrefixPage extends StatefulWidget {
@@ -117,9 +117,6 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     transaksi.setKodeproduk(produk.kodeProduk);
                                     transaksi.setNamaProduk(produk.namaProduk);
                                     transaksi.setNominal(produk.hargaJual);
-                                    transaksi.isBebasNominal(
-                                      produk.bebasNominal,
-                                    );
                                     transaksi.isEndUser(produk.endUser);
                                     log(
                                       '[PREFIX PAGE BEBAS NOMINAL VALUE]: ${produk.bebasNominal}',

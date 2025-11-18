@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -111,7 +109,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             "kode_reseller_register": result['data']["kode_reseller"],
             "type": result["data"]["type"],
             "nomor": result["data"]["nomor"],
-            "expiresAt": result["data"]["expiresAt"], //bugnya disini
+            "expiresAt":
+                result["data"]["expiresAt"], //bugnya disini // kayanya udah solve
           },
         );
       }

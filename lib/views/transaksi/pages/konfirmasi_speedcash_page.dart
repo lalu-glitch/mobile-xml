@@ -5,7 +5,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../core/utils/info_row.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../input_transaksi/utils/transaksi_cubit.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
 import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
 import '../cubit/pembayaran_transaksi_speedcash_cubit.dart';
