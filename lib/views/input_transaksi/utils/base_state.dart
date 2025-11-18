@@ -6,9 +6,9 @@ import '../../layanan/cubit/flow_cubit.dart';
 import 'contact_handler.dart';
 
 // Tipe generik T adalah untuk Widget, S untuk State
-abstract class BaseInputNomorState<T extends StatefulWidget> extends State<T> {
+abstract class BaseInput<T extends StatefulWidget> extends State<T> {
   // Properti yang sama di semua halaman
-  final TextEditingController nomorController = TextEditingController();
+  final TextEditingController dataController = TextEditingController();
 
   // Handlers yang sama di semua halaman
   late final NavigationHandler navigationHandler;
@@ -21,7 +21,7 @@ abstract class BaseInputNomorState<T extends StatefulWidget> extends State<T> {
     navigationHandler = NavigationHandler(context);
     handler = ContactFlowHandler(
       context: context,
-      nomorController: nomorController,
+      nomorController: dataController,
       setStateCallback: (fn) {
         if (mounted) {
           setState(fn);
@@ -51,7 +51,7 @@ abstract class BaseInputNomorState<T extends StatefulWidget> extends State<T> {
 
   @override
   void dispose() {
-    nomorController.dispose();
+    dataController.dispose();
     super.dispose();
   }
 }

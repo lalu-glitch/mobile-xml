@@ -33,12 +33,19 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   double selectedPrice = 0;
 
   late final ContactFlowHandler handler;
+  late ProviderPrefixCubit prefixCubit;
+  late TransaksiHelperCubit sendTransaksi;
+  late FlowCubit flowCubit;
 
   @override
   void initState() {
     super.initState();
-    _nomorController.text = "";
 
+    prefixCubit = context.read<ProviderPrefixCubit>();
+    sendTransaksi = context.read<TransaksiHelperCubit>();
+    flowCubit = context.read<FlowCubit>();
+
+    _nomorController.text = "";
     handler = ContactFlowHandler(
       context: context,
       nomorController: _nomorController,
@@ -49,14 +56,14 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
       },
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ProviderPrefixCubit>().clear();
+      prefixCubit.clear();
     });
   }
 
   Future<void> _fetchProvider(String value) async {
     if (value.length >= 4) {
       final readTransaksi = context.read<TransaksiHelperCubit>().getData();
-      await context.read<ProviderPrefixCubit>().fetchProvidersPrefix(
+      await prefixCubit.fetchProvidersPrefix(
         readTransaksi.kodeCatatan ?? '-',
         value,
       );
@@ -71,20 +78,18 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
         _fetchProvider(value);
       });
     } else {
-      context.read<ProviderPrefixCubit>().clear();
+      prefixCubit.clear();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final flowState = context.watch<FlowCubit>().state!;
-    final flowCubit = context.read<FlowCubit>();
-    final sendTransaksi = context.read<TransaksiHelperCubit>();
     final iconItem = flowState.layananItem;
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;
 
-    final nomorTujuan = _nomorController.text;
+    final nomorTujuan = _nomorController.text.trim();
     final bool isLastPage = currentIndex == sequence.length - 1;
 
     return WillPopScope(
@@ -163,9 +168,6 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(state.message, style: TextStyle(color: kRed)),
                     );
-
-                    // will implement
-                    // return ErrorHandler(error: state.message, onRetry: () {});
                   }
                   if (state is ProviderPrefixSuccess) {
                     if (state.providers.isEmpty) {
@@ -200,23 +202,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                 return GestureDetector(
                                   onTap: isGangguan
                                       ? null
-                                      : () {
-                                          setState(() {
-                                            selectedProductCode =
-                                                produk.kodeProduk;
-                                            selectedPrice = produk.hargaJual
-                                                .toDouble();
-                                          });
-                                          sendTransaksi.setKodeproduk(
-                                            produk.kodeProduk,
-                                          );
-                                          sendTransaksi.setNamaProduk(
-                                            produk.namaProduk,
-                                          );
-                                          sendTransaksi.setNominal(
-                                            produk.hargaJual,
-                                          );
-                                        },
+                                      : () => onProdukSelected(produk),
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
                                       horizontal: 12,
@@ -226,7 +212,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
                                       color: isGangguan
-                                          ? Colors.grey.shade200
+                                          ? kNeutral20
                                           : isSelected
                                           ? kOrange
                                           : kWhite,
@@ -350,9 +336,12 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                               ),
                             ),
                             onPressed: () {
-                              //cek value dari bebasNominal
-
-                              if (!isLastPage) {
+                              final bool navigateToBNEUPage =
+                                  !isLastPage &&
+                                  (selectedProduk.bebasNominal == 1 ||
+                                      selectedProduk.endUser == 1);
+                              if (navigateToBNEUPage) {
+                                sendTransaksi.setTujuan(nomorTujuan);
                                 final nextPage = flowState
                                     .sequence[flowState.currentIndex + 1];
                                 flowCubit.nextPage();
@@ -363,7 +352,6 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                               } else {
                                 //helper
                                 sendTransaksi.setTujuan(nomorTujuan);
-                                sendTransaksi.isEndUser(selectedProduk.endUser);
                                 Navigator.pushNamed(
                                   context,
                                   '/konfirmasiPembayaran',
@@ -386,6 +374,20 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
             : null,
       ),
     );
+  }
+
+  void onProdukSelected(dynamic produk) {
+    setState(() {
+      selectedProductCode = produk.kodeProduk;
+      selectedPrice = produk.hargaJual.toDouble();
+    });
+
+    final trx = context.read<TransaksiHelperCubit>();
+    trx.setKodeproduk(produk.kodeProduk);
+    trx.setNamaProduk(produk.namaProduk);
+    trx.setNominal(produk.hargaJual);
+    trx.isBebasNominal(produk.bebasNominal);
+    trx.isEndUser(produk.endUser);
   }
 
   @override

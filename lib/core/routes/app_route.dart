@@ -5,6 +5,7 @@ import '../../views/auth/pages/otp_page.dart';
 import '../../views/auth/pages/auth_page.dart';
 import '../../initial_page.dart';
 import '../../views/auth/pages/SK_page.dart';
+import '../../views/input_transaksi/input_bn_eu.dart';
 import '../../views/input_transaksi/input_nomer_awal.dart';
 import '../../views/input_transaksi/input_nomer_mid.dart';
 import '../../views/jaringan_mitra/pages/jaringan_mitra_page.dart';
@@ -70,8 +71,9 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/inputNomorTujuan': (context) => authGuardWrapper(InputNomorTujuanAkhir()),
   '/inputNomorFirst': (context) => authGuardWrapper(InputNomorPage()),
   '/inputNomorMid': (context) => authGuardWrapper(InputNomorMidPage()),
+  '/inputBNEU': (context) => authGuardWrapper(InputBebasNominalDanEndUser()),
 
-  //POIN & KOMISI
+  ///POIN & KOMISI
   '/komisiPage': (context) => authGuardWrapper(KomisiPage()),
   '/stastusTukarKomisiPage': (context) =>
       authGuardWrapper(StatusTukarKomisiPage()),
@@ -81,12 +83,14 @@ final Map<String, WidgetBuilder> appRoutes = {
       authGuardWrapper(VerifikasiTukarPoinPage()),
   '/statusTukarPoinPage': (context) => authGuardWrapper(StatusTukarPoinPage()),
 
-  //TRANSAKSI
+  ///TRANSAKSI
   '/konfirmasiPembayaran': (context) =>
       authGuardWrapper(KonfirmasiPembayaranPage()),
   '/transaksiProses': (context) => authGuardWrapper(TransaksiProsesPage()),
   '/transaksiDetail': (context) =>
       authGuardWrapper(const DetailTransaksiPage()),
+
+  ///TRANSAKSI SPEEDCASH
   '/speedcashBindingPage': (context) =>
       authGuardWrapper(SpeedcashBindingPage()),
   '/speedcashRegisterPage': (context) =>

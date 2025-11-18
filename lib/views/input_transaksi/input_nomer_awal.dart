@@ -17,7 +17,7 @@ class InputNomorPage extends StatefulWidget {
   State<InputNomorPage> createState() => _InputNomorPageState();
 }
 
-class _InputNomorPageState extends BaseInputNomorState<InputNomorPage> {
+class _InputNomorPageState extends BaseInput<InputNomorPage> {
   @override
   void handleNextButtonPress() {
     final flowCubit = context.read<FlowCubit>();
@@ -25,7 +25,7 @@ class _InputNomorPageState extends BaseInputNomorState<InputNomorPage> {
     final int currentIndex = flowState.currentIndex;
     final bool isLastPage = currentIndex == flowState.sequence.length - 1;
 
-    if (nomorController.text.isEmpty) {
+    if (dataController.text.isEmpty) {
       showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
       return;
     }
@@ -63,7 +63,7 @@ class _InputNomorPageState extends BaseInputNomorState<InputNomorPage> {
                 const Text("Masukkan Nomor Tujuan"),
                 const SizedBox(height: 8),
                 buildNomorTextField(
-                  controller: nomorController,
+                  controller: dataController,
                   onPickContact: pickContact,
                 ),
                 const SizedBox(height: 20),

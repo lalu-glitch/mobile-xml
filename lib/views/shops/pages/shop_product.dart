@@ -97,7 +97,7 @@ class ShopProducts extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(18),
                         child: CachedNetworkImage(
-                          imageUrl: item.url ?? '',
+                          imageUrl: item.icon ?? '',
                           width: 50,
                           height: 50,
                           fit: BoxFit.cover,

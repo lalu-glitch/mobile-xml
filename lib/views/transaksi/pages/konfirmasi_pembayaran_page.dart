@@ -229,7 +229,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             );
 
             sendTransaksi.setKodeDompet(selected.kodeDompet ?? "");
-            sendTransaksi.bebasNominalValue(
+            sendTransaksi.setbebasNominalValue(
               int.tryParse(textController.text.replaceAll('.', '')) ?? 0,
             );
             sendTransaksi.setEndUserValue(textController.text.trim());

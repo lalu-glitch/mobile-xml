@@ -46,6 +46,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
       body: Center(
         child: BlocConsumer<WebsocketTransaksiCubit, WebsocketTransaksiState>(
           listener: (context, state) {
+            final transaksiCubit = context.read<TransaksiHelperCubit>();
             if (state is WebSocketTransaksiSuccess) {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -53,6 +54,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
                 (route) => false,
                 arguments: state.data,
               );
+              transaksiCubit.reset();
             }
             if (state is WebSocketTransaksiFailed) {
               Navigator.pushNamedAndRemoveUntil(
@@ -61,6 +63,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
                 (route) => false,
                 arguments: state.data,
               );
+              transaksiCubit.reset();
             }
             if (state is WebSocketTransaksiError) {
               showErrorDialog(
@@ -69,6 +72,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
                     ? state.message
                     : 'Gangguan transaksi, Ulangi beberapa saat lagi.',
               );
+              transaksiCubit.reset();
             }
           },
           builder: (context, state) {

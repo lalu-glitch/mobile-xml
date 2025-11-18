@@ -127,7 +127,7 @@ class _ShopPageState extends State<ShopPage> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  // === 1️⃣ Kategori ===
+                  // Kategori
                   ShopsCategoryChips(
                     cubit: cubit,
                     selectedHeading: selectedHeading,
@@ -137,7 +137,7 @@ class _ShopPageState extends State<ShopPage> {
 
                   const Divider(color: kNeutral50, thickness: 4),
 
-                  // === 2️⃣ Produk ===
+                  // Produk
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ShopProducts(
