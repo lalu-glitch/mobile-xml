@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../data/models/transaksi/websocket_transaksi.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../input_transaksi/utils/transaksi_cubit.dart';
 import '../cubit/websocket_transaksi_cubit.dart';
 
 class TransaksiProsesPage extends StatefulWidget {
@@ -46,6 +46,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
       body: Center(
         child: BlocConsumer<WebsocketTransaksiCubit, WebsocketTransaksiState>(
           listener: (context, state) {
+            final transaksiCubit = context.read<TransaksiHelperCubit>();
             if (state is WebSocketTransaksiSuccess) {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -53,6 +54,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
                 (route) => false,
                 arguments: state.data,
               );
+              transaksiCubit.reset();
             }
             if (state is WebSocketTransaksiFailed) {
               Navigator.pushNamedAndRemoveUntil(
@@ -61,6 +63,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
                 (route) => false,
                 arguments: state.data,
               );
+              transaksiCubit.reset();
             }
             if (state is WebSocketTransaksiError) {
               showErrorDialog(
@@ -69,6 +72,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
                     ? state.message
                     : 'Gangguan transaksi, Ulangi beberapa saat lagi.',
               );
+              transaksiCubit.reset();
             }
           },
           builder: (context, state) {

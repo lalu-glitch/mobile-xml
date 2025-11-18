@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../../../data/models/layanan/layanan_model.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../input_transaksi/utils/transaksi_cubit.dart';
 import '../../layanan/cubit/flow_cubit.dart';
 
 class ShopProducts extends StatelessWidget {
@@ -97,7 +97,7 @@ class ShopProducts extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(18),
                         child: CachedNetworkImage(
-                          imageUrl: item.url ?? '',
+                          imageUrl: item.icon ?? '',
                           width: 50,
                           height: 50,
                           fit: BoxFit.cover,

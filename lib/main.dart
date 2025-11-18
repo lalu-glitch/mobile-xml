@@ -19,7 +19,7 @@ import 'data/services/api_service.dart';
 import 'data/services/location_service.dart';
 import 'data/services/speedcash_api_service.dart';
 import 'viewmodels/speedcash/speedcash_viewmodel.dart';
-import 'views/input_nomor/utils/transaksi_cubit.dart';
+import 'views/input_transaksi/utils/transaksi_cubit.dart';
 import 'views/layanan/noprefix/cubit/provider_noprefix_cubit.dart';
 import 'views/layanan/prefix/cubit/provider_prefix_cubit.dart';
 import 'views/riwayat/cubit/riwayat_transaksi_cubit.dart';

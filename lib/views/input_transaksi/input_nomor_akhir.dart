@@ -19,62 +19,8 @@ class InputNomorTujuanAkhir extends StatefulWidget {
   State<InputNomorTujuanAkhir> createState() => _InputNomorTujuanAkhirState();
 }
 
-class _InputNomorTujuanAkhirState
-    extends BaseInputNomorState<InputNomorTujuanAkhir> {
+class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
   final TextEditingController _bebasNominalController = TextEditingController();
-
-  @override
-  void handleNextButtonPress() {
-    final flowCubit = context.read<FlowCubit>();
-    final flowState = flowCubit.state!;
-
-    final sendTransaksi = context.read<TransaksiHelperCubit>();
-    final transaksi = sendTransaksi.getData();
-
-    final int currentIndex = flowState.currentIndex;
-    final bool isLastPage = currentIndex == flowState.sequence.length - 1;
-
-    if (nomorController.text.isEmpty) {
-      showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
-      return;
-    }
-    if (transaksi.isBebasNominal == 1) {
-      final bebasNominalText = _bebasNominalController.text.trim().replaceAll(
-        '.',
-        '',
-      );
-
-      if (bebasNominalText.isEmpty) {
-        showErrorDialog(context, "Bebas nominal tidak boleh kosong");
-        return;
-      }
-      final nominal = int.tryParse(bebasNominalText);
-      if (nominal == null) {
-        showErrorDialog(context, "Input harus berupa angka");
-        return;
-      }
-
-      sendTransaksi.bebasNominalValue(nominal);
-    } else {
-      sendTransaksi.bebasNominalValue(0);
-    }
-
-    sendTransaksi.setTujuan(nomorController.text);
-
-    if (!isLastPage) {
-      final nextPage = flowState.sequence[currentIndex + 1];
-
-      flowCubit.nextPage();
-
-      if (pageRoutes.containsKey(nextPage)) {
-        Navigator.pushNamed(context, pageRoutes[nextPage]!);
-      } else {
-        showErrorDialog(context, "Rute halaman berikutnya tidak ditemukan.");
-      }
-    } else {
-      Navigator.pushNamed(context, '/konfirmasiPembayaran');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +78,7 @@ class _InputNomorTujuanAkhirState
                 const SizedBox(height: 8),
 
                 buildNomorTextField(
-                  controller: nomorController,
+                  controller: dataController,
                   onPickContact: pickContact,
                 ),
 
@@ -174,6 +120,59 @@ class _InputNomorTujuanAkhirState
         ),
       ),
     );
+  }
+
+  @override
+  void handleNextButtonPress() {
+    final flowCubit = context.read<FlowCubit>();
+    final flowState = flowCubit.state!;
+
+    final sendTransaksi = context.read<TransaksiHelperCubit>();
+    final transaksi = sendTransaksi.getData();
+
+    final int currentIndex = flowState.currentIndex;
+    final bool isLastPage = currentIndex == flowState.sequence.length - 1;
+
+    if (dataController.text.isEmpty) {
+      showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
+      return;
+    }
+    if (transaksi.isBebasNominal == 1) {
+      final bebasNominalText = _bebasNominalController.text.trim().replaceAll(
+        '.',
+        '',
+      );
+
+      if (bebasNominalText.isEmpty) {
+        showErrorDialog(context, "Bebas nominal tidak boleh kosong");
+        return;
+      }
+      final nominal = int.tryParse(bebasNominalText);
+      if (nominal == null) {
+        showErrorDialog(context, "Input harus berupa angka");
+        return;
+      }
+
+      sendTransaksi.setbebasNominalValue(nominal);
+    } else {
+      sendTransaksi.setbebasNominalValue(0);
+    }
+
+    sendTransaksi.setTujuan(dataController.text);
+
+    if (!isLastPage) {
+      final nextPage = flowState.sequence[currentIndex + 1];
+
+      flowCubit.nextPage();
+
+      if (pageRoutes.containsKey(nextPage)) {
+        Navigator.pushNamed(context, pageRoutes[nextPage]!);
+      } else {
+        showErrorDialog(context, "Rute halaman berikutnya tidak ditemukan.");
+      }
+    } else {
+      Navigator.pushNamed(context, '/konfirmasiPembayaran');
+    }
   }
 
   @override

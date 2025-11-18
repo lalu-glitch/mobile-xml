@@ -1,21 +1,21 @@
 // ignore_for_file: unused_import, unnecessary_string_interpolations
 
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
-import 'package:xmlapp/core/helper/error_handler.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../../../core/utils/dialog.dart';
-import '../../input_nomor/utils/contact_handler.dart';
+import '../../input_transaksi/utils/contact_handler.dart';
 import '../cubit/flow_cubit.dart';
 import '../../../data/models/layanan/flow_state_models.dart';
 import '../../../core/helper/currency.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../input_transaksi/utils/transaksi_cubit.dart';
 import '../../transaksi/pages/konfirmasi_pembayaran_page.dart';
 import 'cubit/provider_prefix_cubit.dart';
 
@@ -33,12 +33,19 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   double selectedPrice = 0;
 
   late final ContactFlowHandler handler;
+  late ProviderPrefixCubit prefixCubit;
+  late TransaksiHelperCubit sendTransaksi;
+  late FlowCubit flowCubit;
 
   @override
   void initState() {
     super.initState();
-    _nomorController.text = "";
 
+    prefixCubit = context.read<ProviderPrefixCubit>();
+    sendTransaksi = context.read<TransaksiHelperCubit>();
+    flowCubit = context.read<FlowCubit>();
+
+    _nomorController.text = "";
     handler = ContactFlowHandler(
       context: context,
       nomorController: _nomorController,
@@ -49,14 +56,14 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
       },
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ProviderPrefixCubit>().clear();
+      prefixCubit.clear();
     });
   }
 
   Future<void> _fetchProvider(String value) async {
     if (value.length >= 4) {
       final readTransaksi = context.read<TransaksiHelperCubit>().getData();
-      await context.read<ProviderPrefixCubit>().fetchProvidersPrefix(
+      await prefixCubit.fetchProvidersPrefix(
         readTransaksi.kodeCatatan ?? '-',
         value,
       );
@@ -71,20 +78,18 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
         _fetchProvider(value);
       });
     } else {
-      context.read<ProviderPrefixCubit>().clear();
+      prefixCubit.clear();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final flowState = context.watch<FlowCubit>().state!;
-    final flowCubit = context.read<FlowCubit>();
-    final sendTransaksi = context.read<TransaksiHelperCubit>();
     final iconItem = flowState.layananItem;
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;
 
-    final nomorTujuan = _nomorController.text;
+    final nomorTujuan = _nomorController.text.trim();
     final bool isLastPage = currentIndex == sequence.length - 1;
 
     return WillPopScope(
@@ -163,9 +168,6 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(state.message, style: TextStyle(color: kRed)),
                     );
-
-                    // will implement
-                    // return ErrorHandler(error: state.message, onRetry: () {});
                   }
                   if (state is ProviderPrefixSuccess) {
                     if (state.providers.isEmpty) {
@@ -200,23 +202,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                 return GestureDetector(
                                   onTap: isGangguan
                                       ? null
-                                      : () {
-                                          setState(() {
-                                            selectedProductCode =
-                                                produk.kodeProduk;
-                                            selectedPrice = produk.hargaJual
-                                                .toDouble();
-                                          });
-                                          sendTransaksi.setKodeproduk(
-                                            produk.kodeProduk,
-                                          );
-                                          sendTransaksi.setNamaProduk(
-                                            produk.namaProduk,
-                                          );
-                                          sendTransaksi.setNominal(
-                                            produk.hargaJual,
-                                          );
-                                        },
+                                      : () => onProdukSelected(produk),
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
                                       horizontal: 12,
@@ -226,7 +212,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
                                       color: isGangguan
-                                          ? Colors.grey.shade200
+                                          ? kNeutral20
                                           : isSelected
                                           ? kOrange
                                           : kWhite,
@@ -350,7 +336,12 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                               ),
                             ),
                             onPressed: () {
-                              if (!isLastPage) {
+                              final bool navigateToBNEUPage =
+                                  !isLastPage &&
+                                  (selectedProduk.bebasNominal == 1 ||
+                                      selectedProduk.endUser == 1);
+                              if (navigateToBNEUPage) {
+                                sendTransaksi.setTujuan(nomorTujuan);
                                 final nextPage = flowState
                                     .sequence[flowState.currentIndex + 1];
                                 flowCubit.nextPage();
@@ -361,10 +352,6 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                               } else {
                                 //helper
                                 sendTransaksi.setTujuan(nomorTujuan);
-                                sendTransaksi.isBebasNominal(
-                                  selectedProduk.bebasNominal,
-                                );
-                                sendTransaksi.isEndUser(selectedProduk.endUser);
                                 Navigator.pushNamed(
                                   context,
                                   '/konfirmasiPembayaran',
@@ -372,7 +359,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                               }
                             },
                             child: Text(
-                              isLastPage ? "Selanjutnya" : "Next",
+                              isLastPage ? "Selanjutnya" : "Selanjutnya",
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -387,6 +374,20 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
             : null,
       ),
     );
+  }
+
+  void onProdukSelected(dynamic produk) {
+    setState(() {
+      selectedProductCode = produk.kodeProduk;
+      selectedPrice = produk.hargaJual.toDouble();
+    });
+
+    final trx = context.read<TransaksiHelperCubit>();
+    trx.setKodeproduk(produk.kodeProduk);
+    trx.setNamaProduk(produk.namaProduk);
+    trx.setNominal(produk.hargaJual);
+    trx.isBebasNominal(produk.bebasNominal);
+    trx.isEndUser(produk.endUser);
   }
 
   @override

@@ -26,7 +26,7 @@ class TransaksiHelperCubit extends Cubit<TransaksiHelperModel> {
     emit(state.copyWith(isBebasNominal: val));
   }
 
-  void bebasNominalValue(int val) {
+  void setbebasNominalValue(int val) {
     emit(state.copyWith(bebasNominalValue: val));
   }
 
@@ -49,5 +49,9 @@ class TransaksiHelperCubit extends Cubit<TransaksiHelperModel> {
 
   TransaksiHelperModel getData() {
     return state;
+  }
+
+  void reset() {
+    emit(const TransaksiHelperModel());
   }
 }

@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 
-import '../core/helper/constant_finals.dart';
-import '../core/helper/currency.dart';
-import '../data/models/transaksi/websocket_transaksi.dart';
-import 'home/cubit/balance_cubit.dart';
-import '../core/utils/rupiah_text_field.dart';
+import '../../../core/helper/constant_finals.dart';
+import '../../../core/helper/currency.dart';
+import '../../../data/models/transaksi/websocket_transaksi.dart';
+import '../../home/cubit/balance_cubit.dart';
+import '../../../core/utils/rupiah_text_field.dart';
 
 class StrukPage extends StatefulWidget {
   final TransaksiResponse? transaksi;

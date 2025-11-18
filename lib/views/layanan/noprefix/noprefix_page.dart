@@ -7,7 +7,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../cubit/flow_cubit.dart';
 import '../../../core/helper/currency.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../input_transaksi/utils/transaksi_cubit.dart';
 import 'cubit/provider_noprefix_cubit.dart';
 
 class DetailNoPrefixPage extends StatefulWidget {
@@ -22,21 +22,20 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
   double selectedPrice = 0;
   dynamic selectedProduk;
 
-  bool _isInitialized = false;
-
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isInitialized) {
-      _isInitialized = true;
-
-      final flowState = context.watch<FlowCubit>().state!;
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // // Reset helper transaksi untuk memastikan tidak ada data lama yang terbawa.
+      // context.read<TransaksiHelperCubit>().reset();
+      // Ambil data provider saat halaman pertama kali dibuka.
+      final flowState = context.read<FlowCubit>().state!;
       final iconItem = flowState.layananItem;
       context.read<ProviderNoPrefixCubit>().fetchProviders(
         iconItem.kodeCatatan,
         "",
       );
-    }
+    });
   }
 
   @override
@@ -117,10 +116,10 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     transaksi.setKodeproduk(produk.kodeProduk);
                                     transaksi.setNamaProduk(produk.namaProduk);
                                     transaksi.setNominal(produk.hargaJual);
+                                    transaksi.isEndUser(produk.endUser);
                                     transaksi.isBebasNominal(
                                       produk.bebasNominal,
                                     );
-                                    transaksi.isEndUser(produk.endUser);
                                     log(
                                       '[PREFIX PAGE BEBAS NOMINAL VALUE]: ${produk.bebasNominal}',
                                     );

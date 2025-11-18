@@ -10,7 +10,7 @@ import '../../../core/utils/info_row.dart';
 import '../../../data/models/transaksi/metode_transaksi.dart';
 import '../../../data/services/speedcash_api_service.dart';
 import '../../home/cubit/balance_cubit.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../input_transaksi/utils/transaksi_cubit.dart';
 import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
 import '../cubit/pembayaran_transaksi_speedcash_cubit.dart';
 import 'konfirmasi_speedcash_page.dart';
@@ -229,7 +229,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             );
 
             sendTransaksi.setKodeDompet(selected.kodeDompet ?? "");
-            sendTransaksi.bebasNominalValue(
+            sendTransaksi.setbebasNominalValue(
               int.tryParse(textController.text.replaceAll('.', '')) ?? 0,
             );
             sendTransaksi.setEndUserValue(textController.text.trim());
