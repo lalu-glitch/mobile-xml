@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +8,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../layanan/cubit/flow_cubit.dart';
-import '../../input_transaksi/utils/transaksi_cubit.dart';
+import '../../input_nomor/utils/transaksi_cubit.dart';
 import '../cubit/layanan_cubit.dart';
 
 class HomeLayananSection extends StatelessWidget {
@@ -69,9 +71,9 @@ class HomeLayananSection extends StatelessWidget {
                       itemCount: layananList.length,
                       itemBuilder: (context, i) {
                         final iconItem = layananList[i];
-
                         return GestureDetector(
                           onTap: () {
+                            log('[FLOW]: ${iconItem.flow}');
                             final sequence = pageSequences[iconItem.flow] ?? [];
                             // simpan state awal ke FlowCubit
                             context.read<FlowCubit>().startFlow(
