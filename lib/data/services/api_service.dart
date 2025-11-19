@@ -77,10 +77,7 @@ class ApiService {
   }
 
   /// Ambil provider berdasarkan kategori dan tujuan
-  Future<List<ProviderKartu>> fetchProviders(
-    String category,
-    String tujuan,
-  ) async {
+  Future<List<Provider>> fetchProviders(String category, String tujuan) async {
     try {
       final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
@@ -92,9 +89,7 @@ class ApiService {
       final jsonData = Map<String, dynamic>.from(response.data);
       if (response.statusCode == 200 && jsonData['success'] == true) {
         final providers = (jsonData['data'] as List? ?? [])
-            .map(
-              (item) => ProviderKartu.fromJson(Map<String, dynamic>.from(item)),
-            )
+            .map((item) => Provider.fromJson(Map<String, dynamic>.from(item)))
             .toList();
         return providers;
       }
@@ -110,7 +105,7 @@ class ApiService {
     }
   }
 
-  Future<List<ProviderKartu>> fetchProvidersPrefix(
+  Future<List<Provider>> fetchProvidersPrefix(
     String category,
     String tujuan,
   ) async {
@@ -125,9 +120,7 @@ class ApiService {
       final jsonData = Map<String, dynamic>.from(response.data);
       if (response.statusCode == 200 && jsonData['success'] == true) {
         return (jsonData['data'] as List? ?? [])
-            .map(
-              (item) => ProviderKartu.fromJson(Map<String, dynamic>.from(item)),
-            )
+            .map((item) => Provider.fromJson(Map<String, dynamic>.from(item)))
             .toList();
       }
 

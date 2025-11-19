@@ -8,7 +8,7 @@ final class ProviderPrefixInitial extends ProviderPrefixState {}
 class ProviderPrefixLoading extends ProviderPrefixState {}
 
 class ProviderPrefixSuccess extends ProviderPrefixState {
-  final List<ProviderKartu> providers;
+  final List<Provider> providers;
 
   ProviderPrefixSuccess(this.providers);
 }
