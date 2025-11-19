@@ -26,12 +26,10 @@ class InputBebasNominalDanEndUser extends StatefulWidget {
 
 class _InputBebasNominalDanEndUserState
     extends BaseInput<InputBebasNominalDanEndUser> {
-  // final controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>().getData();
-    return WillPopScope(
-      onWillPop: onWillPopLogic,
+    return buildPopScope(
       child: Scaffold(
         backgroundColor: kBackground,
         appBar: AppBar(

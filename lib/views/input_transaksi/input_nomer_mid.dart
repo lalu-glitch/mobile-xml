@@ -41,8 +41,7 @@ class _InputNomorPageState extends BaseInput<InputNomorMidPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: onWillPopLogic,
+    return buildPopScope(
       child: Scaffold(
         backgroundColor: kBackground,
         appBar: AppBar(

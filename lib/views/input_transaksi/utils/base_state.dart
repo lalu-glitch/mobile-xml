@@ -39,14 +39,26 @@ abstract class BaseInput<T extends StatefulWidget> extends State<T> {
   // Untuk Judul dan Logika Tombol Selanjutnya, karena pasti berbeda
   void handleNextButtonPress();
 
-  // Anda juga bisa menempatkan implementasi onWillPop di sini jika sama
-  Future<bool> onWillPopLogic() async {
-    final flowState = context.read<FlowCubit>().state!;
-    if (flowState.currentIndex > 0) {
-      navigationHandler.handleBackNavigation();
-      return false;
-    }
-    return true;
+  // Menggunakan PopScope
+  PopScope buildPopScope({required Widget child}) {
+    return PopScope(
+      canPop: false, // Kita kontrol manual
+      onPopInvokedWithResult: (bool didPop, dynamic result) {
+        if (didPop) return;
+
+        // NULL SAFE CHECK - REKOMENDASI #3
+        final flowCubit = context.read<FlowCubit>();
+        final state = flowCubit.state;
+
+        if (state != null && state.canGoPrevious) {
+          flowCubit.previousPage();
+          Navigator.pop(context);
+        } else {
+          Navigator.pop(context);
+        }
+      },
+      child: child,
+    );
   }
 
   @override

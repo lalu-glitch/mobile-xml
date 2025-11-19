@@ -25,8 +25,7 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>().getData();
-    return WillPopScope(
-      onWillPop: onWillPopLogic,
+    return buildPopScope(
       child: Scaffold(
         backgroundColor: kBackground,
         appBar: AppBar(
@@ -82,22 +81,15 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
                   onPickContact: pickContact,
                 ),
 
-                SizedBox(height: kSize14),
-                Visibility(
-                  visible: transaksi.isBebasNominal == 1,
-                  child: const Text("Masukkan Nominal"),
-                ),
-                Visibility(
-                  visible: transaksi.isBebasNominal == 1,
-                  child: SizedBox(height: kSize8),
-                ),
-                Visibility(
-                  visible: transaksi.isBebasNominal == 1,
-                  child: RupiahTextField(
+                if (transaksi.isBebasNominal == 1) ...[
+                  SizedBox(height: kSize14),
+                  const Text("Masukkan Bebas Nominal"),
+                  SizedBox(height: kSize8),
+                  RupiahTextField(
                     controller: _bebasNominalController,
                     fontSize: 20,
                   ),
-                ),
+                ],
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

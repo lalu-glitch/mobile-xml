@@ -12,7 +12,7 @@ class BankTransferDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final d = state.data;
+    final data = state.data;
     return AlertDialog(
       backgroundColor: kBackground,
       content: SingleChildScrollView(
@@ -21,7 +21,7 @@ class BankTransferDialog extends StatelessWidget {
             const Icon(Icons.warning_rounded, color: kRed, size: 60),
             const SizedBox(height: 16),
             const Text(
-              'OPS!',
+              'Oooops!',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -30,7 +30,7 @@ class BankTransferDialog extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              d.message,
+              data.message,
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
@@ -41,16 +41,16 @@ class BankTransferDialog extends StatelessWidget {
             const SizedBox(height: 16),
             InfoCard(
               title: 'Bank',
-              value: d.bank,
-              footer: 'Atas nama: ${d.atasNama}',
+              value: data.bank,
+              footer: 'Atas nama: ${data.atasNama}',
               additional: {
-                'Nomor Rekening': d.rekening,
+                'Nomor Rekening': data.rekening,
                 'Nominal transfer': CurrencyUtil.formatCurrency(
-                  double.tryParse(d.nominal.toString()) ?? 0,
+                  double.tryParse(data.nominal.toString()) ?? 0,
                 ),
               },
               onCopy: (val) {
-                if (val == d.rekening) {
+                if (val == data.rekening) {
                   Clipboard.setData(ClipboardData(text: val));
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Nomor rekening disalin')),

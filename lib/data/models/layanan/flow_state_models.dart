@@ -28,4 +28,6 @@ class FlowStateModel {
       sequence: sequence ?? this.sequence,
     );
   }
+
+  bool get canGoPrevious => currentIndex > 0;
 }
