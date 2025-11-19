@@ -29,7 +29,7 @@ class FlowCubit extends Cubit<FlowStateModel?> {
   }
 
   void previousPage() {
-    if (state!.currentIndex > 0) {
+    if (state!.canGoPrevious) {
       emit(state!.copyWith(currentIndex: state!.currentIndex - 1));
     }
   }

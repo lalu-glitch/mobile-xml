@@ -25,17 +25,12 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // // Reset helper transaksi untuk memastikan tidak ada data lama yang terbawa.
-      // context.read<TransaksiHelperCubit>().reset();
-      // Ambil data provider saat halaman pertama kali dibuka.
-      final flowState = context.read<FlowCubit>().state!;
-      final iconItem = flowState.layananItem;
-      context.read<ProviderNoPrefixCubit>().fetchProviders(
-        iconItem.kodeCatatan,
-        "",
-      );
-    });
+    final flowState = context.read<FlowCubit>().state!;
+    final iconItem = flowState.layananItem;
+    context.read<ProviderNoPrefixCubit>().fetchProviders(
+      iconItem.kodeCatatan,
+      "",
+    );
   }
 
   @override
