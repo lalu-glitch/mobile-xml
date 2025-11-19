@@ -10,12 +10,8 @@ class SpeedcashVM extends ChangeNotifier {
 
   bool isLoading = false;
   String? error;
-  // String? _message;
-  // String? get message => _message;
   SpeedcashResponse? response;
 
-  /// Register Speedcash
-  // ViewModel
   Future<void> speedcashRegister({
     required String nama,
     required String phone,
