@@ -115,9 +115,6 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     transaksi.isBebasNominal(
                                       produk.bebasNominal,
                                     );
-                                    log(
-                                      '[PREFIX PAGE BEBAS NOMINAL VALUE]: ${produk.bebasNominal}',
-                                    );
                                   },
                             child: Container(
                               margin: const EdgeInsets.symmetric(
@@ -173,7 +170,17 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                                 ? kRed
                                                 : isSelected
                                                 ? kWhite
-                                                : Colors.black,
+                                                : kBlack,
+                                          ),
+                                        ),
+                                        Text(
+                                          produk.kodeProduk,
+                                          style: TextStyle(
+                                            color: isGangguan
+                                                ? kRed
+                                                : isSelected
+                                                ? kWhite
+                                                : kBlack,
                                           ),
                                         ),
                                       ],
@@ -189,7 +196,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                           ? kRed
                                           : isSelected
                                           ? kWhite
-                                          : Colors.black,
+                                          : kBlack,
                                     ),
                                   ),
                                 ],

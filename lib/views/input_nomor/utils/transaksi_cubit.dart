@@ -9,6 +9,14 @@ class TransaksiHelperCubit extends Cubit<TransaksiHelperModel> {
     emit(state.copyWith(kodeProduk: val));
   }
 
+  void setKodeDompet(String val) {
+    emit(state.copyWith(kodeDompet: val));
+  }
+
+  void setKodeCatatan(String val) {
+    emit(state.copyWith(kodeCatatan: val));
+  }
+
   void setTujuan(String val) {
     emit(state.copyWith(tujuan: val));
   }
@@ -37,14 +45,6 @@ class TransaksiHelperCubit extends Cubit<TransaksiHelperModel> {
 
   void setEndUserValue(String val) {
     emit(state.copyWith(endUserValue: val));
-  }
-
-  void setKodeDompet(String val) {
-    emit(state.copyWith(kodeDompet: val));
-  }
-
-  void setKodeCatatan(String val) {
-    emit(state.copyWith(kodeCatatan: val));
   }
 
   TransaksiHelperModel getData() {

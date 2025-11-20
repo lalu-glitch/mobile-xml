@@ -42,7 +42,6 @@ class WebsocketTransaksiCubit extends Cubit<WebsocketTransaksiState> {
         (message) async {
           log('[WS MESSAGE] $message');
           final decoded = jsonDecode(message);
-
           // jika server kirim error format lama
           if (decoded['success'] == false && decoded['error'] != null) {
             emit(WebSocketTransaksiError(decoded['error']));

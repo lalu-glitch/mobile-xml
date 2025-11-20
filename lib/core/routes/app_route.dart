@@ -22,6 +22,7 @@ import '../../views/poin_dan_komisi/pages/poin/pages/verifikasi_tukar_poin_page.
 import '../../views/riwayat/pages/riwayat_page.dart';
 import '../../views/settings/pages/detail_akun_page.dart';
 import '../../views/speedcash/pages/speedcash_topup_tiket.dart';
+import '../../views/transaksi/pages/cek_transaksi_page.dart';
 import '../helper/onboarding_guard.dart';
 import '../utils/webview.dart';
 import '../../views/layanan/noprefix/noprefix_page.dart';
@@ -85,6 +86,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/statusTukarPoinPage': (context) => authGuardWrapper(StatusTukarPoinPage()),
 
   ///TRANSAKSI
+  '/cekTransaksi': (context) => authGuardWrapper(CekTransaksiPage()),
   '/konfirmasiPembayaran': (context) =>
       authGuardWrapper(KonfirmasiPembayaranPage()),
   '/transaksiProses': (context) => authGuardWrapper(TransaksiProsesPage()),

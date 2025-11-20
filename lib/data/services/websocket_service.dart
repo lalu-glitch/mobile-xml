@@ -64,6 +64,23 @@ class WebSocketService {
     log('[WS TX] Payload dikirim');
   }
 
+  void cekTransaksi(String nomor, String kodeProduk) {
+    if (!_isConnected || _channel == null) {
+      log("WS not connected");
+      return;
+    }
+
+    final message = {
+      'service': 'transaksi',
+      'action': 'produk_cek',
+      'data': {'tujuan': nomor, 'kode_produk': kodeProduk},
+    };
+    log('[WS TX] Kirim payload: $message');
+    final encoded = jsonEncode(message);
+    _channel!.sink.add(encoded);
+    log('[WS TX] Payload dikirim');
+  }
+
   Stream<dynamic> get stream {
     if (_channel == null) {
       throw StateError('WebSocket not connected');

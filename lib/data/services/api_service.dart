@@ -85,7 +85,6 @@ class ApiService {
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {"tujuan": tujuan},
       );
-      log('${response.data}');
       final jsonData = Map<String, dynamic>.from(response.data);
       if (response.statusCode == 200 && jsonData['success'] == true) {
         final providers = (jsonData['data'] as List? ?? [])
@@ -116,7 +115,6 @@ class ApiService {
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {"tujuan": tujuan},
       );
-      log(response.data.toString());
       final jsonData = Map<String, dynamic>.from(response.data);
       if (response.statusCode == 200 && jsonData['success'] == true) {
         return (jsonData['data'] as List? ?? [])
