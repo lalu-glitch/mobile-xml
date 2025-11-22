@@ -44,6 +44,7 @@ class ActionButton extends StatelessWidget {
             }
 
             final format = controller.text.replaceAll(RegExp(r'[^0-9]'), '');
+            // final format = CurrencyUtil.parseCurrency(controller.text); // TODO [VERIFY]
             final nominal = int.parse(format);
 
             if (nominal < int.parse(minimumTopUp)) {

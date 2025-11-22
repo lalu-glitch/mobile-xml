@@ -282,7 +282,7 @@ class _StrukPageState extends State<StrukPage> {
     final pdf = pw.Document();
     // parsing harga
     final parsedHarga = int.tryParse(
-      hargaInput.replaceAll(RegExp(r'[^0-9]'), ''), // buang karakter non-digit
+      hargaInput.replaceAll(RegExp(r'[^0-9]'), ''), // TODO (PAKE CURRENCYUTIL)
     );
     final hargaFormatted = CurrencyUtil.formatCurrency(parsedHarga as num?);
 
