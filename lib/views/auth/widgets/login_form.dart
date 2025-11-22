@@ -88,7 +88,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: .end,
       children: [
         CustomTextField(
           controller: kodeAgenCtrl,

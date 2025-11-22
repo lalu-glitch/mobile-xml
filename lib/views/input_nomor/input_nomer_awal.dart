@@ -52,9 +52,9 @@ class _InputNomorPageState extends BaseInput<InputNomorPage> {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const .all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             const Text("Masukkan Nomor Tujuan"),
             const SizedBox(height: 8),

@@ -12,7 +12,7 @@ Widget buildInfoTile(
 }) {
   return Card(
     color: kWhite,
-    margin: const EdgeInsets.symmetric(vertical: 6),
+    margin: const .symmetric(vertical: 6),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     child: ListTile(
       leading: Container(
@@ -20,7 +20,7 @@ Widget buildInfoTile(
           color: kOrangeAccent500.withAlpha(25),
           shape: BoxShape.circle,
         ),
-        padding: const EdgeInsets.all(8),
+        padding: const .all(8),
         child: Icon(leadingIcon, color: kOrange, size: 20),
       ),
       title: Text(

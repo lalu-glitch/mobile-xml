@@ -37,7 +37,7 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+          padding: const .symmetric(vertical: 0, horizontal: 16),
           child: CustomScrollView(
             slivers: [
               BlocBuilder<SpeedcashBankCubit, SpeedcashBankState>(
@@ -62,7 +62,7 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                       delegate: SliverChildListDelegate([
                         if (banks.isNotEmpty) ...[
                           const Padding(
-                            padding: EdgeInsets.only(top: 16.0, bottom: 8.0),
+                            padding: .only(top: 16.0, bottom: 8.0),
                             child: Text(
                               'Bank',
                               style: TextStyle(
@@ -95,7 +95,7 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                         ],
                         if (virtualAccounts.isNotEmpty) ...[
                           const Padding(
-                            padding: EdgeInsets.only(top: 16.0, bottom: 8.0),
+                            padding: .only(top: 16.0, bottom: 8.0),
                             child: Text(
                               'Virtual Account',
                               style: TextStyle(
@@ -130,7 +130,7 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                         ],
                         if (banks.isEmpty && virtualAccounts.isEmpty)
                           const Padding(
-                            padding: EdgeInsets.only(top: 32.0),
+                            padding: .only(top: 32.0),
                             child: Center(
                               child: Text('Tidak ada metode top up tersedia.'),
                             ),

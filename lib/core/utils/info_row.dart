@@ -9,7 +9,7 @@ Widget infoRow(
   Color color = kOrange,
 }) {
   return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: .start,
     children: [
       Expanded(
         flex: 4,

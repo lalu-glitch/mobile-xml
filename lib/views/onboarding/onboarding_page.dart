@@ -11,9 +11,9 @@ class OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+        padding: const .symmetric(vertical: 40, horizontal: 24),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: .center,
           children: [
             Image.asset('assets/images/logo_with_name.png', width: kSize50 * 3),
 

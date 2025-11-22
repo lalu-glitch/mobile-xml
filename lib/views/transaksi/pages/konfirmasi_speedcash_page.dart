@@ -79,7 +79,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
           ),
         ],
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const .all(16),
           child: Column(
             children: [
               _buildInfoCard(transaksi),
@@ -131,7 +131,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
             },
       style: ElevatedButton.styleFrom(
         backgroundColor: kBlue,
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const .symmetric(vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         elevation: 5,
         shadowColor: Colors.blueAccent.shade100,
@@ -161,7 +161,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const .all(16.0),
         child: Column(
           children: [
             infoRow("Nomor Tujuan", transaksi.tujuan ?? ''),

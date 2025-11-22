@@ -176,7 +176,7 @@ class _SettingsPageState extends State<SettingsPage> {
           automaticallyImplyLeading: false,
           surfaceTintColor: Colors.transparent,
           title: Text('Akun saya', style: TextStyle(color: kWhite)),
-          actionsPadding: EdgeInsets.only(right: 16),
+          actionsPadding: .only(right: 16),
           actions: [Icon(Icons.search_rounded, color: kWhite)],
         ),
         backgroundColor: kBackground,
@@ -192,7 +192,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SettingHeader(state: state), // Header profil user
                   Expanded(
                     child: ListView.builder(
-                      padding: EdgeInsets.symmetric(
+                      padding: .symmetric(
                         vertical: kSize32,
                         horizontal: kSize16,
                       ),
@@ -291,12 +291,12 @@ class _SettingsPageState extends State<SettingsPage> {
     List<MenuItem> items,
   ) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const .only(bottom: 20),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+            padding: const .symmetric(horizontal: 0, vertical: 8),
             child: Text(
               title,
               style: const TextStyle(

@@ -29,11 +29,11 @@ class InfoCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const .all(16),
             width: double.infinity,
             color: kOrangeAccent300.withAlpha(50),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 buildRow(
                   context,
@@ -44,7 +44,7 @@ class InfoCard extends StatelessWidget {
                 if (additional != null)
                   ...additional!.entries.map(
                     (e) => Padding(
-                      padding: const EdgeInsets.only(top: 8),
+                      padding: const .only(top: 8),
                       child: buildRow(
                         context,
                         e.key,
@@ -58,7 +58,7 @@ class InfoCard extends StatelessWidget {
           ),
           if (footer != null)
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const .all(12),
               child: Text(footer!, style: const TextStyle(color: kNeutral100)),
             ),
         ],
@@ -73,12 +73,12 @@ class InfoCard extends StatelessWidget {
     VoidCallback? copy,
   ) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text(label, style: const TextStyle(color: kNeutral90, fontSize: 12)),
         const SizedBox(height: 4),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Flexible(
               child: Text(
@@ -96,10 +96,7 @@ class InfoCard extends StatelessWidget {
                 onTap: copy,
                 borderRadius: BorderRadius.circular(8),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 6,
-                  ),
+                  padding: const .symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: kWhite,
                     borderRadius: BorderRadius.circular(8),

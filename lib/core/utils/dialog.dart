@@ -10,9 +10,9 @@ Future<void> showErrorDialog(BuildContext context, String message) {
     builder: (context) {
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+        insetPadding: const .symmetric(horizontal: 24),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const .all(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -22,7 +22,7 @@ Future<void> showErrorDialog(BuildContext context, String message) {
                   color: kRed.withAlpha(25),
                   shape: BoxShape.circle,
                 ),
-                padding: const EdgeInsets.all(16),
+                padding: const .all(16),
                 child: const Icon(Icons.error_outline, color: kRed, size: 48),
               ),
               const SizedBox(height: 16),
@@ -55,7 +55,7 @@ Future<void> showErrorDialog(BuildContext context, String message) {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    padding: const .symmetric(vertical: 12),
                   ),
                   onPressed: () => Navigator.pop(context),
                   child: const Text(
@@ -93,7 +93,7 @@ class SuccessDialog extends StatelessWidget {
       title: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: const .all(8),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: isSuccess ? kGreen : kRed,
@@ -133,7 +133,7 @@ class SuccessDialog extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              padding: const EdgeInsets.symmetric(vertical: 14),
+              padding: const .symmetric(vertical: 14),
             ),
             child: const Text(
               "OK",
@@ -178,8 +178,8 @@ void showAppToast(BuildContext context, String message, ToastType type) {
   // Widget toast custom
   Widget toast = Container(
     width: double.infinity,
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-    margin: const EdgeInsets.symmetric(horizontal: 12),
+    padding: const .symmetric(horizontal: 16, vertical: 12),
+    margin: const .symmetric(horizontal: 12),
     decoration: BoxDecoration(
       color: bgColor,
       borderRadius: BorderRadius.circular(12),
@@ -214,9 +214,9 @@ Future<bool> showExitDialog(BuildContext context) async {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+            insetPadding: const .symmetric(horizontal: 24),
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const .all(20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -226,7 +226,7 @@ Future<bool> showExitDialog(BuildContext context) async {
                       color: kRed.withAlpha(25),
                       shape: BoxShape.circle,
                     ),
-                    padding: const EdgeInsets.all(16),
+                    padding: const .all(16),
                     child: const Icon(Icons.exit_to_app, color: kRed, size: 48),
                   ),
                   const SizedBox(height: 16),
@@ -257,7 +257,7 @@ Future<bool> showExitDialog(BuildContext context) async {
                       Expanded(
                         child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            padding: const .symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -274,7 +274,7 @@ Future<bool> showExitDialog(BuildContext context) async {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: kRed,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            padding: const .symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -311,9 +311,9 @@ Future<bool> showForceExitDialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
-              insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+              insetPadding: const .symmetric(horizontal: 24),
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const .all(20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -323,7 +323,7 @@ Future<bool> showForceExitDialog(
                         color: kRed.withAlpha(25),
                         shape: BoxShape.circle,
                       ),
-                      padding: const EdgeInsets.all(16),
+                      padding: const .all(16),
                       child: const Icon(
                         Icons.warning_rounded,
                         color: kRed,
@@ -358,7 +358,7 @@ Future<bool> showForceExitDialog(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: kRed,
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          padding: const .symmetric(vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),

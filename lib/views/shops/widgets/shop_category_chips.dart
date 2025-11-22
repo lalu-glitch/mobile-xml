@@ -25,7 +25,7 @@ class ShopsCategoryChips extends StatelessWidget {
 
     final headings = ['Semuanya', ...layananByHeading.keys];
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: const .symmetric(vertical: 16),
       child: SizedBox(
         height: 40,
         child: ListView.builder(
@@ -38,8 +38,8 @@ class ShopsCategoryChips extends StatelessWidget {
             return GestureDetector(
               onTap: () => onHeadingSelected(heading),
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                margin: const .symmetric(horizontal: 8),
+                padding: const .symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                   color: isSelected ? kOrange : kNeutral50,
                   borderRadius: BorderRadius.circular(20),

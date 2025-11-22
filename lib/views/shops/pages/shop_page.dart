@@ -139,7 +139,7 @@ class _ShopPageState extends State<ShopPage> {
 
                   // Produk
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const .all(16.0),
                     child: ShopProducts(
                       layananDataToDisplay: filteredLayanan,
                       selectedHeading: selectedHeading,

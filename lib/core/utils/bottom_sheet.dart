@@ -19,7 +19,7 @@ void showCSBottomSheet(BuildContext context, String title) {
     ),
     builder: (context) {
       return Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const .all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -91,7 +91,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
     ),
     builder: (context) {
       return Container(
-        padding: const EdgeInsets.all(24), // Tambah padding menyeluruh
+        padding: const .all(24), // Tambah padding menyeluruh
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment
@@ -125,7 +125,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: const .symmetric(vertical: 16),
               ),
               child: Text(
                 'Ya, Unbind',
@@ -157,10 +157,10 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
     ),
     builder: (context) {
       return Container(
-        padding: const EdgeInsets.all(24),
+        padding: const .all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: .stretch,
           children: [
             Icon(Icons.do_disturb_on_rounded, color: kRed, size: kSize48),
             const SizedBox(height: 16),
@@ -186,7 +186,7 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: const .symmetric(vertical: 16),
               ),
               child: Text(
                 'Ya, Keluar',

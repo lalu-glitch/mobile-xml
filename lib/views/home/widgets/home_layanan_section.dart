@@ -26,12 +26,12 @@ class HomeLayananSection extends StatelessWidget {
         }
         if (state is LayananLoaded) {
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: cubit.layananByHeading.entries.map((entry) {
               final kategori = entry.key;
               final layananList = entry.value;
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   Text(
                     kategori.toUpperCase(),
@@ -53,11 +53,8 @@ class HomeLayananSection extends StatelessWidget {
                         ),
                       ],
                     ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 16,
-                    ),
-                    margin: const EdgeInsets.only(bottom: 24),
+                    padding: const .symmetric(horizontal: 8, vertical: 16),
+                    margin: const .only(bottom: 24),
                     child: GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),

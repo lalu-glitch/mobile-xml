@@ -55,7 +55,7 @@ class _InputBebasNominalDanEndUserState
           child: Padding(
             padding: EdgeInsetsGeometry.all(16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 Card(
                   color: kWhite,
@@ -64,7 +64,7 @@ class _InputBebasNominalDanEndUserState
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const .all(16.0),
                     child: Column(
                       children: [
                         infoRow("Nama Produk", transaksi.namaProduk ?? ''),

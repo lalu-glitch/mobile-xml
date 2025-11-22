@@ -14,7 +14,7 @@ class SettingHeader extends StatelessWidget {
       width: double.infinity,
       height: kSize64 * 2,
       color: kOrange,
-      padding: EdgeInsets.symmetric(vertical: kSize16, horizontal: kSize16),
+      padding: .symmetric(vertical: kSize16, horizontal: kSize16),
       child: UserProfileCard(state: state),
     );
   }
@@ -30,7 +30,7 @@ class UserProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = state.data.data;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: .symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(16),
@@ -45,8 +45,8 @@ class UserProfileCard extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: .start,
+              mainAxisAlignment: .center,
               children: [
                 Text(
                   data.nama ?? '-',
@@ -71,7 +71,7 @@ class UserProfileCard extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const .symmetric(horizontal: 8),
             height: 40,
             decoration: BoxDecoration(
               gradient: LinearGradient(

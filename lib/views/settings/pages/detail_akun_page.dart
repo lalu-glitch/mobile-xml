@@ -24,7 +24,7 @@ class DetailInfoAkun extends StatelessWidget {
         foregroundColor: kWhite,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const .symmetric(horizontal: 16, vertical: 16),
         child: BlocBuilder<InfoAkunCubit, InfoAkunState>(
           builder: (context, state) {
             if (state is InfoAkunLoading) {
@@ -34,7 +34,7 @@ class DetailInfoAkun extends StatelessWidget {
               final data = state.data.data;
               return SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     SizedBox(height: kSize12),
                     SizedBox(
@@ -47,7 +47,7 @@ class DetailInfoAkun extends StatelessWidget {
                     SectionTitle(title: "Informasi Akun"),
                     SizedBox(height: kSize12),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      padding: .symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                         color: kWhite,
                         borderRadius: BorderRadius.circular(14),
@@ -86,7 +86,7 @@ class DetailInfoAkun extends StatelessWidget {
                     SectionTitle(title: "Finansial"),
                     SizedBox(height: kSize12),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      padding: .symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                         color: kWhite,
                         borderRadius: BorderRadius.circular(14),
@@ -119,7 +119,7 @@ class DetailInfoAkun extends StatelessWidget {
                     SectionTitle(title: "Aktivitas"),
                     SizedBox(height: kSize12),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      padding: .symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                         color: kWhite,
                         borderRadius: BorderRadius.circular(14),

@@ -80,7 +80,7 @@ class _JaringanMitraPageState extends State<JaringanMitraPage> {
                           ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.symmetric(
+                            padding: const .symmetric(
                               horizontal: 16,
                               vertical: 8,
                             ),

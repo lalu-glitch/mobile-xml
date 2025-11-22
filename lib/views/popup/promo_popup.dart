@@ -12,7 +12,7 @@ class PromoPopup {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          insetPadding: const EdgeInsets.all(24),
+          insetPadding: const .all(24),
           child: Stack(
             children: [
               ClipRRect(
@@ -24,7 +24,7 @@ class PromoPopup {
                 right: 0,
                 child: IconButton(
                   icon: Container(
-                    padding: EdgeInsets.all(4),
+                    padding: .all(4),
                     decoration: BoxDecoration(
                       color: kBackground,
                       borderRadius: BorderRadius.circular(100),

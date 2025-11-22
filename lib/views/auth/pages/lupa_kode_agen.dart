@@ -68,7 +68,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
 
             return Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const .symmetric(horizontal: 20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -112,7 +112,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                       child: ElevatedButton(
                         onPressed: _doRequestKodeAgen,
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const .symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),

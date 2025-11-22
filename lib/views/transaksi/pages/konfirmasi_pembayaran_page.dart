@@ -90,9 +90,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               final methods = _generatePaymentMethods(state);
 
               return Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const .all(16.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     _buildInfoCard(transaksi),
                     const SizedBox(height: 24),
@@ -156,7 +156,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const .all(16.0),
         child: Column(
           children: [
             infoRow("Nomor Tujuan", transaksi.tujuan ?? ''),
@@ -200,9 +200,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
           setState(() => _selectedMethod = method.nama ?? '');
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const .symmetric(horizontal: 16, vertical: 12),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Text(
                 method.nama ?? '-',
@@ -216,7 +216,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                 children: [
                   if (method.saldoEwallet != null)
                     Padding(
-                      padding: const EdgeInsets.only(right: 8),
+                      padding: const .only(right: 8),
                       child: Text(
                         CurrencyUtil.formatCurrency(method.saldoEwallet ?? 0),
                         textAlign: TextAlign.right,
@@ -249,7 +249,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: kOrange,
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            padding: const .symmetric(vertical: 16),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),

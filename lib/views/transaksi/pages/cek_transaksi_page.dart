@@ -46,7 +46,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
           iconTheme: IconThemeData(color: kWhite),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const .all(16.0),
           child:
               BlocBuilder<
                 WebSocketCekTransaksiCubit,
@@ -61,7 +61,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
                   if (state is WebSocketCekTransaksiSuccess) {
                     cekTransaksiData = state.data;
                     return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: [
                         Card(
                           color: kWhite,
@@ -70,7 +70,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(16.0),
+                            padding: const .all(16.0),
                             child: Column(
                               children: [
                                 ...buildDynamicRows(state.data),

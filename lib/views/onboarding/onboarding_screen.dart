@@ -57,9 +57,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
 
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0),
+            padding: const .symmetric(vertical: 0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               children: List.generate(
                 onboardPages.length,
                 (index) => buildDot(index),
@@ -70,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Padding(
             padding: EdgeInsetsGeometry.symmetric(vertical: 40, horizontal: 24),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 TextButton(
                   onPressed: _finishOnboarding,
@@ -103,7 +103,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget buildDot(int index) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
-      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+      margin: const .symmetric(horizontal: 4.0),
       height: 8.0,
       width: currentPage == index ? 24.0 : 8.0,
       decoration: BoxDecoration(

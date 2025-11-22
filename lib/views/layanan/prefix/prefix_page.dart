@@ -115,9 +115,9 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
           children: [
             // Input Nomor
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const .all(16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   const Text("Nomor Tujuan"),
                   const SizedBox(height: 8),
@@ -165,7 +165,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                   }
                   if (state is ProviderPrefixError) {
                     return Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const .all(16.0),
                       child: Text(state.message, style: TextStyle(color: kRed)),
                     );
                   }
@@ -181,10 +181,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                         final List produkList = provider.produk;
 
                         return Card(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
+                          margin: const .symmetric(horizontal: 12, vertical: 6),
                           color: kWhite,
                           child: ExpansionTile(
                             title: Text(
@@ -204,11 +201,11 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                       ? null
                                       : () => onProdukSelected(produk),
                                   child: Container(
-                                    margin: const EdgeInsets.symmetric(
+                                    margin: const .symmetric(
                                       horizontal: 12,
                                       vertical: 6,
                                     ),
-                                    padding: const EdgeInsets.all(16),
+                                    padding: const .all(16),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
                                       color: isGangguan
@@ -226,13 +223,11 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                       ),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: .spaceBetween,
                                       children: [
                                         Flexible(
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: .start,
                                             children: [
                                               if (isGangguan)
                                                 Row(
@@ -312,12 +307,9 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                   return SafeArea(
                     child: Container(
                       color: kOrange,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
+                      padding: const .symmetric(horizontal: 16, vertical: 12),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: .spaceBetween,
                         children: [
                           Text(
                             "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",

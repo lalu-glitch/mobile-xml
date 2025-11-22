@@ -10,7 +10,7 @@ class PoinExchangeTicket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(16, 16, 16, 16),
+      margin: .fromLTRB(16, 16, 16, 16),
       height: 600,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -23,16 +23,16 @@ class PoinExchangeTicket extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+              padding: .symmetric(vertical: 10, horizontal: 16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   const TextTitle('Detail Tukar Poin'),
                   const TextSub(
                     'Mohon konfirmasi permintaan tukar poin berikut ini',
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    padding: const .symmetric(vertical: 20.0),
                     child: DottedDivider(color: kOrange, strokeWidth: 1.5),
                   ),
                 ],
@@ -44,9 +44,9 @@ class PoinExchangeTicket extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+              padding: .symmetric(vertical: 10, horizontal: 16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   const InfoText('Nama Agen', 'SEO XML Tronik'),
                   const InfoText('ID Agen', 'XML112233'),
@@ -73,7 +73,7 @@ class PoinExchangeTicket extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: .start,
                         children: [
                           TextBody('Voucher XL Combo Flex'),
                           TextSub('Qty: 1 Ton'),
@@ -102,11 +102,11 @@ class PoinExchangeTicket extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+              padding: .symmetric(vertical: 10, horizontal: 16),
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       const TextBody('Total Poin Ditukar'),
                       Text(

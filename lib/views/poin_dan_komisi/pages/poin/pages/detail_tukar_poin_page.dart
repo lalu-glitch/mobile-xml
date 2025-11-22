@@ -39,7 +39,7 @@ class DetailTukarPoin extends StatelessWidget {
             //button batal sama konfirmasi
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const .symmetric(horizontal: 16),
                 child: ActionButtons(),
               ),
             ),

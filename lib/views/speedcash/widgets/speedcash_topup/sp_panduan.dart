@@ -46,19 +46,19 @@ class PanduanSection extends StatelessWidget {
                       color: kNeutral100,
                     ),
                   ),
-                  tilePadding: const EdgeInsets.symmetric(horizontal: 18),
-                  childrenPadding: const EdgeInsets.symmetric(
+                  tilePadding: const .symmetric(horizontal: 18),
+                  childrenPadding: const .symmetric(
                     horizontal: 10,
                     vertical: 8,
                   ),
                   shape: const Border(),
                   children: [
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: List.generate(
                         p.data.length,
                         (x) => Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
+                          padding: const .only(bottom: 4),
                           child: Text("${x + 1}. ${p.data[x]}"),
                         ),
                       ),

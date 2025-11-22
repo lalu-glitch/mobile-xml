@@ -25,11 +25,11 @@ class BankCard extends StatelessWidget {
         shadowColor: kNeutral60,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         color: kWhite,
-        margin: const EdgeInsets.only(top: 6, bottom: 6),
+        margin: const .only(top: 6, bottom: 6),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const .all(16),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: .start,
             children: [
               SizedBox(
                 width: 50,
@@ -51,7 +51,7 @@ class BankCard extends StatelessWidget {
               ),
               SizedBox(width: kSize16),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   Text(
                     title,

@@ -22,7 +22,7 @@ class HomePromoSection extends StatelessWidget {
         }
         if (state is PromoLoaded) {
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               Text(
                 'Pasti Promo',
@@ -48,7 +48,7 @@ class HomePromoSection extends StatelessWidget {
                       },
                       child: Container(
                         width: 260,
-                        margin: const EdgeInsets.only(right: 24),
+                        margin: const .only(right: 24),
                         decoration: BoxDecoration(
                           color: kWhite,
                           borderRadius: BorderRadius.circular(18),

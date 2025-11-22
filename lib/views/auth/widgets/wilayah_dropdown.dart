@@ -77,7 +77,7 @@ class WilayahDropdowns extends StatelessWidget {
         labelText: label,
         labelStyle: TextStyle(color: kNeutral80),
         floatingLabelStyle: TextStyle(color: kOrange),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+        contentPadding: const .symmetric(horizontal: 8, vertical: 12),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: kOrangeAccent500),

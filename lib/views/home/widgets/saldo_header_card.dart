@@ -26,11 +26,11 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Text(
               widget.title,
@@ -50,7 +50,7 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
         ),
         const SizedBox(height: 32),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Text(
               _isSaldoHidden
@@ -110,7 +110,7 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: .center,
                             children: [
                               Icon(
                                 Icons.qr_code_2_outlined,

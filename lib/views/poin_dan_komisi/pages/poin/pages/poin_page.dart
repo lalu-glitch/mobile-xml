@@ -35,9 +35,9 @@ class PoinPage extends StatelessWidget {
 
             // ======= MAIN CONTENT =======
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const .symmetric(horizontal: 16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   SizedBox(height: kSize32),
 
@@ -46,12 +46,9 @@ class PoinPage extends StatelessWidget {
                     elevation: 8,
                     color: kWhite,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 16,
-                      ),
+                      padding: const .symmetric(horizontal: 16, vertical: 16),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: .start,
                         children: [
                           Text('SEO XMLTRONIK', style: TextStyle(fontSize: 16)),
                           Text(
@@ -77,7 +74,7 @@ class PoinPage extends StatelessWidget {
                                     controller: poinCtrl,
                                     borderColor: kOrange,
                                     borderRadius: 14,
-                                    contentPadding: const EdgeInsets.symmetric(
+                                    contentPadding: const .symmetric(
                                       vertical: 8,
                                       horizontal: 12,
                                     ),
@@ -152,7 +149,7 @@ class PoinPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Container(
                           width: kSize80 * 2,
-                          margin: const EdgeInsets.only(right: 16),
+                          margin: const .only(right: 16),
                           child: Card(
                             elevation: 0,
                             color: kWhite,
@@ -160,7 +157,7 @@ class PoinPage extends StatelessWidget {
                             clipBehavior: Clip
                                 .antiAlias, // Tambahkan ini agar ClipRRect berfungsi baik dengan Card
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: .start,
                               children: [
                                 // --- PERUBAHAN DI SINI ---
                                 // Ganti SizedBox dengan tinggi tetap menjadi Expanded.
@@ -183,10 +180,9 @@ class PoinPage extends StatelessWidget {
                                 ),
                                 // --- AKHIR PERUBAHAN ---
                                 Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const .all(8.0),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: .start,
                                     // Pastikan Column ini tidak memakan ruang ekstra
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -264,9 +260,9 @@ class PoinPage extends StatelessWidget {
                       return Card(
                         color: kWhite,
                         elevation: 4,
-                        margin: const EdgeInsets.only(bottom: 12),
+                        margin: const .only(bottom: 12),
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const .all(12.0),
                           child: Row(
                             children: [
                               Container(
@@ -284,7 +280,7 @@ class PoinPage extends StatelessWidget {
                               SizedBox(width: kSize12),
                               Expanded(
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: .start,
                                   children: [
                                     Text(
                                       '5000 Poin',

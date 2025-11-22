@@ -19,16 +19,16 @@ class MitraStatusCard extends StatelessWidget {
       left: 0,
       right: 0,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: kSize16),
+        margin: .symmetric(horizontal: kSize16),
         child: Card(
           color: kWhite,
           elevation: 10,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kSize16),
           ),
-          margin: EdgeInsets.zero,
+          margin: .zero,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: kSize16),
+            padding: .symmetric(vertical: kSize16),
             child: Row(
               children: [
                 Expanded(
@@ -79,8 +79,8 @@ class MitraStatusCard extends StatelessWidget {
         const SizedBox(height: 12),
         Container(
           width: double.infinity,
-          margin: EdgeInsets.symmetric(horizontal: 32),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          margin: .symmetric(horizontal: 32),
+          padding: const .symmetric(horizontal: 16, vertical: 4),
           decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.circular(4),

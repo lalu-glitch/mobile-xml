@@ -68,7 +68,7 @@ class WalletItem extends StatelessWidget {
         bool isUnbinding = (state is UnbindLoading && state.kode == kodeDompet);
 
         return Container(
-          margin: const EdgeInsets.only(right: 16),
+          margin: const .only(right: 16),
           width: 200,
           decoration: BoxDecoration(
             border: Border.all(color: kOrange, width: 3.5),
@@ -78,10 +78,10 @@ class WalletItem extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            padding: const .symmetric(vertical: 12, horizontal: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               children: [
                 // Ganti Image.network dengan CachedNetworkImage
                 Flexible(

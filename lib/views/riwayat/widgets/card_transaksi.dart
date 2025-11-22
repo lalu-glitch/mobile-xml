@@ -17,7 +17,7 @@ class TransactionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      margin: const EdgeInsets.only(top: 14, bottom: 4),
+      margin: const .only(top: 14, bottom: 4),
       color: kWhite,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
@@ -36,13 +36,13 @@ class TransactionCard extends StatelessWidget {
           );
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          padding: const .symmetric(horizontal: 16, vertical: 14),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               // Leading Icon dalam circle
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const .all(10),
                 decoration: BoxDecoration(
                   color: _statusColor(t).withAlpha(25),
                   shape: BoxShape.circle,
@@ -54,7 +54,7 @@ class TransactionCard extends StatelessWidget {
               // Info transaksi (kiri)
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     // Tujuan
                     Text(
@@ -81,14 +81,11 @@ class TransactionCard extends StatelessWidget {
 
               // Harga + Status chip (kanan)
               Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: .end,
                 children: [
                   // Status chip
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
+                    padding: const .symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       color: _statusColor(t).withAlpha(30),
                       borderRadius: BorderRadius.circular(12),

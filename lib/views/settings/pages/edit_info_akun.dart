@@ -47,7 +47,7 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
           final isLoading = state is EditInfoAkunLoading;
 
           return ListView(
-            padding: const EdgeInsets.all(24.0),
+            padding: const .all(24.0),
             children: [
               Form(
                 key: _formKey,
@@ -89,7 +89,7 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kOrange,
                     foregroundColor: kWhite,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const .symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

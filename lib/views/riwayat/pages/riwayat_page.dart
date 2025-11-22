@@ -86,7 +86,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         RiwayatTransaksi transaksi = riwayatList[index];
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          padding: const .symmetric(horizontal: 12),
                           child: TransactionCard(
                             key: ValueKey(transaksi.kode),
                             t: transaksi,
@@ -98,15 +98,12 @@ class RiwayatTransaksiPage extends StatelessWidget {
                 ),
                 if (currentPage < totalPages)
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 16,
-                    ),
+                    padding: const .symmetric(vertical: 8, horizontal: 16),
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          padding: const .symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),

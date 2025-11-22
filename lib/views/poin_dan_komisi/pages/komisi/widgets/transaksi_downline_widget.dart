@@ -11,7 +11,7 @@ class TransaksiDownlineTabPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: kBackground,
       body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
+        padding: const .all(16.0),
         itemCount: 8,
         itemBuilder: (context, index) {
           return DownlineCard();

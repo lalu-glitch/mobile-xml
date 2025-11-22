@@ -66,7 +66,7 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
                       // Item pertama (index 0) adalah Saldo XML
                       if (index == 0) {
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          padding: const .symmetric(horizontal: 4),
                           child: HomeBalanceCarousel(userBalance: state.data),
                         );
                       }
@@ -75,7 +75,7 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
                       final BalanceWallet ewallet =
                           state.data.ewallet![index - 1];
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        padding: const .symmetric(horizontal: 4),
                         child: HomeBalanceCarousel(
                           userBalance: state.data,
                           ewallet: ewallet,
@@ -86,11 +86,11 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
                 ),
                 const SizedBox(height: 16),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: List.generate(itemCount, (index) {
                     return AnimatedContainer(
                       duration: const Duration(milliseconds: 300),
-                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                      margin: const .symmetric(horizontal: 4.0),
                       height: 8.0,
                       width: _currentPage == index ? 24.0 : 8.0,
                       decoration: BoxDecoration(
@@ -122,7 +122,7 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         color: kWhite,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: const .symmetric(horizontal: 16, vertical: 16),
           child: ShimmerBox.buildMainShimmerCard(),
         ),
       ),

@@ -18,7 +18,7 @@ class SettingCard extends StatelessWidget {
     return Card(
       color: kWhite,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const .only(bottom: 12),
       child: ListTile(
         leading: Icon(icons, color: kOrange),
         title: Text(title),

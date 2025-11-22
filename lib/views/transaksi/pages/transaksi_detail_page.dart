@@ -38,7 +38,7 @@ class DetailTransaksiPage extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: const .all(20),
         child: Column(
           children: [
             // Header Status
@@ -70,9 +70,9 @@ class DetailTransaksiPage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
-              margin: EdgeInsets.zero,
+              margin: .zero,
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const .all(20),
                 child: Column(
                   children: [
                     infoRow("Kode Transaksi", status.kode.toString()),
@@ -123,7 +123,7 @@ class DetailTransaksiPage extends StatelessWidget {
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: statusColor,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const .symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),
@@ -151,7 +151,7 @@ class DetailTransaksiPage extends StatelessWidget {
                       );
                     },
                     style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const .symmetric(vertical: 16),
                       side: BorderSide(color: statusColor, width: 1.4),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),

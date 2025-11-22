@@ -49,20 +49,17 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                   }
                   if (state is RequestTopUpSuccess) {
                     return Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      padding: .symmetric(horizontal: 16, vertical: 14),
+                      margin: .symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                         color: kOrangeAccent300.withAlpha(50),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: .start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: .spaceBetween,
                             children: [
                               Text(
                                 'Bank',
@@ -78,7 +75,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                           const Divider(color: kOrange),
                           const SizedBox(height: 8),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: .start,
                             children: [
                               const Text(
                                 'Keterangan',
@@ -101,7 +98,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                           const Divider(color: kOrange),
                           const SizedBox(height: 8),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: .spaceBetween,
                             children: [
                               Text(
                                 'Nomor Rekening',
@@ -117,7 +114,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                           const Divider(color: kOrange),
                           const SizedBox(height: 8),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: .spaceBetween,
                             children: [
                               Text(
                                 'Berlaku sampai',
@@ -133,7 +130,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                           const Divider(color: kOrange),
                           const SizedBox(height: 5),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: .spaceBetween,
                             children: [
                               Text(
                                 'Total Nominal',
@@ -169,7 +166,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        padding: const .fromLTRB(16, 0, 16, 16),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: kOrange,

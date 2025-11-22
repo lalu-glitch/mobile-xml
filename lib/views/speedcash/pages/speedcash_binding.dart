@@ -78,9 +78,9 @@ class SpeedcashBindingPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    margin: const .symmetric(horizontal: 20),
                     child: Padding(
-                      padding: const EdgeInsets.all(18),
+                      padding: const .all(18),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -120,9 +120,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: vm.isLoading ? null : bindSpeedcash,
                               style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
+                                padding: const .symmetric(vertical: 16),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                 ),

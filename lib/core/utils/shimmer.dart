@@ -36,13 +36,13 @@ class ShimmerBox extends StatelessWidget {
       baseColor: kNeutral40,
       highlightColor: Colors.grey.shade100,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           // Title shimmer
           Container(
             width: 150,
             height: 20,
-            margin: const EdgeInsets.only(bottom: 12),
+            margin: const .only(bottom: 12),
             decoration: BoxDecoration(
               color: kWhite,
               borderRadius: BorderRadius.circular(8),
@@ -53,7 +53,7 @@ class ShimmerBox extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 100,
-            margin: const EdgeInsets.only(bottom: 12),
+            margin: const .only(bottom: 12),
             decoration: BoxDecoration(
               color: kWhite,
               borderRadius: BorderRadius.circular(12),
@@ -62,12 +62,12 @@ class ShimmerBox extends StatelessWidget {
 
           // 3 small shimmer boxes
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: List.generate(3, (index) {
               return Flexible(
                 fit: FlexFit.tight,
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  margin: const .symmetric(horizontal: 4),
                   height: 35,
                   decoration: BoxDecoration(
                     color: kWhite,
@@ -104,7 +104,7 @@ class ShimmerBox extends StatelessWidget {
 
   static Widget buildShimmerPromoList() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         SizedBox(
           height: 20,
@@ -129,7 +129,7 @@ class ShimmerBox extends StatelessWidget {
             itemBuilder: (context, index) {
               return Container(
                 width: 260,
-                margin: const EdgeInsets.only(right: 16),
+                margin: const .only(right: 16),
                 child: Shimmer.fromColors(
                   baseColor: kNeutral40,
                   highlightColor: kNeutral20,
@@ -176,7 +176,7 @@ class ShimmerBox extends StatelessWidget {
             child: Container(
               height: 50,
               width: 150,
-              margin: EdgeInsets.only(left: 16),
+              margin: .only(left: 16),
               decoration: BoxDecoration(
                 color: kWhite,
                 borderRadius: BorderRadius.circular(18),
@@ -190,7 +190,7 @@ class ShimmerBox extends StatelessWidget {
 
   static Widget buildShimmerRiwayatTransaksi() {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const .all(16),
       child: ListView.builder(
         itemCount: 6,
         itemBuilder: (context, index) {
@@ -199,7 +199,7 @@ class ShimmerBox extends StatelessWidget {
             highlightColor: kNeutral20,
             child: Card(
               color: kWhite,
-              margin: const EdgeInsets.symmetric(vertical: 6),
+              margin: const .symmetric(vertical: 6),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -216,7 +216,7 @@ class ShimmerBox extends StatelessWidget {
                   width: double.infinity,
                   height: 14,
                   color: Colors.white,
-                  margin: const EdgeInsets.symmetric(vertical: 4),
+                  margin: const .symmetric(vertical: 4),
                 ),
                 subtitle: Container(
                   width: double.infinity,
@@ -233,7 +233,7 @@ class ShimmerBox extends StatelessWidget {
 
   static Widget buildShimmerSettings() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Shimmer.fromColors(
           baseColor: kNeutral40,
@@ -242,12 +242,9 @@ class ShimmerBox extends StatelessWidget {
             width: double.infinity,
             height: kSize64 * 3,
             color: Colors.transparent,
-            padding: EdgeInsets.symmetric(
-              vertical: kSize16,
-              horizontal: kSize16,
-            ),
+            padding: .symmetric(vertical: kSize16, horizontal: kSize16),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: .center,
               children: [
                 // Avatar shimmer
                 Container(
@@ -263,8 +260,8 @@ class ShimmerBox extends StatelessWidget {
 
                 Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: .center,
+                    crossAxisAlignment: .start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // Baris nama shimmer
@@ -324,7 +321,7 @@ class ShimmerBox extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const .symmetric(horizontal: 16),
           child: Shimmer.fromColors(
             baseColor: kNeutral40,
             highlightColor: kNeutral20,
@@ -342,7 +339,7 @@ class ShimmerBox extends StatelessWidget {
         SizedBox(height: kSize32),
 
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const .symmetric(horizontal: 16),
           child: Shimmer.fromColors(
             baseColor: kNeutral40,
             highlightColor: kNeutral20,
@@ -359,17 +356,14 @@ class ShimmerBox extends StatelessWidget {
         // List shimmer
         Expanded(
           child: ListView.builder(
-            padding: EdgeInsets.symmetric(
-              vertical: kSize32,
-              horizontal: kSize16,
-            ),
+            padding: .symmetric(vertical: kSize32, horizontal: kSize16),
             itemCount: 5, // jumlah dummy card shimmer
             itemBuilder: (context, index) {
               return Shimmer.fromColors(
                 baseColor: kNeutral40,
                 highlightColor: kNeutral20,
                 child: Container(
-                  margin: const EdgeInsets.only(bottom: 12),
+                  margin: const .only(bottom: 12),
                   height: kSize64,
                   decoration: BoxDecoration(
                     color: kNeutral40,

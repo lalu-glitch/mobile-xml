@@ -14,7 +14,7 @@ class PillPoinKomisiWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+      padding: .symmetric(vertical: 4, horizontal: 12),
       decoration: BoxDecoration(
         color: kWhite.withAlpha(100),
         borderRadius: BorderRadius.circular(20),
@@ -33,7 +33,7 @@ class PillPoinKomisiWidget extends StatelessWidget {
           Column(
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   Text(
                     title,

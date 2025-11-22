@@ -76,9 +76,9 @@ class _SpeedcashTopUpState extends State<SpeedcashTopUp> {
           backgroundColor: kWhite,
           appBar: AppBar(backgroundColor: kWhite, scrolledUnderElevation: 0),
           body: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
+            padding: const .symmetric(vertical: 30, horizontal: 16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 HeaderSection(title: widget.title, imageUrl: widget.imageUrl),
                 const SizedBox(height: 25),

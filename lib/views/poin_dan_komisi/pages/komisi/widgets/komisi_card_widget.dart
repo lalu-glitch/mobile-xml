@@ -14,14 +14,14 @@ class CardWidget extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: Container(
         width: double.infinity,
-        margin: const EdgeInsets.only(left: 16, right: 16, top: 32),
+        margin: const .only(left: 16, right: 16, top: 32),
         child: Card(
           elevation: 8,
           color: kWhite,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const .symmetric(horizontal: 16, vertical: 16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               mainAxisSize: MainAxisSize.min, // dinamis sesuai konten
               children: [
                 Text('SEO XMLTRONIK', style: TextStyle(fontSize: 16)),
@@ -47,7 +47,7 @@ class CardWidget extends StatelessWidget {
                           controller: komisiCtrl,
                           borderColor: kOrange,
                           borderRadius: 14,
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: .symmetric(
                             vertical: 8,
                             horizontal: 12,
                           ),

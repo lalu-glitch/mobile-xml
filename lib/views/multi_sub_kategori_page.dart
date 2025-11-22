@@ -41,7 +41,7 @@ class MultiSubKategoriPage extends StatelessWidget {
         ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
               Center(child: Text('Multi Sub Kategori Page')),
               ElevatedButton(

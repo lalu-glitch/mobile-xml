@@ -8,7 +8,7 @@ class TukarKomisiTabPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const .all(16),
       itemCount: 10,
       itemBuilder: (context, index) => Card(
         child: ListTile(
@@ -21,7 +21,7 @@ class TukarKomisiTabPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
               color: kOrange,
             ),
-            padding: EdgeInsets.all(12),
+            padding: .all(12),
             child: const Icon(Icons.currency_exchange_rounded, color: kWhite),
           ),
           title: Text(

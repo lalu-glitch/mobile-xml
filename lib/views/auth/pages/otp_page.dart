@@ -97,11 +97,11 @@ class _KodeOTPState extends State<KodeOTP> {
         body: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const .all(16),
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       const Spacer(),
                       IconButton(

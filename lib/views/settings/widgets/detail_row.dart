@@ -41,9 +41,9 @@ class DetailRow extends StatelessWidget {
             }
           : null,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const .symmetric(vertical: 12),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Text(
               label,

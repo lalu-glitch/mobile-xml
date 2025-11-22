@@ -8,13 +8,13 @@ class DownlineCard extends StatelessWidget {
     return Card(
       color: kWhite,
       elevation: 2.0,
-      margin: const EdgeInsets.only(bottom: 16.0),
+      margin: const .only(bottom: 16.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const .all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             buildTopSection(),
             const SizedBox(height: 12.0),
@@ -30,11 +30,11 @@ class DownlineCard extends StatelessWidget {
 
   Widget buildTopSection() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: .spaceBetween,
+      crossAxisAlignment: .start,
       children: [
         const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             Text(
               'SMS0795632',
@@ -50,7 +50,7 @@ class DownlineCard extends StatelessWidget {
         ),
 
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+          padding: const .symmetric(horizontal: 12.0, vertical: 6.0),
           decoration: BoxDecoration(
             color: kGreen.withAlpha(50),
             borderRadius: BorderRadius.circular(8.0),
@@ -93,7 +93,7 @@ class DownlineCard extends StatelessWidget {
 
   Widget buildDetailRow(String label, String value) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: .spaceBetween,
       children: [
         Text(label, style: const TextStyle(fontSize: 14, color: kGrey)),
         Flexible(

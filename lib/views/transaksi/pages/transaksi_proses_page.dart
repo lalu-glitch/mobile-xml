@@ -90,7 +90,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   }
 
   Widget _waitingWidget() => Column(
-    mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisAlignment: .center,
     children: [
       CircularProgressIndicator(color: kOrange, strokeWidth: 5),
       const SizedBox(height: 16),
@@ -115,7 +115,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   /// Widget loading (proses API ongoing)
   Widget _loadingWidget() => Center(
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: .center,
       children: [
         CircularProgressIndicator(color: kOrange, strokeWidth: 5),
         const SizedBox(height: 16),
@@ -142,7 +142,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   Widget _errorWidget(String message) {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: .center,
         children: [
           Text(
             'Ops! Terjadi Kesalahan',
@@ -161,7 +161,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
           ),
           const SizedBox(height: 40),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const .symmetric(horizontal: 32),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: kOrange,
@@ -188,7 +188,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
 
   Widget _statusWidget(TransaksiResponse status, BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: .center,
       children: [
         CircularProgressIndicator(color: kOrange, strokeWidth: 5),
         const SizedBox(height: 32),
@@ -227,7 +227,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
         ),
         const SizedBox(height: 50),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          padding: const .symmetric(horizontal: 32),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: kOrange,

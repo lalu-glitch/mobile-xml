@@ -80,10 +80,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                   final provider = state.providers[index];
                   final List produkList = provider.produk;
                   return Card(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
+                    margin: const .symmetric(horizontal: 12, vertical: 8),
                     color: kWhite,
                     child: ExpansionTile(
                       title: Text(
@@ -115,11 +112,11 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     );
                                   },
                             child: Container(
-                              margin: const EdgeInsets.symmetric(
+                              margin: const .symmetric(
                                 horizontal: 12,
                                 vertical: 10,
                               ),
-                              padding: const EdgeInsets.all(16),
+                              padding: const .all(16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 color: isGangguan
@@ -137,13 +134,11 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                 ),
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: .spaceBetween,
                                 children: [
                                   Flexible(
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: .start,
                                       children: [
                                         if (isGangguan)
                                           Row(
@@ -217,12 +212,9 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
             ? SafeArea(
                 child: Container(
                   color: kOrange,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
+                  padding: const .symmetric(horizontal: 16, vertical: 12),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Text(
                         "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",

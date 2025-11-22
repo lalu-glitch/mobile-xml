@@ -20,7 +20,7 @@ class ActionItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: const EdgeInsets.all(4),
+          padding: const .all(4),
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(8),

@@ -10,14 +10,14 @@ class VerifikasiTukarPoinPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: kBackground,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 150, 16, 16),
+        padding: const .fromLTRB(16, 150, 16, 16),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
               Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                padding: .all(20),
+                margin: .fromLTRB(0, 50, 0, 0),
                 decoration: BoxDecoration(
                   color: kOrange,
                   borderRadius: BorderRadius.circular(100),
@@ -70,7 +70,7 @@ class VerifikasiTukarPoinPage extends StatelessWidget {
                         Navigator.pushNamed(context, '/statusTukarPoinPage'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: kOrange,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const .symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),

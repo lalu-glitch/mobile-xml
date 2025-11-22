@@ -16,10 +16,10 @@ class ErrorHandler extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: EdgeInsets.all(kSize32),
+        padding: .all(kSize32),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: .center,
+          crossAxisAlignment: .center,
           children: [
             // const SizedBox(height: 120),
             Icon(Icons.cloud_off_rounded, color: kNeutral60, size: kSize64),
@@ -49,10 +49,7 @@ class ErrorHandler extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(kSize12),
                 ),
-                padding: EdgeInsets.symmetric(
-                  vertical: kSize12,
-                  horizontal: kSize24,
-                ),
+                padding: .symmetric(vertical: kSize12, horizontal: kSize24),
               ),
             ),
           ],

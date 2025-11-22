@@ -56,9 +56,9 @@ class _AuthPageState extends State<AuthPage> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              padding: const .symmetric(horizontal: 16, vertical: 16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   const SizedBox(height: 50),
                   Text(

@@ -18,9 +18,9 @@ class SyaratDanKetentuan extends StatelessWidget {
         scrolledUnderElevation: 0.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const .all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             Text(
               'Diperbarui pada 02 Juli 2023',
@@ -31,7 +31,7 @@ class SyaratDanKetentuan extends StatelessWidget {
 
             Expanded(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: .symmetric(horizontal: 16),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: kWhite,

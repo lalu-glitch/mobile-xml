@@ -46,7 +46,7 @@ class DetailRiwayatPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ListView(
-                        padding: const EdgeInsets.all(16),
+                        padding: const .all(16),
                         children: [
                           buildInfoTile(
                             context,
@@ -90,14 +90,14 @@ class DetailRiwayatPage extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(16),
+                      padding: const .all(16),
                       child: SafeArea(
                         child: SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: kOrange,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              padding: const .symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                               ),

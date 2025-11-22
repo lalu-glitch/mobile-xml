@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
+                  padding: const .only(top: 16.0),
 
                   child: RefreshIndicator(
                     color: kOrange,
@@ -116,12 +116,10 @@ class _HomePageState extends State<HomePage> {
                         clipBehavior: Clip.none,
                         children: [
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: .start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                ),
+                                padding: const .symmetric(horizontal: 16),
                                 child: HomeHeaderSection(),
                               ),
                               const SizedBox(height: 150),
@@ -140,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                                           decoration: BoxDecoration(
                                             color: kBackground,
                                           ),
-                                          padding: const EdgeInsets.all(16),
+                                          padding: const .all(16),
                                           child: Column(
                                             children: [
                                               const SizedBox(height: 120),
@@ -160,10 +158,9 @@ class _HomePageState extends State<HomePage> {
                                         decoration: BoxDecoration(
                                           color: kBackground,
                                         ),
-                                        padding: const EdgeInsets.all(16),
+                                        padding: const .all(16),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: .start,
                                           children: [
                                             const SizedBox(height: 120),
                                             HomePromoSection(),

@@ -19,7 +19,7 @@ class HomeBalanceCarousel extends StatelessWidget {
           ),
           color: kWhite,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const .symmetric(horizontal: 16, vertical: 16),
             child: ewallet != null
                 ? HeaderSaldo(
                     title: ewallet!.nama,

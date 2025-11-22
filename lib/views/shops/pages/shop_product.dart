@@ -37,7 +37,7 @@ class ShopProducts extends StatelessWidget {
         : layananDataToDisplay.entries;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: entries.expand((entry) {
         final kategori = entry.key;
         final layananList = entry.value;
@@ -65,8 +65,8 @@ class ShopProducts extends StatelessWidget {
                 ),
               ],
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            margin: EdgeInsets.only(bottom: (entries.last == entry) ? 0 : 24),
+            padding: const .symmetric(horizontal: 8, vertical: 16),
+            margin: .only(bottom: (entries.last == entry) ? 0 : 24),
             child: GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

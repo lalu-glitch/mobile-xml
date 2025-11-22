@@ -20,9 +20,9 @@ class DataListHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: kSize16, vertical: 20),
+      padding: .symmetric(horizontal: kSize16, vertical: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           // Teks "Menampilkan 48 data"
           Text(
@@ -32,7 +32,7 @@ class DataListHeader extends StatelessWidget {
 
           // Dropdown Urutkan
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const .symmetric(horizontal: 10),
             decoration: BoxDecoration(
               border: Border.all(color: kNeutral50),
               borderRadius: BorderRadius.circular(16),

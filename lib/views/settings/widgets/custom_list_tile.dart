@@ -37,10 +37,7 @@ class CustomListTile extends StatelessWidget {
             children: [
               if (label != null)
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 2,
-                  ),
+                  padding: const .symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
                     color: (label == 'Baru') ? kOrange : null,
                     gradient: (label == 'Baru')
@@ -64,13 +61,10 @@ class CustomListTile extends StatelessWidget {
             ],
           ),
           onTap: onTap,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 0,
-          ),
+          contentPadding: const .symmetric(horizontal: 16, vertical: 0),
         ),
         // Divider yang lebih tipis dan sedikit ke dalam
-        const Padding(padding: EdgeInsets.only(left: 72, right: 16)),
+        const Padding(padding: .only(left: 72, right: 16)),
       ],
     );
   }

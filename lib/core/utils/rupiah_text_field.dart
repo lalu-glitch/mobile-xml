@@ -60,7 +60,7 @@ class _RupiahTextFieldState extends State<RupiahTextField> {
 
       decoration: InputDecoration(
         prefixIcon: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 8),
+          padding: const .only(left: 12, right: 8),
           child: Text(
             "Rp.",
             style: TextStyle(
