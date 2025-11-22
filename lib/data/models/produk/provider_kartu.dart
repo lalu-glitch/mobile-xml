@@ -1,11 +1,11 @@
-class ProviderKartu {
+class Provider {
   final String namaProvider;
   final List<Produk> produk;
 
-  ProviderKartu({required this.namaProvider, required this.produk});
+  Provider({required this.namaProvider, required this.produk});
 
-  factory ProviderKartu.fromJson(Map<String, dynamic> json) {
-    return ProviderKartu(
+  factory Provider.fromJson(Map<String, dynamic> json) {
+    return Provider(
       namaProvider: json['nama_provider'] ?? '',
       produk: (json['produk'] as List<dynamic>)
           .map((item) => Produk.fromJson(item))
@@ -21,6 +21,7 @@ class Produk {
   final int gangguan;
   final int bebasNominal;
   final int endUser;
+  final int postPaid;
   Produk({
     required this.kodeProduk,
     required this.namaProduk,
@@ -28,6 +29,7 @@ class Produk {
     required this.gangguan,
     required this.bebasNominal,
     required this.endUser,
+    required this.postPaid,
   });
 
   factory Produk.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class Produk {
       gangguan: json['gangguan'] ?? 0,
       bebasNominal: json['bebas_nominal'] ?? 0,
       endUser: json['enduser'] ?? 0,
+      postPaid: json['postpaid'] ?? 0,
     );
   }
 }

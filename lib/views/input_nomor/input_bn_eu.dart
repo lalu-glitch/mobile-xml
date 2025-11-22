@@ -2,6 +2,8 @@
 // tujuannya agar halaman konfirmasi tidak menerima segala inputan
 // sehingga halaman konfirmasi pure nampilin informasi
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xmlapp/views/auth/widgets/custom_textfield.dart';
@@ -69,7 +71,7 @@ class _InputBebasNominalDanEndUserState
                         const Divider(height: 24),
                         infoRow(
                           "Total Pembayaran",
-                          CurrencyUtil.formatCurrency(transaksi.total),
+                          CurrencyUtil.formatCurrency(transaksi.productPrice),
                           isTotal: true,
                         ),
                       ],
@@ -129,6 +131,7 @@ class _InputBebasNominalDanEndUserState
       return;
     }
     //text handler buat bebas nominal
+    log('bebas nominal: ${sendTransaksi.getData().isBebasNominal}');
     if (transaksi.isBebasNominal == 1) {
       final bebasNominalText = dataController.text.trim().replaceAll('.', '');
 
@@ -141,6 +144,7 @@ class _InputBebasNominalDanEndUserState
         showErrorDialog(context, "Input harus berupa angka");
         return;
       }
+      log('nilai bebas nominal : $nominal');
       sendTransaksi.setbebasNominalValue(nominal);
     } else {
       sendTransaksi.setbebasNominalValue(0);
@@ -171,11 +175,5 @@ class _InputBebasNominalDanEndUserState
     } else {
       Navigator.pushNamed(context, '/konfirmasiPembayaran');
     }
-  }
-
-  @override
-  void dispose() {
-    dataController.dispose();
-    super.dispose();
   }
 }

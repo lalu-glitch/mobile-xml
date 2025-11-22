@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -110,13 +108,10 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     });
                                     transaksi.setKodeproduk(produk.kodeProduk);
                                     transaksi.setNamaProduk(produk.namaProduk);
-                                    transaksi.setNominal(produk.hargaJual);
+                                    transaksi.setProductPrice(produk.hargaJual);
                                     transaksi.isEndUser(produk.endUser);
                                     transaksi.isBebasNominal(
                                       produk.bebasNominal,
-                                    );
-                                    log(
-                                      '[PREFIX PAGE BEBAS NOMINAL VALUE]: ${produk.bebasNominal}',
                                     );
                                   },
                             child: Container(
@@ -173,7 +168,17 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                                 ? kRed
                                                 : isSelected
                                                 ? kWhite
-                                                : Colors.black,
+                                                : kBlack,
+                                          ),
+                                        ),
+                                        Text(
+                                          produk.kodeProduk,
+                                          style: TextStyle(
+                                            color: isGangguan
+                                                ? kRed
+                                                : isSelected
+                                                ? kWhite
+                                                : kBlack,
                                           ),
                                         ),
                                       ],
@@ -189,7 +194,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                           ? kRed
                                           : isSelected
                                           ? kWhite
-                                          : Colors.black,
+                                          : kBlack,
                                     ),
                                   ),
                                 ],

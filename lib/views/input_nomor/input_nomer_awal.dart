@@ -3,11 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/dynamic_app_page.dart';
-import '../../data/models/transaksi/transaksi_helper.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
 import 'utils/base_state.dart';
-import 'utils/transaksi_cubit.dart';
 import 'widgets/input_text_field.dart';
 
 class InputNomorPage extends StatefulWidget {
@@ -55,36 +53,32 @@ class _InputNomorPageState extends BaseInput<InputNomorPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocBuilder<TransaksiHelperCubit, TransaksiHelperModel>(
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Masukkan Nomor Tujuan"),
-                const SizedBox(height: 8),
-                buildNomorTextField(
-                  controller: dataController,
-                  onPickContact: pickContact,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text("Masukkan Nomor Tujuan"),
+            const SizedBox(height: 8),
+            buildNomorTextField(
+              controller: dataController,
+              onPickContact: pickContact,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kOrange,
+                foregroundColor: Colors.white,
+                minimumSize: const Size(double.infinity, 48),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kOrange,
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(double.infinity, 48),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: handleNextButtonPress,
-                  child: const Text(
-                    "Selanjutnya",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            );
-          },
+              ),
+              onPressed: handleNextButtonPress,
+              child: const Text(
+                "Selanjutnya",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
         ),
       ),
     );

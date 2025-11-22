@@ -20,14 +20,14 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
     super.initState();
     final transaksi = context.read<TransaksiHelperCubit>().getData();
     final cubit = context.read<WebsocketTransaksiCubit>();
+    //nominal final untuk semua transaksi pada aplikasi
+    final nominal = (transaksi.nominalPembayaran)?.toInt() ?? 0;
 
     cubit.reset();
     cubit.startTransaksi(
       transaksi.tujuan ?? '',
       transaksi.kodeProduk ?? '',
-      nominal: transaksi.isBebasNominal == 1
-          ? transaksi.bebasNominalValue ?? 0
-          : 0,
+      nominal: nominal,
       endUser: transaksi.isEndUser == 1 ? transaksi.endUserValue ?? '' : '',
     );
   }

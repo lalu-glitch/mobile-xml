@@ -251,7 +251,14 @@ class _SettingsPageState extends State<SettingsPage> {
                             return LogoutCard(onTap: _showLogoutBottomSheet);
                           case 8:
                           // return ElevatedButton(
-                          //   onPressed: () {},
+                          //   onPressed: () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => UITestPage(),
+                          //       ),
+                          //     );
+                          //   },
                           //   child: Text('TEST CASE BUTTON'),
                           // );
                           default:

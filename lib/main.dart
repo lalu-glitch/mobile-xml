@@ -28,6 +28,7 @@ import 'views/settings/cubit/wallet/unbind_ewallet_cubit.dart';
 import 'views/speedcash/cubit/panduan_topup_cubit.dart';
 import 'views/speedcash/cubit/list_bank_cubit.dart';
 import 'views/speedcash/cubit/request_topup_cubit.dart';
+import 'views/transaksi/cubit/websocket_cektransaksi_cubit.dart';
 import 'views/transaksi/cubit/websocket_transaksi_cubit.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -180,10 +181,14 @@ class _XmlAppState extends State<XmlApp> {
           BlocProvider(create: (context) => TransaksiHelperCubit()),
           BlocProvider(create: (context) => FlowCubit()),
 
-          //transaksi umum
+          //transaksi web socket
           BlocProvider(
             create: (context) =>
                 WebsocketTransaksiCubit(context.read<WebSocketService>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                WebSocketCekTransaksiCubit(context.read<WebSocketService>()),
           ),
 
           //speedcash

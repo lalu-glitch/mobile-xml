@@ -6,13 +6,14 @@ enum AppPage {
   inputNomorMid,
   pilihProduk,
   multiSubKategori,
+  cekTransaksi,
 }
 
 /// Mapping ID ke sequence
 Map<int, List<AppPage>> pageSequences = {
   1: [AppPage.prefixFinal, AppPage.inputBNEU],
   2: [AppPage.pilihProduk, AppPage.inputNomorAkhir],
-  3: [AppPage.pilihProduk, AppPage.inputNomorMid, AppPage.pilihProduk],
+  3: [AppPage.pilihProduk, AppPage.inputNomorMid, AppPage.cekTransaksi],
   4: [AppPage.pilihProduk, AppPage.inputNomorAkhir],
   5: [AppPage.inputNomorAwal, AppPage.pilihProduk],
   6: [AppPage.multiSubKategori, AppPage.inputNomorMid, AppPage.pilihProduk],
@@ -28,4 +29,5 @@ Map<AppPage, String> pageRoutes = {
   AppPage.inputNomorAkhir: '/inputNomorTujuan',
   AppPage.inputBNEU: '/inputBNEU',
   AppPage.multiSubKategori: '/multiSubKategori',
+  AppPage.cekTransaksi: '/cekTransaksi',
 };

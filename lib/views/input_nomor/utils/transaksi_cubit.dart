@@ -5,53 +5,36 @@ import '../../../data/models/transaksi/transaksi_helper.dart';
 class TransaksiHelperCubit extends Cubit<TransaksiHelperModel> {
   TransaksiHelperCubit() : super(const TransaksiHelperModel());
 
-  void setKodeproduk(String val) {
-    emit(state.copyWith(kodeProduk: val));
-  }
+  void setKodeproduk(String val) => emit(state.copyWith(kodeProduk: val));
+  void setKodeDompet(String val) => emit(state.copyWith(kodeDompet: val));
+  void setKodeCatatan(String val) => emit(state.copyWith(kodeCatatan: val));
+  void setTujuan(String val) => emit(state.copyWith(tujuan: val));
+  void setNamaProduk(String val) => emit(state.copyWith(namaProduk: val));
 
-  void setTujuan(String val) {
-    emit(state.copyWith(tujuan: val));
-  }
+  /// setter untuk harga produk (dari katalog)
+  void setProductPrice(int val) =>
+      emit(state.copyWith(productPrice: val.toDouble()));
 
-  void setNamaProduk(String val) {
-    emit(state.copyWith(namaProduk: val));
-  }
+  /// setter untuk fee/layanan
+  void setFee(int val) => emit(state.copyWith(fee: val.toDouble()));
 
-  void setNominal(int val) {
-    emit(state.copyWith(total: val.toDouble()));
-  }
+  /// setter untuk final total (tagihan + fee + extras)
+  void setFinalTotalTagihan(int val) =>
+      emit(state.copyWith(finalTotal: val.toDouble()));
 
-  //bebas nominal
-  void isBebasNominal(int val) {
-    emit(state.copyWith(isBebasNominal: val));
-  }
+  // jika mau alias backward compatible:
+  /// deprecated: gunakan setProductPrice atau setFinalTotal sesuai konteks
+  void setNominalPembayaran(int val) =>
+      emit(state.copyWith(nominalPembayaran: val.toDouble()));
 
-  void setbebasNominalValue(int val) {
-    emit(state.copyWith(bebasNominalValue: val));
-  }
+  // bebas nominal
+  void isBebasNominal(int val) => emit(state.copyWith(isBebasNominal: val));
+  void setbebasNominalValue(int val) =>
+      emit(state.copyWith(bebasNominalValue: val.toDouble()));
+  //end user
+  void isEndUser(int val) => emit(state.copyWith(isendUser: val));
+  void setEndUserValue(String val) => emit(state.copyWith(endUserValue: val));
 
-  //kode voucher ini mah aslinya
-  void isEndUser(int val) {
-    emit(state.copyWith(isendUser: val));
-  }
-
-  void setEndUserValue(String val) {
-    emit(state.copyWith(endUserValue: val));
-  }
-
-  void setKodeDompet(String val) {
-    emit(state.copyWith(kodeDompet: val));
-  }
-
-  void setKodeCatatan(String val) {
-    emit(state.copyWith(kodeCatatan: val));
-  }
-
-  TransaksiHelperModel getData() {
-    return state;
-  }
-
-  void reset() {
-    emit(const TransaksiHelperModel());
-  }
+  TransaksiHelperModel getData() => state;
+  void reset() => emit(const TransaksiHelperModel());
 }

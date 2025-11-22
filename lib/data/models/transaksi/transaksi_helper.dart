@@ -2,51 +2,62 @@ class TransaksiHelperModel {
   final String? tujuan;
   final String? kodeProduk;
   final String? namaProduk;
-  final String? kodeCatatan; // <---- dipake ke parameter prefix & prefix
-  final double? total;
+  final String? kodeCatatan;
+  final double? productPrice; // harga produk (dari katalog)
+  final double? fee; // biaya layanan / fee
+  final double? finalTotal; // total pembayaran (tagihan + fee + extras)
   final int? isBebasNominal;
-  final int? bebasNominalValue;
+  final double? bebasNominalValue;
   final int? isEndUser;
   final String? endUserValue;
   final String? kodeDompet;
+  final double? nominalPembayaran;
 
   const TransaksiHelperModel({
     this.tujuan,
     this.kodeProduk,
     this.namaProduk,
     this.kodeCatatan,
-    this.total,
+    this.productPrice,
+    this.fee,
+    this.finalTotal,
     this.isBebasNominal,
     this.bebasNominalValue,
     this.isEndUser,
     this.endUserValue,
     this.kodeDompet,
+    this.nominalPembayaran,
   });
 
-  /// copyWith
   TransaksiHelperModel copyWith({
     String? tujuan,
     String? kodeProduk,
     String? namaProduk,
     String? kodeCatatan,
-    double? total,
+    double? productPrice,
+    double? fee,
+    double? finalTotal,
     int? isBebasNominal,
-    final int? bebasNominalValue,
+    double? bebasNominalValue,
     int? isendUser,
     String? endUserValue,
     String? kodeDompet,
+    double? nominalPembayaran,
   }) {
     return TransaksiHelperModel(
       tujuan: tujuan ?? this.tujuan,
       kodeProduk: kodeProduk ?? this.kodeProduk,
       namaProduk: namaProduk ?? this.namaProduk,
       kodeCatatan: kodeCatatan ?? this.kodeCatatan,
-      total: total ?? this.total,
+      productPrice: productPrice ?? this.productPrice,
+      fee: fee ?? this.fee,
+      finalTotal: finalTotal ?? this.finalTotal,
       isBebasNominal: isBebasNominal ?? this.isBebasNominal,
       bebasNominalValue: bebasNominalValue ?? this.bebasNominalValue,
-      isEndUser: isendUser ?? isEndUser,
+      isEndUser: isendUser ?? this.isEndUser,
       endUserValue: endUserValue ?? this.endUserValue,
       kodeDompet: kodeDompet ?? this.kodeDompet,
+      nominalPembayaran: nominalPembayaran ?? this.nominalPembayaran,
     );
   }
 }

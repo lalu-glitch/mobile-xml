@@ -65,7 +65,7 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
                         const Divider(height: 24),
                         infoRow(
                           "Total Pembayaran",
-                          CurrencyUtil.formatCurrency(transaksi.total),
+                          CurrencyUtil.formatCurrency(transaksi.productPrice),
                           isTotal: true,
                         ),
                       ],
