@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xmlapp/core/helper/currency.dart';
@@ -78,7 +76,9 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
                                 ...buildDynamicRows(state.data),
                                 infoRow(
                                   "Fee",
-                                  CurrencyUtil.formatCurrency(transaksi.total),
+                                  CurrencyUtil.formatCurrency(
+                                    transaksi.productPrice,
+                                  ),
                                   isTotal: false,
                                 ),
                               ],
@@ -161,15 +161,14 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
     final clean = rawTagihan.replaceAll(RegExp(r'[.,]'), '');
     final tagihan = int.tryParse(clean) ?? 0;
 
-    final fee = transaksi.total;
-    final totalNominal = tagihan + fee!;
+    final fee = (transaksi.productPrice ?? 0.0).toInt();
 
-    sendTransaksi.setNominal(totalNominal.toInt());
-    log("Nominal yang dikirim: $totalNominal");
+    sendTransaksi.setFee(fee);
+    sendTransaksi.setFinalTotalTagihan(tagihan);
 
     if (first == 'C') {
-      // Jika transaksi dibatalkan, reset state transaksi
       Navigator.pushNamedAndRemoveUntil(context, '/homepage', (route) => false);
+      sendTransaksi.reset();
       return;
     }
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -110,7 +108,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                                     });
                                     transaksi.setKodeproduk(produk.kodeProduk);
                                     transaksi.setNamaProduk(produk.namaProduk);
-                                    transaksi.setNominal(produk.hargaJual);
+                                    transaksi.setProductPrice(produk.hargaJual);
                                     transaksi.isEndUser(produk.endUser);
                                     transaksi.isBebasNominal(
                                       produk.bebasNominal,

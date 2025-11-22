@@ -2,7 +2,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
@@ -30,19 +29,38 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   final TextEditingController textController = TextEditingController();
 
   double getTotalTransaksi(dynamic transaksi) {
-    final double baseTotal = transaksi.total ?? 0;
-    if (transaksi.isBebasNominal == 1) {
-      final int nominalTambahan = transaksi.bebasNominalValue ?? 0;
-      final total = baseTotal + nominalTambahan;
-      return total;
+    final double basePrice = transaksi.productPrice ?? 0;
+
+    final totalTagihanPrice = transaksi.finalTotal ?? 0;
+    if (totalTagihanPrice > 0) {
+      final serviceFee = transaksi.fee ?? 0.0;
+      double base = totalTagihanPrice + serviceFee;
+      return base;
     }
-    return baseTotal;
+    if (transaksi.isBebasNominal == 1) {
+      final double bebasNominalPrice = transaksi.bebasNominalValue ?? 0;
+      return bebasNominalPrice;
+    }
+    return basePrice;
+  }
+
+  double getDisplayedTotal(dynamic transaksi) {
+    final double totalTagihanPrice = transaksi.finalTotal ?? 0.0;
+    if (totalTagihanPrice > 0) {
+      final serviceFee = transaksi.fee ?? 0.0;
+      return totalTagihanPrice + serviceFee;
+    }
+    if (transaksi.isBebasNominal == 1) {
+      final productPrice = transaksi.productPrice ?? 0.0;
+      final bebas = (transaksi.bebasNominalValue ?? 0).toDouble();
+      return productPrice + bebas;
+    }
+    return transaksi.productPrice ?? 0.0;
   }
 
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>().getData();
-    log('transaksi harga total: ${transaksi.total}');
 
     return WillPopScope(
       onWillPop: () async {
@@ -132,7 +150,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
   /// Card informasi transaksi
   Widget _buildInfoCard(dynamic transaksi) {
-    final totalTransaksi = getTotalTransaksi(transaksi);
+    final totalTransaksi = getDisplayedTotal(transaksi);
     return Card(
       color: kWhite,
       elevation: 3,
@@ -147,6 +165,18 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             const Divider(height: 24),
             infoRow("Nama Produk", transaksi.namaProduk ?? ''),
             const Divider(height: 24),
+            if (transaksi.isBebasNominal == 1) ...[
+              infoRow(
+                "Harga Produk",
+                CurrencyUtil.formatCurrency(transaksi.productPrice),
+              ),
+              const Divider(height: 24),
+              infoRow(
+                'Nominal',
+                CurrencyUtil.formatCurrency(transaksi.bebasNominalValue),
+              ),
+              const Divider(height: 24),
+            ],
             infoRow(
               "Total Pembayaran",
               CurrencyUtil.formatCurrency(totalTransaksi),
@@ -212,7 +242,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   Widget _buildPayButton(List<PaymentMethodModel> methods, dynamic transaksi) {
     final sendTransaksi = context.read<TransaksiHelperCubit>();
     final totalTransaksi = getTotalTransaksi(transaksi);
-
+    log('[transaksi harga final sebelum proses]: $totalTransaksi');
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
@@ -231,10 +261,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               (m) => m.nama == _selectedMethod,
             );
 
+            //3 ini dpakai buat di transaksi proses
             sendTransaksi.setKodeDompet(selected.kodeDompet ?? "");
-            sendTransaksi.setbebasNominalValue(
-              int.tryParse(textController.text.replaceAll('.', '')) ?? 0,
-            );
+            sendTransaksi.setNominalPembayaran((totalTransaksi).toInt());
             sendTransaksi.setEndUserValue(textController.text.trim());
 
             // Cek saldo cukup atau tidak
@@ -247,7 +276,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               return;
             }
 
-            // Jika metode Speedcash
+            // kalo pake metode Speedcash
             if (selected.nama == 'SPEEDCASH') {
               Navigator.push(
                 context,
@@ -272,7 +301,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               return;
             }
 
-            // Jika cukup saldo, lanjut ke proses transaksi
+            // kalo cukup saldo, lanjut ke proses transaksi
             Navigator.pushNamedAndRemoveUntil(
               context,
               '/transaksiProses',

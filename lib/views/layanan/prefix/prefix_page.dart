@@ -385,9 +385,17 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
     final trx = context.read<TransaksiHelperCubit>();
     trx.setKodeproduk(produk.kodeProduk);
     trx.setNamaProduk(produk.namaProduk);
-    trx.setNominal(produk.hargaJual);
+    trx.setProductPrice(produk.hargaJual);
     trx.isBebasNominal(produk.bebasNominal);
     trx.isEndUser(produk.endUser);
+
+    //log semua trx
+    log('semua data dari prefix: ');
+    log('kode produk: ${trx.getData().kodeProduk}');
+    log('nama produk: ${trx.getData().namaProduk}');
+    log('harga jual: ${trx.getData().productPrice}');
+    log('bebas nominal: ${trx.getData().isBebasNominal}');
+    log('end user: ${trx.getData().isEndUser}');
   }
 
   @override
