@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xmlapp/core/helper/constant_finals.dart';
 import 'package:xmlapp/views/settings/cubit/info_akun/info_akun_cubit.dart';
 
+import '../../../core/helper/currency.dart';
 import '../widgets/detail_row.dart';
 import '../widgets/section_title.dart';
 import '../widgets/setting_user_header.dart';
@@ -94,7 +95,7 @@ class DetailInfoAkun extends StatelessWidget {
                         children: [
                           DetailRow(
                             label: "Saldo",
-                            value: data.saldo.toString(),
+                            value: CurrencyUtil.formatCurrency(data.saldo),
                           ),
                           _buildDivider(),
                           DetailRow(
