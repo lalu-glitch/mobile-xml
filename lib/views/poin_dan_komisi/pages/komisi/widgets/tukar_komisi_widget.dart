@@ -14,7 +14,7 @@ class TukarKomisiTabPage extends StatelessWidget {
         child: ListTile(
           tileColor: kWhite,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadiusGeometry.circular(16),
+            borderRadius: BorderRadius.circular(16),
           ),
           leading: Container(
             decoration: BoxDecoration(

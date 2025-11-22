@@ -16,6 +16,7 @@ class KomisiPage extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: kBackground,
         appBar: AppBar(
           backgroundColor: kOrange,
