@@ -67,7 +67,7 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
                       if (index == 0) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: HomeBalanceCarousel(),
+                          child: HomeBalanceCarousel(userBalance: state.data),
                         );
                       }
 

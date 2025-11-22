@@ -77,7 +77,7 @@ class _InputNomorPageState extends BaseInput<InputNomorMidPage> {
                       const Divider(height: 24),
                       infoRow(
                         "Total Pembayaran",
-                        CurrencyUtil.formatCurrency(transaksi.total),
+                        CurrencyUtil.formatCurrency(transaksi.productPrice),
                         isTotal: true,
                       ),
                     ],
