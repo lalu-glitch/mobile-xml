@@ -59,7 +59,7 @@ class CardWidget extends StatelessWidget {
                           onTap: () {
                             Navigator.pushNamed(
                               context,
-                              '/detailTukarKomisiPage',
+                              '/statusTukarKomisiPage',
                             );
                           },
                           child: Container(
@@ -95,6 +95,8 @@ class CardWidget extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           color: kNeutral80,
                         ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
                       ),
                     ),
                   ],

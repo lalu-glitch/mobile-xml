@@ -77,7 +77,7 @@ final Map<String, WidgetBuilder> appRoutes = {
 
   ///POIN & KOMISI
   '/komisiPage': (context) => authGuardWrapper(KomisiPage()),
-  '/stastusTukarKomisiPage': (context) =>
+  '/statusTukarKomisiPage': (context) =>
       authGuardWrapper(StatusTukarKomisiPage()),
   '/poinPage': (context) => authGuardWrapper(PoinPage()),
   '/detailTukarPoinPage': (context) => authGuardWrapper(DetailTukarPoin()),
