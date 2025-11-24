@@ -20,6 +20,7 @@ import '../../../transaksi/pages/konfirmasi_pembayaran_page.dart';
 import '../cubit/provider_prefix_cubit.dart';
 import '../helper/prefix_controller.dart';
 import '../widgets/widget_input_nomor_prefix.dart';
+import '../widgets/widget_navigation_button_prefix.dart';
 
 class DetailPrefixPage extends StatefulWidget {
   const DetailPrefixPage({super.key});
@@ -29,7 +30,7 @@ class DetailPrefixPage extends StatefulWidget {
 }
 
 class _DetailPrefixPageState extends State<DetailPrefixPage> {
-  final TextEditingController _nomorController = TextEditingController();
+  final _nomorController = TextEditingController();
 
   late final DetailPrefixController controller;
   String? selectedProductCode;
@@ -43,7 +44,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
   void initState() {
     super.initState();
 
-    // baca cubit dari context (aman di initState)
+    // baca cubit dari context
     prefixCubit = context.read<ProviderPrefixCubit>();
     sendTransaksi = context.read<TransaksiHelperCubit>();
     flowCubit = context.read<FlowCubit>();
@@ -118,13 +119,13 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
         ),
         body: Column(
           children: [
-            // Input Nomor
+            // field input nomor
             InputNomorPrefixWidget(
               nomorController: _nomorController,
               controller: controller,
             ),
 
-            // LIST PROVIDER DENGAN ACCORDION
+            // list produk dengan accordion
             Expanded(
               child: BlocBuilder<ProviderPrefixCubit, ProviderPrefixState>(
                 builder: (context, state) {
@@ -280,81 +281,16 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
             ),
           ],
         ),
-
+        // tombol selanjutnya
         bottomNavigationBar: selectedProductCode != null
-            ? BlocBuilder<ProviderPrefixCubit, ProviderPrefixState>(
-                builder: (context, state) {
-                  if (state is! ProviderPrefixSuccess) {
-                    return const SizedBox.shrink();
-                  }
-
-                  final selectedProduk = state.providers
-                      .expand((p) => p.produk)
-                      .where((p) => p.kodeProduk == selectedProductCode)
-                      .firstOrNull;
-
-                  if (selectedProduk == null) return const SizedBox.shrink();
-
-                  return SafeArea(
-                    child: Container(
-                      color: kOrange,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
-                            style: TextStyle(
-                              color: kWhite,
-                              fontWeight: FontWeight.bold,
-                              fontSize: kSize16,
-                            ),
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: kWhite,
-                              foregroundColor: kOrange,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            onPressed: () {
-                              final bool navigateToBNEUPage =
-                                  !isLastPage &&
-                                  (selectedProduk.bebasNominal == 1 ||
-                                      selectedProduk.endUser == 1);
-                              if (navigateToBNEUPage) {
-                                sendTransaksi.setTujuan(nomorTujuan);
-                                final nextPage = flowState
-                                    .sequence[flowState.currentIndex + 1];
-                                flowCubit.nextPage();
-                                Navigator.pushNamed(
-                                  context,
-                                  pageRoutes[nextPage]!,
-                                );
-                              } else {
-                                sendTransaksi.setTujuan(nomorTujuan);
-                                Navigator.pushNamed(
-                                  context,
-                                  '/konfirmasiPembayaran',
-                                );
-                              }
-                            },
-                            child: Text(
-                              isLastPage ? "Selanjutnya" : "Selanjutnya",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+            ? NavigationButtonPrefix(
+                selectedProductCode: selectedProductCode,
+                selectedPrice: selectedPrice,
+                isLastPage: isLastPage,
+                sendTransaksi: sendTransaksi,
+                nomorTujuan: nomorTujuan,
+                flowState: flowState,
+                flowCubit: flowCubit,
               )
             : null,
       ),

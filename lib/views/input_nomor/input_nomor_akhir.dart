@@ -20,7 +20,7 @@ class InputNomorTujuanAkhir extends StatefulWidget {
 }
 
 class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
-  final TextEditingController _bebasNominalController = TextEditingController();
+  final _bebasNominalController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
