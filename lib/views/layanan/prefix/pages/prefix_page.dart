@@ -8,16 +8,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
 
-import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/dynamic_app_page.dart';
-import '../../../core/utils/dialog.dart';
-import '../../input_nomor/utils/contact_handler.dart';
-import '../cubit/flow_cubit.dart';
-import '../../../data/models/layanan/flow_state_models.dart';
-import '../../../core/helper/currency.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
-import '../../transaksi/pages/konfirmasi_pembayaran_page.dart';
-import 'cubit/provider_prefix_cubit.dart';
+import '../../../../core/helper/constant_finals.dart';
+import '../../../../core/helper/dynamic_app_page.dart';
+import '../../../../core/utils/dialog.dart';
+import '../../../input_nomor/utils/contact_handler.dart';
+import '../../cubit/flow_cubit.dart';
+import '../../../../data/models/layanan/flow_state_models.dart';
+import '../../../../core/helper/currency.dart';
+import '../../../input_nomor/utils/transaksi_cubit.dart';
+import '../../../transaksi/pages/konfirmasi_pembayaran_page.dart';
+import '../cubit/provider_prefix_cubit.dart';
+import '../helper/prefix_controller.dart';
 
 class DetailPrefixPage extends StatefulWidget {
   const DetailPrefixPage({super.key});
@@ -28,58 +29,61 @@ class DetailPrefixPage extends StatefulWidget {
 
 class _DetailPrefixPageState extends State<DetailPrefixPage> {
   final TextEditingController _nomorController = TextEditingController();
-  Timer? _debounce;
+
+  late final DetailPrefixController controller;
   String? selectedProductCode;
   double selectedPrice = 0;
 
-  late final ContactFlowHandler handler;
-  late ProviderPrefixCubit prefixCubit;
-  late TransaksiHelperCubit sendTransaksi;
-  late FlowCubit flowCubit;
+  late final ProviderPrefixCubit prefixCubit;
+  late final TransaksiHelperCubit sendTransaksi;
+  late final FlowCubit flowCubit;
 
   @override
   void initState() {
     super.initState();
 
+    // baca cubit dari context (aman di initState)
     prefixCubit = context.read<ProviderPrefixCubit>();
     sendTransaksi = context.read<TransaksiHelperCubit>();
     flowCubit = context.read<FlowCubit>();
 
-    _nomorController.text = "";
-    handler = ContactFlowHandler(
-      context: context,
+    controller = DetailPrefixController(
       nomorController: _nomorController,
+      prefixCubit: prefixCubit,
+      transaksiCubit: sendTransaksi,
+      flowCubit: flowCubit,
       setStateCallback: (fn) {
-        if (mounted) {
-          setState(fn);
-        }
+        if (mounted) setState(fn);
       },
     );
+
+    _nomorController.text = "";
+
+    // clear providers frame pertama
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      prefixCubit.clear();
+      controller.initClear();
     });
   }
 
-  Future<void> _fetchProvider(String value) async {
-    if (value.length >= 4) {
-      final readTransaksi = context.read<TransaksiHelperCubit>().getData();
-      await prefixCubit.fetchProvidersPrefix(
-        readTransaksi.kodeCatatan ?? '-',
-        value,
-      );
-    }
+  @override
+  void dispose() {
+    controller.dispose();
+    _nomorController.dispose();
+    super.dispose();
   }
 
-  void _onNomorChanged(String value) {
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
+  Future<void> onProdukSelected(dynamic produk) async {
+    setState(() {
+      selectedProductCode = produk.kodeProduk;
+      selectedPrice = (produk.hargaJual ?? 0).toDouble();
+    });
 
-    if (value.length >= 4) {
-      _debounce = Timer(const Duration(milliseconds: 800), () {
-        _fetchProvider(value);
-      });
-    } else {
-      prefixCubit.clear();
-    }
+    context.read<TransaksiHelperCubit>()
+      ..setKodeproduk(produk.kodeProduk)
+      ..setNamaProduk(produk.namaProduk)
+      ..setProductPrice(produk.hargaJual)
+      ..isBebasNominal(produk.bebasNominal)
+      ..isEndUser(produk.endUser);
   }
 
   @override
@@ -95,9 +99,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
     return PopScope(
       canPop: true,
       onPopInvokedWithResult: (didPop, result) async {
-        if (didPop) {
-          return;
-        }
+        if (didPop) return;
         if (currentIndex > 0) {
           flowCubit.previousPage();
           Navigator.pop(context);
@@ -117,15 +119,15 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
           children: [
             // Input Nomor
             Padding(
-              padding: const .all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
-                crossAxisAlignment: .start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text("Nomor Tujuan"),
                   const SizedBox(height: 8),
                   TextField(
                     controller: _nomorController,
-                    onChanged: _onNomorChanged,
+                    onChanged: controller.onNomorChanged,
                     onSubmitted: (_) => FocusScope.of(context).unfocus(),
                     keyboardType: TextInputType.phone,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -145,7 +147,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                       hintText: "0812 1111 2222",
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.contact_page),
-                        onPressed: handler.pickContact,
+                        onPressed: () => controller.pickContact(context),
                       ),
                     ),
                   ),
@@ -160,17 +162,20 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                   if (_nomorController.text.isEmpty) {
                     return const Center(child: Text('Silahkan isi nomor HP'));
                   }
+
                   if (state is ProviderPrefixLoading) {
                     return const Center(
                       child: CircularProgressIndicator(color: kOrange),
                     );
                   }
+
                   if (state is ProviderPrefixError) {
                     return Padding(
-                      padding: const .all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Text(state.message, style: TextStyle(color: kRed)),
                     );
                   }
+
                   if (state is ProviderPrefixSuccess) {
                     if (state.providers.isEmpty) {
                       return const Center(child: Text('Data tidak tersedia'));
@@ -183,7 +188,10 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                         final List produkList = provider.produk;
 
                         return Card(
-                          margin: const .symmetric(horizontal: 12, vertical: 6),
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
                           color: kWhite,
                           child: ExpansionTile(
                             title: Text(
@@ -192,94 +200,105 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            children: [
-                              ...produkList.map((produk) {
-                                final bool isSelected =
-                                    selectedProductCode == produk.kodeProduk;
-                                final bool isGangguan = produk.gangguan == 1;
+                            children: produkList.map<Widget>((produk) {
+                              final bool isSelected =
+                                  selectedProductCode == produk.kodeProduk;
+                              final bool isGangguan =
+                                  (produk.gangguan ?? 0) == 1;
 
-                                return GestureDetector(
-                                  onTap: isGangguan
-                                      ? null
-                                      : () => onProdukSelected(produk),
-                                  child: Container(
-                                    margin: const .symmetric(
-                                      horizontal: 12,
-                                      vertical: 6,
-                                    ),
-                                    padding: const .all(16),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
+                              return GestureDetector(
+                                onTap: isGangguan
+                                    ? null
+                                    : () => onProdukSelected(produk),
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: isGangguan
+                                        ? kNeutral20
+                                        : isSelected
+                                        ? kOrange
+                                        : kWhite,
+                                    border: Border.all(
                                       color: isGangguan
-                                          ? kNeutral20
+                                          ? kRed
                                           : isSelected
-                                          ? kOrange
-                                          : kWhite,
-                                      border: Border.all(
-                                        color: isGangguan
-                                            ? kRed
-                                            : isSelected
-                                            ? Colors.deepOrange
-                                            : Colors.grey.shade300,
-                                        width: isGangguan ? 2 : 1,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: .spaceBetween,
-                                      children: [
-                                        Flexible(
-                                          child: Column(
-                                            crossAxisAlignment: .start,
-                                            children: [
-                                              if (isGangguan)
-                                                Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.cancel,
-                                                      color: kRed,
-                                                      size: 14,
-                                                    ),
-                                                    const SizedBox(width: 4),
-                                                    Text(
-                                                      "Gangguan",
-                                                      style: TextStyle(
-                                                        color: kRed,
-                                                        fontSize: kSize12,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              Text(
-                                                produk.namaProduk,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: isGangguan
-                                                      ? kRed
-                                                      : isSelected
-                                                      ? kWhite
-                                                      : Colors.black,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Text(
-                                          "${CurrencyUtil.formatCurrency(produk.hargaJual)}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: isGangguan
-                                                ? kRed
-                                                : isSelected
-                                                ? kWhite
-                                                : Colors.black,
-                                          ),
-                                        ),
-                                      ],
+                                          ? Colors.deepOrange
+                                          : Colors.grey.shade300,
+                                      width: isGangguan ? 2 : 1,
                                     ),
                                   ),
-                                );
-                              }),
-                            ],
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (isGangguan)
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.cancel,
+                                                    color: kRed,
+                                                    size: 14,
+                                                  ),
+                                                  const SizedBox(width: 4),
+                                                  Text(
+                                                    "Gangguan",
+                                                    style: TextStyle(
+                                                      color: kRed,
+                                                      fontSize: kSize12,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            Text(
+                                              produk.namaProduk,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: isGangguan
+                                                    ? kRed
+                                                    : isSelected
+                                                    ? kWhite
+                                                    : kBlack,
+                                              ),
+                                            ),
+                                            Text(
+                                              produk.kodeProduk,
+                                              style: TextStyle(
+                                                color: isGangguan
+                                                    ? kRed
+                                                    : isSelected
+                                                    ? kWhite
+                                                    : kBlack,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Text(
+                                        "${CurrencyUtil.formatCurrency(produk.hargaJual)}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: isGangguan
+                                              ? kRed
+                                              : isSelected
+                                              ? kWhite
+                                              : kBlack,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }).toList(),
                           ),
                         );
                       },
@@ -292,6 +311,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
             ),
           ],
         ),
+
         bottomNavigationBar: selectedProductCode != null
             ? BlocBuilder<ProviderPrefixCubit, ProviderPrefixState>(
                 builder: (context, state) {
@@ -309,9 +329,12 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                   return SafeArea(
                     child: Container(
                       color: kOrange,
-                      padding: const .symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       child: Row(
-                        mainAxisAlignment: .spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
@@ -344,7 +367,6 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                                   pageRoutes[nextPage]!,
                                 );
                               } else {
-                                //helper
                                 sendTransaksi.setTujuan(nomorTujuan);
                                 Navigator.pushNamed(
                                   context,
@@ -368,34 +390,5 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
             : null,
       ),
     );
-  }
-
-  void onProdukSelected(dynamic produk) {
-    setState(() {
-      selectedProductCode = produk.kodeProduk;
-      selectedPrice = produk.hargaJual.toDouble();
-    });
-
-    final trx = context.read<TransaksiHelperCubit>();
-    trx.setKodeproduk(produk.kodeProduk);
-    trx.setNamaProduk(produk.namaProduk);
-    trx.setProductPrice(produk.hargaJual);
-    trx.isBebasNominal(produk.bebasNominal);
-    trx.isEndUser(produk.endUser);
-
-    //log semua trx
-    log('semua data dari prefix: ');
-    log('kode produk: ${trx.getData().kodeProduk}');
-    log('nama produk: ${trx.getData().namaProduk}');
-    log('harga jual: ${trx.getData().productPrice}');
-    log('bebas nominal: ${trx.getData().isBebasNominal}');
-    log('end user: ${trx.getData().isEndUser}');
-  }
-
-  @override
-  void dispose() {
-    _debounce?.cancel();
-    _nomorController.dispose();
-    super.dispose();
   }
 }
