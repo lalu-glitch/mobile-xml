@@ -47,7 +47,6 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
           >(
             listener: (context, state) {
               if (state is KonfirmasiTransaksiSpeedcashSuccess) {
-                // Ambil originalPartnerReferenceNo dari response
                 final resp = state.data;
                 final originalRef = resp.originalPartnerReferenceNo;
                 context
