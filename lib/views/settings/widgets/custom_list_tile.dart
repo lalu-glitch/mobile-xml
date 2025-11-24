@@ -33,7 +33,7 @@ class CustomListTile extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.w500),
           ),
           trailing: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: [
               if (label != null)
                 Container(

@@ -176,7 +176,7 @@ class DetailTransaksiPage extends StatelessWidget {
   }
 }
 
-// HELPER WARNA STATUS
+// helper warna status transaksi
 Color getStatusColor(int statusTrx) {
   if ([0, 1, 2, 4].contains(statusTrx)) {
     return kOrange; // Kuning
@@ -190,7 +190,7 @@ Color getStatusColor(int statusTrx) {
   return kGrey; // Default
 }
 
-// HELPER ICON STATUS
+// helper status icon
 IconData getStatusIcon(int statusTrx) {
   if ([0, 1, 2, 4].contains(statusTrx)) {
     return Icons.hourglass_bottom_rounded; // icon kuning

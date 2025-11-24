@@ -14,7 +14,7 @@ Future<void> showErrorDialog(BuildContext context, String message) {
         child: Padding(
           padding: const .all(20),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: [
               // Icon error
               Container(
@@ -185,7 +185,7 @@ void showAppToast(BuildContext context, String message, ToastType type) {
       borderRadius: BorderRadius.circular(12),
     ),
     child: Row(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: .min,
       children: [
         Icon(icon, color: Colors.white),
         const SizedBox(width: 12),
@@ -218,7 +218,7 @@ Future<bool> showExitDialog(BuildContext context) async {
             child: Padding(
               padding: const .all(20),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: .min,
                 children: [
                   // Ikon keluar
                   Container(
@@ -315,7 +315,7 @@ Future<bool> showForceExitDialog(
               child: Padding(
                 padding: const .all(20),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: .min,
                   children: [
                     // Ikon keluar
                     Container(

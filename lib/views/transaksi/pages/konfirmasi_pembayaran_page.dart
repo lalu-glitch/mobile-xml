@@ -62,11 +62,8 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>().getData();
 
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pop(context);
-        return false;
-      },
+    return PopScope(
+      canPop: true,
       child: Scaffold(
         backgroundColor: kBackground,
         appBar: AppBar(
@@ -212,7 +209,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                 ),
               ),
               Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: .min,
                 children: [
                   if (method.saldoEwallet != null)
                     Padding(

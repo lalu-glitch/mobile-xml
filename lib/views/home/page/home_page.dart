@@ -84,9 +84,11 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ],
-      child: WillPopScope(
-        onWillPop: () async {
-          return await showExitDialog(context);
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) return;
+          await showExitDialog(context);
         },
         child: Scaffold(
           body: Stack(

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/dynamic_app_page.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
-import '../cubit/flow_cubit.dart';
-import '../../../core/helper/currency.dart';
-import 'cubit/provider_noprefix_cubit.dart';
+import '../../../../core/helper/constant_finals.dart';
+import '../../../../core/helper/dynamic_app_page.dart';
+import '../../../input_nomor/utils/transaksi_cubit.dart';
+import '../../cubit/flow_cubit.dart';
+import '../../../../core/helper/currency.dart';
+import '../cubit/provider_noprefix_cubit.dart';
+import '../widgets/widget_input_nomor_noprefix.dart';
 
 class DetailNoPrefixPage extends StatefulWidget {
   const DetailNoPrefixPage({super.key});
@@ -42,14 +43,16 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
 
     final bool isLastPage = currentIndex == sequence.length - 1;
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) {
+          return;
+        }
         if (currentIndex > 0) {
           flowCubit.previousPage();
           Navigator.pop(context);
-          return false;
         }
-        return true;
       },
       child: Scaffold(
         backgroundColor: kBackground,
@@ -209,50 +212,11 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
           },
         ),
         bottomNavigationBar: selectedProductCode != null
-            ? SafeArea(
-                child: Container(
-                  color: kOrange,
-                  padding: const .symmetric(horizontal: 16, vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: .spaceBetween,
-                    children: [
-                      Text(
-                        "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
-                        style: TextStyle(
-                          color: kWhite,
-                          fontWeight: FontWeight.bold,
-                          fontSize: kSize16,
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: kWhite,
-                          foregroundColor: kOrange,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        onPressed: () {
-                          if (!isLastPage) {
-                            final nextPage =
-                                flowState.sequence[flowState.currentIndex + 1];
-                            flowCubit.nextPage();
-                            Navigator.pushNamed(context, pageRoutes[nextPage]!);
-                          } else {
-                            Navigator.pushNamed(
-                              context,
-                              '/konfirmasiPembayaran',
-                            );
-                          }
-                        },
-                        child: const Text(
-                          "Selanjutnya",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+            ? NavigationButtonNoPrefix(
+                selectedPrice: selectedPrice,
+                isLastPage: isLastPage,
+                flowState: flowState,
+                flowCubit: flowCubit,
               )
             : null,
       ),

@@ -13,7 +13,7 @@ class DownlineCard extends StatelessWidget {
       child: Padding(
         padding: const .all(16.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           crossAxisAlignment: .start,
           children: [
             buildTopSection(),

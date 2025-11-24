@@ -34,56 +34,62 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kWhite,
-      appBar: AppBar(
-        title: const Text("Proses Transaksi", style: TextStyle(color: kWhite)),
-        iconTheme: const IconThemeData(color: kWhite),
-        backgroundColor: kOrange,
-      ),
-      body: Center(
-        child: BlocConsumer<WebsocketTransaksiCubit, WebsocketTransaksiState>(
-          listener: (context, state) {
-            final transaksiCubit = context.read<TransaksiHelperCubit>();
-            if (state is WebSocketTransaksiSuccess) {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/transaksiDetail',
-                (route) => false,
-                arguments: state.data,
-              );
-              transaksiCubit.reset();
-            }
-            if (state is WebSocketTransaksiFailed) {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/transaksiDetail',
-                (route) => false,
-                arguments: state.data,
-              );
-              transaksiCubit.reset();
-            }
-            if (state is WebSocketTransaksiError) {
-              showErrorDialog(
-                context,
-                (state.message.isNotEmpty)
-                    ? state.message
-                    : 'Gangguan transaksi, Ulangi beberapa saat lagi.',
-              );
-              transaksiCubit.reset();
-            }
-          },
-          builder: (context, state) {
-            if (state is WebSocketTransaksiLoading) {
-              return _loadingWidget();
-            } else if (state is WebSocketTransaksiPending) {
-              return _statusWidget(state.data, context);
-            } else if (state is WebSocketTransaksiError) {
-              return _errorWidget(state.message);
-            } else {
-              return _waitingWidget();
-            }
-          },
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: kWhite,
+        appBar: AppBar(
+          title: const Text(
+            "Proses Transaksi",
+            style: TextStyle(color: kWhite),
+          ),
+          iconTheme: const IconThemeData(color: kWhite),
+          backgroundColor: kOrange,
+        ),
+        body: Center(
+          child: BlocConsumer<WebsocketTransaksiCubit, WebsocketTransaksiState>(
+            listener: (context, state) {
+              final transaksiCubit = context.read<TransaksiHelperCubit>();
+              if (state is WebSocketTransaksiSuccess) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/transaksiDetail',
+                  (route) => false,
+                  arguments: state.data,
+                );
+                transaksiCubit.reset();
+              }
+              if (state is WebSocketTransaksiFailed) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/transaksiDetail',
+                  (route) => false,
+                  arguments: state.data,
+                );
+                transaksiCubit.reset();
+              }
+              if (state is WebSocketTransaksiError) {
+                showErrorDialog(
+                  context,
+                  (state.message.isNotEmpty)
+                      ? state.message
+                      : 'Gangguan transaksi, Ulangi beberapa saat lagi.',
+                );
+                transaksiCubit.reset();
+              }
+            },
+            builder: (context, state) {
+              if (state is WebSocketTransaksiLoading) {
+                return _loadingWidget();
+              } else if (state is WebSocketTransaksiPending) {
+                return _statusWidget(state.data, context);
+              } else if (state is WebSocketTransaksiError) {
+                return _errorWidget(state.message);
+              } else {
+                return _waitingWidget();
+              }
+            },
+          ),
         ),
       ),
     );

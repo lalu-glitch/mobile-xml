@@ -47,7 +47,6 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
           >(
             listener: (context, state) {
               if (state is KonfirmasiTransaksiSpeedcashSuccess) {
-                // Ambil originalPartnerReferenceNo dari response
                 final resp = state.data;
                 final originalRef = resp.originalPartnerReferenceNo;
                 context
@@ -69,7 +68,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
                 final url = state.data.url;
                 Navigator.pushNamed(
                   context,
-                  '/webView',
+                  '/webviewSpeedcash',
                   arguments: {'url': url, 'title': 'Bayar Speedcash'},
                 );
               } else if (state is PembayaranTransaksiSpeedcashError) {

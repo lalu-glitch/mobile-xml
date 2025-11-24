@@ -80,7 +80,7 @@ class WalletItem extends StatelessWidget {
           child: Padding(
             padding: const .symmetric(vertical: 12, horizontal: 16),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: .min,
               mainAxisAlignment: .center,
               children: [
                 // Ganti Image.network dengan CachedNetworkImage

@@ -22,7 +22,7 @@ class CardWidget extends StatelessWidget {
             padding: const .symmetric(horizontal: 16, vertical: 16),
             child: Column(
               crossAxisAlignment: .start,
-              mainAxisSize: MainAxisSize.min, // dinamis sesuai konten
+              mainAxisSize: .min, // dinamis sesuai konten
               children: [
                 Text('SEO XMLTRONIK', style: TextStyle(fontSize: 16)),
                 Text(
