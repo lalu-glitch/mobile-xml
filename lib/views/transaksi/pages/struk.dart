@@ -71,7 +71,7 @@ class _StrukPageState extends State<StrukPage> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   Center(
                     child: Text(
@@ -97,7 +97,7 @@ class _StrukPageState extends State<StrukPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: .center,
                       children: [
                         const SizedBox(
                           width: 120,
@@ -151,7 +151,7 @@ class _StrukPageState extends State<StrukPage> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: .stretch,
               children: [
                 Row(
                   children: [
@@ -245,7 +245,7 @@ class _StrukPageState extends State<StrukPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           SizedBox(
             width: 120,
