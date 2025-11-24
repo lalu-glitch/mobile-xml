@@ -5,6 +5,8 @@ import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../cubit/balance_cubit.dart';
 
+/// kode ini handle buat nampilin welcoming text (selamat 'waktu')
+/// dan beberapa action kaya search button, notification button dan cs button.
 class HomeHeaderSection extends StatelessWidget {
   const HomeHeaderSection({super.key});
 
@@ -47,39 +49,22 @@ class HomeHeaderSection extends StatelessWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        InkWell(
-                          onTap: () {},
-                          customBorder: const CircleBorder(),
-                          child: Icon(Icons.search, color: kWhite),
-                        ),
-                        const SizedBox(width: 8),
-                        InkWell(
-                          onTap: () {},
-                          customBorder: const CircleBorder(),
-                          child: Stack(
-                            children: [
-                              Icon(Icons.notifications_none, color: kWhite),
-                              Positioned(
-                                left: 12,
-                                child: Container(
-                                  height: 10,
-                                  width: 10,
-                                  decoration: BoxDecoration(
-                                    color: kGreen,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                            ],
+                        IconButton(
+                          onPressed: () {},
+                          icon: Badge.count(
+                            count: 100,
+                            maxCount: 99,
+                            child: Icon(
+                              Icons.notifications_active_rounded,
+                              color: kWhite,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        InkWell(
-                          onTap: () {
+                        IconButton(
+                          onPressed: () {
                             showCSBottomSheet(context, "Hubungi CS");
                           },
-                          customBorder: const CircleBorder(),
-                          child: Icon(Icons.headset_mic_rounded, color: kWhite),
+                          icon: Icon(Icons.headset_mic_rounded, color: kWhite),
                         ),
                       ],
                     ),
