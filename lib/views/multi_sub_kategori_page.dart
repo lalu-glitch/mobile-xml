@@ -16,14 +16,16 @@ class MultiSubKategoriPage extends StatelessWidget {
     final List<AppPage> sequence = flowState.sequence;
 
     final bool isLastPage = currentIndex == sequence.length - 1;
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) {
+          return;
+        }
         if (currentIndex > 0) {
           flowCubit.previousPage();
           Navigator.pop(context);
-          return false;
         }
-        return true;
       },
       child: Scaffold(
         backgroundColor: kBackground,

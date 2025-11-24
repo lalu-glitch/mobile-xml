@@ -46,7 +46,6 @@ abstract class BaseInput<T extends StatefulWidget> extends State<T> {
       onPopInvokedWithResult: (bool didPop, dynamic result) {
         if (didPop) return;
 
-        // NULL SAFE CHECK - REKOMENDASI #3
         final flowCubit = context.read<FlowCubit>();
         final state = flowCubit.state;
 
