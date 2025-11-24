@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../helper/constant_finals.dart';
+import '../../../core/helper/constant_finals.dart';
 
-class WebviewPage extends StatefulWidget {
+class SpeedcashWebviewPage extends StatefulWidget {
   final String? url;
   final String? title;
 
-  const WebviewPage({super.key, this.url, this.title});
+  const SpeedcashWebviewPage({super.key, this.url, this.title});
 
   @override
-  State<WebviewPage> createState() => _WebviewPageState();
+  State<SpeedcashWebviewPage> createState() => _SpeedcashWebviewPageState();
 }
 
-class _WebviewPageState extends State<WebviewPage> {
+class _SpeedcashWebviewPageState extends State<SpeedcashWebviewPage> {
   WebViewController? _controller;
   bool isLoading = true;
   String _currentUrl = '';
@@ -101,13 +101,10 @@ class _WebviewPageState extends State<WebviewPage> {
       appBar: AppBar(
         title: Text(
           title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(color: kWhite, fontWeight: FontWeight.bold),
         ),
         backgroundColor: kBlue,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: kWhite),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
@@ -122,7 +119,7 @@ class _WebviewPageState extends State<WebviewPage> {
             const Center(child: CircularProgressIndicator(color: kBlue)),
           if (_isActiveFailed)
             Container(
-              color: Colors.white,
+              color: kWhite,
               child: const Center(
                 child: Text(
                   "Binding gagal, silakan coba lagi.",

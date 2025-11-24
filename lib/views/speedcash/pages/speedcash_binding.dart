@@ -46,7 +46,7 @@ class SpeedcashBindingPage extends StatelessWidget {
             if (vm.response != null && vm.response!.redirectUrl != null) {
               Navigator.pushNamed(
                 context,
-                '/webView',
+                '/webviewSpeedcash',
                 arguments: {
                   'url': vm.response!.redirectUrl!,
                   'title': 'Binding Speedcash',

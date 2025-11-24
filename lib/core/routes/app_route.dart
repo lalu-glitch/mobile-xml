@@ -24,7 +24,7 @@ import '../../views/settings/pages/detail_akun_page.dart';
 import '../../views/speedcash/pages/speedcash_topup_tiket.dart';
 import '../../views/transaksi/pages/cek_transaksi_page.dart';
 import '../helper/onboarding_guard.dart';
-import '../utils/webview.dart';
+import '../../views/speedcash/pages/speedcash_webview.dart';
 import '../../views/layanan/noprefix/pages/noprefix_page.dart';
 import '../../views/layanan/prefix/pages/prefix_page.dart';
 import '../../views/speedcash/pages/speedcash_binding.dart';
@@ -101,7 +101,8 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/speedcashTopUpPage': (context) =>
       authGuardWrapper(const SpeedcashTopUpPage()),
   '/speedcashTiketTopUpPage': (context) => (const SpeedCashTiketTopUp()),
-  '/webView': (context) => authGuardWrapper(WebviewPage(url: '', title: '')),
+  '/webviewSpeedcash': (context) =>
+      authGuardWrapper(SpeedcashWebviewPage(url: '', title: '')),
 
   ///MENU SETTINGS
   '/jaringanMitra': (context) => authGuardWrapper(JaringanMitraPage()),

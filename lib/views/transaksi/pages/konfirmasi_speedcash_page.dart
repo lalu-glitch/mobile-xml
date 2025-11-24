@@ -69,7 +69,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
                 final url = state.data.url;
                 Navigator.pushNamed(
                   context,
-                  '/webView',
+                  '/webviewSpeedcash',
                   arguments: {'url': url, 'title': 'Bayar Speedcash'},
                 );
               } else if (state is PembayaranTransaksiSpeedcashError) {
