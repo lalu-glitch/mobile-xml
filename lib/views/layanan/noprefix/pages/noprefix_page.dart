@@ -7,6 +7,7 @@ import '../../../input_nomor/utils/transaksi_cubit.dart';
 import '../../cubit/flow_cubit.dart';
 import '../../../../core/helper/currency.dart';
 import '../cubit/provider_noprefix_cubit.dart';
+import '../widgets/widget_input_nomor_noprefix.dart';
 
 class DetailNoPrefixPage extends StatefulWidget {
   const DetailNoPrefixPage({super.key});
@@ -211,50 +212,11 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
           },
         ),
         bottomNavigationBar: selectedProductCode != null
-            ? SafeArea(
-                child: Container(
-                  color: kOrange,
-                  padding: const .symmetric(horizontal: 16, vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: .spaceBetween,
-                    children: [
-                      Text(
-                        "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
-                        style: TextStyle(
-                          color: kWhite,
-                          fontWeight: FontWeight.bold,
-                          fontSize: kSize16,
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: kWhite,
-                          foregroundColor: kOrange,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        onPressed: () {
-                          if (!isLastPage) {
-                            final nextPage =
-                                flowState.sequence[flowState.currentIndex + 1];
-                            flowCubit.nextPage();
-                            Navigator.pushNamed(context, pageRoutes[nextPage]!);
-                          } else {
-                            Navigator.pushNamed(
-                              context,
-                              '/konfirmasiPembayaran',
-                            );
-                          }
-                        },
-                        child: const Text(
-                          "Selanjutnya",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+            ? NavigationButtonNoPrefix(
+                selectedPrice: selectedPrice,
+                isLastPage: isLastPage,
+                flowState: flowState,
+                flowCubit: flowCubit,
               )
             : null,
       ),
