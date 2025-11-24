@@ -6,6 +6,7 @@ import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../../data/models/layanan/layanan_model.dart';
 import '../../home/cubit/layanan_cubit.dart';
+import '../helper/shop_controller.dart';
 import '../widgets/shop_category_chips.dart';
 import '../../../core/utils/search_appbar_actions.dart';
 import 'shop_product.dart';
@@ -19,6 +20,8 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage> {
   final searchController = TextEditingController();
+  late final ShopController controller;
+
   bool isSearching = false;
   String selectedHeading = 'Semuanya';
   Map<String, List<IconItem>> filteredLayanan = {};
@@ -27,52 +30,40 @@ class _ShopPageState extends State<ShopPage> {
   void initState() {
     super.initState();
 
-    // Jalankan fetch setelah frame pertama
+    controller = ShopController(
+      searchController: searchController,
+      layananCubit: context.read<LayananCubit>(),
+    );
+
+    //realtime listener
+    searchController.addListener(_updateFilteredData);
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await context.read<LayananCubit>().fetchLayanan();
       _updateFilteredData();
     });
-
-    // Listener realtime pencarian
-    searchController.addListener(_updateFilteredData);
   }
 
   void _updateFilteredData() {
-    final query = searchController.text.toLowerCase();
-    final allData = context.read<LayananCubit>().layananByHeading;
-
-    setState(() {
-      if (query.isEmpty) {
-        filteredLayanan = Map.from(allData);
-      } else {
-        filteredLayanan = {
-          for (final entry in allData.entries)
-            if (entry.value.any(
-              (item) => item.title?.toLowerCase().contains(query) ?? false,
-            ))
-              entry.key: entry.value
-                  .where(
-                    (item) =>
-                        item.title?.toLowerCase().contains(query) ?? false,
-                  )
-                  .toList(),
-        };
-      }
-    });
+    final query = searchController.text;
+    filteredLayanan = controller.filter(query: query);
+    setState(() {});
   }
 
   void onClearText() {
-    setState(() {
-      searchController.clear();
-    });
+    searchController.clear();
+    _updateFilteredData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackground,
+
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: kOrange,
+        iconTheme: IconThemeData(color: kWhite),
         title: isSearching
             ? TextField(
                 controller: searchController,
@@ -85,8 +76,6 @@ class _ShopPageState extends State<ShopPage> {
                 ),
               )
             : Text('Layanan Toko', style: TextStyle(color: kWhite)),
-        backgroundColor: kOrange,
-        iconTheme: IconThemeData(color: kWhite),
         actions: [
           SearchAppBar(
             isSearching: isSearching,
@@ -96,7 +85,6 @@ class _ShopPageState extends State<ShopPage> {
         ],
       ),
 
-      // === BODY ===
       body: BlocBuilder<LayananCubit, LayananState>(
         builder: (context, state) {
           if (state is LayananLoading) {
@@ -117,7 +105,7 @@ class _ShopPageState extends State<ShopPage> {
           }
 
           if (state is LayananLoaded) {
-            // Update data filter dengan data terbaru
+            // Ketika data fresh dari cubit → refresh filter
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _updateFilteredData();
             });
@@ -127,19 +115,19 @@ class _ShopPageState extends State<ShopPage> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  // Kategori
+                  // Kategori chips
                   ShopsCategoryChips(
                     cubit: cubit,
                     selectedHeading: selectedHeading,
-                    onHeadingSelected: (heading) =>
-                        setState(() => selectedHeading = heading),
+                    onHeadingSelected: (heading) {
+                      setState(() => selectedHeading = heading);
+                    },
                   ),
 
                   const Divider(color: kNeutral50, thickness: 4),
 
-                  // Produk
                   Padding(
-                    padding: const .all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: ShopProducts(
                       layananDataToDisplay: filteredLayanan,
                       selectedHeading: selectedHeading,
