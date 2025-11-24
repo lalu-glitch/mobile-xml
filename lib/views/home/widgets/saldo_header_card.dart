@@ -27,7 +27,7 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: .start,
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: .min,
       children: [
         Row(
           mainAxisAlignment: .spaceBetween,

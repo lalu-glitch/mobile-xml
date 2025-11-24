@@ -80,7 +80,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
                   child: Padding(
                     padding: const .all(18),
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisSize: .min,
                       children: [
                         // Logo
                         Image.asset(

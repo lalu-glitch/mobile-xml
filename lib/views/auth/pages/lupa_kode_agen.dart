@@ -70,7 +70,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
               child: SingleChildScrollView(
                 padding: const .symmetric(horizontal: 20),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: .min,
                   children: [
                     // Title
                     Text(

@@ -184,7 +184,7 @@ class PoinPage extends StatelessWidget {
                                   child: Column(
                                     crossAxisAlignment: .start,
                                     // Pastikan Column ini tidak memakan ruang ekstra
-                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisSize: .min,
                                     children: [
                                       Text(
                                         '23.000.000',

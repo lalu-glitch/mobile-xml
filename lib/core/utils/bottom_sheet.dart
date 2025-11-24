@@ -21,7 +21,7 @@ void showCSBottomSheet(BuildContext context, String title) {
       return Padding(
         padding: const .all(16.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: [
             Text(
               title,
@@ -93,7 +93,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
       return Container(
         padding: const .all(24), // Tambah padding menyeluruh
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           crossAxisAlignment: CrossAxisAlignment
               .stretch, // Pastikan anak-anak mengambil lebar penuh
           children: [
@@ -159,7 +159,7 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
       return Container(
         padding: const .all(24),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           crossAxisAlignment: .stretch,
           children: [
             Icon(Icons.do_disturb_on_rounded, color: kRed, size: kSize48),

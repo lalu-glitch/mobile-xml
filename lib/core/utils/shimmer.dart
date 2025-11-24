@@ -262,7 +262,7 @@ class ShimmerBox extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: .center,
                     crossAxisAlignment: .start,
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: .min,
                     children: [
                       // Baris nama shimmer
                       Row(
