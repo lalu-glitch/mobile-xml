@@ -25,7 +25,7 @@ import '../../views/speedcash/pages/speedcash_topup_tiket.dart';
 import '../../views/transaksi/pages/cek_transaksi_page.dart';
 import '../helper/onboarding_guard.dart';
 import '../utils/webview.dart';
-import '../../views/layanan/noprefix/noprefix_page.dart';
+import '../../views/layanan/noprefix/pages/noprefix_page.dart';
 import '../../views/layanan/prefix/pages/prefix_page.dart';
 import '../../views/speedcash/pages/speedcash_binding.dart';
 import '../../views/speedcash/pages/speedcash_topup_list_bank.dart';

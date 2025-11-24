@@ -19,6 +19,7 @@ import '../../../input_nomor/utils/transaksi_cubit.dart';
 import '../../../transaksi/pages/konfirmasi_pembayaran_page.dart';
 import '../cubit/provider_prefix_cubit.dart';
 import '../helper/prefix_controller.dart';
+import '../widgets/widget_input_nomor_prefix.dart';
 
 class DetailPrefixPage extends StatefulWidget {
   const DetailPrefixPage({super.key});
@@ -118,41 +119,9 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
         body: Column(
           children: [
             // Input Nomor
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text("Nomor Tujuan"),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: _nomorController,
-                    onChanged: controller.onNomorChanged,
-                    onSubmitted: (_) => FocusScope.of(context).unfocus(),
-                    keyboardType: TextInputType.phone,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: kOrange),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(color: kOrange),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(color: kOrange),
-                      ),
-                      hintText: "0812 1111 2222",
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.contact_page),
-                        onPressed: () => controller.pickContact(context),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            InputNomorPrefixWidget(
+              nomorController: _nomorController,
+              controller: controller,
             ),
 
             // LIST PROVIDER DENGAN ACCORDION
