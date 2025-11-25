@@ -70,7 +70,9 @@ class HomeLayananSection extends StatelessWidget {
                         final iconItem = layananList[i];
                         return GestureDetector(
                           onTap: () {
-                            log('[FLOW]: ${iconItem.flow}');
+                            // log('[FLOW]: ${iconItem.kodeBayar}');
+                            log('[kodebayar]: ${iconItem.kodeBayar}');
+                            log('[kodecek]: ${iconItem.kodeCek}');
                             final sequence = pageSequences[iconItem.flow] ?? [];
                             // simpan state awal ke FlowCubit
                             context.read<FlowCubit>().startFlow(

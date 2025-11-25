@@ -19,6 +19,7 @@ Map<int, List<AppPage>> pageSequences = {
   6: [AppPage.multiSubKategori, AppPage.inputNomorMid, AppPage.pilihProduk],
   7: [AppPage.multiSubKategori, AppPage.pilihProduk, AppPage.inputNomorAkhir],
   8: [AppPage.inputNomorAwal, AppPage.multiSubKategori, AppPage.pilihProduk],
+  9: [AppPage.inputNomorAwal, AppPage.pilihProduk], //khusus omni
 };
 
 Map<AppPage, String> pageRoutes = {
