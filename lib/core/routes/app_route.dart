@@ -23,6 +23,7 @@ import '../../views/riwayat/pages/riwayat_page.dart';
 import '../../views/settings/pages/detail_akun_page.dart';
 import '../../views/speedcash/pages/speedcash_topup_tiket.dart';
 import '../../views/transaksi/pages/cek_transaksi_page.dart';
+import '../../views/webview/omni_webview.dart';
 import '../helper/onboarding_guard.dart';
 import '../../views/speedcash/pages/speedcash_webview.dart';
 import '../../views/layanan/noprefix/pages/noprefix_page.dart';
@@ -110,4 +111,5 @@ final Map<String, WidgetBuilder> appRoutes = {
   ///MISCELLANEOUS
   '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
   '/detailInfoAkun': (context) => authGuardWrapper(DetailInfoAkun()),
+  '/webview': (context) => authGuardWrapper(OmniWebViewPage()),
 };

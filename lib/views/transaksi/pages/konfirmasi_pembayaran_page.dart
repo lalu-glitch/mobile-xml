@@ -1,6 +1,4 @@
 // ignore_for_file: unnecessary_null_comparison
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,8 +10,9 @@ import '../../../data/models/transaksi/metode_transaksi.dart';
 import '../../../data/services/speedcash_api_service.dart';
 import '../../home/cubit/balance_cubit.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
-import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
-import '../cubit/pembayaran_transaksi_speedcash_cubit.dart';
+import '../cubit/transaksi_omni/transaksi_omni_cubit.dart';
+import '../cubit/transaksi_speedcash/konfirmasi_transaksi_speedcash_cubit.dart';
+import '../cubit/transaksi_speedcash/pembayaran_transaksi_speedcash_cubit.dart';
 import 'konfirmasi_speedcash_page.dart';
 
 class KonfirmasiPembayaranPage extends StatefulWidget {
@@ -147,40 +146,31 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
   /// Card informasi transaksi
   Widget _buildInfoCard(dynamic transaksi) {
+    final omni = context.read<TransaksiOmniCubit>().state;
+
+    final nomorTujuan = omni.msisdn ?? transaksi.tujuan;
+    final kodeProduk = omni.kode ?? transaksi.kodeProduk;
     final totalTransaksi = getDisplayedTotal(transaksi);
+
+    // ===== DYNAMIC FIELD MAPPING =====
+    final Map<String, dynamic> infoFields = {
+      "Nomor Tujuan": nomorTujuan,
+      "Kode Produk": kodeProduk,
+      "Nama Produk": transaksi.namaProduk,
+      if (transaksi.isBebasNominal == 1) ...{
+        "Harga Produk": CurrencyUtil.formatCurrency(transaksi.productPrice),
+        "Nominal": CurrencyUtil.formatCurrency(transaksi.bebasNominalValue),
+      },
+      "Total Pembayaran": CurrencyUtil.formatCurrency(totalTransaksi),
+    };
+
     return Card(
       color: kWhite,
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const .all(16.0),
-        child: Column(
-          children: [
-            infoRow("Nomor Tujuan", transaksi.tujuan ?? ''),
-            const Divider(height: 24),
-            infoRow("Kode Produk", transaksi.kodeProduk ?? ''),
-            const Divider(height: 24),
-            infoRow("Nama Produk", transaksi.namaProduk ?? ''),
-            const Divider(height: 24),
-            if (transaksi.isBebasNominal == 1) ...[
-              infoRow(
-                "Harga Produk",
-                CurrencyUtil.formatCurrency(transaksi.productPrice),
-              ),
-              const Divider(height: 24),
-              infoRow(
-                'Nominal',
-                CurrencyUtil.formatCurrency(transaksi.bebasNominalValue),
-              ),
-              const Divider(height: 24),
-            ],
-            infoRow(
-              "Total Pembayaran",
-              CurrencyUtil.formatCurrency(totalTransaksi),
-              isTotal: true,
-            ),
-          ],
-        ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(children: buildDynamicInfoRows(infoFields)),
       ),
     );
   }
@@ -239,7 +229,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   Widget _buildPayButton(List<PaymentMethodModel> methods, dynamic transaksi) {
     final sendTransaksi = context.read<TransaksiHelperCubit>();
     final totalTransaksi = getTotalTransaksi(transaksi);
-    log('[transaksi harga final sebelum proses]: $totalTransaksi');
+
     return SafeArea(
       child: SizedBox(
         width: double.infinity,

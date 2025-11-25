@@ -5,7 +5,8 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../data/models/transaksi/websocket_transaksi.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
-import '../cubit/websocket_transaksi_cubit.dart';
+import '../cubit/transaksi_omni/transaksi_omni_cubit.dart';
+import '../cubit/transaksi_websocket/websocket_transaksi_cubit.dart';
 
 class TransaksiProsesPage extends StatefulWidget {
   const TransaksiProsesPage({super.key});
@@ -24,9 +25,11 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
     final nominal = (transaksi.nominalPembayaran)?.toInt() ?? 0;
 
     cubit.reset();
+    //SEMENTARA
+    final omniState = context.read<TransaksiOmniCubit>().state;
     cubit.startTransaksi(
-      transaksi.tujuan ?? '',
-      transaksi.kodeProduk ?? '',
+      transaksi.tujuan ?? omniState.msisdn ?? '',
+      transaksi.kodeProduk ?? omniState.kode ?? '',
       nominal: nominal,
       endUser: transaksi.isEndUser == 1 ? transaksi.endUserValue ?? '' : '',
     );

@@ -10,6 +10,7 @@ class FlowCubit extends Cubit<FlowStateModel?> {
 
   void startFlow(int flowId, IconItem layananItem) {
     resetFlow();
+
     final sequence = pageSequences[flowId] ?? [];
     emit(
       FlowStateModel(

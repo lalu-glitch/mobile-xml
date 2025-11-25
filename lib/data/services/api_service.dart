@@ -65,7 +65,6 @@ class ApiService {
           },
         ),
       );
-      log(response.data.toString());
       if (response.statusCode == 200) {
         return IconResponse.fromJson(response.data);
       } else {

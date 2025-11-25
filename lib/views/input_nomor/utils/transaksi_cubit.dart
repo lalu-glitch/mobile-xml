@@ -22,10 +22,12 @@ class TransaksiHelperCubit extends Cubit<TransaksiHelperModel> {
   void setFinalTotalTagihan(int val) =>
       emit(state.copyWith(finalTotal: val.toDouble()));
 
-  // jika mau alias backward compatible:
-  /// deprecated: gunakan setProductPrice atau setFinalTotal sesuai konteks
   void setNominalPembayaran(int val) =>
       emit(state.copyWith(nominalPembayaran: val.toDouble()));
+
+  //setter buat omni
+  void setKodeCek(String val) => emit(state.copyWith(kodeCek: val));
+  void setKodeBayar(String val) => emit(state.copyWith(kodeBayar: val));
 
   // bebas nominal
   void isBebasNominal(int val) => emit(state.copyWith(isBebasNominal: val));
