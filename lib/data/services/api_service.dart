@@ -223,10 +223,7 @@ class ApiService {
         queryParameters: {"page": page, "limit": limit},
       );
       if (response.statusCode == 200) {
-        final Map<String, dynamic> data = Map<String, dynamic>.from(
-          response.data,
-        );
-        return RiwayatTransaksiResponseModel.fromJson(data);
+        return RiwayatTransaksiResponseModel.fromJson(response.data);
       }
       return null;
     } on DioException catch (e) {

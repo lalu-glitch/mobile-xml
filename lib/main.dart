@@ -9,6 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'data/services/auth_service.dart';
 import 'data/services/websocket_service.dart';
+import 'views/auth/cubit/register_cubit.dart';
 import 'views/auth/cubit/request_kode_agen_cubit.dart';
 import 'views/home/cubit/balance_cubit.dart';
 import 'views/home/cubit/layanan_cubit.dart';
@@ -146,6 +147,11 @@ class _XmlAppState extends State<XmlApp> {
       ],
       child: MultiBlocProvider(
         providers: [
+          //auth
+          BlocProvider(
+            create: (context) => RegisterCubit(context.read<AuthService>()),
+          ),
+
           //umum
           BlocProvider(
             create: (context) => InfoAkunCubit(context.read<ApiService>()),
