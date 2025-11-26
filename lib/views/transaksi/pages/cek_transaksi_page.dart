@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -180,7 +178,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
       "Total Tagihan": "rptagihan",
       "Fee": "harga_jual",
       "Admin": "admin",
-      "Periode": "periode",
+      "Periode": "periode", //is this available in API?
     };
 
     fieldMapping.forEach((label, key) {
@@ -192,7 +190,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
         // Format mata uang jika fieldnya tagihan atau admin
         if (key == "rptagihan" || key == "admin") {
           displayValue = CurrencyUtil.formatCurrency(
-            _parseAmount(displayValue),
+            CurrencyUtil.parseAmount(displayValue),
           );
         }
 
@@ -202,13 +200,6 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
     });
 
     return rows;
-  }
-
-  /// Helper untuk membersihkan string currency (hapus titik/koma) jadi integer
-  int _parseAmount(String? value) {
-    if (value == null) return 0;
-    final clean = value.replaceAll(RegExp(r'[.,]'), '');
-    return int.tryParse(clean) ?? 0;
   }
 
   @override
@@ -224,14 +215,14 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
     // 2. Ambil & Parsing Nominal
     // ---- TOTAL TAGIHAN ----
     final rawTagihan = _cekTransaksiData?.data["rptagihan"]?.toString();
-    final tagihan = _parseAmount(rawTagihan);
+    final tagihan = CurrencyUtil.parseAmount(rawTagihan);
 
     // ---- FEE ----
     int fee = 0;
     if (isOmni) {
       // OMNI pakai harga_jual dari WS
       final rawHargaJual = _cekTransaksiData?.data["harga_jual"]?.toString();
-      fee = _parseAmount(rawHargaJual);
+      fee = CurrencyUtil.parseAmount(rawHargaJual);
     } else {
       // NORMAL pakai productPrice sebagai fee
       fee = (transaksiHelper.getData().productPrice ?? 0.0).toInt();

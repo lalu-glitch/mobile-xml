@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/helper/constant_finals.dart';
+import 'constant_finals.dart';
 
 class CardDecorationPainter extends CustomPainter {
   // Anda bisa membuat rasio ini bisa diubah jika perlu
@@ -135,4 +135,102 @@ class _InlineDottedLinePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+/// Pembuat Garis Putus-putus [gemini]
+class DashedLineDivider extends StatelessWidget {
+  const DashedLineDivider({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final boxWidth = constraints.constrainWidth();
+        const dashWidth = 8.0;
+        const dashHeight = 1.0;
+        final dashCount = (boxWidth / (2 * dashWidth)).floor();
+        return Flex(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          direction: Axis.horizontal,
+          children: List.generate(dashCount, (_) {
+            return SizedBox(
+              width: dashWidth,
+              height: dashHeight,
+              child: DecoratedBox(
+                decoration: BoxDecoration(color: Colors.grey[300]),
+              ),
+            );
+          }),
+        );
+      },
+    );
+  }
+}
+
+/// Pemotong bentuk Struk dengan pinggiran Setengah Lingkaran (Scalloped) [gemini]
+class InvertedCircleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+
+    // Konfigurasi Ukuran Lubang
+    // radius: seberapa besar/dalam lengkungan potongannya
+    const double radius = 10.0;
+
+    // diameter: lebar satu lubang (jarak antar titik)
+    const double diameter = radius * 2;
+
+    // 1. Mulai dari kiri atas (0,0) -> lurus ke kiri bawah
+    path.lineTo(0, size.height);
+
+    // 2. Loop membuat lengkungan masuk ke dalam
+    double x = 1;
+
+    while (x < size.width) {
+      // Kita menggambar kurva dari titik saat ini (x) ke titik berikutnya (x + diameter)
+      path.quadraticBezierTo(
+        x + radius, // Control Point X: Tepat di tengah lubang
+        size.height -
+            radius, // Control Point Y: NAIK ke atas (masuk ke dalam kotak)
+        x + diameter, // End Point X: Ujung lubang
+        size.height, // End Point Y: Kembali ke garis dasar
+      );
+      x += diameter;
+    }
+
+    // 3. Tarik garis ke kanan atas lalu tutup
+    path.lineTo(size.width, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+/// Pemotong bentuk Tiket (Zigzag tajam bawah)
+class ReceiptClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height - 20);
+
+    // Logic Zigzag
+    double x = 0;
+    double y = size.height - 20;
+    double increment = 10;
+
+    while (x < size.width) {
+      x += increment;
+      y = (y == size.height - 20) ? size.height : size.height - 20;
+      path.lineTo(x, y);
+    }
+
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

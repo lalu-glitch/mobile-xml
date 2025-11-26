@@ -15,7 +15,7 @@ import '../../home/cubit/balance_cubit.dart';
 import '../../../core/utils/rupiah_text_field.dart';
 
 class StrukPage extends StatefulWidget {
-  final TransaksiResponse? transaksi;
+  final dynamic transaksi;
   const StrukPage({super.key, this.transaksi});
 
   @override
@@ -24,7 +24,7 @@ class StrukPage extends StatefulWidget {
 
 class _StrukPageState extends State<StrukPage> {
   late TextEditingController _hargaController;
-  TransaksiResponse? trx;
+  dynamic trx;
 
   String namaUser = "KONTER PULSA";
   bool _isInit = false;
@@ -42,7 +42,7 @@ class _StrukPageState extends State<StrukPage> {
 
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    trx = args['transaksi'] as TransaksiResponse;
+    trx = args['transaksi'] as dynamic;
 
     final balanceState = context.read<BalanceCubit>().state;
 

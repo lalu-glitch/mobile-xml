@@ -5,7 +5,6 @@ import '../../views/auth/pages/otp_page.dart';
 import '../../views/auth/pages/auth_page.dart';
 import '../../initial_page.dart';
 import '../../views/auth/pages/SK_page.dart';
-
 import '../../views/input_nomor/input_bn_eu.dart';
 import '../../views/input_nomor/input_nomer_awal.dart';
 import '../../views/input_nomor/input_nomer_mid.dart';
@@ -36,8 +35,8 @@ import '../../views/transaksi/pages/konfirmasi_pembayaran_page.dart';
 import '../../views/settings/pages/settings_page.dart';
 import '../../views/shops/pages/shop_page.dart';
 import '../helper/auth_guard.dart';
-import '../../views/transaksi/pages/struk.dart';
-import '../../views/transaksi/pages/transaksi_detail_page.dart';
+import '../../views/transaksi/pages/struk_page.dart';
+import '../../views/transaksi/pages/detail_transaksi_page.dart';
 import '../../views/transaksi/pages/transaksi_proses_page.dart';
 
 Widget authGuardWrapper(Widget child) {

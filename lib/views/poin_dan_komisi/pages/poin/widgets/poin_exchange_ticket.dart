@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/helper/constant_finals.dart';
-import 'custom_painter_helper.dart';
+import '../../../../../core/helper/custom_painter_helper.dart';
 import 'text_helper.dart';
 
 class PoinExchangeTicket extends StatelessWidget {

@@ -242,35 +242,21 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> historyDetail(String kodeKode) async {
+  Future<StatusTransaksiModel> historyDetail(String kode) async {
     try {
       final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
-        "$baseURL/trx_by_kode/$kodeKode",
+        "$baseURL/trx_by_kode/$kode",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
       if (response.statusCode == 200) {
-        final jsonData = Map<String, dynamic>.from(response.data);
-        return {
-          "success": true,
-          "data": jsonData,
-          "message": "Berhasil mendapatkan detail history transaksi",
-        };
-      } else {
-        return {
-          "success": false,
-          "data": null,
-          "message":
-              "Gagal mendapatkan detail history. Status: ${response.statusCode}",
-        };
+        return StatusTransaksiModel.fromJson(response.data);
       }
-    } on DioException catch (e) {
-      final apiMessage = e.response?.data is Map
-          ? e.response?.data["message"] ?? "Terjadi kesalahan server"
-          : e.message;
-      return {"success": false, "data": null, "message": apiMessage};
+      throw Exception(
+        "Gagal mendapatkan detail history transaksi. Status: ${response.statusCode}",
+      );
     } catch (e) {
-      return {"success": false, "data": null, "message": e.toString()};
+      throw Exception(e.toString());
     }
   }
 
