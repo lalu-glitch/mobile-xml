@@ -8,7 +8,7 @@ import '../../core/utils/info_row.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../../core/utils/dialog.dart';
 import 'utils/base_state.dart';
-import 'utils/transaksi_cubit.dart';
+import 'utils/transaksi_helper_cubit.dart';
 import 'widgets/input_text_field.dart';
 
 class InputNomorMidPage extends StatefulWidget {

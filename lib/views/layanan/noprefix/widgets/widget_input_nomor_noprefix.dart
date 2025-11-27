@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/helper/constant_finals.dart';
 import '../../../../core/helper/currency.dart';
-import '../../../../core/helper/dynamic_app_page.dart';
 import '../../../../data/models/layanan/flow_state_models.dart';
 import '../../cubit/flow_cubit.dart';
 
@@ -13,10 +12,12 @@ class NavigationButtonNoPrefix extends StatelessWidget {
     required this.isLastPage,
     required this.flowState,
     required this.flowCubit,
+    required this.onPressed,
   });
 
   final double selectedPrice;
   final bool isLastPage;
+  final VoidCallback onPressed;
   final FlowStateModel flowState;
   final FlowCubit flowCubit;
 
@@ -45,16 +46,7 @@ class NavigationButtonNoPrefix extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              onPressed: () {
-                if (!isLastPage) {
-                  final nextPage =
-                      flowState.sequence[flowState.currentIndex + 1];
-                  flowCubit.nextPage();
-                  Navigator.pushNamed(context, pageRoutes[nextPage]!);
-                } else {
-                  Navigator.pushNamed(context, '/konfirmasiPembayaran');
-                }
-              },
+              onPressed: onPressed,
               child: const Text(
                 "Selanjutnya",
                 style: TextStyle(fontWeight: FontWeight.bold),

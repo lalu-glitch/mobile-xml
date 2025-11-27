@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/transaksi/transaksi_helper.dart';
 
+//cubit ini berguna buat setter semua data dari API untuk dipass ke berbagai page
+// kurang lebih kaya temporary value container/database
 class TransaksiHelperCubit extends Cubit<TransaksiHelperModel> {
   TransaksiHelperCubit() : super(const TransaksiHelperModel());
 

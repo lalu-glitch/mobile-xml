@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helper/constant_finals.dart';
 import '../../../../core/helper/dynamic_app_page.dart';
-import '../../../input_nomor/utils/transaksi_cubit.dart';
+import '../../../input_nomor/utils/transaksi_helper_cubit.dart';
 import '../../cubit/flow_cubit.dart';
 import '../../../../core/helper/currency.dart';
 import '../cubit/provider_noprefix_cubit.dart';
+import '../helper/noprefix_controller.dart';
 import '../widgets/widget_input_nomor_noprefix.dart';
 
 class DetailNoPrefixPage extends StatefulWidget {
@@ -17,6 +18,7 @@ class DetailNoPrefixPage extends StatefulWidget {
 }
 
 class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
+  late DetailNoPrefixController controller;
   String? selectedProductCode;
   double selectedPrice = 0;
   dynamic selectedProduk;
@@ -24,19 +26,19 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
   @override
   void initState() {
     super.initState();
-    final flowState = context.read<FlowCubit>().state!;
-    final iconItem = flowState.layananItem;
-    context.read<ProviderNoPrefixCubit>().fetchProviders(
-      iconItem.kodeCatatan,
-      "",
+    controller = DetailNoPrefixController(
+      context: context,
+      flowCubit: context.read<FlowCubit>(),
+      transaksiCubit: context.read<TransaksiHelperCubit>(),
+      refresh: setState,
     );
+    controller.initFetch();
   }
 
   @override
   Widget build(BuildContext context) {
     final flowState = context.watch<FlowCubit>().state!;
     final flowCubit = context.read<FlowCubit>();
-    final transaksi = context.read<TransaksiHelperCubit>();
     final iconItem = flowState.layananItem;
     final int currentIndex = flowState.currentIndex;
     final List<AppPage> sequence = flowState.sequence;
@@ -94,25 +96,14 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                       children: [
                         ...produkList.map((produk) {
                           final bool isSelected =
-                              selectedProductCode == produk.kodeProduk;
+                              controller.selectedProductCode ==
+                              produk.kodeProduk;
                           final bool isGangguan = produk.gangguan == 1;
                           return GestureDetector(
                             onTap: isGangguan
                                 ? null
                                 : () {
-                                    setState(() {
-                                      selectedProductCode = produk.kodeProduk;
-                                      selectedPrice = produk.hargaJual
-                                          .toDouble();
-                                      selectedProduk = produk;
-                                    });
-                                    transaksi.setKodeproduk(produk.kodeProduk);
-                                    transaksi.setNamaProduk(produk.namaProduk);
-                                    transaksi.setProductPrice(produk.hargaJual);
-                                    transaksi.isEndUser(produk.endUser);
-                                    transaksi.isBebasNominal(
-                                      produk.bebasNominal,
-                                    );
+                                    controller.onProdukSelected(produk);
                                   },
                             child: Container(
                               margin: const .symmetric(
@@ -211,12 +202,16 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
             ); // Fallback
           },
         ),
-        bottomNavigationBar: selectedProductCode != null
+        bottomNavigationBar: controller.selectedProductCode != null
             ? NavigationButtonNoPrefix(
-                selectedPrice: selectedPrice,
+                selectedPrice: controller.selectedPrice,
                 isLastPage: isLastPage,
                 flowState: flowState,
                 flowCubit: flowCubit,
+                onPressed: () => controller.navigateNext(
+                  isLastPage: isLastPage,
+                  nomorTujuan: '',
+                ),
               )
             : null,
       ),
