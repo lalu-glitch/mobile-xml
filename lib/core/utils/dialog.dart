@@ -42,7 +42,7 @@ Future<void> showErrorDialog(BuildContext context, String message) {
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14, color: Colors.black87),
+                style: const TextStyle(fontSize: 14, color: kBlack),
               ),
               const SizedBox(height: 24),
 

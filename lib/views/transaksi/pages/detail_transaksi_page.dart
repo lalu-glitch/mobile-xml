@@ -14,7 +14,6 @@ class DetailTransaksiPage extends StatelessWidget {
     final args = ModalRoute.of(context)?.settings.arguments;
     final status = args is TransaksiResponse ? args : null;
 
-    // Safety check agar tidak crash jika status null
     if (status == null) {
       return const Scaffold(body: Center(child: Text("Data Error")));
     }
@@ -24,7 +23,7 @@ class DetailTransaksiPage extends StatelessWidget {
     final IconData statusIcon = getStatusIcon(trxStatus);
 
     return Scaffold(
-      backgroundColor: kBackground, // Light Grey Background
+      backgroundColor: kBackground,
       appBar: AppBar(
         backgroundColor: kBackground,
         elevation: 0,
@@ -50,7 +49,7 @@ class DetailTransaksiPage extends StatelessWidget {
           children: [
             // 1. RECEIPT CARD SECTION
             ClipPath(
-              clipper: InvertedCircleClipper(), // Custom Scallop Shape
+              clipper: InvertedCircleClipper(),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -69,7 +68,7 @@ class DetailTransaksiPage extends StatelessWidget {
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   children: [
-                    // --- HEADER ICON ---
+                    // Header Icon (tanpa Lottie di sini lagi)
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -79,8 +78,6 @@ class DetailTransaksiPage extends StatelessWidget {
                       child: Icon(statusIcon, color: statusColor, size: 40),
                     ),
                     const SizedBox(height: 16),
-
-                    // --- STATUS TEXT ---
                     Text(
                       status.keterangan,
                       textAlign: TextAlign.center,
@@ -95,28 +92,22 @@ class DetailTransaksiPage extends StatelessWidget {
                       DateFormat('dd MMM yyyy • HH:mm').format(status.tglEntri),
                       style: TextStyle(color: kNeutral60, fontSize: 12),
                     ),
-
                     const SizedBox(height: 32),
-
-                    // --- DIVIDER DASHED ---
                     const DashedLineDivider(),
                     const SizedBox(height: 24),
 
-                    // --- DETAIL ROWS ---
+                    // === DETAIL ROWS (sama seperti sebelumnya) ===
                     TransaksiDetailRow(
                       label: "Produk",
                       value: status.kodeProduk,
                     ),
                     TransaksiDetailRow(label: "Tujuan", value: status.tujuan),
-
-                    // Copyable Trx ID
                     TransaksiDetailRow(
                       label: "Kode Transaksi",
                       value: status.kode.toString(),
                       canCopy: true,
                     ),
 
-                    // --- SN SECTION (Highlighted) ---
                     if (status.sn != null && status.sn!.isNotEmpty) ...[
                       const SizedBox(height: 16),
                       Container(
@@ -140,7 +131,7 @@ class DetailTransaksiPage extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
-                                fontFamily: 'Monospace', // Font teknis
+                                fontFamily: 'Monospace',
                                 letterSpacing: 0.5,
                               ),
                             ),
@@ -149,10 +140,8 @@ class DetailTransaksiPage extends StatelessWidget {
                       ),
                     ],
 
-                    const SizedBox(height: 24),
-
-                    // --- OUTBOX / MESSAGE ---
                     if (status.outbox != null && status.outbox!.isNotEmpty) ...[
+                      const SizedBox(height: 24),
                       const DashedLineDivider(),
                       const SizedBox(height: 16),
                       Align(
@@ -185,6 +174,7 @@ class DetailTransaksiPage extends StatelessWidget {
                 ),
               ),
             ),
+
             const SizedBox(height: 30),
 
             // 2. ACTION BUTTONS
@@ -246,8 +236,6 @@ class DetailTransaksiPage extends StatelessWidget {
             ),
 
             const SizedBox(height: 30),
-
-            // Branding Footer
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

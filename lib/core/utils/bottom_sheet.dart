@@ -105,7 +105,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
             const SizedBox(height: 16),
             Text(
               'Unbind Akun SpeedCash',
-              style: TextStyle(color: Colors.black, fontSize: kSize20),
+              style: TextStyle(color: kBlack, fontSize: kSize20),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
@@ -166,7 +166,7 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
             const SizedBox(height: 16),
             Text(
               'Keluar',
-              style: TextStyle(color: Colors.black, fontSize: kSize20),
+              style: TextStyle(color: kBlack, fontSize: kSize20),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),

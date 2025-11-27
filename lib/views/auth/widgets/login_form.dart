@@ -127,7 +127,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               child: RichText(
                 text: TextSpan(
                   text: 'Dengan login, Anda telah setuju dengan ',
-                  style: TextStyle(color: Colors.black, fontSize: 14),
+                  style: TextStyle(color: kBlack, fontSize: 14),
                   children: [
                     TextSpan(
                       text: 'syarat dan ketentuan',

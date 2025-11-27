@@ -40,7 +40,7 @@ class GenericStatusView extends StatelessWidget {
           children: [
             const Spacer(),
 
-            // 1. VISUALIZATION (Pulse Animation)
+            // Pulse Animation
             if (isLoading)
               FintechPulseLoader(color: themeColor, icon: statusIcon)
             else
@@ -57,7 +57,7 @@ class GenericStatusView extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            // 2. TEXT CONTENT
+            // TEXT CONTENT
             Text(
               title,
               style: const TextStyle(
@@ -77,7 +77,7 @@ class GenericStatusView extends StatelessWidget {
 
             const Spacer(),
 
-            // 3. ACTION BUTTON (Bottom Floating)
+            // ACTION BUTTON (Bottom Floating)
             if (showButton) ...[
               SizedBox(
                 width: double.infinity,

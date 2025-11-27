@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../data/models/transaksi/websocket_transaksi.dart';
 
 class CetakStrukButton extends StatelessWidget {
   const CetakStrukButton({super.key, required this.status});
@@ -41,8 +39,6 @@ class CetakStrukButton extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              // Menambahkan Haptic Feedback agar terasa responsif di tangan
-              HapticFeedback.lightImpact();
               Navigator.pushNamed(
                 context,
                 '/struk',

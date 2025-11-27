@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../core/helper/constant_finals.dart';
 import '../../core/helper/dynamic_app_page.dart';
 import '../layanan/cubit/flow_cubit.dart';
 import '../transaksi/cubit/transaksi_omni/transaksi_omni_cubit.dart';
@@ -169,14 +170,14 @@ class _OmniWebViewPageState extends State<OmniWebViewPage> {
           "Telkomsel OMNI",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: kRed,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Stack(
         children: [
           WebViewWidget(controller: _controller),
           if (_isLoading)
-            const Center(child: CircularProgressIndicator(color: Colors.red)),
+            const Center(child: CircularProgressIndicator(color: kRed)),
         ],
       ),
     );

@@ -55,7 +55,7 @@ class DetailRiwayatTransaksiRow extends StatelessWidget {
                       value!,
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                        color: isHighlighted ? Colors.black : kBlack,
+                        color: isHighlighted ? kBlack : kBlack,
                         fontWeight: isHighlighted
                             ? FontWeight.w900
                             : FontWeight.w600,

@@ -9,8 +9,6 @@ import '../cubit/detail_riwayat_transaksi_cubit.dart';
 import '../widgets/widget_cetak_struk_button.dart';
 import '../widgets/widget_detail_transaksi_row.dart';
 
-// Pastikan import Cubit, Shimmer, dan Constants Anda di sini
-
 class DetailRiwayatPage extends StatelessWidget {
   final String kode;
 
@@ -26,7 +24,7 @@ class DetailRiwayatPage extends StatelessWidget {
       backgroundColor: kBackground,
       appBar: AppBar(
         title: const Text(
-          'Bukti Transaksi', // Wording lebih natural
+          'Detail Transaksi',
           style: TextStyle(
             color: kBlack,
             fontSize: 18,
@@ -193,18 +191,17 @@ class DetailRiwayatPage extends StatelessWidget {
                                       canCopy: true,
                                     ),
                                     // Tampilkan SN jika ada
-                                    if (status.sn != null &&
-                                        status.sn!.isNotEmpty)
+                                    if (status.sn.isNotEmpty)
                                       DetailRiwayatTransaksiRow(
                                         label: "Serial Number (SN)",
-                                        value: status.sn ?? '',
+                                        value: status.sn,
                                         isHighlighted:
                                             true, // SN biasanya penting
                                         canCopy: true,
                                       ),
 
                                     // Tampilkan Outbox/Pesan Operator jika ada
-                                    if (status.outbox!.isNotEmpty) ...[
+                                    if (status.outbox.isNotEmpty) ...[
                                       const SizedBox(height: 16),
                                       Container(
                                         padding: const EdgeInsets.all(12),
@@ -216,7 +213,7 @@ class DetailRiwayatPage extends StatelessWidget {
                                           border: Border.all(color: kNeutral20),
                                         ),
                                         child: Text(
-                                          status.outbox!,
+                                          status.outbox,
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: kNeutral90,
