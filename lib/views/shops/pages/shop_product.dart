@@ -57,9 +57,6 @@ class ShopProducts extends StatelessWidget {
             decoration: BoxDecoration(
               color: kWhite,
               borderRadius: BorderRadius.circular(16),
-              boxShadow: const [
-                BoxShadow(color: kBlack, blurRadius: 2, offset: Offset(0, 1)),
-              ],
             ),
             padding: const .symmetric(horizontal: 8, vertical: 16),
             margin: .only(bottom: (entries.last == entry) ? 0 : 24),
