@@ -6,7 +6,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/dynamic_app_page.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../layanan/cubit/flow_cubit.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../input_nomor/utils/transaksi_helper_cubit.dart';
 import '../../transaksi/cubit/transaksi_omni/transaksi_omni_cubit.dart';
 import '../cubit/layanan_cubit.dart';
 

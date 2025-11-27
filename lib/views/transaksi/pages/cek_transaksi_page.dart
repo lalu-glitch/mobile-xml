@@ -9,7 +9,7 @@ import '../../../core/utils/info_row.dart';
 import '../../../data/models/transaksi/cek_transaksi.dart';
 import '../../../data/models/transaksi/transaksi_helper.dart';
 import '../../input_nomor/utils/base_state.dart';
-import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../input_nomor/utils/transaksi_helper_cubit.dart';
 import '../../layanan/cubit/flow_cubit.dart';
 import '../cubit/transaksi_omni/transaksi_omni_cubit.dart';
 import '../cubit/transaksi_websocket/websocket_cektransaksi_cubit.dart';
