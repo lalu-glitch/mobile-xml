@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helper/dynamic_app_page.dart';
-import '../../../input_nomor/utils/transaksi_cubit.dart';
+import '../../../input_nomor/utils/transaksi_helper_cubit.dart';
 import '../../cubit/flow_cubit.dart';
 import '../cubit/provider_noprefix_cubit.dart';
 
@@ -46,15 +46,15 @@ class DetailNoPrefixController {
     refresh(() {});
   }
 
+  /// TODO [VERIFY]
   void navigateNext({required bool isLastPage, required String nomorTujuan}) {
     transaksiCubit.setTujuan(nomorTujuan);
     final state = flowCubit.state!;
 
-    if (!isLastPage &&
-        (selectedProduk?.bebasNominal == 1 || selectedProduk?.endUser == 1)) {
+    if (!isLastPage) {
+      final nextPage = state.sequence[state.currentIndex + 1];
       flowCubit.nextPage();
-      final next = state.sequence[state.currentIndex + 1];
-      Navigator.pushNamed(context, pageRoutes[next]!);
+      Navigator.pushNamed(context, pageRoutes[nextPage]!);
     } else {
       Navigator.pushNamed(context, '/konfirmasiPembayaran');
     }
