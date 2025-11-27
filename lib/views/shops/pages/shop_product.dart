@@ -58,11 +58,7 @@ class ShopProducts extends StatelessWidget {
               color: kWhite,
               borderRadius: BorderRadius.circular(16),
               boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 2,
-                  offset: Offset(0, 1),
-                ),
+                BoxShadow(color: kBlack, blurRadius: 2, offset: Offset(0, 1)),
               ],
             ),
             padding: const .symmetric(horizontal: 8, vertical: 16),

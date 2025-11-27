@@ -5,7 +5,6 @@ import '../../views/auth/pages/otp_page.dart';
 import '../../views/auth/pages/auth_page.dart';
 import '../../initial_page.dart';
 import '../../views/auth/pages/SK_page.dart';
-
 import '../../views/input_nomor/input_bn_eu.dart';
 import '../../views/input_nomor/input_nomer_awal.dart';
 import '../../views/input_nomor/input_nomer_mid.dart';
@@ -23,6 +22,7 @@ import '../../views/riwayat/pages/riwayat_page.dart';
 import '../../views/settings/pages/detail_akun_page.dart';
 import '../../views/speedcash/pages/speedcash_topup_tiket.dart';
 import '../../views/transaksi/pages/cek_transaksi_page.dart';
+import '../../views/webview/omni_webview.dart';
 import '../helper/onboarding_guard.dart';
 import '../../views/speedcash/pages/speedcash_webview.dart';
 import '../../views/layanan/noprefix/pages/noprefix_page.dart';
@@ -35,8 +35,8 @@ import '../../views/transaksi/pages/konfirmasi_pembayaran_page.dart';
 import '../../views/settings/pages/settings_page.dart';
 import '../../views/shops/pages/shop_page.dart';
 import '../helper/auth_guard.dart';
-import '../../views/transaksi/pages/struk.dart';
-import '../../views/transaksi/pages/transaksi_detail_page.dart';
+import '../../views/struk/pages/struk_page.dart';
+import '../../views/transaksi/pages/detail_transaksi_page.dart';
 import '../../views/transaksi/pages/transaksi_proses_page.dart';
 
 Widget authGuardWrapper(Widget child) {
@@ -110,4 +110,5 @@ final Map<String, WidgetBuilder> appRoutes = {
   ///MISCELLANEOUS
   '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),
   '/detailInfoAkun': (context) => authGuardWrapper(DetailInfoAkun()),
+  '/webview': (context) => authGuardWrapper(OmniWebViewPage()),
 };

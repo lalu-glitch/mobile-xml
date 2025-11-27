@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +7,7 @@ import '../../../core/helper/dynamic_app_page.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../layanan/cubit/flow_cubit.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
+import '../../transaksi/cubit/transaksi_omni/transaksi_omni_cubit.dart';
 import '../cubit/layanan_cubit.dart';
 
 class HomeLayananSection extends StatelessWidget {
@@ -17,6 +16,7 @@ class HomeLayananSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>();
+    final transaksiOmni = context.read<TransaksiOmniCubit>();
     final cubit = context.read<LayananCubit>();
 
     return BlocBuilder<LayananCubit, LayananState>(
@@ -45,13 +45,6 @@ class HomeLayananSection extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: kWhite,
                       borderRadius: BorderRadius.circular(16),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 2,
-                          offset: Offset(0, 1),
-                        ),
-                      ],
                     ),
                     padding: const .symmetric(horizontal: 8, vertical: 16),
                     margin: const .only(bottom: 24),
@@ -70,9 +63,8 @@ class HomeLayananSection extends StatelessWidget {
                         final iconItem = layananList[i];
                         return GestureDetector(
                           onTap: () {
-                            // log('[FLOW]: ${iconItem.kodeBayar}');
-                            log('[kodebayar]: ${iconItem.kodeBayar}');
-                            log('[kodecek]: ${iconItem.kodeCek}');
+                            transaksi.reset();
+                            transaksiOmni.reset();
                             final sequence = pageSequences[iconItem.flow] ?? [];
                             // simpan state awal ke FlowCubit
                             context.read<FlowCubit>().startFlow(
@@ -82,6 +74,9 @@ class HomeLayananSection extends StatelessWidget {
 
                             // simpan kodeCatatan untuk prefix page
                             transaksi.setKodeCatatan(iconItem.kodeCatatan);
+                            //simpan kodeCek dan kodeBayar buat omni
+                            transaksi.setKodeCek(iconItem.kodeCek ?? '');
+                            transaksi.setKodeBayar(iconItem.kodeBayar ?? '');
 
                             // navigasi ke halaman pertama dari flow
                             final firstPage = sequence[0];

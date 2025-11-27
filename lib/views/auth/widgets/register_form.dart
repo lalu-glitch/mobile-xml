@@ -227,7 +227,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                 child: RichText(
                   text: TextSpan(
                     text: 'Dengan mendaftar, Anda setuju dengan ',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: kBlack),
                     children: [
                       TextSpan(
                         text: 'syarat dan ketentuan',

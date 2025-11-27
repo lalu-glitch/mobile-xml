@@ -5,8 +5,8 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../data/models/transaksi/websocket_transaksi.dart';
-import '../../../data/services/websocket_service.dart';
+import '../../../../data/models/transaksi/websocket_transaksi.dart';
+import '../../../../data/services/websocket_service.dart';
 
 part 'websocket_transaksi_state.dart';
 

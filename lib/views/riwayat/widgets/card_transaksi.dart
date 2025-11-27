@@ -6,7 +6,7 @@ import '../../../core/helper/auth_guard.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../data/services/api_service.dart';
 import '../cubit/detail_riwayat_transaksi_cubit.dart';
-import '../pages/detail_riwayat.dart';
+import '../pages/detail_riwayat_page.dart';
 
 class TransactionCard extends StatelessWidget {
   final dynamic t; // model transaksi

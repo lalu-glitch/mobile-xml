@@ -1,6 +1,4 @@
 // ignore_for_file: unnecessary_null_comparison
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,11 +7,13 @@ import '../../../core/helper/currency.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../core/utils/info_row.dart';
 import '../../../data/models/transaksi/metode_transaksi.dart';
+import '../../../data/models/transaksi/transaksi_helper.dart';
 import '../../../data/services/speedcash_api_service.dart';
 import '../../home/cubit/balance_cubit.dart';
 import '../../input_nomor/utils/transaksi_cubit.dart';
-import '../cubit/konfirmasi_transaksi_speedcash_cubit.dart';
-import '../cubit/pembayaran_transaksi_speedcash_cubit.dart';
+import '../cubit/transaksi_omni/transaksi_omni_cubit.dart';
+import '../cubit/transaksi_speedcash/konfirmasi_transaksi_speedcash_cubit.dart';
+import '../cubit/transaksi_speedcash/pembayaran_transaksi_speedcash_cubit.dart';
 import 'konfirmasi_speedcash_page.dart';
 
 class KonfirmasiPembayaranPage extends StatefulWidget {
@@ -26,36 +26,46 @@ class KonfirmasiPembayaranPage extends StatefulWidget {
 
 class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   String _selectedMethod = "SALDO"; // default pilihan
-  final TextEditingController textController = TextEditingController();
 
-  double getTotalTransaksi(dynamic transaksi) {
-    final double basePrice = transaksi.productPrice ?? 0;
+  /// Menghitung total nominal yang akan diproses ke Backend.
+  /// Prioritas: Tagihan > Bebas Nominal > Harga Produk Normal.
+  double _getTotalTransaksi(TransaksiHelperModel transaksi) {
+    // Ambil nilai dasar dengan default 0.0 agar aman dari null
+    final double finalTotal = transaksi.finalTotal ?? 0.0;
+    final double fee = transaksi.fee ?? 0.0;
+    final double productPrice = transaksi.productPrice ?? 0.0;
+    final double bebasNominal = transaksi.bebasNominalValue ?? 0.0;
 
-    final totalTagihanPrice = transaksi.finalTotal ?? 0;
-    if (totalTagihanPrice > 0) {
-      final serviceFee = transaksi.fee ?? 0.0;
-      double base = totalTagihanPrice + serviceFee;
-      return base;
+    // Cek Tagihan
+    if (finalTotal > 0) {
+      return finalTotal + fee;
     }
+    // Cek Bebas Nominal
     if (transaksi.isBebasNominal == 1) {
-      final double bebasNominalPrice = transaksi.bebasNominalValue ?? 0;
-      return bebasNominalPrice;
+      return bebasNominal;
     }
-    return basePrice;
+    // Default
+    return productPrice;
   }
 
-  double getDisplayedTotal(dynamic transaksi) {
-    final double totalTagihanPrice = transaksi.finalTotal ?? 0.0;
-    if (totalTagihanPrice > 0) {
-      final serviceFee = transaksi.fee ?? 0.0;
-      return totalTagihanPrice + serviceFee;
+  /// Menghitung total yang ditampilkan ke UI (Layar).
+  /// Logika sedikit berbeda pada 'Bebas Nominal' (Harga Produk + Input).
+  double _getDisplayedTotal(TransaksiHelperModel transaksi) {
+    final double finalTotal = transaksi.finalTotal ?? 0.0;
+    final double fee = transaksi.fee ?? 0.0;
+    final double productPrice = transaksi.productPrice ?? 0.0;
+    final double bebasNominal = (transaksi.bebasNominalValue ?? 0).toDouble();
+
+    // Cek Tagihan
+    if (finalTotal > 0) {
+      return finalTotal + fee;
     }
+    // Cek Bebas Nominal (Tampilan UI menjumlahkan harga dasar + nominal input)
     if (transaksi.isBebasNominal == 1) {
-      final productPrice = transaksi.productPrice ?? 0.0;
-      final bebas = (transaksi.bebasNominalValue ?? 0).toDouble();
-      return productPrice + bebas;
+      return productPrice + bebasNominal;
     }
-    return transaksi.productPrice ?? 0.0;
+    // Default
+    return productPrice;
   }
 
   @override
@@ -147,40 +157,31 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
 
   /// Card informasi transaksi
   Widget _buildInfoCard(dynamic transaksi) {
-    final totalTransaksi = getDisplayedTotal(transaksi);
+    final omni = context.read<TransaksiOmniCubit>().state;
+
+    final nomorTujuan = omni.msisdn ?? transaksi.tujuan;
+    final kodeProduk = omni.kode ?? transaksi.kodeProduk;
+    final totalTransaksi = _getDisplayedTotal(transaksi);
+
+    // ===== DYNAMIC FIELD MAPPING =====
+    final Map<String, dynamic> infoFields = {
+      "Nomor Tujuan": nomorTujuan,
+      "Kode Produk": kodeProduk,
+      "Nama Produk": transaksi.namaProduk,
+      if (transaksi.isBebasNominal == 1) ...{
+        "Harga Produk": CurrencyUtil.formatCurrency(transaksi.productPrice),
+        "Nominal": CurrencyUtil.formatCurrency(transaksi.bebasNominalValue),
+      },
+      "Total Pembayaran": CurrencyUtil.formatCurrency(totalTransaksi),
+    };
+
     return Card(
       color: kWhite,
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const .all(16.0),
-        child: Column(
-          children: [
-            infoRow("Nomor Tujuan", transaksi.tujuan ?? ''),
-            const Divider(height: 24),
-            infoRow("Kode Produk", transaksi.kodeProduk ?? ''),
-            const Divider(height: 24),
-            infoRow("Nama Produk", transaksi.namaProduk ?? ''),
-            const Divider(height: 24),
-            if (transaksi.isBebasNominal == 1) ...[
-              infoRow(
-                "Harga Produk",
-                CurrencyUtil.formatCurrency(transaksi.productPrice),
-              ),
-              const Divider(height: 24),
-              infoRow(
-                'Nominal',
-                CurrencyUtil.formatCurrency(transaksi.bebasNominalValue),
-              ),
-              const Divider(height: 24),
-            ],
-            infoRow(
-              "Total Pembayaran",
-              CurrencyUtil.formatCurrency(totalTransaksi),
-              isTotal: true,
-            ),
-          ],
-        ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(children: buildDynamicInfoRows(infoFields)),
       ),
     );
   }
@@ -238,8 +239,8 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
   /// Tombol Bayar
   Widget _buildPayButton(List<PaymentMethodModel> methods, dynamic transaksi) {
     final sendTransaksi = context.read<TransaksiHelperCubit>();
-    final totalTransaksi = getTotalTransaksi(transaksi);
-    log('[transaksi harga final sebelum proses]: $totalTransaksi');
+    final totalTransaksi = _getTotalTransaksi(transaksi);
+
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
@@ -261,7 +262,6 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             //3 ini dpakai buat di transaksi proses
             sendTransaksi.setKodeDompet(selected.kodeDompet ?? "");
             sendTransaksi.setNominalPembayaran((totalTransaksi).toInt());
-            sendTransaksi.setEndUserValue(textController.text.trim());
 
             // Cek saldo cukup atau tidak
             final saldo = selected.saldoEwallet ?? 0;
@@ -316,11 +316,5 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    textController.dispose();
-    super.dispose();
   }
 }

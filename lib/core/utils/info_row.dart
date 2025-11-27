@@ -37,3 +37,18 @@ Widget infoRow(
     ],
   );
 }
+
+List<Widget> buildDynamicInfoRows(Map<String, dynamic> fields) {
+  final widgets = <Widget>[];
+
+  fields.forEach((label, value) {
+    final text = value?.toString().trim();
+
+    if (text != null && text.isNotEmpty && text != "-") {
+      widgets.add(infoRow(label, text));
+      widgets.add(const Divider(height: 24));
+    }
+  });
+
+  return widgets;
+}

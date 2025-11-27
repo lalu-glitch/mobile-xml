@@ -12,6 +12,8 @@ class TransaksiHelperModel {
   final String? endUserValue;
   final String? kodeDompet;
   final double? nominalPembayaran;
+  final String? kodeCek;
+  final String? kodeBayar;
 
   const TransaksiHelperModel({
     this.tujuan,
@@ -27,6 +29,8 @@ class TransaksiHelperModel {
     this.endUserValue,
     this.kodeDompet,
     this.nominalPembayaran,
+    this.kodeCek,
+    this.kodeBayar,
   });
 
   TransaksiHelperModel copyWith({
@@ -43,6 +47,8 @@ class TransaksiHelperModel {
     String? endUserValue,
     String? kodeDompet,
     double? nominalPembayaran,
+    String? kodeCek,
+    String? kodeBayar,
   }) {
     return TransaksiHelperModel(
       tujuan: tujuan ?? this.tujuan,
@@ -58,6 +64,8 @@ class TransaksiHelperModel {
       endUserValue: endUserValue ?? this.endUserValue,
       kodeDompet: kodeDompet ?? this.kodeDompet,
       nominalPembayaran: nominalPembayaran ?? this.nominalPembayaran,
+      kodeCek: kodeCek ?? this.kodeCek,
+      kodeBayar: kodeBayar ?? this.kodeBayar,
     );
   }
 }

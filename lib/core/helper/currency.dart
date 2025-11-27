@@ -17,9 +17,9 @@ class CurrencyUtil {
     }
   }
 
-  static int parseCurrency(String value) {
-    // Hapus semua selain angka
-    final numericString = value.replaceAll(RegExp(r'[^0-9]'), '');
-    return int.tryParse(numericString) ?? 0;
+  static int parseAmount(String? value) {
+    if (value == null || value.isEmpty) return 0;
+    String cleanValue = value.replaceAll(RegExp(r'[^0-9]'), '');
+    return int.tryParse(cleanValue) ?? 0;
   }
 }

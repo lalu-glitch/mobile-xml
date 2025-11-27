@@ -18,7 +18,7 @@ class DownlineCard extends StatelessWidget {
           children: [
             buildTopSection(),
             const SizedBox(height: 12.0),
-            const Divider(color: Colors.black12, height: 1),
+            const Divider(color: kBlack, height: 1),
             const SizedBox(height: 12.0),
 
             buildBottomSection(),

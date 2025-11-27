@@ -5,8 +5,8 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../data/models/transaksi/cek_transaksi.dart';
-import '../../../data/services/websocket_service.dart';
+import '../../../../data/models/transaksi/cek_transaksi.dart';
+import '../../../../data/services/websocket_service.dart';
 
 part 'websocket_cektransaksi_state.dart';
 
@@ -29,7 +29,7 @@ class WebSocketCekTransaksiCubit extends Cubit<WebSocketCekTransaksiState> {
       _subscription = webSocketService.stream.listen(
         (raw) {
           final msg = jsonDecode(raw);
-          log('msg');
+          log('$msg');
           // HANDLE ERROR
           if (msg['success'] == false) {
             emit(
