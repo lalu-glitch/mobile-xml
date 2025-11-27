@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../core/helper/constant_finals.dart';
+import 'constant_finals.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;

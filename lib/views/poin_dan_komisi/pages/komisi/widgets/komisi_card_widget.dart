@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/helper/constant_finals.dart';
-import '../../../../auth/widgets/custom_textfield.dart';
+import '../../../../../core/helper/custom_textfield.dart';
 
 class CardWidget extends StatelessWidget {
   const CardWidget({super.key, required this.komisiCtrl});

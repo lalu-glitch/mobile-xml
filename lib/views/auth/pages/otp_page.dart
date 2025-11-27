@@ -5,7 +5,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../data/services/auth_service.dart';
-import '../widgets/custom_textfield.dart';
+import '../../../core/helper/custom_textfield.dart';
 
 class KodeOTP extends StatefulWidget {
   const KodeOTP({super.key});

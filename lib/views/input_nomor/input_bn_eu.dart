@@ -6,7 +6,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xmlapp/views/auth/widgets/custom_textfield.dart';
+import 'package:xmlapp/core/helper/custom_textfield.dart';
 
 import '../../core/helper/constant_finals.dart';
 import '../../core/helper/currency.dart';
