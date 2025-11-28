@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../core/helper/constant_finals.dart';
@@ -157,6 +158,7 @@ class AuthService {
       );
 
       final isSuccess = response.statusCode == 200;
+      log(response.data.toString());
       return {
         "success": isSuccess,
         "data": response.data,

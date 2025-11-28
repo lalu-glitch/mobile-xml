@@ -1,11 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/dialog.dart';
-import '../../../data/services/auth_service.dart';
 import '../../../core/helper/custom_textfield.dart';
+import '../cubit/login_cubit.dart';
 
 class LoginFormWidget extends StatefulWidget {
   const LoginFormWidget({super.key});
@@ -16,8 +17,7 @@ class LoginFormWidget extends StatefulWidget {
 
 class _LoginFormWidgetState extends State<LoginFormWidget> {
   final nomorCtrl = TextEditingController();
-  final kodeAgenCtrl = TextEditingController();
-  final authService = AuthService();
+  final kodeResellerCtrl = TextEditingController();
 
   bool isChecked = false;
 
@@ -27,11 +27,23 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     });
   }
 
-  bool loading = false;
+  void navigateToSnKPage() async {
+    final result = await Navigator.pushNamed(context, '/S&KPage');
+    if (result is bool) {
+      setState(() => isChecked = result);
+      if (result == true && mounted) {
+        showAppToast(
+          context,
+          'Syarat dan Ketentuan telah disetujui.',
+          ToastType.success,
+        );
+      }
+    }
+  }
 
-  /// Kirim request OTP ke server
-  Future<void> doOTP() async {
-    final kodeAgen = kodeAgenCtrl.text.trim();
+  /// VALIDASI + EKSEKUSI LOGIN
+  void _onLoginPressed() {
+    final kodeAgen = kodeResellerCtrl.text.trim();
     final nomor = nomorCtrl.text.trim();
 
     if (kodeAgen.isEmpty || nomor.isEmpty) {
@@ -43,67 +55,30 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
       return;
     }
 
-    setState(() => loading = true);
-
-    final result = await authService.sendOtp(kodeAgen, nomor);
-
-    setState(() => loading = false);
-
-    if (!mounted) return;
-
-    if (result["success"]) {
-      Navigator.pushNamed(
-        context,
-        '/kodeOTP',
-        arguments: {
-          "kode_reseller": kodeAgen,
-          "type": result["data"]["type"],
-          "expiresAt": result["data"]["expiresAt"],
-        },
-      );
-    } else {
-      showErrorDialog(context, result["message"]);
-    }
-  }
-
-  void navigateToSnKPage() async {
-    final result = await Navigator.pushNamed(context, '/S&KPage');
-
-    if (result is bool) {
-      setState(() {
-        isChecked = result;
-      });
-      if (result == true) {
-        if (mounted) {
-          showAppToast(
-            context,
-            'Syarat dan Ketentuan telah disetujui.',
-            ToastType.success,
-          );
-        }
-      }
-    }
+    context.read<LoginCubit>().login(nomor, kodeAgen);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: .end,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         CustomTextField(
-          controller: kodeAgenCtrl,
+          controller: kodeResellerCtrl,
           labelText: 'Kode Agen',
           capitalization: TextCapitalization.characters,
           prefixIcon: Icon(Icons.person, color: kOrangeAccent400),
         ),
         const SizedBox(height: 16),
+
         CustomTextField(
           controller: nomorCtrl,
-          labelText: 'Nomer Whatsapp',
+          labelText: 'Nomor Whatsapp',
           textFormater: [FilteringTextInputFormatter.digitsOnly],
           prefixIcon: Icon(Icons.phone, color: kOrangeAccent400),
           keyboardType: TextInputType.phone,
         ),
+
         const SizedBox(height: 20),
         GestureDetector(
           child: Text(
@@ -114,6 +89,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             Navigator.pushNamed(context, '/lupaKodeAgen');
           },
         ),
+
         const SizedBox(height: 24),
         Row(
           children: [
@@ -137,9 +113,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                         decoration: TextDecoration.underline,
                       ),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          navigateToSnKPage();
-                        },
+                        ..onTap = navigateToSnKPage,
                     ),
                     TextSpan(text: ' yang berlaku.'),
                   ],
@@ -148,26 +122,52 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             ),
           ],
         ),
+
         const SizedBox(height: 24),
-        ElevatedButton(
-          onPressed: isChecked || loading
-              ? doOTP
-              : () {
-                  showAppToast(
-                    context,
-                    'Anda harus menyetujui syarat dan ketentuan',
-                    ToastType.error,
-                  );
+
+        BlocConsumer<LoginCubit, LoginState>(
+          listener: (context, state) {
+            if (state is LoginSuccess) {
+              final kodeReseller = kodeResellerCtrl.text.trim();
+              Navigator.pushNamed(
+                context,
+                '/kodeOTP',
+                arguments: {
+                  "kode_reseller": kodeReseller,
+                  "type": state.data["type"],
+                  "expiresAt": state.data["expiresAt"],
                 },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: isChecked ? kOrange : kNeutral40,
-            minimumSize: Size(double.infinity, 50),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-          child: Text('Login', style: TextStyle(color: kWhite, fontSize: 16)),
+              );
+            }
+
+            if (state is LoginError) {
+              showErrorDialog(context, state.message);
+            }
+          },
+          builder: (context, state) {
+            final bool isLoading = state is LoginLoading;
+
+            return ElevatedButton(
+              onPressed: (!isChecked || isLoading) ? null : _onLoginPressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kOrange,
+                minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              child: isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(color: kWhite),
+                    )
+                  : const Text(
+                      'Masuk',
+                      style: TextStyle(color: kWhite, fontSize: 16),
+                    ),
+            );
+          },
         ),
+
         const SizedBox(height: 30),
       ],
     );
@@ -176,7 +176,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   @override
   void dispose() {
     nomorCtrl.dispose();
-    kodeAgenCtrl.dispose();
+    kodeResellerCtrl.dispose();
     super.dispose();
   }
 }
