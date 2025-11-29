@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../data/models/speedcash/speedcash_response.dart';
 import '../../data/services/speedcash_api_service.dart';
 
+///TODO [migrate to cubit]
 class SpeedcashVM extends ChangeNotifier {
   final SpeedcashApiService _apiService;
 

@@ -72,11 +72,12 @@ class HomeLayananSection extends StatelessWidget {
                               iconItem,
                             );
 
-                            // simpan kodeCatatan untuk prefix page
-                            transaksi.setKodeCatatan(iconItem.kodeCatatan);
-                            //simpan kodeCek dan kodeBayar buat omni
-                            transaksi.setKodeCek(iconItem.kodeCek ?? '');
-                            transaksi.setKodeBayar(iconItem.kodeBayar ?? '');
+                            transaksi.pilihMenuLayanan(
+                              kodeCatatan:
+                                  iconItem.kodeCatatan, // <- buat prefix
+                              kodeCek: iconItem.kodeCek, // <- buat omni
+                              kodeBayar: iconItem.kodeBayar, // <- buat omni
+                            );
 
                             // navigasi ke halaman pertama dari flow
                             final firstPage = sequence[0];

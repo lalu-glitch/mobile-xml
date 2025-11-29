@@ -1,32 +1,39 @@
 class TransaksiHelperModel {
-  final String? tujuan;
+  // Data Produk
   final String? kodeProduk;
   final String? namaProduk;
   final String? kodeCatatan;
-  final double? productPrice; // harga produk (dari katalog)
-  final double? fee; // biaya layanan / fee
-  final double? finalTotal; // total pembayaran (tagihan + fee + extras)
-  final int? isBebasNominal;
+  final double? productPrice;
+  final double? fee;
+  final double? finalTotal;
+
+  // Logic Flags (Ganti jadi boolean biar simpel)
+  final bool isBebasNominal;
+  final bool isEndUser;
+
+  // Input User
   final double? bebasNominalValue;
-  final int? isEndUser;
-  final String? endUserValue;
+  final String? endUserValue; // Voucher/ID Game
+  final String? tujuan; // Nomor HP
   final String? kodeDompet;
   final double? nominalPembayaran;
+
+  // System
   final String? kodeCek;
   final String? kodeBayar;
 
   const TransaksiHelperModel({
-    this.tujuan,
     this.kodeProduk,
     this.namaProduk,
     this.kodeCatatan,
     this.productPrice,
     this.fee,
     this.finalTotal,
-    this.isBebasNominal,
+    this.isBebasNominal = false, // Default false
+    this.isEndUser = false, // Default false
     this.bebasNominalValue,
-    this.isEndUser,
     this.endUserValue,
+    this.tujuan,
     this.kodeDompet,
     this.nominalPembayaran,
     this.kodeCek,
@@ -41,9 +48,9 @@ class TransaksiHelperModel {
     double? productPrice,
     double? fee,
     double? finalTotal,
-    int? isBebasNominal,
+    bool? isBebasNominal,
     double? bebasNominalValue,
-    int? isendUser,
+    bool? isEndUser,
     String? endUserValue,
     String? kodeDompet,
     double? nominalPembayaran,
@@ -60,7 +67,7 @@ class TransaksiHelperModel {
       finalTotal: finalTotal ?? this.finalTotal,
       isBebasNominal: isBebasNominal ?? this.isBebasNominal,
       bebasNominalValue: bebasNominalValue ?? this.bebasNominalValue,
-      isEndUser: isendUser ?? this.isEndUser,
+      isEndUser: isEndUser ?? this.isEndUser,
       endUserValue: endUserValue ?? this.endUserValue,
       kodeDompet: kodeDompet ?? this.kodeDompet,
       nominalPembayaran: nominalPembayaran ?? this.nominalPembayaran,

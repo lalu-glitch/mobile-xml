@@ -28,6 +28,7 @@ class InputBebasNominalDanEndUser extends StatefulWidget {
 
 class _InputBebasNominalDanEndUserState
     extends BaseInput<InputBebasNominalDanEndUser> {
+  final _nominalController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>().getData();
@@ -36,7 +37,7 @@ class _InputBebasNominalDanEndUserState
         backgroundColor: kBackground,
         appBar: AppBar(
           title: Text(
-            transaksi.isBebasNominal == 1 ? 'Input Nominal' : 'Input Voucher',
+            transaksi.isBebasNominal ? 'Input Nominal' : 'Input Voucher',
             style: TextStyle(color: kWhite),
           ),
           backgroundColor: kOrange,
@@ -79,13 +80,13 @@ class _InputBebasNominalDanEndUserState
                   ),
                 ),
 
-                if (transaksi.isBebasNominal == 1) ...[
+                if (transaksi.isBebasNominal) ...[
                   const SizedBox(height: 20),
                   const Text("Masukkan Bebas Nominal"),
                   SizedBox(height: kSize8),
-                  RupiahTextField(controller: dataController, fontSize: 20),
+                  RupiahTextField(controller: _nominalController, fontSize: 20),
                 ],
-                if (transaksi.isEndUser == 1) ...[
+                if (transaksi.isEndUser) ...[
                   const SizedBox(height: 20),
                   const Text("Masukkan Kode Voucher"),
                   SizedBox(height: kSize8),
@@ -132,7 +133,7 @@ class _InputBebasNominalDanEndUserState
     }
     //text handler buat bebas nominal
     log('bebas nominal: ${sendTransaksi.getData().isBebasNominal}');
-    if (transaksi.isBebasNominal == 1) {
+    if (transaksi.isBebasNominal) {
       final bebasNominalText = dataController.text.trim().replaceAll('.', '');
 
       if (bebasNominalText.isEmpty) {
@@ -151,7 +152,7 @@ class _InputBebasNominalDanEndUserState
     }
 
     //text handler buat endUser
-    if (transaksi.isEndUser == 1) {
+    if (transaksi.isEndUser) {
       final voucherText = dataController.text.trim();
       if (voucherText.isEmpty) {
         showErrorDialog(context, "Voucher tidak boleh kosong");
@@ -175,5 +176,11 @@ class _InputBebasNominalDanEndUserState
     } else {
       Navigator.pushNamed(context, '/konfirmasiPembayaran');
     }
+  }
+
+  @override
+  void dispose() {
+    _nominalController.dispose();
+    super.dispose();
   }
 }

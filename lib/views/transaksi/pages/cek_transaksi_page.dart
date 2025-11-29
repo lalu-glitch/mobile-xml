@@ -22,7 +22,7 @@ class CekTransaksiPage extends StatefulWidget {
 }
 
 class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
-  // Variabel local untuk menyimpan data sementara agar mudah diakses
+  // simpen data sementara buat dipake di fungsi2 widget dibawahnya
   CekTransaksiModel? _cekTransaksiData;
 
   // Konstanta untuk kode flow agar tidak pakai magic number
@@ -31,11 +31,9 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
   @override
   void initState() {
     super.initState();
-    // Kita pindahkan logika inisialisasi yang rumit ke fungsi terpisah
     _fetchTransactionData();
   }
 
-  /// Memulai proses pengecekan transaksi ke server via WebSocket
   void _fetchTransactionData() {
     final helperCubit = context.read<TransaksiHelperCubit>();
     final flowCubit = context.read<FlowCubit>();
@@ -51,7 +49,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
       // Logic khusus OMNI
       final omniState = context.read<TransaksiOmniCubit>().state;
       final kodeOmni = omniState.kode ?? '';
-      final kodeProduk = transaksi.kodeCek ?? ''; // Di omni pakai kodeCek
+      final kodeProduk = transaksi.kodeCek ?? ''; // omni pakai kodeCek
 
       wsCubit.cekTransaksi(kodeOmni, kodeProduk);
     } else {
@@ -81,17 +79,21 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child:
-              BlocBuilder<
+              BlocConsumer<
                 WebSocketCekTransaksiCubit,
                 WebSocketCekTransaksiState
               >(
+                listener: (context, state) {
+                  if (state is WebSocketCekTransaksiError) {
+                    showErrorDialog(context, state.message);
+                  }
+                },
                 builder: (context, state) {
                   if (state is WebSocketCekTransaksiLoading) {
                     return const Center(
                       child: CircularProgressIndicator(color: kOrange),
                     );
                   }
-
                   if (state is WebSocketCekTransaksiSuccess) {
                     // Simpan data ke variabel class agar bisa diakses handleNextButtonPress
                     _cekTransaksiData = state.data;
@@ -107,14 +109,71 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
                       ),
                     );
                   }
-
                   if (state is WebSocketCekTransaksiError) {
-                    return Center(child: Text(state.message));
+                    return _buildStatusView(
+                      context,
+                      icon: Icons.receipt_long_rounded,
+                      title: "Gagal Melakukan Pengecekan",
+                      message: state.message,
+                      color: kRed,
+                    );
                   }
-
-                  return const SizedBox.shrink();
+                  return SizedBox.shrink();
                 },
               ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatusView(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String message,
+    required Color color,
+  }) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 48.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 1. Visual Anchor (Icon with soft background)
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: color.withAlpha(26),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, size: 48, color: color),
+            ),
+            const SizedBox(height: 24),
+
+            // 2. Clear Headline
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[800], // Dark grey for readability
+                letterSpacing: 0.5,
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            // 3. Supportive Subtext
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                height: 1.5, // Better line height for multi-line text
+                color: kNeutral80,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -204,7 +263,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
 
   @override
   void handleNextButtonPress() {
-    // 1. Persiapan Data
+    // Persiapan Data
     final transaksiHelper = context.read<TransaksiHelperCubit>();
     final flowCubit = context.read<FlowCubit>();
     final flowState = flowCubit.state!;
@@ -212,7 +271,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
     final isOmni = flowState.flow == _flowOmni;
     final isLastPage = flowState.currentIndex == flowState.sequence.length - 1;
 
-    // 2. Ambil & Parsing Nominal
+    // Ambil & Parsing Nominal
     // ---- TOTAL TAGIHAN ----
     final rawTagihan = _cekTransaksiData?.data["rptagihan"]?.toString();
     final tagihan = CurrencyUtil.parseAmount(rawTagihan);
@@ -232,7 +291,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
     transaksiHelper.setFee(fee);
     transaksiHelper.setFinalTotalTagihan(tagihan);
 
-    // 4. Pengecekan Khusus (Hanya Normal Mode)
+    // Pengecekan Khusus (Hanya Normal Mode)
     // Jika kode produk diawali huruf 'C', batalkan flow dan kembali ke home.
     if (!isOmni) {
       final kodeProduk = transaksiHelper.getData().kodeProduk ?? "";
@@ -247,10 +306,9 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
       }
     }
 
-    // 5. Logika Navigasi (Unified Logic)
+    // Logika Navigasi (Unified Logic)
     if (isLastPage) {
-      // Jika halaman terakhir flow, reset flow (kecuali OMNI mungkin butuh logic beda,
-      // tapi biasanya reset itu aman) dan masuk konfirmasi.
+      // Jika halaman terakhir flow, reset flow
       if (!isOmni) flowCubit.resetFlow();
       Navigator.pushNamed(context, '/konfirmasiPembayaran');
     } else {

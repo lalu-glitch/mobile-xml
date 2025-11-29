@@ -9,7 +9,10 @@ class ShopController {
 
   ShopController({required this.searchController, required this.layananCubit});
 
-  Map<String, List<IconItem>> filter({required String query}) {
+  Map<String, List<IconItem>> filter({
+    required String query,
+    required List<SectionItem> dataMentah,
+  }) {
     final allData = layananCubit.layananByHeading;
     if (query.isEmpty) return Map.from(allData);
 

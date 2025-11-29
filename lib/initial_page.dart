@@ -45,7 +45,7 @@ class _InitialPageState extends State<InitialPage> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_rounded),
-            label: 'Home',
+            label: 'Beranda',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart_rounded),
@@ -57,7 +57,7 @@ class _InitialPageState extends State<InitialPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_rounded),
-            label: 'User',
+            label: 'Akun',
           ),
         ],
       ),

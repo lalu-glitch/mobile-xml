@@ -41,7 +41,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
       return finalTotal + fee;
     }
     // Cek Bebas Nominal
-    if (transaksi.isBebasNominal == 1) {
+    if (transaksi.isBebasNominal) {
       return bebasNominal;
     }
     // Default
@@ -61,7 +61,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
       return finalTotal + fee;
     }
     // Cek Bebas Nominal (Tampilan UI menjumlahkan harga dasar + nominal input)
-    if (transaksi.isBebasNominal == 1) {
+    if (transaksi.isBebasNominal) {
       return productPrice + bebasNominal;
     }
     // Default
@@ -168,7 +168,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
       "Nomor Tujuan": nomorTujuan,
       "Kode Produk": kodeProduk,
       "Nama Produk": transaksi.namaProduk,
-      if (transaksi.isBebasNominal == 1) ...{
+      if (transaksi.isBebasNominal) ...{
         "Harga Produk": CurrencyUtil.formatCurrency(transaksi.productPrice),
         "Nominal": CurrencyUtil.formatCurrency(transaksi.bebasNominalValue),
       },
