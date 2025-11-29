@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/shimmer.dart';
-import '../../../data/models/layanan/layanan_model.dart';
 import '../../home/cubit/layanan_cubit.dart';
 import '../helper/shop_controller.dart';
 import '../widgets/shop_category_chips.dart';
@@ -24,42 +23,22 @@ class _ShopPageState extends State<ShopPage> {
 
   bool isSearching = false;
   String selectedHeading = 'Semuanya';
-  Map<String, List<IconItem>> filteredLayanan = {};
 
   @override
   void initState() {
     super.initState();
 
+    // Setup controller helper
     controller = ShopController(
       searchController: searchController,
       layananCubit: context.read<LayananCubit>(),
     );
-
-    //realtime listener
-    searchController.addListener(_updateFilteredData);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await context.read<LayananCubit>().fetchLayanan();
-      _updateFilteredData();
-    });
-  }
-
-  void _updateFilteredData() {
-    final query = searchController.text;
-    filteredLayanan = controller.filter(query: query);
-    setState(() {});
-  }
-
-  void onClearText() {
-    searchController.clear();
-    _updateFilteredData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackground,
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: kOrange,
@@ -69,22 +48,28 @@ class _ShopPageState extends State<ShopPage> {
                 controller: searchController,
                 autofocus: true,
                 style: TextStyle(color: kWhite),
+                // Panggil setState pas ngetik biar UI rebuild & filter jalan
+                onChanged: (val) => setState(() {}),
                 decoration: InputDecoration(
                   hintText: 'Cari layanan',
                   hintStyle: TextStyle(color: kWhite.withAlpha(200)),
                   border: InputBorder.none,
                 ),
               )
-            : Text('Layanan Toko', style: TextStyle(color: kWhite)),
+            : Text('Toko', style: TextStyle(color: kWhite)),
         actions: [
           SearchAppBar(
             isSearching: isSearching,
-            onSearchChanged: (value) => setState(() => isSearching = value),
-            onClear: onClearText,
+            onSearchChanged: (value) {
+              setState(() {
+                isSearching = value;
+                if (!isSearching) searchController.clear();
+              });
+            },
+            onClear: () => setState(() => searchController.clear()),
           ),
         ],
       ),
-
       body: BlocBuilder<LayananCubit, LayananState>(
         builder: (context, state) {
           if (state is LayananLoading) {
@@ -105,17 +90,16 @@ class _ShopPageState extends State<ShopPage> {
           }
 
           if (state is LayananLoaded) {
-            // Ketika data fresh dari cubit → refresh filter
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              _updateFilteredData();
-            });
-
             final cubit = context.read<LayananCubit>();
+
+            final filteredResult = controller.filter(
+              dataMentah: state.data.data,
+              query: searchController.text,
+            );
 
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  // Kategori chips
                   ShopsCategoryChips(
                     cubit: cubit,
                     selectedHeading: selectedHeading,
@@ -123,13 +107,12 @@ class _ShopPageState extends State<ShopPage> {
                       setState(() => selectedHeading = heading);
                     },
                   ),
-
                   const Divider(color: kNeutral50, thickness: 4),
-
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ShopProducts(
-                      layananDataToDisplay: filteredLayanan,
+                      // Gunakan hasil filter on-the-fly
+                      layananDataToDisplay: filteredResult,
                       selectedHeading: selectedHeading,
                       isSearchingActive:
                           isSearching && searchController.text.isNotEmpty,
@@ -148,7 +131,6 @@ class _ShopPageState extends State<ShopPage> {
 
   @override
   void dispose() {
-    searchController.removeListener(_updateFilteredData);
     searchController.dispose();
     super.dispose();
   }

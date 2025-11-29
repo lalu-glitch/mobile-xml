@@ -28,15 +28,15 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   void _startTransaction() {
     final transaksiHelper = context.read<TransaksiHelperCubit>();
     final transaksiData = transaksiHelper.getData();
-    final omniState = context.read<TransaksiOmniCubit>().state;
+    final omniData = context.read<TransaksiOmniCubit>();
     final socketCubit = context.read<WebsocketTransaksiCubit>();
 
     // Reset state socket sebelum mulai
     socketCubit.reset();
 
     // Persiapan data
-    final tujuan = transaksiData.tujuan ?? omniState.msisdn ?? '';
-    final kodeProduk = transaksiData.kodeProduk ?? omniState.kode ?? '';
+    final tujuan = transaksiData.tujuan ?? omniData.state.msisdn ?? '';
+    final kodeProduk = transaksiData.kodeProduk ?? omniData.state.kode ?? '';
     final nominal = (transaksiData.nominalPembayaran)?.toInt() ?? 0;
     final endUser = (transaksiData.isEndUser == 1)
         ? (transaksiData.endUserValue ?? '')
@@ -54,7 +54,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false, // User tidak bisa back manual
+      canPop: false,
       child: Scaffold(
         backgroundColor: kBackground,
         body: BlocConsumer<WebsocketTransaksiCubit, WebsocketTransaksiState>(
@@ -90,7 +90,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
             }
           },
           builder: (context, state) {
-            // 1. LOADING / WAITING
+            // loading
             if (state is WebSocketTransaksiLoading ||
                 state is WebsocketTransaksiInitial) {
               return const GenericStatusView(
@@ -100,7 +100,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
               );
             }
 
-            // 2. PENDING (Butuh waktu lama)
+            // pending
             if (state is WebSocketTransaksiPending) {
               return GenericStatusView(
                 title: state.data.keterangan, // Judul dari API
@@ -119,7 +119,7 @@ class _TransaksiProsesPageState extends State<TransaksiProsesPage> {
               );
             }
 
-            // 3. ERROR (Tampilan Error penuh satu layar)
+            // error
             if (state is WebSocketTransaksiError) {
               return GenericStatusView(
                 title: 'Ops! Terjadi Kesalahan',

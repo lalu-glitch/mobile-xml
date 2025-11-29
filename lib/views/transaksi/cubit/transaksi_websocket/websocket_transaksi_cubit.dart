@@ -89,9 +89,6 @@ class WebsocketTransaksiCubit extends Cubit<WebsocketTransaksiState> {
 
     log('[WS STATUS] $status');
 
-    // =========================
-    // STATUS MENUNGGU
-    // =========================
     if (_TrxStatus.menunggu.contains(status)) {
       _pendingCount++;
       log('[WS PENDING COUNT] $_pendingCount');
@@ -106,35 +103,23 @@ class WebsocketTransaksiCubit extends Cubit<WebsocketTransaksiState> {
       return;
     }
 
-    // =========================
-    // STATUS SUKSES
-    // =========================
     if (status == _TrxStatus.sukses) {
       emit(WebSocketTransaksiSuccess(response));
       await disconnect();
       return;
     }
 
-    // =========================
-    // STATUS GAGAL
-    // =========================
     if (_TrxStatus.gagal.contains(status)) {
       emit(WebSocketTransaksiFailed(response));
       await disconnect();
       return;
     }
 
-    // =========================
-    // FALLBACK - STATUS UNKNOWN
-    // =========================
     emit(WebSocketTransaksiFailed(response));
     await disconnect();
     return;
   }
 
-  // ------------------------------
-  // DISCONNECT
-  // ------------------------------
   Future<void> disconnect() async {
     await _subscription?.cancel();
     _subscription = null;
@@ -142,14 +127,12 @@ class WebsocketTransaksiCubit extends Cubit<WebsocketTransaksiState> {
     webSocketService.disconnect();
   }
 
-  // Cleanup Cubit
   @override
   Future<void> close() async {
     await disconnect();
     return super.close();
   }
 
-  // Reset ulang cubit
   void reset() {
     _pendingCount = 0;
     emit(WebsocketTransaksiInitial());

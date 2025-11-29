@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../data/models/produk/provider_kartu.dart';
 import '../../../input_nomor/utils/contact_handler.dart';
 import '../../../input_nomor/utils/transaksi_helper_cubit.dart';
 import '../../cubit/flow_cubit.dart';
@@ -12,7 +14,10 @@ class DetailPrefixController {
   final ProviderPrefixCubit prefixCubit;
   final TransaksiHelperCubit transaksiCubit;
   final FlowCubit flowCubit;
-  final void Function(void Function()) setStateCallback;
+  final void Function(void Function()) refresh;
+  String? selectedProductCode;
+  double selectedPrice = 0;
+  dynamic selectedProduk;
 
   Timer? _debounce;
 
@@ -21,7 +26,7 @@ class DetailPrefixController {
     required this.prefixCubit,
     required this.transaksiCubit,
     required this.flowCubit,
-    required this.setStateCallback,
+    required this.refresh,
   });
 
   /// Init: clear any existing providers (call after first frame)
@@ -65,8 +70,24 @@ class DetailPrefixController {
     final handler = ContactFlowHandler(
       context: context,
       nomorController: nomorController,
-      setStateCallback: setStateCallback,
+      setStateCallback: refresh,
     );
     await handler.pickContact();
+  }
+
+  void onProdukSelected(BuildContext context, Produk produk) {
+    selectedProductCode = produk.kodeProduk;
+    selectedPrice = produk.hargaJual.toDouble();
+    selectedProduk = produk;
+
+    context.read<TransaksiHelperCubit>().pilihProduk(
+      kode: produk.kodeProduk,
+      nama: produk.namaProduk,
+      harga: selectedPrice,
+      isBebasNominalApi: produk.bebasNominal,
+      isEndUserApi: produk.endUser,
+    );
+    // panggil setState parent
+    refresh(() {});
   }
 }

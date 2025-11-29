@@ -7,6 +7,7 @@ import '../../../core/helper/dynamic_app_page.dart';
 import '../../../data/models/layanan/layanan_model.dart';
 import '../../input_nomor/utils/transaksi_helper_cubit.dart';
 import '../../layanan/cubit/flow_cubit.dart';
+import '../../transaksi/cubit/transaksi_omni/transaksi_omni_cubit.dart';
 
 class ShopProducts extends StatelessWidget {
   const ShopProducts({
@@ -22,6 +23,8 @@ class ShopProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final transaksi = context.read<TransaksiHelperCubit>();
+    final transaksiOmni = context.read<TransaksiOmniCubit>();
     if (layananDataToDisplay.isEmpty) {
       return const Center(child: Text("Tidak ada layanan tersedia."));
     }
@@ -74,10 +77,16 @@ class ShopProducts extends StatelessWidget {
                 final item = layananList[i];
                 return GestureDetector(
                   onTap: () {
+                    transaksi.reset();
+                    transaksiOmni.reset();
                     final sequence = pageSequences[item.flow] ?? [];
                     context.read<FlowCubit>().startFlow(item.flow!, item);
-                    context.read<TransaksiHelperCubit>().setKodeCatatan(
-                      item.kodeCatatan,
+
+                    //setter
+                    transaksi.pilihMenuLayanan(
+                      kodeCatatan: item.kodeCatatan,
+                      kodeCek: item.kodeCek,
+                      kodeBayar: item.kodeBayar,
                     );
 
                     final firstPage = sequence.firstOrNull;

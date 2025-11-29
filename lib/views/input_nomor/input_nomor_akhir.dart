@@ -81,7 +81,7 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
                   onPickContact: pickContact,
                 ),
 
-                if (transaksi.isBebasNominal == 1) ...[
+                if (transaksi.isBebasNominal) ...[
                   SizedBox(height: kSize14),
                   const Text("Masukkan Bebas Nominal"),
                   SizedBox(height: kSize8),
@@ -129,7 +129,7 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
       showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
       return;
     }
-    if (transaksi.isBebasNominal == 1) {
+    if (transaksi.isBebasNominal) {
       final bebasNominalText = _bebasNominalController.text.trim().replaceAll(
         '.',
         '',

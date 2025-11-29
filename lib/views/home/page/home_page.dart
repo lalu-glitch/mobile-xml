@@ -125,6 +125,7 @@ class _HomePageState extends State<HomePage> {
                                 child: HomeHeaderSection(),
                               ),
                               const SizedBox(height: 150),
+                              //ini buat promo sama layanan
                               BlocBuilder<LayananCubit, LayananState>(
                                 builder: (context, layananState) {
                                   return BlocBuilder<PromoCubit, PromoState>(
@@ -165,8 +166,10 @@ class _HomePageState extends State<HomePage> {
                                           crossAxisAlignment: .start,
                                           children: [
                                             const SizedBox(height: 120),
+                                            // promo yang bisa di scroll horizontal
                                             HomePromoSection(),
                                             const SizedBox(height: 24),
+                                            // layanan dalam gridview
                                             HomeLayananSection(),
                                             const SizedBox(height: 120),
                                           ],

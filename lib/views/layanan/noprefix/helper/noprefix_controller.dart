@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helper/dynamic_app_page.dart';
+import '../../../../data/models/produk/provider_kartu.dart';
 import '../../../input_nomor/utils/transaksi_helper_cubit.dart';
 import '../../cubit/flow_cubit.dart';
 import '../cubit/provider_noprefix_cubit.dart';
@@ -31,16 +32,18 @@ class DetailNoPrefixController {
     noPrefixCubit.fetchProviders(layanan.kodeCatatan, "");
   }
 
-  void onProdukSelected(dynamic produk) {
+  void onProdukSelected(Produk produk) {
     selectedProductCode = produk.kodeProduk;
     selectedPrice = produk.hargaJual.toDouble();
     selectedProduk = produk;
 
-    transaksiCubit.setKodeproduk(produk.kodeProduk);
-    transaksiCubit.setNamaProduk(produk.namaProduk);
-    transaksiCubit.setProductPrice(produk.hargaJual);
-    transaksiCubit.isEndUser(produk.endUser);
-    transaksiCubit.isBebasNominal(produk.bebasNominal);
+    context.read<TransaksiHelperCubit>().pilihProduk(
+      kode: produk.kodeProduk,
+      nama: produk.namaProduk,
+      harga: selectedPrice,
+      isBebasNominalApi: produk.bebasNominal,
+      isEndUserApi: produk.endUser,
+    );
 
     // panggil setState parent
     refresh(() {});

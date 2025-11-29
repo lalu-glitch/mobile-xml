@@ -15,7 +15,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
 
   double _getTotalTransaksi(dynamic transaksi) {
     final double baseTotal = transaksi.total ?? 0;
-    if (transaksi.isBebasNominal == 1) {
+    if (transaksi.isBebasNominal) {
       final int nominalTambahan = transaksi.bebasNominalValue ?? 0;
       final total = baseTotal + nominalTambahan;
       return total;
