@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../data/models/user/user_balance.dart';
+import '../../../data/models/user/user_balance_model.dart';
 import '../../../data/services/api_service.dart';
 
 part 'balance_state.dart';

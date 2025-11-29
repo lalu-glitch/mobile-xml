@@ -1,27 +1,34 @@
+// halaman ini berfungsi untuk handle input BebasNominal dan EndUser (BNEU) dari prefix
+// tujuannya agar halaman konfirmasi tidak menerima segala inputan
+// sehingga halaman konfirmasi pure nampilin informasi
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xmlapp/core/helper/custom_textfield.dart';
 
-import '../../core/helper/constant_finals.dart';
-import '../../core/helper/currency.dart';
-import '../../core/helper/dynamic_app_page.dart';
-import '../layanan/cubit/flow_cubit.dart';
-import '../../core/utils/dialog.dart';
-import '../../core/utils/rupiah_text_field.dart';
-import 'utils/base_state.dart';
-import 'utils/transaksi_helper_cubit.dart';
-import '../../core/utils/info_row.dart';
-import 'widgets/input_text_field.dart';
+import '../../../core/helper/constant_finals.dart';
+import '../../../core/helper/currency.dart';
+import '../../../core/helper/dynamic_app_page.dart';
+import '../../../core/utils/dialog.dart';
+import '../../../core/utils/info_row.dart';
+import '../../../core/utils/rupiah_text_field.dart';
+import '../../layanan/cubit/flow_cubit.dart';
+import '../utils/base_state.dart';
+import '../utils/transaksi_helper_cubit.dart';
 
-class InputNomorTujuanAkhir extends StatefulWidget {
-  const InputNomorTujuanAkhir({super.key});
+class InputBebasNominalDanEndUser extends StatefulWidget {
+  const InputBebasNominalDanEndUser({super.key});
 
   @override
-  State<InputNomorTujuanAkhir> createState() => _InputNomorTujuanAkhirState();
+  State<InputBebasNominalDanEndUser> createState() =>
+      _InputBebasNominalDanEndUserState();
 }
 
-class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
-  final _bebasNominalController = TextEditingController();
-
+class _InputBebasNominalDanEndUserState
+    extends BaseInput<InputBebasNominalDanEndUser> {
+  final _nominalController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>().getData();
@@ -29,10 +36,11 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
       child: Scaffold(
         backgroundColor: kBackground,
         appBar: AppBar(
-          title: const Text(
-            "Input Nomor Tujuan",
+          title: Text(
+            transaksi.isBebasNominal ? 'Input Nominal' : 'Input Voucher',
             style: TextStyle(color: kWhite),
           ),
+          backgroundColor: kOrange,
           leading: BackButton(
             onPressed: () {
               final flowCubit = context.read<FlowCubit>();
@@ -42,12 +50,11 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
               Navigator.pop(context);
             },
           ),
-          backgroundColor: kOrange,
           iconTheme: const IconThemeData(color: kWhite),
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const .all(16.0),
+            padding: EdgeInsetsGeometry.all(16),
             child: Column(
               crossAxisAlignment: .start,
               children: [
@@ -72,25 +79,20 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                const Text("Masukkan Nomor Tujuan"),
-                const SizedBox(height: 8),
-
-                buildNomorTextField(
-                  controller: dataController,
-                  onPickContact: pickContact,
-                ),
 
                 if (transaksi.isBebasNominal) ...[
-                  SizedBox(height: kSize14),
+                  const SizedBox(height: 20),
                   const Text("Masukkan Bebas Nominal"),
                   SizedBox(height: kSize8),
-                  RupiahTextField(
-                    controller: _bebasNominalController,
-                    fontSize: 20,
-                  ),
+                  RupiahTextField(controller: _nominalController, fontSize: 20),
                 ],
-                const SizedBox(height: 20),
+                if (transaksi.isEndUser) ...[
+                  const SizedBox(height: 20),
+                  const Text("Masukkan Kode Voucher"),
+                  SizedBox(height: kSize8),
+                  CustomTextField(controller: dataController),
+                ],
+                SizedBox(height: kSize40),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kOrange,
@@ -126,14 +128,13 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
     final bool isLastPage = currentIndex == flowState.sequence.length - 1;
 
     if (dataController.text.isEmpty) {
-      showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
+      showErrorDialog(context, "Inputan tidak boleh kosong");
       return;
     }
+    //text handler buat bebas nominal
+    log('bebas nominal: ${sendTransaksi.getData().isBebasNominal}');
     if (transaksi.isBebasNominal) {
-      final bebasNominalText = _bebasNominalController.text.trim().replaceAll(
-        '.',
-        '',
-      );
+      final bebasNominalText = dataController.text.trim().replaceAll('.', '');
 
       if (bebasNominalText.isEmpty) {
         showErrorDialog(context, "Bebas nominal tidak boleh kosong");
@@ -144,13 +145,23 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
         showErrorDialog(context, "Input harus berupa angka");
         return;
       }
-
+      log('nilai bebas nominal : $nominal');
       sendTransaksi.setbebasNominalValue(nominal);
     } else {
       sendTransaksi.setbebasNominalValue(0);
     }
 
-    sendTransaksi.setTujuan(dataController.text);
+    //text handler buat endUser
+    if (transaksi.isEndUser) {
+      final voucherText = dataController.text.trim();
+      if (voucherText.isEmpty) {
+        showErrorDialog(context, "Voucher tidak boleh kosong");
+        return;
+      }
+      sendTransaksi.setEndUserValue(voucherText);
+    } else {
+      sendTransaksi.setEndUserValue('');
+    }
 
     if (!isLastPage) {
       final nextPage = flowState.sequence[currentIndex + 1];
@@ -169,7 +180,7 @@ class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
 
   @override
   void dispose() {
-    _bebasNominalController.dispose();
+    _nominalController.dispose();
     super.dispose();
   }
 }

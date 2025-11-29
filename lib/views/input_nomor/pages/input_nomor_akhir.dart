@@ -1,34 +1,27 @@
-// halaman ini berfungsi untuk handle input BebasNominal dan EndUser (BNEU) dari prefix
-// tujuannya agar halaman konfirmasi tidak menerima segala inputan
-// sehingga halaman konfirmasi pure nampilin informasi
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:xmlapp/core/helper/custom_textfield.dart';
 
-import '../../core/helper/constant_finals.dart';
-import '../../core/helper/currency.dart';
-import '../../core/helper/dynamic_app_page.dart';
-import '../../core/utils/dialog.dart';
-import '../../core/utils/info_row.dart';
-import '../../core/utils/rupiah_text_field.dart';
-import '../layanan/cubit/flow_cubit.dart';
-import 'utils/base_state.dart';
-import 'utils/transaksi_helper_cubit.dart';
+import '../../../core/helper/constant_finals.dart';
+import '../../../core/helper/currency.dart';
+import '../../../core/helper/dynamic_app_page.dart';
+import '../../layanan/cubit/flow_cubit.dart';
+import '../../../core/utils/dialog.dart';
+import '../../../core/utils/rupiah_text_field.dart';
+import '../utils/base_state.dart';
+import '../utils/transaksi_helper_cubit.dart';
+import '../../../core/utils/info_row.dart';
+import '../widgets/widget_input_text_field.dart';
 
-class InputBebasNominalDanEndUser extends StatefulWidget {
-  const InputBebasNominalDanEndUser({super.key});
+class InputNomorTujuanAkhir extends StatefulWidget {
+  const InputNomorTujuanAkhir({super.key});
 
   @override
-  State<InputBebasNominalDanEndUser> createState() =>
-      _InputBebasNominalDanEndUserState();
+  State<InputNomorTujuanAkhir> createState() => _InputNomorTujuanAkhirState();
 }
 
-class _InputBebasNominalDanEndUserState
-    extends BaseInput<InputBebasNominalDanEndUser> {
-  final _nominalController = TextEditingController();
+class _InputNomorTujuanAkhirState extends BaseInput<InputNomorTujuanAkhir> {
+  final _bebasNominalController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final transaksi = context.read<TransaksiHelperCubit>().getData();
@@ -36,11 +29,10 @@ class _InputBebasNominalDanEndUserState
       child: Scaffold(
         backgroundColor: kBackground,
         appBar: AppBar(
-          title: Text(
-            transaksi.isBebasNominal ? 'Input Nominal' : 'Input Voucher',
+          title: const Text(
+            "Input Nomor Tujuan",
             style: TextStyle(color: kWhite),
           ),
-          backgroundColor: kOrange,
           leading: BackButton(
             onPressed: () {
               final flowCubit = context.read<FlowCubit>();
@@ -50,11 +42,12 @@ class _InputBebasNominalDanEndUserState
               Navigator.pop(context);
             },
           ),
+          backgroundColor: kOrange,
           iconTheme: const IconThemeData(color: kWhite),
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsetsGeometry.all(16),
+            padding: const .all(16.0),
             child: Column(
               crossAxisAlignment: .start,
               children: [
@@ -79,20 +72,25 @@ class _InputBebasNominalDanEndUserState
                     ),
                   ),
                 ),
+                const SizedBox(height: 20),
+                const Text("Masukkan Nomor Tujuan"),
+                const SizedBox(height: 8),
+
+                buildNomorTextField(
+                  controller: dataController,
+                  onPickContact: pickContact,
+                ),
 
                 if (transaksi.isBebasNominal) ...[
-                  const SizedBox(height: 20),
+                  SizedBox(height: kSize14),
                   const Text("Masukkan Bebas Nominal"),
                   SizedBox(height: kSize8),
-                  RupiahTextField(controller: _nominalController, fontSize: 20),
+                  RupiahTextField(
+                    controller: _bebasNominalController,
+                    fontSize: 20,
+                  ),
                 ],
-                if (transaksi.isEndUser) ...[
-                  const SizedBox(height: 20),
-                  const Text("Masukkan Kode Voucher"),
-                  SizedBox(height: kSize8),
-                  CustomTextField(controller: dataController),
-                ],
-                SizedBox(height: kSize40),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kOrange,
@@ -128,13 +126,14 @@ class _InputBebasNominalDanEndUserState
     final bool isLastPage = currentIndex == flowState.sequence.length - 1;
 
     if (dataController.text.isEmpty) {
-      showErrorDialog(context, "Inputan tidak boleh kosong");
+      showErrorDialog(context, "Nomor tujuan tidak boleh kosong");
       return;
     }
-    //text handler buat bebas nominal
-    log('bebas nominal: ${sendTransaksi.getData().isBebasNominal}');
     if (transaksi.isBebasNominal) {
-      final bebasNominalText = dataController.text.trim().replaceAll('.', '');
+      final bebasNominalText = _bebasNominalController.text.trim().replaceAll(
+        '.',
+        '',
+      );
 
       if (bebasNominalText.isEmpty) {
         showErrorDialog(context, "Bebas nominal tidak boleh kosong");
@@ -145,23 +144,13 @@ class _InputBebasNominalDanEndUserState
         showErrorDialog(context, "Input harus berupa angka");
         return;
       }
-      log('nilai bebas nominal : $nominal');
+
       sendTransaksi.setbebasNominalValue(nominal);
     } else {
       sendTransaksi.setbebasNominalValue(0);
     }
 
-    //text handler buat endUser
-    if (transaksi.isEndUser) {
-      final voucherText = dataController.text.trim();
-      if (voucherText.isEmpty) {
-        showErrorDialog(context, "Voucher tidak boleh kosong");
-        return;
-      }
-      sendTransaksi.setEndUserValue(voucherText);
-    } else {
-      sendTransaksi.setEndUserValue('');
-    }
+    sendTransaksi.setTujuan(dataController.text);
 
     if (!isLastPage) {
       final nextPage = flowState.sequence[currentIndex + 1];
@@ -180,7 +169,7 @@ class _InputBebasNominalDanEndUserState
 
   @override
   void dispose() {
-    _nominalController.dispose();
+    _bebasNominalController.dispose();
     super.dispose();
   }
 }

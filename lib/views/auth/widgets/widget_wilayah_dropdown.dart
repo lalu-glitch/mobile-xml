@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/helper/constant_finals.dart';
-import '../../../data/models/user/region.dart';
+import '../../../data/models/user/region_model.dart';
 
 class WilayahDropdowns extends StatelessWidget {
   final List<Region> provinsi;

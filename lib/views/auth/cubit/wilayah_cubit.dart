@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../data/models/user/region.dart';
+import '../../../data/models/user/region_model.dart';
 import '../../../data/services/auth_service.dart';
 
 part 'wilayah_state.dart';

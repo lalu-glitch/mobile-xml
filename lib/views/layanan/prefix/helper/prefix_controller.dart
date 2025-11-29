@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../data/models/produk/provider_kartu.dart';
+import '../../../../data/models/produk/provider_kartu_model.dart';
 import '../../../input_nomor/utils/contact_handler.dart';
 import '../../../input_nomor/utils/transaksi_helper_cubit.dart';
 import '../../cubit/flow_cubit.dart';

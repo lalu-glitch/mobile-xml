@@ -6,14 +6,14 @@ import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/shimmer.dart';
-import '../../../data/models/user/info_akun.dart';
+import '../../../data/models/user/info_akun_model.dart';
 import '../../home/cubit/balance_cubit.dart';
 import '../cubit/info_akun/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
-import '../widgets/custom_list_tile.dart';
-import '../widgets/logout_card.dart';
-import '../widgets/setting_user_header.dart';
-import '../widgets/wallet_item_settings.dart';
+import '../widgets/widget_custom_list_tile.dart';
+import '../widgets/widget_logout_card.dart';
+import '../widgets/widget_setting_user_header.dart';
+import '../widgets/widget_wallet_item_settings.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

@@ -36,8 +36,8 @@ class _InitialPageState extends State<InitialPage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: kWhite,
-        selectedItemColor: kBlack,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: kOrange,
+        unselectedItemColor: kNeutral60,
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() => _selectedIndex = index);

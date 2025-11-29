@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import '../../../data/models/transaksi/riwayat_transaksi.dart';
+import '../../../data/models/transaksi/riwayat_transaksi_model.dart';
 import '../../../data/services/api_service.dart';
 
 part 'riwayat_transaksi_state.dart';

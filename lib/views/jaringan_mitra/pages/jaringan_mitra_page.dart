@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/search_appbar_actions.dart';
 import '../../poin_dan_komisi/pages/komisi/widgets/downline_widget_card.dart';
-import '../widgets/mitra_status_card.dart';
-import '../widgets/sum_data_and_filter.dart';
+import '../widgets/widget_mitra_status_card.dart';
+import '../widgets/widget_sum_data_and_filter.dart';
 
 class JaringanMitraPage extends StatefulWidget {
   const JaringanMitraPage({super.key});

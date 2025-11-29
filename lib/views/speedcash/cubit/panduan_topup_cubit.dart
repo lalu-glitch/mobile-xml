@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../data/models/speedcash/speedcash_topup_guide.dart';
+import '../../../data/models/speedcash/speedcash_topup_guide_model.dart';
 import '../../../data/services/speedcash_api_service.dart';
 
 part 'panduan_topup_state.dart';

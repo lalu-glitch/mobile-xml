@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../data/models/transaksi/cek_transaksi.dart';
+import '../../../../data/models/transaksi/cek_transaksi_model.dart';
 import '../../../../data/services/websocket_service.dart';
 
 part 'websocket_cektransaksi_state.dart';

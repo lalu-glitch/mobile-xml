@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../data/models/user/info_akun.dart';
+import '../../../../data/models/user/info_akun_model.dart';
 import '../../../../data/services/api_service.dart';
 
 part 'info_akun_state.dart';

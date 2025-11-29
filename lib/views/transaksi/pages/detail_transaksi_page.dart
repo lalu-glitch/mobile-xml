@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/custom_painter_helper.dart';
-import '../../../data/models/transaksi/websocket_transaksi.dart';
+import '../../../data/models/transaksi/websocket_transaksi_model.dart';
 import '../widgets/widget_transaksi_detail_row.dart';
 
 class DetailTransaksiPage extends StatelessWidget {

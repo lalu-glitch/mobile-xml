@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/models/speedcash/speedcash_response.dart';
+import '../../data/models/speedcash/speedcash_response_model.dart';
 import '../../data/services/speedcash_api_service.dart';
 
 ///TODO [migrate to cubit]

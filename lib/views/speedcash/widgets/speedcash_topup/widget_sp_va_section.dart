@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../core/utils/dialog.dart';
-import 'sp_info_card.dart';
+import 'widget_sp_info_card.dart';
 
 class VASection extends StatelessWidget {
   const VASection({required this.kodeVA, required this.atasNama, super.key});

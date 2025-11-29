@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/shimmer.dart';
-import '../../../data/models/transaksi/riwayat_transaksi.dart';
+import '../../../data/models/transaksi/riwayat_transaksi_model.dart';
 
 import '../cubit/riwayat_transaksi_cubit.dart';
-import '../widgets/card_transaksi.dart';
+import '../widgets/widget_card_transaksi.dart';
 
 class RiwayatTransaksiPage extends StatelessWidget {
   const RiwayatTransaksiPage({super.key});

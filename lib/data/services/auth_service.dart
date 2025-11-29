@@ -6,7 +6,7 @@ import '../../core/helper/constant_finals.dart';
 import 'package:android_id/android_id.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../models/user/region.dart';
+import '../models/user/region_model.dart';
 
 class AuthService {
   static final String baseUrl = baseURL;

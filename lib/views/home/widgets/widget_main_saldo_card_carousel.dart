@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/shimmer.dart';
-import '../../../data/models/user/user_balance.dart';
+import '../../../data/models/user/user_balance_model.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../cubit/balance_cubit.dart';
-import 'home_balance_carousel.dart';
+import 'widget_home_balance_carousel.dart';
 
 class MainSaldoCardCarousel extends StatefulWidget {
   const MainSaldoCardCarousel({super.key});

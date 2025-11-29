@@ -5,7 +5,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
 import '../cubit/list_bank_cubit.dart';
-import '../widgets/bank_card.dart';
+import '../widgets/widget_bank_card.dart';
 import 'speedcash_topup.dart';
 
 class SpeedcashTopUpPage extends StatefulWidget {

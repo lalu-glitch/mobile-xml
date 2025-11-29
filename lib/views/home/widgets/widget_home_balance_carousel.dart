@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:xmlapp/data/models/user/user_balance.dart';
+import 'package:xmlapp/data/models/user/user_balance_model.dart';
 import '../../../core/helper/constant_finals.dart';
-import 'saldo_header_card.dart';
+import 'widget_saldo_header_card.dart';
 
 class HomeBalanceCarousel extends StatelessWidget {
   const HomeBalanceCarousel({this.userBalance, this.ewallet, super.key});

@@ -4,9 +4,9 @@ import 'package:xmlapp/core/helper/constant_finals.dart';
 import 'package:xmlapp/views/settings/cubit/info_akun/info_akun_cubit.dart';
 
 import '../../../core/helper/currency.dart';
-import '../widgets/detail_row.dart';
-import '../widgets/section_title.dart';
-import '../widgets/setting_user_header.dart';
+import '../widgets/widget_detail_row.dart';
+import '../widgets/widget_section_title.dart';
+import '../widgets/widget_setting_user_header.dart';
 
 class DetailInfoAkun extends StatelessWidget {
   const DetailInfoAkun({super.key});

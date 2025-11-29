@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import '../../../../core/helper/constant_finals.dart';
 import '../../../../core/helper/currency.dart';
 import '../../cubit/request_topup_cubit.dart';
-import 'sp_info_card.dart';
+import 'widget_sp_info_card.dart';
 
 class BankTransferDialog extends StatelessWidget {
   const BankTransferDialog({required this.state, super.key});

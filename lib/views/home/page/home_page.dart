@@ -10,11 +10,11 @@ import '../../popup/promo_popup.dart';
 import '../cubit/balance_cubit.dart';
 import '../cubit/layanan_cubit.dart';
 import '../cubit/promo_cubit.dart';
-import '../widgets/home_header_section.dart';
-import '../widgets/home_layanan_section.dart';
-import '../widgets/home_promo_section.dart';
-import '../widgets/main_saldo_card_carousel.dart';
-import '../widgets/poin_komisi_overlay.dart';
+import '../widgets/widget_home_header_section.dart';
+import '../widgets/widget_home_layanan_section.dart';
+import '../widgets/widget_home_promo_section.dart';
+import '../widgets/widget_main_saldo_card_carousel.dart';
+import '../widgets/widget_poin_komisi_overlay.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

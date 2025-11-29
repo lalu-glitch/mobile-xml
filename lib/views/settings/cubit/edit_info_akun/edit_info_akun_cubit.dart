@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../data/models/user/edit_info_akun.dart';
+import '../../../../data/models/user/edit_info_akun_model.dart';
 import '../../../../data/services/api_service.dart';
 
 part 'edit_info_akun_state.dart';

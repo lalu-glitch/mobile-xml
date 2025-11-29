@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../data/models/speedcash/speedcash_konfirmasi_transaksi.dart';
+import '../../../../data/models/speedcash/speedcash_konfirmasi_transaksi_model.dart';
 import '../../../../data/services/speedcash_api_service.dart';
 
 part 'konfirmasi_transaksi_speedcash_state.dart';

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xmlapp/views/auth/cubit/wilayah_cubit.dart';
-import 'package:xmlapp/views/auth/widgets/login_form.dart';
+import 'package:xmlapp/views/auth/widgets/widget_login_form.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../data/services/auth_service.dart';
-import '../widgets/register_form.dart';
+import '../widgets/widget_register_form.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});

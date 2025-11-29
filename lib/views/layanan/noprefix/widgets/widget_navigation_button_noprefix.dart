@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/helper/constant_finals.dart';
 import '../../../../core/helper/currency.dart';
-import '../../../../data/models/layanan/flow_state_models.dart';
+import '../../../../data/models/layanan/flow_state_model.dart';
 import '../../cubit/flow_cubit.dart';
 
 class NavigationButtonNoPrefix extends StatelessWidget {

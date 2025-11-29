@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/helper/constant_finals.dart';
 import '../../../../core/helper/currency.dart';
-import '../../../../data/models/produk/provider_kartu.dart';
+import '../../../../data/models/produk/provider_kartu_model.dart';
 
 class PrefixProductItem extends StatelessWidget {
   const PrefixProductItem({

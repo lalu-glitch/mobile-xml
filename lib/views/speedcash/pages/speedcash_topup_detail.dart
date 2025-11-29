@@ -7,12 +7,12 @@ import '../../../core/utils/dialog.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
 import '../cubit/panduan_topup_cubit.dart';
 import '../cubit/request_topup_cubit.dart';
-import '../widgets/speedcash_topup/sp_bank_section.dart';
-import '../widgets/speedcash_topup/sp_bank_transfer_dialog.dart';
-import '../widgets/speedcash_topup/sp_kanjut_button.dart';
-import '../widgets/speedcash_topup/sp_panduan.dart';
-import '../widgets/speedcash_topup/sp_topup_header_section.dart';
-import '../widgets/speedcash_topup/sp_va_section.dart';
+import '../widgets/speedcash_topup/widget_sp_bank_section.dart';
+import '../widgets/speedcash_topup/widget_sp_bank_transfer_dialog.dart';
+import '../widgets/speedcash_topup/widget_sp_kanjut_button.dart';
+import '../widgets/speedcash_topup/widget_sp_panduan.dart';
+import '../widgets/speedcash_topup/widget_sp_topup_header_section.dart';
+import '../widgets/speedcash_topup/widget_sp_va_section.dart';
 
 class SpeedcashTopUp extends StatefulWidget {
   const SpeedcashTopUp({

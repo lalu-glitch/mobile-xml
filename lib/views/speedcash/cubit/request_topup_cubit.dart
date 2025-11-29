@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../data/models/speedcash/speedcash_request_topup.dart';
+import '../../../data/models/speedcash/speedcash_request_topup_model.dart';
 import '../../../data/services/speedcash_api_service.dart';
 
 part 'request_topup_state.dart';

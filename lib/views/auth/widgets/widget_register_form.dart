@@ -5,12 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/dialog.dart';
-import '../../../data/models/user/region.dart';
+import '../../../data/models/user/region_model.dart';
 import '../cubit/register_cubit.dart';
 import '../cubit/wilayah_cubit.dart';
 import '../helper/register_controller.dart';
 import '../../../core/helper/custom_textfield.dart';
-import 'wilayah_dropdown.dart';
+import 'widget_wilayah_dropdown.dart';
 
 class RegisterFormWidget extends StatefulWidget {
   const RegisterFormWidget({super.key});

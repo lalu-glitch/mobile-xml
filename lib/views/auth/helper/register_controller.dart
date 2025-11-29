@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/dialog.dart';
-import '../../../data/models/user/region.dart';
+import '../../../data/models/user/region_model.dart';
 
 class RegisterFormController {
   final TextEditingController namaCtrl;

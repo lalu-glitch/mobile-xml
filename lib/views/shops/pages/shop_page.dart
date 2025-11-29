@@ -6,7 +6,7 @@ import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/shimmer.dart';
 import '../../home/cubit/layanan_cubit.dart';
 import '../helper/shop_controller.dart';
-import '../widgets/shop_category_chips.dart';
+import '../widgets/widget_shop_category_chips.dart';
 import '../../../core/utils/search_appbar_actions.dart';
 import 'shop_product.dart';
 
