@@ -134,7 +134,7 @@ class ApiService {
     }
   }
 
-  /// Proses transaksi
+  /// Proses transaksi non websocket
   Future<Map<String, dynamic>> prosesTransaksi(
     String tujuan,
     String kodeProduk,
@@ -177,7 +177,7 @@ class ApiService {
     }
   }
 
-  /// Cek status transaksi by kode_inbox
+  /// Cek status transaksi by kode_inbox non
   Future<Map<String, dynamic>> getStatusByInbox(int kodeInbox) async {
     try {
       final deviceID = await loadDeviceId();
