@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../widgets/widget_step_item.dart';
+import '../widgets/widget_comparison_card.dart';
+import '../widgets/widget_kyc_fab.dart';
+import '../widgets/widget_timeline_step.dart';
 
 class KYCOnboardingPage extends StatelessWidget {
   const KYCOnboardingPage({super.key});
@@ -10,392 +12,170 @@ class KYCOnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(
-                  horizontal: kSize24,
-                  vertical: kSize24,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // 1. Header Section
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+      appBar: AppBar(
+        backgroundColor: kWhite,
+        elevation: 0,
+        scrolledUnderElevation: 0.0,
+        title: const Text(
+          "Verifikasi Akun",
+          style: TextStyle(
+            color: kBlack,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // 1. HERO SECTION & VALUE PROP
+                  Container(
+                    color: kWhite,
+                    padding: const EdgeInsets.fromLTRB(24, 10, 24, 30),
+                    child: Column(
                       children: [
-                        // Illustration Placeholder
+                        const SizedBox(height: 10),
+                        // Illustration Placeholder (Modern Bubble Style)
                         Container(
-                          width: kSize56,
-                          height: kSize56,
+                          height: 80,
+                          width: 80,
                           decoration: BoxDecoration(
-                            color: kBackground,
-                            borderRadius: BorderRadius.circular(kSize12),
+                            color: kOrange.withAlpha(25),
+                            shape: .circle,
                           ),
-                          child: Icon(
-                            Icons.shield_outlined,
-                            color: kNeutral100,
-                            size: kSize28,
+                          child: const Icon(
+                            Icons.verified_user_rounded,
+                            color: kOrange,
+                            size: 40,
                           ),
                         ),
-                        SizedBox(width: kSize16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Upgrade Akunmu, Yuk!",
-                                style: TextStyle(
-                                  fontSize: kSize18,
-                                  fontWeight: FontWeight.bold,
-                                  color: kBlack,
-                                ),
-                              ),
-                              SizedBox(height: kSize4),
-                              Text(
-                                "Nikmati fitur lengkap XML Mobile dengan verifikasi datamu sekarang.",
-                                style: TextStyle(
-                                  fontSize: kSize14,
-                                  color: kNeutral90,
-                                ),
-                              ),
-                            ],
+                        const SizedBox(height: 20),
+                        const Text(
+                          "Buka Batas Transaksimu!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w800,
+                            color: kBlack,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          "Verifikasi datamu untuk menikmati limit saldo\ndan transaksi yang jauh lebih besar.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: kNeutral80,
+                            height: 1.5,
+                          ),
+                        ),
+
+                        const SizedBox(height: 32),
+
+                        // COMPARISON CARD (Replacing the Grid Table)
+                        KYCComparisonCard(kOrange, kBlack, kNeutral80),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // 2. STEPS (TIMELINE STYLE)
+                  Container(
+                    color: kWhite,
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Cara Verifikasi",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: kBlack,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        KYCTimelineStep(
+                          icon: Icons.description_outlined,
+                          title: "Isi data diri",
+                          subtitle: "Pastikan data diri sesuai",
+                          isFirst: true,
+                          kPrimary: kOrange,
+                        ),
+                        KYCTimelineStep(
+                          icon: Icons.badge_outlined,
+                          title: "Siapkan e-KTP",
+                          subtitle: "Pastikan tulisan pada KTP terbaca jelas",
+                          isFirst: true,
+                          kPrimary: kOrange,
+                        ),
+                        KYCTimelineStep(
+                          icon: Icons.camera_alt_outlined,
+                          title: "Foto Selfie + KTP",
+                          subtitle: "Wajah tidak tertutup masker/kacamata",
+                          kPrimary: kOrange,
+                        ),
+                        KYCTimelineStep(
+                          icon: Icons.check_circle_outline,
+                          title: "Kirim & Tunggu Verifikasi",
+                          subtitle: "Proses maksimal 1x24 jam kerja",
+                          isLast: true,
+                          kPrimary: kOrange,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // 3. TRUST FOOTER
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.lock_outline,
+                          size: 16,
+                          color: kNeutral80,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          "Data terenkripsi & diawasi oleh",
+                          style: TextStyle(
+                            color: kNeutral80,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
                     ),
-
-                    SizedBox(height: kSize24),
-
-                    // 2. Comparison Table
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: kNeutral40),
-                        borderRadius: BorderRadius.circular(kSize12),
-                      ),
-                      child: Column(
-                        children: [
-                          // Header Row
-                          Padding(
-                            padding: EdgeInsets.all(kSize12),
-                            child: Row(
-                              children: [
-                                Expanded(flex: 3, child: SizedBox()),
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: kSize8,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: kOrange,
-                                      borderRadius: BorderRadius.circular(
-                                        kSize8,
-                                      ),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "REG",
-                                        style: TextStyle(
-                                          color: kWhite,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: kSize12,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: kSize8),
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: kSize8,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: kNeutral50,
-                                      borderRadius: BorderRadius.circular(
-                                        kSize8,
-                                      ),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "UNREG",
-                                        style: TextStyle(
-                                          color: kBlack,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: kSize12,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Divider(height: 1, color: kNeutral40),
-                          // Row 1
-                          Padding(
-                            padding: EdgeInsets.all(kSize12),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    "Maksimal saldo Speedcash",
-                                    style: TextStyle(
-                                      fontSize: kSize12,
-                                      color: kNeutral80,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    "Rp 20.000.000,-",
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        TextStyle(
-                                          fontSize: kSize12,
-                                          color: kNeutral80,
-                                        ).copyWith(
-                                          color: kBlack,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    "Rp 2.000.000,-",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: kSize12,
-                                      color: kNeutral80,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Divider(height: 1, color: kNeutral40),
-                          // Row 2
-                          Container(
-                            padding: EdgeInsets.all(kSize12),
-                            decoration: BoxDecoration(
-                              color: kBackground.withOpacity(
-                                0.3,
-                              ), // Slight shading if needed
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(kSize12),
-                                bottomRight: Radius.circular(kSize12),
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    "Maksimal transaksi perbulan",
-                                    style: TextStyle(
-                                      fontSize: kSize12,
-                                      color: kNeutral80,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    "Rp 40.000.000,-",
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        TextStyle(
-                                          fontSize: kSize12,
-                                          color: kNeutral80,
-                                        ).copyWith(
-                                          color: kBlack,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    "Rp 10.000.000,-",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: kSize12,
-                                      color: kNeutral80,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(height: kSize24),
-
-                    // 3. 4 Langkah Mudah Text
-                    Text(
-                      "4 Langkah Mudah Verifikasi Akun",
-                      style: TextStyle(
-                        fontSize: kSize18,
-                        fontWeight: FontWeight.bold,
-                        color: kBlack,
-                      ).copyWith(fontSize: kSize16),
-                    ),
-                    SizedBox(height: kSize16),
-
-                    // 4. Step Items
-                    KYCStepItem(
-                      icon: Icons.list_alt_rounded,
-                      text: "Isi data diri lengkap sesuai dokumen",
-                      kSize44: kSize44,
-                      kSize12: kSize12,
-                      kSize14: kSize14,
-                      kSize8: kSize8,
-                      kOrange: kOrange,
-                      kNeutral30: kNeutral30,
-                      kBlack: kBlack,
-                    ),
-                    SizedBox(height: kSize12),
-                    KYCStepItem(
-                      icon: Icons.file_upload_outlined,
-                      text: "Upload dokumen verifikasi (KTP)",
-                      kSize44: kSize44,
-                      kSize12: kSize12,
-                      kSize14: kSize14,
-                      kSize8: kSize8,
-                      kOrange: kOrange,
-                      kNeutral30: kNeutral30,
-                      kBlack: kBlack,
-                    ),
-                    SizedBox(height: kSize12),
-                    KYCStepItem(
-                      icon: Icons.person_outline,
-                      text: "Upload foto selfie sambil memegang KTP",
-                      kSize44: kSize44,
-                      kSize12: kSize12,
-                      kSize14: kSize14,
-                      kSize8: kSize8,
-                      kOrange: kOrange,
-                      kNeutral30: kNeutral30,
-                      kBlack: kBlack,
-                    ),
-                    SizedBox(height: kSize12),
-                    KYCStepItem(
-                      icon: Icons.check,
-                      text: "Akunmu siap dipakai!",
-                      kSize44: kSize44,
-                      kSize12: kSize12,
-                      kSize14: kSize14,
-                      kSize8: kSize8,
-                      kOrange: kOrange,
-                      kNeutral30: kNeutral30,
-                      kBlack: kBlack,
-                    ),
-
-                    SizedBox(height: kSize28),
-
-                    // 5. Disclaimer Footer
-                    Container(
-                      padding: EdgeInsets.all(kSize16),
-                      decoration: BoxDecoration(
-                        color: kNeutral30,
-                        borderRadius: BorderRadius.circular(kSize12),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.security,
-                                color: kNeutral90,
-                                size: kSize24,
-                              ),
-                              SizedBox(width: kSize12),
-                              Expanded(
-                                child: Text(
-                                  "Datamu akan dirahasiakan dan hanya digunakan untuk keperluan verifikasi",
-                                  style: TextStyle(
-                                    fontSize: kSize12,
-                                    color: kNeutral80,
-                                  ).copyWith(color: kNeutral90),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: kSize12),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: kSize24 + kSize12,
-                              ), // Indent to align with text above
-                              Text(
-                                "Proses ini diawasi oleh",
-                                style: TextStyle(
-                                  fontSize: kSize12,
-                                  color: kNeutral80,
-                                ),
-                              ),
-                              SizedBox(width: kSize8),
-
-                              // BI Logo Placeholder using Text/Icon
-                              ///TODO
-                              Text(
-                                "BANK INDONESIA",
-                                style: TextStyle(
-                                  color: kBlue,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: kSize10,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: kSize48), // Bottom spacing for scroll
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    height: 35,
+                    color: kWhite,
+                    child: Image.asset('assets/images/kyc/bi-logo.png'),
+                  ),
+                  const SizedBox(height: 120),
+                ],
               ),
             ),
+          ),
 
-            // 6. Bottom Button
-            SafeArea(
-              child: Container(
-                color: Colors.transparent,
-                padding: .all(16),
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kOrange,
-                    padding: EdgeInsets.symmetric(vertical: kSize16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(kSize16),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    "Mulai Sekarang",
-                    style: TextStyle(
-                      color: kWhite,
-                      fontSize: kSize16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          // 4. FLOATING BOTTOM BUTTON
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: KYCFloatingActionButton(
+        title: 'Mulai verifikasi',
+        onPressed: () => print('cok'),
       ),
     );
   }
