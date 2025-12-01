@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
+import '../widgets/widget_step_item.dart';
 
 class KYCOnboardingPage extends StatelessWidget {
   const KYCOnboardingPage({super.key});
@@ -123,7 +124,7 @@ class KYCOnboardingPage extends StatelessWidget {
                                       child: Text(
                                         "UNREG",
                                         style: TextStyle(
-                                          color: kNeutral80,
+                                          color: kBlack,
                                           fontWeight: FontWeight.bold,
                                           fontSize: kSize12,
                                         ),
@@ -251,7 +252,7 @@ class KYCOnboardingPage extends StatelessWidget {
                     SizedBox(height: kSize16),
 
                     // 4. Step Items
-                    _buildStepItem(
+                    KYCStepItem(
                       icon: Icons.list_alt_rounded,
                       text: "Isi data diri lengkap sesuai dokumen",
                       kSize44: kSize44,
@@ -263,7 +264,7 @@ class KYCOnboardingPage extends StatelessWidget {
                       kBlack: kBlack,
                     ),
                     SizedBox(height: kSize12),
-                    _buildStepItem(
+                    KYCStepItem(
                       icon: Icons.file_upload_outlined,
                       text: "Upload dokumen verifikasi (KTP)",
                       kSize44: kSize44,
@@ -275,8 +276,8 @@ class KYCOnboardingPage extends StatelessWidget {
                       kBlack: kBlack,
                     ),
                     SizedBox(height: kSize12),
-                    _buildStepItem(
-                      icon: Icons.person_outline, // Placeholder for Selfie Icon
+                    KYCStepItem(
+                      icon: Icons.person_outline,
                       text: "Upload foto selfie sambil memegang KTP",
                       kSize44: kSize44,
                       kSize12: kSize12,
@@ -287,7 +288,7 @@ class KYCOnboardingPage extends StatelessWidget {
                       kBlack: kBlack,
                     ),
                     SizedBox(height: kSize12),
-                    _buildStepItem(
+                    KYCStepItem(
                       icon: Icons.check,
                       text: "Akunmu siap dipakai!",
                       kSize44: kSize44,
@@ -395,50 +396,6 @@ class KYCOnboardingPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  // Helper Widget for Steps
-  Widget _buildStepItem({
-    required IconData icon,
-    required String text,
-    required double kSize44,
-    required double kSize12,
-    required double kSize14,
-    required double kSize8,
-    required Color kOrange,
-    required Color kNeutral30,
-    required Color kBlack,
-  }) {
-    return Container(
-      padding: EdgeInsets.all(kSize12),
-      decoration: BoxDecoration(
-        color: kNeutral30, // Light grey background like in design
-        borderRadius: BorderRadius.circular(kSize14),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: .all(8),
-            decoration: BoxDecoration(
-              color: kOrange,
-              borderRadius: BorderRadius.circular(kSize8),
-            ),
-            child: Icon(icon, color: kWhite, size: kSize24),
-          ),
-          SizedBox(width: kSize12),
-          Expanded(
-            child: Text(
-              text,
-              style: TextStyle(
-                color: kBlack,
-                fontWeight: FontWeight.w600,
-                fontSize: kSize14,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
