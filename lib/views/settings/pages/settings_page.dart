@@ -63,7 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
         imagePath: 'assets/icons/verify-icon.png',
         title: 'Verifikasi Akun',
         label: 'MITRA VVIP',
-        onTap: () => debugPrint('Navigasi ke Verifikasi Akun'),
+        onTap: () => Navigator.pushNamed(context, '/KYCPage'),
       ),
     ];
 
