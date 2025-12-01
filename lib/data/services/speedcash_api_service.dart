@@ -4,11 +4,12 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../core/helper/constant_finals.dart';
+import '../models/speedcash/speedcash_binding_model.dart';
 import '../models/speedcash/speedcash_konfirmasi_transaksi_model.dart';
 import '../models/speedcash/speedcash_list_bank_model.dart';
 import '../models/speedcash/speedcash_payment_transaksi_model.dart';
+import '../models/speedcash/speedcash_register_model.dart';
 import '../models/speedcash/speedcash_request_topup_model.dart';
-import '../models/speedcash/speedcash_response_model.dart';
 import '../models/speedcash/speedcash_topup_guide_model.dart';
 import '../models/speedcash/speedcash_unbind_model.dart';
 import 'auth_service.dart';
@@ -25,7 +26,7 @@ class SpeedcashApiService {
   final String _basicAuthSpeedcashHeader =
       "Basic ${base64Encode(utf8.encode("${dotenv.env['BASIC_USER_SPEEDCASH']}:${dotenv.env['BASIC_PASS_SPEEDCASH']}"))}";
 
-  Future<Map<String, dynamic>> speedcashRegister({
+  Future<SpeedcashRegisterModel> speedcashRegister({
     required String nama,
     required String phone,
     required String email,
@@ -41,37 +42,27 @@ class SpeedcashApiService {
         ),
         data: {"nama": nama, "phone": phone, "email": email},
       );
-
       if (response.statusCode == 200) {
-        final jsonData = Map<String, dynamic>.from(response.data);
-
-        final parsed = SpeedcashResponse.fromJson(jsonData);
-
-        return {
-          "success": parsed.success,
-          "data": parsed,
-          "message": parsed.success
-              ? "Berhasil daftar speedcash"
-              : "Gagal daftar speedcash",
-        };
+        return SpeedcashRegisterModel.fromJson(response.data);
       } else {
-        return {
-          "success": false,
-          "data": null,
-          "message": "Gagal daftar speedcash. Status: ${response.statusCode}",
-        };
+        throw Exception(
+          "Gagal binding Speedcash. Status: ${response.statusCode}",
+        );
       }
     } on DioException catch (e) {
-      final apiMessage = e.response?.data is Map
-          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
-          : e.message;
-      return {"success": false, "data": null, "message": apiMessage};
+      final data = e.response?.data;
+
+      final msg = (data is Map<String, dynamic>)
+          ? data['message'] ?? "Terjadi kesalahan server"
+          : e.message ?? "Koneksi bermasalah";
+
+      return SpeedcashRegisterModel.error(msg);
     } catch (e) {
-      return {"success": false, "data": null, "message": e.toString()};
+      return SpeedcashRegisterModel.error(e.toString());
     }
   }
 
-  Future<Map<String, dynamic>> speedcashBinding(
+  Future<SpeedcashBindingModel> speedcashBinding(
     String kodeReseller,
     String phone,
   ) async {
@@ -88,35 +79,21 @@ class SpeedcashApiService {
       );
 
       if (response.statusCode == 200) {
-        final jsonData = Map<String, dynamic>.from(response.data);
-
-        final parsed = SpeedcashResponse.fromJson(jsonData);
-
-        return {
-          "success": parsed.success,
-          "data": parsed,
-          "message": parsed.success
-              ? "Berhasil binding Speedcash"
-              : "Gagal binding Speedcash",
-        };
+        return SpeedcashBindingModel.fromJson(response.data);
       } else {
-        return {
-          "success": false,
-          "data": null,
-          "message": "Gagal binding Speedcash. Status: ${response.statusCode}",
-        };
+        throw Exception(
+          "Gagal binding Speedcash. Status: ${response.statusCode}",
+        );
       }
     } on DioException catch (e) {
-      final apiMessage = e.response?.data is Map
-          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
-          : e.message;
-      return {
-        "success": false,
-        "data": null,
-        "message": 'Ada kesalahan $apiMessage',
-      };
+      final data = e.response?.data;
+
+      final msg = (data is Map<String, dynamic>)
+          ? data['message'] ?? "Terjadi kesalahan server"
+          : e.message ?? "Koneksi bermasalah";
+      return SpeedcashBindingModel.error(msg);
     } catch (e) {
-      return {"success": false, "data": null, "message": e.toString()};
+      return SpeedcashBindingModel.error(e.toString());
     }
   }
 

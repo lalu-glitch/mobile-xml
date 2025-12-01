@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'data/services/auth_service.dart';
@@ -20,7 +19,6 @@ import 'core/routes/app_route.dart';
 import 'data/services/api_service.dart';
 import 'data/services/location_service.dart';
 import 'data/services/speedcash_api_service.dart';
-import 'viewmodels/speedcash/speedcash_viewmodel.dart';
 import 'views/input_nomor/utils/transaksi_helper_cubit.dart';
 import 'views/layanan/noprefix/cubit/provider_noprefix_cubit.dart';
 import 'views/layanan/prefix/cubit/provider_prefix_cubit.dart';
@@ -223,26 +221,18 @@ class _XmlAppState extends State<XmlApp> {
                 RequestTopUpCubit(context.read<SpeedcashApiService>()),
           ),
         ],
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (context) =>
-                  SpeedcashVM(apiService: context.read<SpeedcashApiService>()),
-            ),
-          ],
-          child: MaterialApp(
-            title: "XML App",
-            theme: ThemeData(
-              textTheme: Theme.of(
-                context,
-              ).textTheme.apply(fontFamily: 'Gabarito'),
-              fontFamily: 'Gabarito',
-              useMaterial3: true,
-            ),
-            navigatorKey: navigatorKey,
-            initialRoute: '/',
-            routes: appRoutes,
+        child: MaterialApp(
+          title: "XML App",
+          theme: ThemeData(
+            textTheme: Theme.of(
+              context,
+            ).textTheme.apply(fontFamily: 'Gabarito'),
+            fontFamily: 'Gabarito',
+            useMaterial3: true,
           ),
+          navigatorKey: navigatorKey,
+          initialRoute: '/',
+          routes: appRoutes,
         ),
       ),
     );
