@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../core/helper/constant_finals.dart';
@@ -23,6 +24,7 @@ class _OmniWebViewPageState extends State<OmniWebViewPage> {
 
   bool _isLoading = true;
   bool _hasRedirected = false;
+  bool _isScriptInjected = false;
 
   // Konstanta URL Default
   static const String _defaultUrl =
@@ -99,7 +101,10 @@ class _OmniWebViewPageState extends State<OmniWebViewPage> {
     _checkAndHandleUrl(url);
 
     // 2. Inject script listener untuk memantau perubahan URL tanpa reload (SPA behavior)
-    await _controller.runJavaScript(_historyObserverScript);
+    if (!_isScriptInjected) {
+      await _controller.runJavaScript(_historyObserverScript);
+      _isScriptInjected = true;
+    }
   }
 
   /// Pusat logika pengecekan URL
@@ -163,15 +168,18 @@ class _OmniWebViewPageState extends State<OmniWebViewPage> {
   }
 
   @override
+  void dispose() {
+    _controller.removeJavaScriptChannel('UrlChange');
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Telkomsel OMNI",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: const Text("Telkomsel OMNI", style: TextStyle(color: kWhite)),
         backgroundColor: kRed,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: kWhite),
       ),
       body: Stack(
         children: [

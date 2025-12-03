@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/helper/constant_finals.dart';
 import '../selfie_ktp/selfie_ktp_onboarding_page.dart';
+import 'foto_ktp_onboarding_page.dart';
 
 class KTPVerifyPage extends StatelessWidget {
   final String imagePath;
@@ -22,7 +23,10 @@ class KTPVerifyPage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => FotoKTPOnboardingPage()),
+          ),
         ),
       ),
       body: Column(
@@ -72,7 +76,12 @@ class KTPVerifyPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context), // Foto Ulang
+                    onPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FotoKTPOnboardingPage(),
+                      ),
+                    ), // Foto Ulang
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       side: const BorderSide(color: Color(0xFFFE7F04)),
@@ -93,7 +102,6 @@ class KTPVerifyPage extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      ///TODO [UPLOAD]
                       Navigator.push(
                         context,
                         MaterialPageRoute(

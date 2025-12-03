@@ -35,7 +35,7 @@ class _KTPCameraSelfiePageState extends State<KTPCameraSelfiePage> {
 
       _controller = CameraController(
         firstCamera,
-        ResolutionPreset.high,
+        ResolutionPreset.medium,
         enableAudio: false,
         imageFormatGroup: ImageFormatGroup.jpeg,
       );
@@ -45,12 +45,6 @@ class _KTPCameraSelfiePageState extends State<KTPCameraSelfiePage> {
     } catch (e) {
       debugPrint("Error initializing camera: $e");
     }
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
   }
 
   @override
@@ -191,18 +185,15 @@ class _KTPCameraSelfiePageState extends State<KTPCameraSelfiePage> {
     setState(() => _isCapturing = true);
     try {
       await _initializeControllerFuture;
-
-      // Ambil gambar (Hasilnya biasanya mirror/terbalik secara default pada kamera depan)
+      // Ambil gambar
       final XFile image = await _controller!.takePicture();
-
       if (!mounted) return;
 
       setState(() => _isCapturing = false);
-
       //setter
       context.read<KYCHelperCubit>().setFotoSelfie(image.path);
 
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => KTPSelfieVerifyPage(imagePath: image.path),
@@ -217,5 +208,11 @@ class _KTPCameraSelfiePageState extends State<KTPCameraSelfiePage> {
         ).showSnackBar(SnackBar(content: Text("Gagal mengambil foto: $e")));
       }
     }
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
   }
 }
