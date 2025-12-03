@@ -14,6 +14,7 @@ import 'views/auth/cubit/request_kode_agen_cubit.dart';
 import 'views/home/cubit/balance_cubit.dart';
 import 'views/home/cubit/layanan_cubit.dart';
 import 'views/home/cubit/promo_cubit.dart';
+import 'views/kyc/utils/cubit/kyc_helper_cubit.dart';
 import 'views/layanan/cubit/flow_cubit.dart';
 import 'core/routes/app_route.dart';
 import 'data/services/api_service.dart';
@@ -189,6 +190,7 @@ class _XmlAppState extends State<XmlApp> {
           //helper
           BlocProvider(create: (context) => TransaksiHelperCubit()),
           BlocProvider(create: (context) => FlowCubit()),
+          BlocProvider(create: (context) => KYCHelperCubit()),
 
           //transaksi web socket
           BlocProvider(
