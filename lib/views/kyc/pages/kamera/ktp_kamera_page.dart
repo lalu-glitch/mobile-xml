@@ -15,8 +15,7 @@ class KTPCameraPage extends StatefulWidget {
   State<KTPCameraPage> createState() => _KTPCameraPageState();
 }
 
-class _KTPCameraPageState extends State<KTPCameraPage>
-    with WidgetsBindingObserver {
+class _KTPCameraPageState extends State<KTPCameraPage> {
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
   bool _isFlashOn = false;
@@ -25,26 +24,7 @@ class _KTPCameraPageState extends State<KTPCameraPage>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     _initCamera();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    final CameraController? cameraController = _controller;
-
-    // App backgrounded or inactive
-    if (cameraController == null || !cameraController.value.isInitialized) {
-      return;
-    }
-
-    if (state == AppLifecycleState.inactive) {
-      // Free up memory when camera not active
-      cameraController.dispose();
-    } else if (state == AppLifecycleState.resumed) {
-      // Re-initialize camera when app resumed
-      _initCamera();
-    }
   }
 
   Future<void> _initCamera() async {
@@ -314,7 +294,6 @@ class _KTPCameraPageState extends State<KTPCameraPage>
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     _controller?.dispose();
     super.dispose();
   }

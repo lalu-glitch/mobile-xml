@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../data_diri/isi_data_diri_page.dart';
+import 'selfie_ktp_onboarding_page.dart';
 
 class KTPSelfieVerifyPage extends StatelessWidget {
   final String imagePath;
@@ -21,7 +22,12 @@ class KTPSelfieVerifyPage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FotoSelfieKTPOnboardingPage(),
+            ),
+          ),
         ),
       ),
       body: Column(
@@ -72,7 +78,12 @@ class KTPSelfieVerifyPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context), // Foto Ulang
+                    onPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FotoSelfieKTPOnboardingPage(),
+                      ),
+                    ), // Foto Ulang
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       side: const BorderSide(color: Color(0xFFFE7F04)),
