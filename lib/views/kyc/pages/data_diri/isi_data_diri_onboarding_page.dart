@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/helper/constant_finals.dart';
-import '../widgets/widget_comparison_card.dart';
-import '../widgets/widget_kyc_fab.dart';
-import '../widgets/widget_timeline_step.dart';
+import '../../../../core/helper/constant_finals.dart';
+import '../../widgets/kyc_data_diri/widget_comparison_card.dart';
+import '../../widgets/widget_kyc_action_button.dart';
+import '../../widgets/kyc_data_diri/widget_timeline_step.dart';
+import '../../widgets/widget_secure_footer.dart';
+import 'isi_data_diri_page.dart';
 
-class KYCOnboardingPage extends StatelessWidget {
-  const KYCOnboardingPage({super.key});
+class IsiDataDiriOnboardingPage extends StatefulWidget {
+  const IsiDataDiriOnboardingPage({super.key});
 
+  @override
+  State<IsiDataDiriOnboardingPage> createState() =>
+      _IsiDataDiriOnboardingPageState();
+}
+
+class _IsiDataDiriOnboardingPageState extends State<IsiDataDiriOnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhite,
       appBar: AppBar(
         backgroundColor: kWhite,
-        elevation: 0,
         scrolledUnderElevation: 0.0,
         title: const Text(
           "Verifikasi Akun",
@@ -133,37 +140,19 @@ class KYCOnboardingPage extends StatelessWidget {
                       ],
                     ),
                   ),
-
-                  // 3. TRUST FOOTER
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.lock_outline,
-                          size: 16,
-                          color: kNeutral80,
+                  SecureFooter(),
+                  const SizedBox(height: 50),
+                  SafeArea(
+                    child: KYCActionButton(
+                      title: 'Mulai verifikasi',
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const IsiDataDiriPage(),
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          "Data terenkripsi & diawasi oleh",
-                          style: TextStyle(
-                            color: kNeutral80,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Container(
-                    height: 35,
-                    color: kWhite,
-                    child: Image.asset('assets/images/kyc/bi-logo.png'),
-                  ),
-                  const SizedBox(height: 120),
                 ],
               ),
             ),
@@ -171,11 +160,6 @@ class KYCOnboardingPage extends StatelessWidget {
 
           // 4. FLOATING BOTTOM BUTTON
         ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: KYCFloatingActionButton(
-        title: 'Mulai verifikasi',
-        onPressed: () => print('cok'),
       ),
     );
   }

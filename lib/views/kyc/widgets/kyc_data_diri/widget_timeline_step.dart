@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/helper/constant_finals.dart';
+import '../../../../core/helper/constant_finals.dart';
 
 class KYCTimelineStep extends StatelessWidget {
   final IconData icon;
