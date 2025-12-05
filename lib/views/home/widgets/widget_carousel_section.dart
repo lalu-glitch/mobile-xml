@@ -7,28 +7,20 @@ import '../../../core/helper/constant_finals.dart';
 import '../cubit/balance_cubit.dart';
 import 'widget_wallet_carousel.dart';
 
-class MainSaldoCardCarousel extends StatefulWidget {
-  const MainSaldoCardCarousel({super.key});
+class CarouselSection extends StatefulWidget {
+  const CarouselSection({super.key});
 
   @override
-  State<MainSaldoCardCarousel> createState() => _MainSaldoCardCarouselState();
+  State<CarouselSection> createState() => _CarouselSectionState();
 }
 
-class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
+class _CarouselSectionState extends State<CarouselSection> {
   late PageController _pageController;
-  int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(viewportFraction: 1);
-    _pageController.addListener(() {
-      if (_pageController.page != null) {
-        setState(() {
-          _currentPage = _pageController.page!.round();
-        });
-      }
-    });
   }
 
   @override
@@ -84,22 +76,6 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                //animated row
-                Row(
-                  mainAxisAlignment: .center,
-                  children: List.generate(itemCount, (index) {
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      margin: const .symmetric(horizontal: 4.0),
-                      height: 8.0,
-                      width: _currentPage == index ? 24.0 : 8.0,
-                      decoration: BoxDecoration(
-                        color: kOrange,
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                    );
-                  }),
-                ),
               ],
             ),
           );

@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                           PoinKomisiOverlay(),
-                          MainSaldoCardCarousel(),
+                          CarouselSection(),
                         ],
                       ),
                     ),
