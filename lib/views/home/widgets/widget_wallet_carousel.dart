@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:xmlapp/data/models/user/user_balance_model.dart';
 import '../../../core/helper/constant_finals.dart';
-import 'widget_saldo_header_card.dart';
+import '../../../data/models/user/ewallet_model.dart';
+import '../utils/wallet_color.dart';
+import 'widget_wallet.dart';
 
-class HomeBalanceCarousel extends StatelessWidget {
-  const HomeBalanceCarousel({this.userBalance, this.ewallet, super.key});
+class WalletCarousel extends StatelessWidget {
+  const WalletCarousel({this.userBalance, this.ewallet, super.key});
   final UserBalance? userBalance;
-  final BalanceWallet? ewallet;
+  final Ewallet? ewallet;
 
   @override
   Widget build(BuildContext context) {
+    final String code = ewallet?.kodeDompet ?? '';
+    final Color themeColor = walletColorMap[code] ?? kOrange;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Card(
@@ -21,14 +26,17 @@ class HomeBalanceCarousel extends StatelessWidget {
           child: Padding(
             padding: const .symmetric(horizontal: 16, vertical: 16),
             child: ewallet != null
-                ? HeaderSaldo(
-                    title: ewallet!.nama,
-                    balance: ewallet!.saldoEwallet,
-                    themeColor: kBlue,
+                ? CardWallet(
+                    title: ewallet!.namaEwallet,
+                    balance: ewallet!.saldo,
+                    themeColor: themeColor,
+                    data: userBalance,
                   )
-                : HeaderSaldo(
+                : CardWallet(
                     title: 'Saldo XML',
                     balance: userBalance?.saldo ?? 0,
+                    themeColor: kOrange,
+                    data: userBalance,
                   ),
           ),
         );

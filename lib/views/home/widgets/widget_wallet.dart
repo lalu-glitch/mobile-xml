@@ -1,30 +1,35 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
+import '../../../data/models/user/user_balance_model.dart';
 import 'widget_saldo_action_item.dart';
 
-class HeaderSaldo extends StatefulWidget {
-  const HeaderSaldo({
+class CardWallet extends StatefulWidget {
+  const CardWallet({
     required this.title,
     required this.balance,
-    this.themeColor = kOrange,
+    required this.themeColor,
+    required this.data,
     super.key,
   });
 
   final String title;
   final int balance;
   final Color themeColor;
-
+  final UserBalance? data;
   @override
-  State<HeaderSaldo> createState() => _HeaderSaldoState();
+  State<CardWallet> createState() => _CardWalletState();
 }
 
-class _HeaderSaldoState extends State<HeaderSaldo> {
+class _CardWalletState extends State<CardWallet> {
   bool _isSaldoHidden = true;
 
   @override
   Widget build(BuildContext context) {
+    log('[KODE LEVEL]: ${widget.data?.kodeLevel}');
     return Column(
       crossAxisAlignment: .start,
       mainAxisSize: .min,
@@ -77,59 +82,61 @@ class _HeaderSaldoState extends State<HeaderSaldo> {
           ],
         ),
         Spacer(),
-        IntrinsicHeight(
-          child: Row(
-            children: [
-              InkWell(
-                onTap: widget.title == 'SPEEDCASH'
-                    ? () {
-                        Navigator.pushNamed(context, '/speedcashTopUpPage');
-                      }
-                    : null,
-                child: ActionItem(
-                  icon: Icons.add_rounded,
-                  label: 'Top Up Saldo',
+        if (widget.data?.kodeLevel != 'VERIF1' ||
+            widget.data?.kodeLevel != 'VERIF2') ...[
+          IntrinsicHeight(
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: widget.title == 'Speedcash'
+                      ? () {
+                          Navigator.pushNamed(context, '/speedcashTopUpPage');
+                        }
+                      : null,
+                  child: ActionItem(
+                    icon: Icons.add_rounded,
+                    label: 'Top Up Saldo',
+                    color: widget.themeColor,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                ActionItem(
+                  icon: Icons.swap_horiz_sharp,
+                  label: 'Transfer Saldo',
                   color: widget.themeColor,
                 ),
-              ),
-              const SizedBox(width: 16),
-              ActionItem(
-                icon: Icons.swap_horiz_sharp,
-                label: 'Transfer Saldo',
-                color: widget.themeColor,
-              ),
-              const SizedBox(width: 16),
-              widget.title == 'SPEEDCASH'
-                  ? SizedBox()
-                  : Expanded(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: widget.themeColor,
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: const Column(
-                            mainAxisAlignment: .center,
-                            children: [
-                              Icon(
-                                Icons.qr_code_2_outlined,
-                                color: kWhite,
-                                size: 24,
-                              ),
+                const SizedBox(width: 16),
 
-                              Text(
-                                'Tampilkan QRIS',
-                                style: TextStyle(color: kWhite, fontSize: 12),
-                              ),
-                            ],
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: widget.themeColor,
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: const Column(
+                        mainAxisAlignment: .center,
+                        children: [
+                          Icon(
+                            Icons.qr_code_2_outlined,
+                            color: kWhite,
+                            size: 24,
                           ),
-                        ),
+
+                          Text(
+                            'Tampilkan QRIS',
+                            style: TextStyle(color: kWhite, fontSize: 12),
+                          ),
+                        ],
                       ),
                     ),
-            ],
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ],
     );
   }

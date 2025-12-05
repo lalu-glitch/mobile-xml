@@ -6,14 +6,12 @@ import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/shimmer.dart';
-import '../../../data/models/user/info_akun_model.dart';
 import '../../home/cubit/balance_cubit.dart';
 import '../cubit/info_akun/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
 import '../widgets/widget_custom_list_tile.dart';
 import '../widgets/widget_logout_card.dart';
 import '../widgets/widget_setting_user_header.dart';
-import '../widgets/widget_wallet_item_settings.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -200,21 +198,23 @@ class _SettingsPageState extends State<SettingsPage> {
                       itemBuilder: (context, index) {
                         switch (index) {
                           case 0:
-                            // --- DOMPET APLIKASI ---
-                            return SizedBox(
-                              height: (state.data.data.ewallet?.isEmpty ?? true)
-                                  ? 0
-                                  : 120, // tinggi maksimum kontainer kalo ada ewallet
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: state.data.data.ewallet?.length ?? 0,
-                                itemBuilder: (context, index) {
-                                  final Ewallet currentEwallet =
-                                      state.data.data.ewallet![index];
-                                  return WalletItem(ewallet: currentEwallet);
-                                },
-                              ),
-                            );
+
+                          /// TODO [apa bakal di setting tempatnya ditampilin?? idk bro]
+                          // // --- DOMPET APLIKASI ---
+                          // return SizedBox(
+                          //   height: (state.data.data.ewallet?.isEmpty ?? true)
+                          //       ? 0
+                          //       : 120, // tinggi maksimum kontainer kalo ada ewallet
+                          //   child: ListView.builder(
+                          //     scrollDirection: Axis.horizontal,
+                          //     itemCount: state.data.data.ewallet?.length ?? 0,
+                          //     itemBuilder: (context, index) {
+                          //       final Ewallet currentEwallet =
+                          //           state.data.data.ewallet![index];
+                          //       return WalletItem(ewallet: currentEwallet);
+                          //     },
+                          //   ),
+                          // );
                           case 1:
                             return _buildSection(
                               context,

@@ -7,7 +7,6 @@ import '../models/layanan/layanan_model.dart';
 import '../models/produk/provider_kartu_model.dart';
 import '../models/transaksi/status_transaksi_model.dart';
 import '../models/transaksi/riwayat_transaksi_model.dart';
-import '../models/transaksi/transaksi_response_model.dart';
 import '../models/user/edit_info_akun_model.dart';
 import '../models/user/info_akun_model.dart';
 import '../models/user/user_balance_model.dart';
@@ -40,6 +39,7 @@ class ApiService {
         "$baseURL/user/balance",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
+      log('[userBalance] : ${response.data}');
       if (response.statusCode == 200) {
         return UserBalance.fromJson(response.data);
       } else {
@@ -131,82 +131,6 @@ class ApiService {
           ? e.response?.data["message"] ?? "Terjadi kesalahan pada server."
           : e.message;
       throw Exception(apiMessage);
-    }
-  }
-
-  /// Proses transaksi non websocket
-  Future<Map<String, dynamic>> prosesTransaksi(
-    String tujuan,
-    String kodeProduk,
-    String kodeDompet,
-  ) async {
-    try {
-      final deviceID = await loadDeviceId();
-      final response = await authService.dio.post(
-        "$baseURL/transaksi",
-        options: Options(headers: {"x-device-id": "android-$deviceID"}),
-        data: {
-          "tujuan": tujuan,
-          "kode_produk": kodeProduk,
-          "kode_dompet": kodeDompet,
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final jsonData = Map<String, dynamic>.from(response.data);
-        return {
-          "success": jsonData["success"] ?? false,
-          "data": TransaksiResponseModel.fromJson(jsonData),
-          "message": jsonData["message"] ?? "Berhasil memproses transaksi",
-        };
-      } else {
-        return {
-          "success": false,
-          "data": null,
-          "message":
-              "Gagal memproses transaksi. Status: ${response.statusCode}",
-        };
-      }
-    } on DioException catch (e) {
-      final apiMessage = e.response?.data is Map
-          ? e.response?.data["message"] ?? "Terjadi kesalahan server"
-          : e.message;
-      return {"success": false, "data": null, "message": apiMessage};
-    } catch (e) {
-      return {"success": false, "data": null, "message": e.toString()};
-    }
-  }
-
-  /// Cek status transaksi by kode_inbox non
-  Future<Map<String, dynamic>> getStatusByInbox(int kodeInbox) async {
-    try {
-      final deviceID = await loadDeviceId();
-      final response = await authService.dio.post(
-        "$baseURL/trx_by_inbox/$kodeInbox",
-        options: Options(headers: {"x-device-id": "android-$deviceID"}),
-      );
-
-      if (response.statusCode == 200) {
-        final jsonData = Map<String, dynamic>.from(response.data);
-        return {
-          "success": true,
-          "data": StatusTransaksiModel.fromJson(jsonData),
-          "message": "Berhasil mendapatkan status transaksi",
-        };
-      } else {
-        return {
-          "success": false,
-          "data": null,
-          "message": "Gagal mendapatkan status. Status: ${response.statusCode}",
-        };
-      }
-    } on DioException catch (e) {
-      final apiMessage = e.response?.data is Map
-          ? e.response?.data["message"] ?? "Terjadi kesalahan server"
-          : e.message;
-      return {"success": false, "data": null, "message": apiMessage};
-    } catch (e) {
-      return {"success": false, "data": null, "message": e.toString()};
     }
   }
 

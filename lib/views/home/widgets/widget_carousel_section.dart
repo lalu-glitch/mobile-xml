@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/shimmer.dart';
-import '../../../data/models/user/user_balance_model.dart';
+import '../../../data/models/user/ewallet_model.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../cubit/balance_cubit.dart';
-import 'widget_home_balance_carousel.dart';
+import 'widget_wallet_carousel.dart';
 
 class MainSaldoCardCarousel extends StatefulWidget {
   const MainSaldoCardCarousel({super.key});
@@ -60,31 +60,31 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
                     controller: _pageController,
                     padEnds: false,
                     clipBehavior: Clip.none,
-                    // Item pertama adalah Saldo XML, sisanya dari ewallet
                     itemCount: itemCount,
                     itemBuilder: (context, index) {
-                      // Item pertama (index 0) adalah Saldo XML
-                      if (index == 0) {
+                      final ewalletCount = state.data.ewallet?.length ?? 0;
+                      // Tampilkan e-wallet terlebih dahulu
+                      if (index < ewalletCount) {
+                        final Ewallet ewallet = state.data.ewallet![index];
                         return Padding(
                           padding: const .symmetric(horizontal: 4),
-                          child: HomeBalanceCarousel(userBalance: state.data),
+                          child: WalletCarousel(
+                            userBalance: state.data,
+                            ewallet: ewallet,
+                          ),
                         );
                       }
 
-                      // Item selanjutnya adalah e-wallet
-                      final BalanceWallet ewallet =
-                          state.data.ewallet![index - 1];
+                      // Item terakhir selalu Saldo XML
                       return Padding(
                         padding: const .symmetric(horizontal: 4),
-                        child: HomeBalanceCarousel(
-                          userBalance: state.data,
-                          ewallet: ewallet,
-                        ),
+                        child: WalletCarousel(userBalance: state.data),
                       );
                     },
                   ),
                 ),
                 const SizedBox(height: 16),
+                //animated row
                 Row(
                   mainAxisAlignment: .center,
                   children: List.generate(itemCount, (index) {

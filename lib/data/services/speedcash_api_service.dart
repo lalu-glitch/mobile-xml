@@ -227,6 +227,8 @@ class SpeedcashApiService {
     String tujuan,
     int qty,
     String endUser,
+    String subProduk,
+    int hargaSubProduk,
   ) async {
     try {
       final response = await authService.dio.post(
@@ -243,6 +245,8 @@ class SpeedcashApiService {
           "tujuan": tujuan,
           "qty": qty,
           "enduser": endUser,
+          "sub_produk": subProduk,
+          "harga_sub_produk": hargaSubProduk,
         },
       );
       log('$response');

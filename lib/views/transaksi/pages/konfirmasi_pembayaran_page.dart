@@ -147,9 +147,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
       PaymentMethodModel(nama: "SALDO", kodeDompet: "", saldoEwallet: saldo),
       ...eWallets.map(
         (ewallet) => PaymentMethodModel(
-          nama: ewallet.nama,
+          nama: ewallet.namaEwallet,
           kodeDompet: ewallet.kodeDompet,
-          saldoEwallet: ewallet.saldoEwallet,
+          saldoEwallet: ewallet.saldo,
         ),
       ),
     ];
@@ -272,9 +272,8 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               showErrorDialog(context, msg);
               return;
             }
-
             // kalo pake metode Speedcash
-            if (selected.nama == 'SPEEDCASH') {
+            if (selected.kodeDompet == 'SP') {
               Navigator.push(
                 context,
                 MaterialPageRoute(

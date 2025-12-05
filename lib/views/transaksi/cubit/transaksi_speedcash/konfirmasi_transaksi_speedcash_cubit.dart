@@ -18,6 +18,8 @@ class KonfirmasiTransaksiSpeedcashCubit
     String tujuan, {
     int qty = 0,
     String endUser = '',
+    String subProduk = '',
+    int hargaSubProduk = 0,
   }) async {
     emit(KonfirmasiTransaksiSpeedcashLoading());
     try {
@@ -27,6 +29,8 @@ class KonfirmasiTransaksiSpeedcashCubit
         tujuan,
         qty,
         endUser,
+        subProduk,
+        hargaSubProduk,
       );
       emit(KonfirmasiTransaksiSpeedcashSuccess(data: data));
     } catch (e) {

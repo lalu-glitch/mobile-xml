@@ -24,7 +24,6 @@ class Data extends Equatable {
   final String kodeReferral;
   final int markupReferral;
   final int? saldo;
-  final List<Ewallet>? ewallet;
   final int? komisi;
   final int? poin;
   final int piutang;
@@ -40,7 +39,6 @@ class Data extends Equatable {
     required this.kodeReferral,
     required this.markupReferral,
     this.saldo,
-    this.ewallet,
     this.komisi,
     this.poin,
     required this.piutang,
@@ -57,11 +55,6 @@ class Data extends Equatable {
     kodeReferral: json["kode_referral"],
     markupReferral: json["markup_referral"],
     saldo: json["saldo"],
-    ewallet: json["ewallet"] != null
-        ? List<Ewallet>.from(
-            (json["ewallet"] as List).map((x) => Ewallet.fromJson(x)),
-          )
-        : [],
     komisi: json["komisi"],
     poin: json["poin"],
     piutang: json["piutang"],
@@ -78,7 +71,6 @@ class Data extends Equatable {
     "kode_referral": kodeReferral,
     "markup_referral": markupReferral,
     "saldo": saldo,
-    "ewallet": ewallet?.map((x) => x.toJson()).toList(),
     "komisi": komisi,
     "poin": poin,
     "piutang": piutang,
@@ -96,7 +88,6 @@ class Data extends Equatable {
     kodeReferral,
     markupReferral,
     saldo,
-    ewallet,
     komisi,
     poin,
     piutang,
@@ -107,37 +98,37 @@ class Data extends Equatable {
   ];
 }
 
-class Ewallet extends Equatable {
-  final int id;
-  final String icon;
-  final String nama;
-  final String kodeDompet;
-  final int binding;
+// class Ewallet extends Equatable {
+//   final int id;
+//   final String icon;
+//   final String nama;
+//   final String kodeDompet;
+//   final int binding;
 
-  const Ewallet({
-    required this.id,
-    required this.icon,
-    required this.nama,
-    required this.kodeDompet,
-    required this.binding,
-  });
+//   const Ewallet({
+//     required this.id,
+//     required this.icon,
+//     required this.nama,
+//     required this.kodeDompet,
+//     required this.binding,
+//   });
 
-  factory Ewallet.fromJson(Map<String, dynamic> json) => Ewallet(
-    id: json["id"],
-    icon: json["icon"],
-    nama: json["nama"],
-    kodeDompet: json["kode_dompet"],
-    binding: json["binding"],
-  );
+//   factory Ewallet.fromJson(Map<String, dynamic> json) => Ewallet(
+//     id: json["id"],
+//     icon: json["icon"],
+//     nama: json["nama"],
+//     kodeDompet: json["kode_dompet"],
+//     binding: json["binding"],
+//   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "icon": icon,
-    "nama": nama,
-    "kode_dompet": kodeDompet,
-    "binding": binding,
-  };
+//   Map<String, dynamic> toJson() => {
+//     "id": id,
+//     "icon": icon,
+//     "nama": nama,
+//     "kode_dompet": kodeDompet,
+//     "binding": binding,
+//   };
 
-  @override
-  List<Object?> get props => [id, icon, nama, kodeDompet, binding];
-}
+//   @override
+//   List<Object?> get props => [id, icon, nama, kodeDompet, binding];
+// }
