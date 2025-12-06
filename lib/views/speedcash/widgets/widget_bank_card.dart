@@ -38,6 +38,8 @@ class BankCard extends StatelessWidget {
                     ? CachedNetworkImage(
                         imageUrl: imageUrl,
                         fit: BoxFit.contain,
+                        memCacheWidth: 150,
+                        memCacheHeight: 150,
                         placeholder: (context, url) =>
                             const Center(child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) =>

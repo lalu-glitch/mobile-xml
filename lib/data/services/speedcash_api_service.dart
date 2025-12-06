@@ -249,7 +249,7 @@ class SpeedcashApiService {
           "harga_sub_produk": hargaSubProduk,
         },
       );
-      log('$response');
+      log('[SPEEDCASH]: ${response.statusCode}');
       if (response.statusCode == 200) {
         return SpeedcashKonfirmasiTransaksiModel.fromJson(response.data);
       } else {

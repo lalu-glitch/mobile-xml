@@ -44,6 +44,8 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
   WidgetsFlutterBinding.ensureInitialized();
+  //idk if this code is necessary or not, but ima put it here.. just in case.
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 50 * 1024 * 1024;
   runApp(const XmlApp());
 }
 

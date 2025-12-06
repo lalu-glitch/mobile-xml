@@ -85,7 +85,12 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
               >(
                 listener: (context, state) {
                   if (state is WebSocketCekTransaksiError) {
-                    showErrorDialog(context, state.message);
+                    showErrorDialog(
+                      context,
+                      state.message,
+                      onPressed: () =>
+                          Navigator.pushReplacementNamed(context, '/'),
+                    );
                   }
                 },
                 builder: (context, state) {

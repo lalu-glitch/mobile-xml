@@ -39,7 +39,6 @@ class ApiService {
         "$baseURL/user/balance",
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
       );
-      log('[userBalance] : ${response.data}');
       if (response.statusCode == 200) {
         return UserBalance.fromJson(response.data);
       } else {
@@ -52,7 +51,7 @@ class ApiService {
     }
   }
 
-  /// Ambil icon dengan kategori (pulsa, ewallet, token, dll)
+  /// Ambil item promo dan layanan
   Future<IconResponse> fetchIcons() async {
     try {
       final deviceID = await loadDeviceId();

@@ -38,22 +38,12 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
 
   @override
   Widget build(BuildContext context) {
-    // Gradient Background
-    final Gradient bgGradient = LinearGradient(
-      colors: [
-        widget.themeColor,
-        HSLColor.fromColor(widget.themeColor).withLightness(0.45).toColor(),
-      ],
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-    );
-
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            gradient: bgGradient,
+            color: widget.themeColor,
             borderRadius: .circular(28),
             boxShadow: [
               BoxShadow(
@@ -88,10 +78,7 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
                 // konten utama
                 Positioned.fill(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 16,
-                    ),
+                    padding: const .symmetric(horizontal: 20, vertical: 16),
                     child: Center(
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -239,7 +226,10 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
     if (!widget.isConnected && !widget.isXmlWallet) {
       return _buildConnectButton();
     }
-    if (!widget.isConnected && widget.isXmlWallet) {
+    if (!widget.isConnected) {
+      return _buildXmlStatusBadge();
+    }
+    if (widget.isXmlWallet) {
       return _buildXmlStatusBadge();
     }
     return _buildActionMenu();
@@ -280,7 +270,7 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
   Widget _buildXmlStatusBadge() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const .symmetric(vertical: 12),
       decoration: BoxDecoration(
         color: kWhite.withAlpha(40),
         borderRadius: .circular(16),
@@ -289,7 +279,7 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
       child: Row(
         mainAxisAlignment: .center,
         children: [
-          Icon(Icons.stars_rounded, color: kYellow, size: 20),
+          Icon(Icons.stars_rounded, color: Colors.yellow, size: 20),
           const SizedBox(width: 8),
           Text(
             "Basic Member", // Atau "Akun Aktif"
@@ -308,7 +298,7 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
   // Opsi C: Menu Aksi (Topup, Transfer, QRIS)
   Widget _buildActionMenu() {
     return Container(
-      padding: const EdgeInsets.all(12), // Padding diperkecil agar muat
+      padding: const .all(12), // Padding diperkecil agar muat
       decoration: BoxDecoration(
         color: kWhite.withAlpha(40),
         borderRadius: .circular(20),
@@ -362,7 +352,7 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.all(6),
+                padding: const .all(6),
                 decoration: BoxDecoration(
                   color: isHighlight ? kWhite : Colors.transparent,
                   shape: .circle,

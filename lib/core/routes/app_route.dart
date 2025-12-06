@@ -34,7 +34,7 @@ import '../../views/speedcash/pages/speedcash_register.dart';
 import '../../views/home/page/home_page.dart';
 import '../../views/transaksi/pages/konfirmasi_pembayaran_page.dart';
 import '../../views/settings/pages/settings_page.dart';
-import '../../views/shops/pages/shop_page.dart';
+import '../../views/toko/pages/shop_page.dart';
 import '../helper/auth_guard.dart';
 import '../../views/struk/pages/struk_page.dart';
 import '../../views/transaksi/pages/detail_transaksi_page.dart';

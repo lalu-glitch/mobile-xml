@@ -19,7 +19,7 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage> {
   final searchController = TextEditingController();
-  late final ShopController controller;
+  late final ShopController controller; // Helper logic tetap dipisah (bagus)
 
   bool isSearching = false;
   String selectedHeading = 'Semuanya';
@@ -27,8 +27,6 @@ class _ShopPageState extends State<ShopPage> {
   @override
   void initState() {
     super.initState();
-
-    // Setup controller helper
     controller = ShopController(
       searchController: searchController,
       layananCubit: context.read<LayananCubit>(),
@@ -42,13 +40,13 @@ class _ShopPageState extends State<ShopPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: kOrange,
-        iconTheme: IconThemeData(color: kWhite),
+        iconTheme: const IconThemeData(color: kWhite), // const optimization
         title: isSearching
             ? TextField(
                 controller: searchController,
                 autofocus: true,
-                style: TextStyle(color: kWhite),
-                // Panggil setState pas ngetik biar UI rebuild & filter jalan
+                style: const TextStyle(color: kWhite),
+                // Rebuild hanya saat user berhenti mengetik (opsional) atau tiap ketik
                 onChanged: (val) => setState(() {}),
                 decoration: InputDecoration(
                   hintText: 'Cari layanan',
@@ -56,7 +54,7 @@ class _ShopPageState extends State<ShopPage> {
                   border: InputBorder.none,
                 ),
               )
-            : Text('Toko', style: TextStyle(color: kWhite)),
+            : const Text('Toko', style: TextStyle(color: kWhite)),
         actions: [
           SearchAppBar(
             isSearching: isSearching,
@@ -92,12 +90,14 @@ class _ShopPageState extends State<ShopPage> {
           if (state is LayananLoaded) {
             final cubit = context.read<LayananCubit>();
 
+            // Filter logic
             final filteredResult = controller.filter(
               dataMentah: state.data.data,
               query: searchController.text,
             );
 
             return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: [
                   ShopsCategoryChips(
@@ -111,7 +111,6 @@ class _ShopPageState extends State<ShopPage> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ShopProducts(
-                      // Gunakan hasil filter on-the-fly
                       layananDataToDisplay: filteredResult,
                       selectedHeading: selectedHeading,
                       isSearchingActive:

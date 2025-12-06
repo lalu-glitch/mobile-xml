@@ -99,7 +99,7 @@ class _CarouselSectionState extends State<CarouselSection> {
         color: kWhite,
         child: Padding(
           padding: const .symmetric(horizontal: 16, vertical: 16),
-          child: ShimmerBox.buildMainShimmerCard(),
+          child: ShimmerBox.dMainShimmerWallet(),
         ),
       ),
     );

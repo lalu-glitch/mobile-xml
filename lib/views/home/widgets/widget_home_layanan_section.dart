@@ -1,50 +1,53 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/dynamic_app_page.dart';
 import '../../../core/utils/shimmer.dart';
-import '../../layanan/cubit/flow_cubit.dart';
-import '../../input_nomor/utils/transaksi_helper_cubit.dart';
-import '../../transaksi/cubit/transaksi_omni/transaksi_omni_cubit.dart';
 import '../cubit/layanan_cubit.dart';
+import 'widget_layanan_grid_item.dart';
 
 class HomeLayananSection extends StatelessWidget {
   const HomeLayananSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final transaksi = context.read<TransaksiHelperCubit>();
-    final transaksiOmni = context.read<TransaksiOmniCubit>();
-    final cubit = context.read<LayananCubit>();
-
     return BlocBuilder<LayananCubit, LayananState>(
+      buildWhen: (previous, current) =>
+          current is LayananLoaded || current is LayananLoading,
       builder: (context, state) {
         if (state is LayananLoading) {
           return ShimmerBox.buildShimmerIcons();
         }
         if (state is LayananLoaded) {
+          final cubit = context.read<LayananCubit>();
+
           return Column(
-            crossAxisAlignment: .start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: cubit.layananByHeading.entries.map((entry) {
               final kategori = entry.key;
               final layananList = entry.value;
+
               return Column(
-                crossAxisAlignment: .start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     kategori.toUpperCase(),
-                    style: TextStyle(fontSize: kSize18, fontWeight: .bold),
+                    style: TextStyle(
+                      fontSize: kSize18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Container(
                     decoration: BoxDecoration(
                       color: kWhite,
-                      borderRadius: .circular(16),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    padding: const .symmetric(horizontal: 8, vertical: 16),
-                    margin: const .only(bottom: 24),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 16,
+                    ),
+                    margin: const EdgeInsets.only(bottom: 24),
                     child: GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -56,61 +59,10 @@ class HomeLayananSection extends StatelessWidget {
                             childAspectRatio: 0.85,
                           ),
                       itemCount: layananList.length,
+                      // Optimization: Menggunakan function terpisah atau class terpisah
+                      // membantu Flutter mengenali boundary widget.
                       itemBuilder: (context, i) {
-                        final iconItem = layananList[i];
-                        return GestureDetector(
-                          onTap: () {
-                            transaksi.reset();
-                            transaksiOmni.reset();
-                            final sequence = pageSequences[iconItem.flow] ?? [];
-                            // simpan state awal ke FlowCubit
-                            context.read<FlowCubit>().startFlow(
-                              iconItem.flow!,
-                              iconItem,
-                            );
-
-                            transaksi.pilihMenuLayanan(
-                              kodeCatatan:
-                                  iconItem.kodeCatatan, // <- buat prefix
-                              kodeCek: iconItem.kodeCek, // <- buat omni
-                              kodeBayar: iconItem.kodeBayar, // <- buat omni
-                            );
-
-                            // navigasi ke halaman pertama dari flow
-                            final firstPage = sequence[0];
-                            Navigator.pushNamed(
-                              context,
-                              pageRoutes[firstPage]!,
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: .circular(18),
-                                child: CachedNetworkImage(
-                                  imageUrl: iconItem.icon ?? '',
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) =>
-                                      const SizedBox(),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.apps, color: kOrange),
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                              Expanded(
-                                child: Text(
-                                  iconItem.title ?? '-',
-                                  style: TextStyle(fontSize: kSize12),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                        return LayananGridItem(item: layananList[i]);
                       },
                     ),
                   ),
@@ -119,7 +71,7 @@ class HomeLayananSection extends StatelessWidget {
             }).toList(),
           );
         }
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       },
     );
   }

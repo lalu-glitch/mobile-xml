@@ -31,10 +31,10 @@ class ShimmerBox extends StatelessWidget {
     );
   }
 
-  static Widget buildMainShimmerCard() {
+  static Widget dMainShimmerWallet() {
     return Shimmer.fromColors(
       baseColor: kNeutral40,
-      highlightColor: Colors.grey.shade100,
+      highlightColor: kNeutral20,
       child: Column(
         crossAxisAlignment: .start,
         children: [
@@ -52,30 +52,12 @@ class ShimmerBox extends StatelessWidget {
           // Balance shimmer
           Container(
             width: double.infinity,
-            height: 100,
+            height: 150,
             margin: const .only(bottom: 12),
             decoration: BoxDecoration(
               color: kWhite,
               borderRadius: .circular(12),
             ),
-          ),
-
-          // 3 small shimmer boxes
-          Row(
-            mainAxisAlignment: .spaceBetween,
-            children: List.generate(3, (index) {
-              return Flexible(
-                fit: FlexFit.tight,
-                child: Container(
-                  margin: const .symmetric(horizontal: 4),
-                  height: 35,
-                  decoration: BoxDecoration(
-                    color: kWhite,
-                    borderRadius: .circular(10),
-                  ),
-                ),
-              );
-            }),
           ),
         ],
       ),

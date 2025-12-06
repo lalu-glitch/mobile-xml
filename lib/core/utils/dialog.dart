@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 
 import '../helper/constant_finals.dart';
 
-Future<void> showErrorDialog(BuildContext context, String message) {
+Future<void> showErrorDialog(
+  BuildContext context,
+  String message, {
+  VoidCallback? onPressed, // Parameter opsional baru
+}) {
   return showDialog<void>(
     context: context,
     builder: (context) {
@@ -51,7 +55,7 @@ Future<void> showErrorDialog(BuildContext context, String message) {
                     shape: RoundedRectangleBorder(borderRadius: .circular(12)),
                     padding: const .symmetric(vertical: 12),
                   ),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: onPressed ?? () => Navigator.pop(context),
                   child: const Text(
                     "OK",
                     style: TextStyle(fontSize: 16, color: Colors.white),

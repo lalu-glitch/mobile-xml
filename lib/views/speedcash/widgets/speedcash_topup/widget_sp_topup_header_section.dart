@@ -20,6 +20,8 @@ class HeaderSection extends StatelessWidget {
               ? CachedNetworkImage(
                   imageUrl: imageUrl!,
                   fit: BoxFit.contain,
+                  memCacheWidth: 150,
+                  memCacheHeight: 150,
                   placeholder: (_, _) =>
                       const Center(child: CircularProgressIndicator()),
                   errorWidget: (_, _, _) => const Icon(Icons.business_rounded),
