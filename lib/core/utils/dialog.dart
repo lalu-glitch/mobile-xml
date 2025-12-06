@@ -211,6 +211,7 @@ Future<bool> showExitDialog(BuildContext context) async {
         context: context,
         builder: (context) {
           return Dialog(
+            backgroundColor: kWhite,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
