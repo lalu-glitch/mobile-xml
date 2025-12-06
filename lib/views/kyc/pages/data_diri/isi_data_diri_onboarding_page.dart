@@ -25,11 +25,7 @@ class _IsiDataDiriOnboardingPageState extends State<IsiDataDiriOnboardingPage> {
         scrolledUnderElevation: 0.0,
         title: const Text(
           "Verifikasi Akun",
-          style: TextStyle(
-            color: kBlack,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
+          style: TextStyle(color: kBlack, fontWeight: .bold, fontSize: 16),
         ),
         centerTitle: true,
       ),
@@ -39,7 +35,7 @@ class _IsiDataDiriOnboardingPageState extends State<IsiDataDiriOnboardingPage> {
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: .stretch,
                 children: [
                   // 1. HERO SECTION & VALUE PROP
                   Container(
@@ -68,7 +64,7 @@ class _IsiDataDiriOnboardingPageState extends State<IsiDataDiriOnboardingPage> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 22,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: .w800,
                             color: kBlack,
                             letterSpacing: -0.5,
                           ),
@@ -99,13 +95,13 @@ class _IsiDataDiriOnboardingPageState extends State<IsiDataDiriOnboardingPage> {
                     color: kWhite,
                     padding: const EdgeInsets.all(24),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: [
                         const Text(
                           "Cara Verifikasi",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: kBlack,
                           ),
                         ),

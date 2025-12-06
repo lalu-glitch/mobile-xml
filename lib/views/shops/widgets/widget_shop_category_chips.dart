@@ -29,7 +29,7 @@ class ShopsCategoryChips extends StatelessWidget {
       child: SizedBox(
         height: 40,
         child: ListView.builder(
-          scrollDirection: Axis.horizontal,
+          scrollDirection: .horizontal,
           itemCount: headings.length,
           itemBuilder: (context, index) {
             final heading = headings[index];
@@ -42,14 +42,14 @@ class ShopsCategoryChips extends StatelessWidget {
                 padding: const .symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                   color: isSelected ? kOrange : kNeutral50,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: .circular(20),
                 ),
                 child: Center(
                   child: Text(
                     heading,
                     style: TextStyle(
                       color: isSelected ? kWhite : kBlack,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: .w500,
                     ),
                   ),
                 ),

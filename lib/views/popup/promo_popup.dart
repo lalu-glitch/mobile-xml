@@ -9,14 +9,12 @@ class PromoPopup {
       barrierDismissible: true, // tap luar untuk close
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: .circular(16)),
           insetPadding: const .all(24),
           child: Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: .circular(16),
                 child: _buildPromoImage(imagePath),
               ),
               Positioned(
@@ -27,7 +25,7 @@ class PromoPopup {
                     padding: .all(4),
                     decoration: BoxDecoration(
                       color: kBackground,
-                      borderRadius: BorderRadius.circular(100),
+                      borderRadius: .circular(100),
                     ),
                     child: const Icon(Icons.close_rounded, color: kRed),
                   ),

@@ -22,14 +22,14 @@
 // //         height: 40,
 // //         decoration: BoxDecoration(
 // //           color: color,
-// //           borderRadius: BorderRadius.circular(14),
+// //           borderRadius: .circular(14),
 // //         ),
 // //         child: Center(
 // //           child: Text(
 // //             text,
 // //             style: const TextStyle(
 // //               color: Colors.white,
-// //               fontWeight: FontWeight.w500,
+// //               fontWeight: .w500,
 // //             ),
 // //           ),
 // //         ),
@@ -71,7 +71,7 @@
 // //           width: 200,
 // //           decoration: BoxDecoration(
 // //             border: Border.all(color: kOrange, width: 3.5),
-// //             borderRadius: const BorderRadius.only(
+// //             borderRadius: const .only(
 // //               topLeft: Radius.circular(20),
 // //               bottomRight: Radius.circular(20),
 // //             ),

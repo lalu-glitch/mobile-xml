@@ -22,7 +22,7 @@ class KTPImageGuideSection extends StatelessWidget {
               _buildImageContainer(isCorrect: true, asset: imageValid),
               const SizedBox(height: 12),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 children: const [
                   Icon(Icons.check_circle, color: kGreen, size: 20),
                   SizedBox(width: 8),
@@ -30,7 +30,7 @@ class KTPImageGuideSection extends StatelessWidget {
                     "Benar",
                     style: TextStyle(
                       color: kGreen,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       fontSize: 14,
                     ),
                   ),
@@ -47,7 +47,7 @@ class KTPImageGuideSection extends StatelessWidget {
               _buildImageContainer(isCorrect: false, asset: imageInvalid),
               const SizedBox(height: 12),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 children: const [
                   Icon(Icons.cancel, color: kRed, size: 20),
                   SizedBox(width: 8),
@@ -55,7 +55,7 @@ class KTPImageGuideSection extends StatelessWidget {
                     "Salah",
                     style: TextStyle(
                       color: kRed,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       fontSize: 14,
                     ),
                   ),
@@ -77,7 +77,7 @@ class KTPImageGuideSection extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xFFF0F1F2), // Placeholder background
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: .circular(8),
           // Simulasi gambar KTP
           image: DecorationImage(
             image: //image asset AssetImage('assets/images/ktp_sample.png'),

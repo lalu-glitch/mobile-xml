@@ -46,7 +46,7 @@ class SpeedcashBindingPage extends StatelessWidget {
           appBar: AppBar(
             title: const Text(
               'Speedcash Binding',
-              style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
+              style: TextStyle(color: kWhite, fontWeight: .bold),
             ),
             leading: BackButton(onPressed: () => Navigator.pop(context)),
             backgroundColor: kOrange,
@@ -57,9 +57,7 @@ class SpeedcashBindingPage extends StatelessWidget {
               child: Card(
                 elevation: 1,
                 color: kWhite,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: .circular(10)),
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: Padding(
                   padding: const EdgeInsets.all(18),
@@ -85,7 +83,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                           filled: true,
                           fillColor: kOrange.withAlpha(25),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: .circular(16),
                             borderSide: BorderSide.none,
                           ),
                         ),
@@ -134,7 +132,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                                   vertical: 16,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
+                                  borderRadius: .circular(16),
                                 ),
                                 backgroundColor: kOrange,
                                 elevation: 1,
@@ -152,7 +150,7 @@ class SpeedcashBindingPage extends StatelessWidget {
                                       "Bind Speedcash",
                                       style: TextStyle(
                                         fontSize: kSize18,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: .w600,
                                         color: kWhite,
                                       ),
                                     ),

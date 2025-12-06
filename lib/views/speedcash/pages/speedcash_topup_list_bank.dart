@@ -65,10 +65,7 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                             padding: .only(top: 16.0, bottom: 8.0),
                             child: Text(
                               'Bank',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: TextStyle(fontSize: 18, fontWeight: .bold),
                             ),
                           ),
                           ...banks.map((bank) {
@@ -98,10 +95,7 @@ class _SpeedcashTopUpPageState extends State<SpeedcashTopUpPage> {
                             padding: .only(top: 16.0, bottom: 8.0),
                             child: Text(
                               'Virtual Account',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: TextStyle(fontSize: 18, fontWeight: .bold),
                             ),
                           ),
                           ...virtualAccounts.map((va) {

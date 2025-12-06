@@ -108,7 +108,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       width: currentPage == index ? 24.0 : 8.0,
       decoration: BoxDecoration(
         color: currentPage == index ? kOrange : kOrangeAccent300,
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: .circular(12.0),
       ),
     );
   }

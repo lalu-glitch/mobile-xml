@@ -25,7 +25,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                 'Detail Transfer',
                 style: TextStyle(
                   color: kBlack,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   fontSize: 20,
                 ),
               ),
@@ -33,7 +33,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
               Text(
                 'Silahkan cek detail Top Up dibawah ini \n Terimakasih sudah menggunakan layanan di XML Mobile',
                 style: TextStyle(
-                  fontWeight: FontWeight.w500,
+                  fontWeight: .w500,
                   color: kNeutral80,
                   fontSize: 14,
                 ),
@@ -53,7 +53,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                       margin: .symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                         color: kOrangeAccent300.withAlpha(50),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: .circular(12),
                       ),
                       child: Column(
                         crossAxisAlignment: .start,
@@ -137,7 +137,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                                 style: TextStyle(
                                   color: kBlack,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: .w600,
                                 ),
                               ),
                               Text(
@@ -145,7 +145,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
                                 style: TextStyle(
                                   color: kBlack,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: .w600,
                                 ),
                               ),
                             ],
@@ -172,9 +172,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
             backgroundColor: kOrange,
             foregroundColor: kWhite,
             minimumSize: const Size(double.infinity, 48),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: .circular(12)),
           ),
           onPressed: () {
             showAppToast(context, 'Berhasil TopUp', ToastType.success);
@@ -182,10 +180,7 @@ class SpeedCashTiketTopUp extends StatelessWidget {
             Navigator.pop(context);
             Navigator.pop(context);
           },
-          child: const Text(
-            "Selesai",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+          child: const Text("Selesai", style: TextStyle(fontWeight: .bold)),
         ),
       ),
     );

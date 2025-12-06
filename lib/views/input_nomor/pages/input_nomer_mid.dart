@@ -66,9 +66,7 @@ class _InputNomorPageState extends BaseInput<InputNomorMidPage> {
               Card(
                 color: kWhite,
                 elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: .circular(12)),
                 child: Padding(
                   padding: const .all(16.0),
                   child: Column(
@@ -97,14 +95,12 @@ class _InputNomorPageState extends BaseInput<InputNomorMidPage> {
                   backgroundColor: kOrange,
                   foregroundColor: Colors.white,
                   minimumSize: const Size(double.infinity, 48),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: .circular(12)),
                 ),
                 onPressed: handleNextButtonPress,
                 child: const Text(
                   "Selanjutnya",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: .bold),
                 ),
               ),
             ],

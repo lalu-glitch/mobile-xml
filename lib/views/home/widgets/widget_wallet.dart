@@ -125,7 +125,7 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
   // 1. Header (Nama Wallet & Logo)
   Widget _buildHeader() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: .spaceBetween,
       children: [
         Flexible(
           child: Row(
@@ -262,7 +262,7 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
           shape: RoundedRectangleBorder(borderRadius: .circular(16)),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: [
             const Icon(Icons.link_rounded, size: 20),
             const SizedBox(width: 8),
@@ -287,7 +287,7 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
         border: Border.all(color: kWhite.withAlpha(40), width: 1),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: .center,
         children: [
           Icon(Icons.stars_rounded, color: kYellow, size: 20),
           const SizedBox(width: 8),
@@ -315,7 +315,7 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
         border: Border.all(color: kWhite.withAlpha(25)),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround, // Distribute evenly
+        mainAxisAlignment: .spaceAround, // Distribute evenly
         children: [
           _buildMenuItem(
             icon: Icons.add_circle_outline_rounded,
@@ -365,7 +365,7 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                   color: isHighlight ? kWhite : Colors.transparent,
-                  shape: BoxShape.circle,
+                  shape: .circle,
                 ),
                 child: Icon(
                   icon,

@@ -25,7 +25,7 @@ class StrukItemRow extends StatelessWidget {
               textAlign: TextAlign.end,
               style: TextStyle(
                 color: kBlack,
-                fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
+                fontWeight: isBold ? .bold : .w500,
                 fontSize: 14,
                 fontFamily: isBold ? null : "monospace",
               ),

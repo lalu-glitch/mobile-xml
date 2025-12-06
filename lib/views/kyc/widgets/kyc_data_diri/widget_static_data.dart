@@ -11,13 +11,13 @@ class KYCReadOnlyField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text(
           label,
           style: const TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontWeight: .w600,
             color: kBlack,
           ),
         ),
@@ -26,7 +26,7 @@ class KYCReadOnlyField extends StatelessWidget {
           value,
           style: const TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.bold,
+            fontWeight: .bold,
             color: kBlack,
           ),
         ),

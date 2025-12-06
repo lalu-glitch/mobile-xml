@@ -15,7 +15,7 @@ void showCSBottomSheet(BuildContext context, String title) {
     context: context,
     backgroundColor: kBackground,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      borderRadius: .vertical(top: Radius.circular(20)),
     ),
     builder: (context) {
       return Padding(
@@ -25,16 +25,14 @@ void showCSBottomSheet(BuildContext context, String title) {
           children: [
             Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: .bold),
             ),
             const SizedBox(height: 12),
 
             // CS WA
             Card(
               color: kWhite,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: .circular(16)),
               elevation: 3,
               child: ListTile(
                 leading: CircleAvatar(
@@ -43,7 +41,7 @@ void showCSBottomSheet(BuildContext context, String title) {
                 ),
                 title: const Text(
                   "WhatsApp CS 1",
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: TextStyle(fontWeight: .w600),
                 ),
                 subtitle: const Text("+62 823 2929 9971"),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
@@ -56,9 +54,7 @@ void showCSBottomSheet(BuildContext context, String title) {
             // CS Telegram
             Card(
               color: kWhite,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: .circular(16)),
               elevation: 3,
               child: ListTile(
                 leading: CircleAvatar(
@@ -67,7 +63,7 @@ void showCSBottomSheet(BuildContext context, String title) {
                 ),
                 title: const Text(
                   "Telegram CS 2",
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: TextStyle(fontWeight: .w600),
                 ),
                 subtitle: const Text("@cs2_XMLtronik"),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
@@ -87,7 +83,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
   showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      borderRadius: .vertical(top: Radius.circular(20)),
     ),
     builder: (context) {
       return Container(
@@ -122,9 +118,7 @@ void showUnbindBottomSheet(BuildContext context, VoidCallback onUnbindPressed) {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: kRed, // Warna tombol merah yang lebih tegas
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: .circular(12)),
                 padding: const .symmetric(vertical: 16),
               ),
               child: Text(
@@ -153,7 +147,7 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
   showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      borderRadius: .vertical(top: Radius.circular(20)),
     ),
     builder: (context) {
       return Container(
@@ -183,9 +177,7 @@ void verifyLogOut(BuildContext context, VoidCallback onConfirm) {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: kRed,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: .circular(12)),
                 padding: const .symmetric(vertical: 16),
               ),
               child: Text(

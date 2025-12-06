@@ -266,9 +266,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             style: ElevatedButton.styleFrom(
               backgroundColor: isChecked ? kOrange : kNeutral40,
               minimumSize: const Size(double.infinity, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: .circular(15)),
             ),
             child: loading
                 ? CircularProgressIndicator(color: kWhite)

@@ -36,7 +36,7 @@ class GenericStatusView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: [
             const Spacer(),
 
@@ -50,7 +50,7 @@ class GenericStatusView extends StatelessWidget {
                 height: 80,
                 decoration: BoxDecoration(
                   color: themeColor.withAlpha(26),
-                  shape: BoxShape.circle,
+                  shape: .circle,
                 ),
                 child: Icon(statusIcon, size: 40, color: themeColor),
               ),
@@ -62,7 +62,7 @@ class GenericStatusView extends StatelessWidget {
               title,
               style: const TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: kBlack,
                 letterSpacing: -0.5,
               ),
@@ -88,7 +88,7 @@ class GenericStatusView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
+                      borderRadius: .circular(
                         50,
                       ), // Pill shape (Standar Fintech)
                     ),
@@ -96,10 +96,7 @@ class GenericStatusView extends StatelessWidget {
                   onPressed: onPressed,
                   child: Text(
                     buttonText ?? "Kembali",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: const TextStyle(fontSize: 16, fontWeight: .w600),
                   ),
                 ),
               ),

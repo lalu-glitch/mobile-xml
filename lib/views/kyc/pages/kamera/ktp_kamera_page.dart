@@ -135,7 +135,7 @@ class _KTPCameraPageState extends State<KTPCameraPage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: .w600,
                             ),
                           ),
                         ],
@@ -164,7 +164,7 @@ class _KTPCameraPageState extends State<KTPCameraPage> {
                         right: 24,
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: .spaceEvenly,
                         children: [
                           const SizedBox(width: 48), // Spacer
                           // --- SHUTTER BUTTON DENGAN LOGIC CROP ---
@@ -183,7 +183,7 @@ class _KTPCameraPageState extends State<KTPCameraPage> {
                                 width: 72,
                                 height: 72,
                                 decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
+                                  shape: .circle,
                                   border: Border.all(
                                     color: Colors.white,
                                     width: 4,
@@ -192,7 +192,7 @@ class _KTPCameraPageState extends State<KTPCameraPage> {
                                 padding: const EdgeInsets.all(4),
                                 child: Container(
                                   decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
+                                    shape: .circle,
                                     color: Colors.white,
                                   ),
                                 ),

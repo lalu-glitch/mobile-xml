@@ -52,14 +52,14 @@ class ShopProducts extends StatelessWidget {
           if (showCategoryHeader || entries.length > 1) ...[
             Text(
               kategori.toUpperCase(),
-              style: TextStyle(fontSize: kSize18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: kSize18, fontWeight: .bold),
             ),
             const SizedBox(height: 12),
           ],
           Container(
             decoration: BoxDecoration(
               color: kWhite,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: .circular(16),
             ),
             padding: const .symmetric(horizontal: 8, vertical: 16),
             margin: .only(bottom: (entries.last == entry) ? 0 : 24),
@@ -97,7 +97,7 @@ class ShopProducts extends StatelessWidget {
                   child: Column(
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(18),
+                        borderRadius: .circular(18),
                         child: CachedNetworkImage(
                           imageUrl: item.icon ?? '',
                           width: 50,

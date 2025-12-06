@@ -28,10 +28,7 @@ class CustomListTile extends StatelessWidget {
             radius: 20,
             child: Image.asset(imagePath, width: 20, height: 20),
           ),
-          title: Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.w500),
-          ),
+          title: Text(title, style: const TextStyle(fontWeight: .w500)),
           trailing: Row(
             mainAxisSize: .min,
             children: [
@@ -45,14 +42,14 @@ class CustomListTile extends StatelessWidget {
                         : LinearGradient(
                             colors: [Color(0xFFf4b95a), Color(0xFFba770c)],
                           ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: .circular(8),
                   ),
                   child: Text(
                     label!,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 10,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                 ),

@@ -33,16 +33,14 @@ class PanduanSection extends StatelessWidget {
               final p = panduanList[i];
               return Card(
                 color: kNeutral30,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: .circular(12)),
                 elevation: 0,
                 child: ExpansionTile(
                   title: Text(
                     p.label,
                     style: const TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: .w600,
                       color: kNeutral100,
                     ),
                   ),

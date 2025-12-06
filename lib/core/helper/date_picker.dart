@@ -24,13 +24,13 @@ class DatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text(
           label,
           style: const TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontWeight: .w600,
             color: kBlack,
           ),
         ),
@@ -42,7 +42,7 @@ class DatePicker extends StatelessWidget {
               border: Border(bottom: BorderSide(color: kNeutral50)),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Text(
                   selectedDate != null ? _formatDate(selectedDate!) : hint,

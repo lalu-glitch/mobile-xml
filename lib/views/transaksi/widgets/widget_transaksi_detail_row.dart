@@ -22,7 +22,7 @@ class TransaksiDetailRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Expanded(
             flex: 2,
@@ -43,7 +43,7 @@ class TransaksiDetailRow extends StatelessWidget {
                     }
                   : null,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: .end,
                 children: [
                   Flexible(
                     child: Text(
@@ -51,7 +51,7 @@ class TransaksiDetailRow extends StatelessWidget {
                       textAlign: TextAlign.right,
                       style: const TextStyle(
                         color: kBlack,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: .w600,
                         fontSize: 14,
                       ),
                     ),

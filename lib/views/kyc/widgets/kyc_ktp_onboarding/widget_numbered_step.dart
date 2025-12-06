@@ -11,21 +11,21 @@ class KYCNumberStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         // Lingkaran Angka
         Container(
           padding: .all(12),
           decoration: const BoxDecoration(
             color: kNeutral50, // Warna lingkaran abu-abu
-            shape: BoxShape.circle,
+            shape: .circle,
           ),
           child: Center(
             child: Text(
               number,
               style: const TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: kBlack,
               ),
             ),
@@ -40,7 +40,7 @@ class KYCNumberStep extends StatelessWidget {
               fontSize: 14,
               color: kBlack,
               height: 1.4, // Line height agar nyaman dibaca
-              fontWeight: FontWeight.w500,
+              fontWeight: .w500,
             ),
           ),
         ),

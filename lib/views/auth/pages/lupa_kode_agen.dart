@@ -77,7 +77,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                       "Lupa Kode Agen",
                       style: TextStyle(
                         fontSize: kSize28,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: kBlack,
                       ),
                     ),
@@ -114,7 +114,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                         style: ElevatedButton.styleFrom(
                           padding: const .symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: .circular(16),
                           ),
                           backgroundColor: kOrange,
                         ),
@@ -122,7 +122,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                           "Kirim Permintaan",
                           style: TextStyle(
                             fontSize: kSize18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: kWhite,
                           ),
                         ),
@@ -140,7 +140,7 @@ class _LupaKodeAgenPageState extends State<LupaKodeAgenPage> {
                         style: TextStyle(
                           fontSize: kSize14,
                           color: kBlue,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: .w500,
                           decoration: TextDecoration.underline,
                           decorationColor: kBlue,
                           decorationThickness: 2.0,

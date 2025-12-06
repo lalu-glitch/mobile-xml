@@ -103,7 +103,7 @@ class _SpeedcashTopUpState extends State<SpeedcashTopUp> {
                   style: TextStyle(
                     color: kNeutral100,
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                   ),
                 ),
                 const SizedBox(height: 8),

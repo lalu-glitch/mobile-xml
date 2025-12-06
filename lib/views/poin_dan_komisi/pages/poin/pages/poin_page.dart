@@ -58,10 +58,7 @@ class PoinPage extends StatelessWidget {
                           SizedBox(height: kSize20),
                           Text(
                             '123.456.789',
-                            style: TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: TextStyle(fontSize: 32, fontWeight: .w600),
                           ),
                           SizedBox(height: kSize16),
                           SizedBox(
@@ -93,14 +90,14 @@ class PoinPage extends StatelessWidget {
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                         color: kOrange,
-                                        borderRadius: BorderRadius.circular(14),
+                                        borderRadius: .circular(14),
                                       ),
                                       child: const Text(
                                         'Tukar',
                                         style: TextStyle(
                                           color: kWhite,
                                           fontSize: 12,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: .bold,
                                         ),
                                       ),
                                     ),
@@ -119,7 +116,7 @@ class PoinPage extends StatelessWidget {
                                   'Kamu dapat menukarkan poin yang sudah terkumpul dengan stok pulsa. Minimal penukaran adalah 5000 poin.',
                                   style: TextStyle(
                                     fontSize: 10,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: .w400,
                                     color: kNeutral80,
                                   ),
                                 ),
@@ -136,7 +133,7 @@ class PoinPage extends StatelessWidget {
                   // hadiah spesial
                   Text(
                     'Hadiah Spesial',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 16, fontWeight: .w600),
                   ),
                   SizedBox(height: kSize16),
 
@@ -144,7 +141,7 @@ class PoinPage extends StatelessWidget {
                   SizedBox(
                     height: kSize100 * 3,
                     child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
+                      scrollDirection: .horizontal,
                       itemCount: 5,
                       itemBuilder: (context, index) {
                         return Container(
@@ -165,7 +162,7 @@ class PoinPage extends StatelessWidget {
                                 // blok teks/tombol di bawahnya diukur.
                                 Expanded(
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: .only(
                                       topLeft: Radius.circular(16),
                                       topRight: Radius.circular(16),
                                     ),
@@ -190,7 +187,7 @@ class PoinPage extends StatelessWidget {
                                         '23.000.000',
                                         style: TextStyle(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.w500,
+                                          fontWeight: .w500,
                                           color: kBlack,
                                         ),
                                       ),
@@ -199,7 +196,7 @@ class PoinPage extends StatelessWidget {
                                         'iPhone 17 Pro Max',
                                         style: TextStyle(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: .w600,
                                         ),
                                       ),
                                       Text(
@@ -207,7 +204,7 @@ class PoinPage extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: kNeutral80,
-                                          fontWeight: FontWeight.w400,
+                                          fontWeight: .w400,
                                         ),
                                       ),
                                       SizedBox(height: kSize8),
@@ -218,8 +215,7 @@ class PoinPage extends StatelessWidget {
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: kOrange,
                                             shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
+                                              borderRadius: .circular(8),
                                             ),
                                           ),
                                           child: Text(
@@ -247,7 +243,7 @@ class PoinPage extends StatelessWidget {
                   // Hadiah Lainnya
                   Text(
                     'Hadiah Lainnya',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 16, fontWeight: .w600),
                   ),
                   SizedBox(height: kSize16),
 
@@ -286,7 +282,7 @@ class PoinPage extends StatelessWidget {
                                       '5000 Poin',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: .w600,
                                         color: kOrange,
                                       ),
                                     ),
@@ -295,7 +291,7 @@ class PoinPage extends StatelessWidget {
                                       '1 Unit Power Bank',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: .w600,
                                       ),
                                     ),
                                     SizedBox(height: kSize4),
@@ -315,7 +311,7 @@ class PoinPage extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: kOrange,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: .circular(8),
                                   ),
                                 ),
                                 child: Text(

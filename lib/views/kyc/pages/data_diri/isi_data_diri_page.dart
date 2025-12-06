@@ -133,7 +133,7 @@ class _IsiDataDiriPageState extends State<IsiDataDiriPage> {
             child: SingleChildScrollView(
               padding: const .symmetric(horizontal: 24.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   KYCHeader(
                     step: widget.isConfirm ? "4 dari 4" : "1 dari 4",

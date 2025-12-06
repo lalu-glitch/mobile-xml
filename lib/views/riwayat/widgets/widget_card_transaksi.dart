@@ -19,9 +19,9 @@ class TransactionCard extends StatelessWidget {
       elevation: 0,
       margin: const .only(top: 14, bottom: 4),
       color: kWhite,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(16)),
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: .circular(16),
         onTap: () {
           Navigator.push(
             context,
@@ -45,7 +45,7 @@ class TransactionCard extends StatelessWidget {
                 padding: const .all(10),
                 decoration: BoxDecoration(
                   color: _statusColor(t).withAlpha(25),
-                  shape: BoxShape.circle,
+                  shape: .circle,
                 ),
                 child: Icon(_statusIcon(t), color: _statusColor(t), size: 28),
               ),
@@ -60,7 +60,7 @@ class TransactionCard extends StatelessWidget {
                     Text(
                       t.tujuan,
                       style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         fontSize: 16,
                         color: kBlack,
                       ),
@@ -88,13 +88,13 @@ class TransactionCard extends StatelessWidget {
                     padding: const .symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       color: _statusColor(t).withAlpha(30),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: .circular(12),
                     ),
                     child: Text(
                       t.keterangan,
                       style: TextStyle(
                         fontSize: 12,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: .w600,
                         color: _statusColor(t),
                       ),
                     ),
@@ -103,7 +103,7 @@ class TransactionCard extends StatelessWidget {
                   Text(
                     "Rp ${t.harga.toStringAsFixed(0)}",
                     style: const TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       fontSize: 15,
                       color: kBlack,
                     ),

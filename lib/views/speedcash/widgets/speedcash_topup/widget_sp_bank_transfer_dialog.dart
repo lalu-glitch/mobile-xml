@@ -22,18 +22,14 @@ class BankTransferDialog extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               'Oooops!',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                color: kBlack,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: .w600, color: kBlack),
             ),
             const SizedBox(height: 6),
             Text(
               data.message,
               style: const TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.w500,
+                fontWeight: .w500,
                 color: kNeutral90,
               ),
               textAlign: TextAlign.center,
@@ -66,7 +62,7 @@ class BankTransferDialog extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
           child: const Text(
             'Kembali',
-            style: TextStyle(color: kNeutral90, fontWeight: FontWeight.w500),
+            style: TextStyle(color: kNeutral90, fontWeight: .w500),
           ),
         ),
       ],

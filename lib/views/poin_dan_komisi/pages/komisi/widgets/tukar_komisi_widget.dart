@@ -13,36 +13,27 @@ class TukarKomisiTabPage extends StatelessWidget {
       itemBuilder: (context, index) => Card(
         child: ListTile(
           tileColor: kWhite,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: .circular(16)),
           leading: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: .circular(14),
               color: kOrange,
             ),
             padding: .all(12),
             child: const Icon(Icons.currency_exchange_rounded, color: kWhite),
           ),
-          title: Text(
-            'Tukar Komisi ',
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
+          title: Text('Tukar Komisi ', style: TextStyle(fontWeight: .w600)),
           subtitle: Text(
             'Tanggal: 2025-10-11',
             style: TextStyle(
               color: kNeutral80,
               fontSize: 12,
-              fontWeight: FontWeight.w400,
+              fontWeight: .w400,
             ),
           ),
           trailing: Text(
             '+Rp25.000',
-            style: TextStyle(
-              color: kGreen,
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-            ),
+            style: TextStyle(color: kGreen, fontSize: 14, fontWeight: .w700),
           ),
         ),
       ),

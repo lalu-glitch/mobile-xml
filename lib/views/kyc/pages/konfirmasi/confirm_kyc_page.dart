@@ -15,7 +15,7 @@ class KonfirmasiKYCPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             // MainAxisAlignment tidak perlu center karena kita pakai Spacer
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: .center,
             children: [
               // Spacer pertama mendorong konten ke tengah vertikal
               const Spacer(),
@@ -25,7 +25,7 @@ class KonfirmasiKYCPage extends StatelessWidget {
               // Contoh: Image.asset('assets/ic_success.png', width: 80)
               Container(
                 padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(shape: BoxShape.circle),
+                decoration: const BoxDecoration(shape: .circle),
                 child: const Icon(
                   Icons.verified_outlined, // Placeholder icon
                   size: 100,
@@ -40,7 +40,7 @@ class KonfirmasiKYCPage extends StatelessWidget {
                 'PENGAJUAN BERHASIL',
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Colors.black,
                   letterSpacing: 0.5,
                 ),
@@ -71,7 +71,7 @@ class KonfirmasiKYCPage extends StatelessWidget {
                 style: TextButton.styleFrom(foregroundColor: kNeutral60),
                 child: const Text(
                   'Butuh bantuan?',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 14, fontWeight: .w500),
                 ),
               ),
 
@@ -91,14 +91,12 @@ class KonfirmasiKYCPage extends StatelessWidget {
                     foregroundColor: kWhite, // Warna teks putih
                     elevation: 0, // Flat design sesuai gambar
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        16,
-                      ), // Radius sudut tombol
+                      borderRadius: .circular(16), // Radius sudut tombol
                     ),
                   ),
                   child: const Text(
                     'Kembali ke Beranda',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 16, fontWeight: .w600),
                   ),
                 ),
               ),

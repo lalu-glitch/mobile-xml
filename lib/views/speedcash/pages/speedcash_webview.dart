@@ -101,7 +101,7 @@ class _SpeedcashWebviewPageState extends State<SpeedcashWebviewPage> {
       appBar: AppBar(
         title: Text(
           title,
-          style: const TextStyle(color: kWhite, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: kWhite, fontWeight: .bold),
         ),
         backgroundColor: kBlue,
         iconTheme: const IconThemeData(color: kWhite),

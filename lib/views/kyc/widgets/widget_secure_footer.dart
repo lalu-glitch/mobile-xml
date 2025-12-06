@@ -12,7 +12,7 @@ class SecureFooter extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
               const Icon(Icons.lock_outline, size: 16, color: kNeutral80),
               const SizedBox(width: 8),
@@ -21,7 +21,7 @@ class SecureFooter extends StatelessWidget {
                 style: TextStyle(
                   color: kNeutral80,
                   fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: .w500,
                 ),
               ),
             ],

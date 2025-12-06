@@ -14,7 +14,7 @@ class CetakStrukButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: kWhite,
         // Membuat efek "Sheet" dengan radius di atas
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: const .vertical(top: Radius.circular(24)),
         boxShadow: [
           BoxShadow(
             color: kBlack.withAlpha(15), // Bayangan lebih halus
@@ -35,7 +35,7 @@ class CetakStrukButton extends StatelessWidget {
               shadowColor: kOrange.withAlpha(130),
               elevation: 8,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16), // Rounded modern
+                borderRadius: .circular(16), // Rounded modern
               ),
             ),
             onPressed: () {
@@ -50,7 +50,7 @@ class CetakStrukButton extends StatelessWidget {
               "Cetak Struk",
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: kWhite,
                 letterSpacing: 0.5, // Sedikit spasi agar font terbaca jelas
               ),

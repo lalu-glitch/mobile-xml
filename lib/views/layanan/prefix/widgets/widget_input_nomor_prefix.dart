@@ -19,7 +19,7 @@ class InputNomorPrefixWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           const Text("Nomor Tujuan"),
           const SizedBox(height: 8),
@@ -31,15 +31,15 @@ class InputNomorPrefixWidget extends StatelessWidget {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: .circular(8),
                 borderSide: BorderSide(color: kOrange),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: .circular(10.0),
                 borderSide: const BorderSide(color: kOrange),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: .circular(10.0),
                 borderSide: const BorderSide(color: kOrange),
               ),
               hintText: "0812 1111 2222",

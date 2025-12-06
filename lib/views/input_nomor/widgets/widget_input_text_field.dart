@@ -14,15 +14,15 @@ Widget buildNomorTextField({
     decoration: InputDecoration(
       hintText: "Input Nomor Tujuan",
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: .circular(8),
         borderSide: const BorderSide(color: kOrange),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: .circular(10.0),
         borderSide: const BorderSide(color: kOrange),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: .circular(10.0),
         borderSide: const BorderSide(color: kOrange),
       ),
       suffixIcon: IconButton(

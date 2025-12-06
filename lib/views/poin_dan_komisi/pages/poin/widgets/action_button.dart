@@ -22,18 +22,12 @@ class ActionButton extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: color,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: .circular(8)),
           ),
           onPressed: onPressed,
           child: Text(
             label,
-            style: TextStyle(
-              color: kWhite,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
+            style: TextStyle(color: kWhite, fontSize: 14, fontWeight: .w500),
           ),
         ),
       ),

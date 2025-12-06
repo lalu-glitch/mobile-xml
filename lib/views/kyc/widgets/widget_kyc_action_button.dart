@@ -25,9 +25,7 @@ class KYCActionButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: kOrange,
             elevation: 0, // Flat, lebih ringan render-nya daripada elevation 4
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: .circular(16)),
             // Hapus splash/ripple berat jika mau ultra-performant,
             // tapi default biasanya sudah cukup oke.
           ),
@@ -35,7 +33,7 @@ class KYCActionButton extends StatelessWidget {
             title,
             style: const TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w600,
+              fontWeight: .w600,
               color: kWhite,
             ),
           ),

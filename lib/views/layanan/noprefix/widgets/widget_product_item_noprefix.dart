@@ -22,7 +22,7 @@ class NoPrefixProductItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: .circular(12),
         color: isGangguan
             ? kNeutral20
             : isSelected
@@ -38,11 +38,11 @@ class NoPrefixProductItem extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Flexible(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 if (isGangguan)
                   Row(
@@ -55,7 +55,7 @@ class NoPrefixProductItem extends StatelessWidget {
                 Text(
                   produk.namaProduk,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: isGangguan
                         ? kRed
                         : isSelected
@@ -81,7 +81,7 @@ class NoPrefixProductItem extends StatelessWidget {
           Text(
             CurrencyUtil.formatCurrency(produk.hargaJual),
             style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: isGangguan
                   ? kRed
                   : isSelected

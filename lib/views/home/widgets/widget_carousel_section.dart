@@ -95,7 +95,7 @@ class _CarouselSectionState extends State<CarouselSection> {
       right: 0,
       child: Card(
         elevation: 20,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        shape: RoundedRectangleBorder(borderRadius: .circular(24)),
         color: kWhite,
         child: Padding(
           padding: const .symmetric(horizontal: 16, vertical: 16),

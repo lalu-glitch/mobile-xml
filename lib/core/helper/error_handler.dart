@@ -29,7 +29,7 @@ class ErrorHandler extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: kSize18,
-                fontWeight: FontWeight.w600,
+                fontWeight: .w600,
                 color: kBlack,
               ),
             ),
@@ -46,9 +46,7 @@ class ErrorHandler extends StatelessWidget {
               label: const Text('Coba Lagi', style: TextStyle(color: kWhite)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: kOrange,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(kSize12),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: .circular(kSize12)),
                 padding: .symmetric(vertical: kSize12, horizontal: kSize24),
               ),
             ),

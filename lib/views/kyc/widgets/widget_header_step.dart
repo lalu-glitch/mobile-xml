@@ -11,7 +11,7 @@ class KYCHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text(
           "Langkah $step",
@@ -23,7 +23,7 @@ class KYCHeader extends StatelessWidget {
           style: const TextStyle(
             color: kOrange,
             fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontWeight: .bold,
           ),
         ),
       ],

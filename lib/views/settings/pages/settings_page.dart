@@ -206,7 +206,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           //       ? 0
                           //       : 120, // tinggi maksimum kontainer kalo ada ewallet
                           //   child: ListView.builder(
-                          //     scrollDirection: Axis.horizontal,
+                          //     scrollDirection: .horizontal,
                           //     itemCount: state.data.data.ewallet?.length ?? 0,
                           //     itemBuilder: (context, index) {
                           //       final Ewallet currentEwallet =
@@ -301,16 +301,14 @@ class _SettingsPageState extends State<SettingsPage> {
               title,
               style: const TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w600,
+                fontWeight: .w600,
                 color: kBlack,
               ),
             ),
           ),
           Card(
             color: kWhite,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: .circular(8)),
             child: Column(
               children: items.map((item) {
                 return CustomListTile(

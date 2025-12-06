@@ -26,16 +26,13 @@ class HomePromoSection extends StatelessWidget {
             children: [
               Text(
                 'Pasti Promo',
-                style: TextStyle(
-                  fontSize: kSize18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: kSize18, fontWeight: .bold),
               ),
               const SizedBox(height: 12),
               SizedBox(
                 height: 140,
                 child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
+                  scrollDirection: .horizontal,
                   itemCount: cubit.promoList.length,
                   itemBuilder: (context, i) {
                     final item = cubit.promoList[i];
@@ -51,10 +48,10 @@ class HomePromoSection extends StatelessWidget {
                         margin: const .only(right: 24),
                         decoration: BoxDecoration(
                           color: kWhite,
-                          borderRadius: BorderRadius.circular(18),
+                          borderRadius: .circular(18),
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(18),
+                          borderRadius: .circular(18),
                           child: CachedNetworkImage(
                             imageUrl: item.icon ?? '',
                             fit: BoxFit.cover,

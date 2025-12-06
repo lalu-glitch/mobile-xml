@@ -58,15 +58,15 @@ class CustomTextField extends StatelessWidget {
         labelStyle: TextStyle(color: labelColor ?? kNeutral80),
         floatingLabelStyle: TextStyle(color: floatingLabelColor ?? kOrange),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius: .circular(borderRadius),
           borderSide: BorderSide(color: borderColor ?? kOrangeAccent500),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius: .circular(borderRadius),
           borderSide: BorderSide(color: borderColor ?? kOrangeAccent500),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius: .circular(borderRadius),
           borderSide: BorderSide(
             color: focusedBorderColor ?? kOrange,
             width: 2,

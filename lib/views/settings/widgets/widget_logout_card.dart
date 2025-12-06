@@ -11,15 +11,12 @@ class LogoutCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: kWhite,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(12)),
       child: ListTile(
         leading: const Icon(Icons.logout, color: Colors.redAccent),
         title: const Text(
           "Keluar",
-          style: TextStyle(
-            color: Colors.redAccent,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.redAccent, fontWeight: .bold),
         ),
         onTap: onTap,
       ),

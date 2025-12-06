@@ -32,7 +32,7 @@ class HeaderSection extends StatelessWidget {
           style: const TextStyle(
             color: kNeutral100,
             fontSize: 16,
-            fontWeight: FontWeight.w600,
+            fontWeight: .w600,
           ),
         ),
       ],

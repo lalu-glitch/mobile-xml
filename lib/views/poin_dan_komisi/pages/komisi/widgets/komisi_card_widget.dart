@@ -32,7 +32,7 @@ class CardWidget extends StatelessWidget {
                 SizedBox(height: kSize20),
                 Text(
                   '123.456.789',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 32, fontWeight: .w600),
                 ),
                 SizedBox(height: kSize16),
 
@@ -66,14 +66,14 @@ class CardWidget extends StatelessWidget {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: kOrange,
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: .circular(14),
                             ),
                             child: const Text(
                               'Tukar',
                               style: TextStyle(
                                 color: kWhite,
                                 fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),
@@ -92,7 +92,7 @@ class CardWidget extends StatelessWidget {
                         'Setiap akhir bulan akan dilakukan pencairan Margin mitra massal pada jam 23.50 WIB',
                         style: TextStyle(
                           fontSize: 10,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: .w400,
                           color: kNeutral80,
                         ),
                         overflow: TextOverflow.ellipsis,

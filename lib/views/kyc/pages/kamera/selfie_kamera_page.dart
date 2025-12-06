@@ -107,7 +107,7 @@ class _KTPCameraSelfiePageState extends State<KTPCameraSelfiePage> {
                         style: TextStyle(
                           color: kWhite,
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                         ),
                       ),
                     ],
@@ -149,14 +149,14 @@ class _KTPCameraSelfiePageState extends State<KTPCameraSelfiePage> {
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          shape: .circle,
                           border: Border.all(color: kWhite, width: 5),
                           color: kWhite.withAlpha(50), // Semi-transparent fill
                         ),
                         padding: const EdgeInsets.all(4),
                         child: Container(
                           decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
+                            shape: .circle,
                             color: kWhite,
                           ),
                         ),

@@ -35,11 +35,7 @@ class DetailTransaksiPage extends StatelessWidget {
         ),
         title: const Text(
           'Detail Transaksi',
-          style: TextStyle(
-            color: kBlack,
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-          ),
+          style: TextStyle(color: kBlack, fontWeight: .w600, fontSize: 16),
         ),
         scrolledUnderElevation: 0.0,
       ),
@@ -54,9 +50,7 @@ class DetailTransaksiPage extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: kWhite,
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(20),
-                  ),
+                  borderRadius: const .vertical(top: Radius.circular(20)),
                   boxShadow: [
                     BoxShadow(
                       color: kBlack.withAlpha(15),
@@ -73,7 +67,7 @@ class DetailTransaksiPage extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: statusColor.withAlpha(25),
-                        shape: BoxShape.circle,
+                        shape: .circle,
                       ),
                       child: Icon(statusIcon, color: statusColor, size: 40),
                     ),
@@ -83,7 +77,7 @@ class DetailTransaksiPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: statusColor,
                       ),
                     ),
@@ -115,11 +109,11 @@ class DetailTransaksiPage extends StatelessWidget {
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: kNeutral20,
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: .circular(8),
                           border: Border.all(color: kNeutral20),
                         ),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: .start,
                           children: [
                             Text(
                               "Serial Number (SN)",
@@ -130,7 +124,7 @@ class DetailTransaksiPage extends StatelessWidget {
                               status.sn!,
                               style: const TextStyle(
                                 fontSize: 15,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 fontFamily: 'Monospace',
                                 letterSpacing: 0.5,
                               ),
@@ -157,7 +151,7 @@ class DetailTransaksiPage extends StatelessWidget {
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: kYellow.withAlpha(25),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: .circular(8),
                         ),
                         child: Text(
                           status.outbox!,
@@ -199,7 +193,7 @@ class DetailTransaksiPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       side: BorderSide(color: statusColor),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: .circular(12),
                       ),
                       backgroundColor: kWhite,
                     ),
@@ -227,7 +221,7 @@ class DetailTransaksiPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: .circular(12),
                       ),
                     ),
                   ),
@@ -237,7 +231,7 @@ class DetailTransaksiPage extends StatelessWidget {
 
             const SizedBox(height: 30),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               children: [
                 Icon(Icons.lock_outline, size: 14, color: kNeutral50),
                 const SizedBox(width: 6),

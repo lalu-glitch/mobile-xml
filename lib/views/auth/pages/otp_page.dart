@@ -119,7 +119,7 @@ class _KodeOTPState extends State<KodeOTP> {
                     style: TextStyle(
                       fontSize: 24,
                       color: kNeutral100,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -132,7 +132,7 @@ class _KodeOTPState extends State<KodeOTP> {
                   CustomTextField(
                     controller: kodeOTPCtrl,
                     style: TextStyle(
-                      fontWeight: FontWeight.w900,
+                      fontWeight: .w900,
                       fontSize: 25,
                       letterSpacing: 30,
                     ),
@@ -161,7 +161,7 @@ class _KodeOTPState extends State<KodeOTP> {
                       backgroundColor: start == 0 ? kNeutral40 : kOrange,
                       minimumSize: const Size(double.infinity, 50),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: .circular(15),
                       ),
                     ),
                     child: Text(
@@ -183,7 +183,7 @@ class _KodeOTPState extends State<KodeOTP> {
                       style: TextStyle(
                         color: kOrangeAccent500,
                         fontSize: 14,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: .w900,
                         decoration: TextDecoration.underline,
                         decorationColor: kOrangeAccent300,
                         decorationThickness: 2.0,

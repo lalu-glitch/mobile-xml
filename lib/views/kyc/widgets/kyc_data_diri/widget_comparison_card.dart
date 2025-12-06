@@ -19,7 +19,7 @@ class KYCComparisonCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: const Color(0xFFE5E7EB)),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: .circular(16),
         boxShadow: [
           BoxShadow(
             color: kBlack.withAlpha(15),
@@ -35,9 +35,7 @@ class KYCComparisonCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             decoration: BoxDecoration(
               color: kNeutral20,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(16),
-              ),
+              borderRadius: const .vertical(top: Radius.circular(16)),
               border: Border(bottom: BorderSide(color: kNeutral20)),
             ),
             child: Row(
@@ -49,7 +47,7 @@ class KYCComparisonCard extends StatelessWidget {
                     child: Text(
                       "UNREG",
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: .w600,
                         color: kNeutral70,
                         fontSize: 13,
                       ),
@@ -65,13 +63,13 @@ class KYCComparisonCard extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: kPrimary.withAlpha(25),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: .circular(20),
                     ),
                     child: Center(
                       child: Text(
                         "REG",
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: kPrimary,
                           fontSize: 13,
                         ),
@@ -126,7 +124,7 @@ class KYCComparisonCard extends StatelessWidget {
               style: TextStyle(
                 color: kTextSecondary,
                 fontSize: 13,
-                fontWeight: FontWeight.w500,
+                fontWeight: .w500,
               ),
             ),
           ),
@@ -149,7 +147,7 @@ class KYCComparisonCard extends StatelessWidget {
                 valPremium,
                 style: TextStyle(
                   color: kBlack,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   fontSize: 15,
                 ),
               ),

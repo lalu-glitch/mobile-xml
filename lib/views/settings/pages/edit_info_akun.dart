@@ -56,10 +56,10 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
                   decoration: const InputDecoration(
                     hintText: 'Masukkan info baru',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                      borderRadius: .all(Radius.circular(12.0)),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                      borderRadius: .all(Radius.circular(12.0)),
                       borderSide: BorderSide(color: kOrange, width: 2),
                     ),
                   ),
@@ -90,9 +90,7 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
                     backgroundColor: kOrange,
                     foregroundColor: kWhite,
                     padding: const .symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: .circular(12)),
                   ),
                   onPressed: isLoading
                       ? null
@@ -129,10 +127,7 @@ class _EditInfoAkunScreenState extends State<EditInfoAkunScreen> {
                         )
                       : const Text(
                           'Simpan',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
+                          style: TextStyle(fontWeight: .bold, fontSize: 16),
                         ),
                 ),
               ),

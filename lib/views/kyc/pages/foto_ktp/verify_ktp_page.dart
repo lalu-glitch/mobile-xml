@@ -17,7 +17,7 @@ class KTPVerifyPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Verifikasi KTP',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black, fontWeight: .bold),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -36,7 +36,7 @@ class KTPVerifyPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     const Text(
                       "Pastikan foto KTP terlihat jelas",
@@ -47,7 +47,7 @@ class KTPVerifyPage extends StatelessWidget {
                     Container(
                       constraints: const BoxConstraints(maxHeight: 300),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: .circular(12),
                         border: Border.all(color: kNeutral30),
                         boxShadow: [
                           BoxShadow(
@@ -58,7 +58,7 @@ class KTPVerifyPage extends StatelessWidget {
                         ],
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: .circular(12),
                         // Menampilkan gambar dari File System
                         child: Image.file(File(imagePath), fit: BoxFit.contain),
                       ),
@@ -85,15 +85,13 @@ class KTPVerifyPage extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       side: const BorderSide(color: Color(0xFFFE7F04)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: .circular(8)),
                     ),
                     child: const Text(
                       "Foto Ulang",
                       style: TextStyle(
                         color: Color(0xFFFE7F04),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                   ),
@@ -112,17 +110,12 @@ class KTPVerifyPage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFFE7F04),
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: .circular(8)),
                       elevation: 0,
                     ),
                     child: const Text(
                       "Gunakan Foto",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(color: Colors.white, fontWeight: .bold),
                     ),
                   ),
                 ),

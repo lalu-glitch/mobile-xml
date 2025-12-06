@@ -66,7 +66,7 @@ class _AuthPageState extends State<AuthPage> {
                     style: TextStyle(
                       fontSize: 32,
                       color: kOrange,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: .w900,
                     ),
                   ),
                   Text(
@@ -74,7 +74,7 @@ class _AuthPageState extends State<AuthPage> {
                     style: TextStyle(
                       fontSize: 24,
                       color: kNeutral100,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: .w500,
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -94,7 +94,7 @@ class _AuthPageState extends State<AuthPage> {
                                         ? kOrange
                                         : kNeutral90,
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: .w500,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -122,7 +122,7 @@ class _AuthPageState extends State<AuthPage> {
                                         ? kNeutral90
                                         : kOrange,
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: .w500,
                                   ),
                                 ),
                                 const SizedBox(height: 10),

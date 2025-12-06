@@ -148,7 +148,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: kBlue,
         padding: const .symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: .circular(16)),
         elevation: 5,
         shadowColor: Colors.blueAccent.shade100,
       ),
@@ -162,7 +162,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
               "Selanjutnya",
               style: TextStyle(
                 fontSize: kSize16,
-                fontWeight: FontWeight.w600,
+                fontWeight: .w600,
                 color: kWhite,
               ),
             ),
@@ -175,7 +175,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
     return Card(
       color: kWhite,
       elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(12)),
       child: Padding(
         padding: const .all(16.0),
         child: Column(

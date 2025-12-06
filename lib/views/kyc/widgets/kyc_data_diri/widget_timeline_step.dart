@@ -24,7 +24,7 @@ class KYCTimelineStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           // Timeline Indicator
           Column(
@@ -62,10 +62,7 @@ class KYCTimelineStep extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
+                    style: const TextStyle(fontWeight: .bold, fontSize: 15),
                   ),
                   const SizedBox(height: 4),
                   Text(

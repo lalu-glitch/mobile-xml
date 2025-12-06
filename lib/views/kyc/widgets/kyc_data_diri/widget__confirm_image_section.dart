@@ -15,11 +15,11 @@ class ConfirmImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         const Text(
           "Dokumen Pendukung",
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 14, fontWeight: .bold),
         ),
         const SizedBox(height: 16),
         Row(

@@ -33,7 +33,7 @@ class OnboardingPage extends StatelessWidget {
               style: TextStyle(
                 color: kNeutral100,
                 fontSize: 24,
-                fontWeight: FontWeight.w800,
+                fontWeight: .w800,
               ),
               textAlign: TextAlign.center,
             ),
@@ -41,11 +41,7 @@ class OnboardingPage extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               content.description,
-              style: TextStyle(
-                color: kGrey,
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
+              style: TextStyle(color: kGrey, fontSize: 14, fontWeight: .w400),
               textAlign: TextAlign.center,
             ),
             const Spacer(flex: 1),

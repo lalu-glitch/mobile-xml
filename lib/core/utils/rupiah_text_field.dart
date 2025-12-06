@@ -65,7 +65,7 @@ class _RupiahTextFieldState extends State<RupiahTextField> {
             "Rp.",
             style: TextStyle(
               fontSize: widget.fontSize,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: kOrange,
             ),
           ),
@@ -75,13 +75,13 @@ class _RupiahTextFieldState extends State<RupiahTextField> {
         filled: true,
         fillColor: kBackground,
         isDense: true,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        border: OutlineInputBorder(borderRadius: .circular(12)),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: .circular(12),
           borderSide: const BorderSide(color: kOrangeAccent300, width: 2),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: .circular(12),
           borderSide: const BorderSide(color: kOrangeAccent300, width: 2),
         ),
       ),
