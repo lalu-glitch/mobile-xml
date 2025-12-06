@@ -1,13 +1,17 @@
-class UserBalance {
+import 'package:equatable/equatable.dart';
+
+import 'ewallet_model.dart';
+
+class UserBalance extends Equatable {
   final bool isLogout;
   final String? namauser;
   final String? kodeReseller;
   final int? saldo;
   final int? poin;
   final String? kodeLevel;
-  final List<BalanceWallet>? ewallet;
+  final List<Ewallet>? ewallet;
 
-  UserBalance({
+  const UserBalance({
     required this.isLogout,
     this.namauser,
     this.kodeReseller,
@@ -26,7 +30,7 @@ class UserBalance {
       poin: _parseInt(json['poin']),
       kodeLevel: json['kode_level'] ?? '',
       ewallet: (json['ewallet'] as List<dynamic>? ?? [])
-          .map((e) => BalanceWallet.fromJson(e))
+          .map((e) => Ewallet.fromJson(e))
           .toList(),
     );
   }
@@ -38,24 +42,15 @@ class UserBalance {
     if (value is String) return int.tryParse(value) ?? 0;
     return 0;
   }
-}
 
-class BalanceWallet {
-  final String nama; // maps from 'nama'
-  final String kodeDompet; // maps from 'kode_dompet'
-  final int saldoEwallet; // maps from 'saldo_ewallet'
-
-  BalanceWallet({
-    required this.nama,
-    required this.kodeDompet,
-    required this.saldoEwallet,
-  });
-
-  factory BalanceWallet.fromJson(Map<String, dynamic> json) {
-    return BalanceWallet(
-      nama: json['nama'] ?? '',
-      kodeDompet: json['kode_dompet'] ?? '',
-      saldoEwallet: UserBalance._parseInt(json['saldo_ewallet']),
-    );
-  }
+  @override
+  List<Object?> get props => [
+    isLogout,
+    namauser,
+    kodeReseller,
+    saldo,
+    poin,
+    kodeLevel,
+    ewallet,
+  ];
 }

@@ -13,7 +13,7 @@ import '../cubit/promo_cubit.dart';
 import '../widgets/widget_home_header_section.dart';
 import '../widgets/widget_home_layanan_section.dart';
 import '../widgets/widget_home_promo_section.dart';
-import '../widgets/widget_main_saldo_card_carousel.dart';
+import '../widgets/widget_carousel_section.dart';
 import '../widgets/widget_poin_komisi_overlay.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,26 +31,20 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      context.read<BalanceCubit>().fetchUserBalance();
-      context.read<LayananCubit>().fetchLayanan();
-      context.read<PromoCubit>().fetchPromo();
+      _fetchData();
     });
+  }
+
+  Future<void> _fetchData() async {
+    await Future.wait([
+      context.read<BalanceCubit>().fetchUserBalance(),
+      context.read<LayananCubit>().fetchLayanan(),
+      context.read<PromoCubit>().fetchPromo(),
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubitBalance = context.read<BalanceCubit>();
-    final cubitLayanan = context.read<LayananCubit>();
-    final cubitPromo = context.read<PromoCubit>();
-
-    Future<void> refreshData() async {
-      await Future.wait([
-        cubitBalance.fetchUserBalance(),
-        cubitLayanan.fetchLayanan(),
-        cubitPromo.fetchPromo(),
-      ]);
-    }
-
     return MultiBlocListener(
       listeners: [
         BlocListener<BalanceCubit, BalanceState>(
@@ -72,13 +66,13 @@ class _HomePageState extends State<HomePage> {
         ),
         BlocListener<PromoCubit, PromoState>(
           listener: (context, state) {
+            final cubitPromo = context.read<PromoCubit>();
             if (state is PromoLoaded && !cubitPromo.hasShownPopUp) {
               cubitPromo.hasShownPopUp = true;
               final promos = cubitPromo.promoList;
               final img =
                   promos.firstOrNull?.icon ??
                   'assets/images/fallback_promo.png';
-
               PromoPopup.show(context, img);
             }
           },
@@ -102,15 +96,15 @@ class _HomePageState extends State<HomePage> {
                   width: 300,
                   height: 300,
                   fit: BoxFit.cover,
+                  cacheWidth: 400,
                 ),
               ),
               SafeArea(
                 child: Padding(
-                  padding: const .only(top: 16.0),
-
+                  padding: const EdgeInsets.only(top: 16.0),
                   child: RefreshIndicator(
                     color: kOrange,
-                    onRefresh: refreshData,
+                    onRefresh: _fetchData,
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       dragStartBehavior: DragStartBehavior.down,
@@ -118,37 +112,41 @@ class _HomePageState extends State<HomePage> {
                         clipBehavior: Clip.none,
                         children: [
                           Column(
-                            crossAxisAlignment: .start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const .symmetric(horizontal: 16),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
                                 child: HomeHeaderSection(),
                               ),
                               const SizedBox(height: 150),
-                              //ini buat promo sama layanan
+
                               BlocBuilder<LayananCubit, LayananState>(
                                 builder: (context, layananState) {
                                   return BlocBuilder<PromoCubit, PromoState>(
                                     builder: (context, promoState) {
                                       if (layananState is LayananInitial ||
                                           promoState is PromoInitial) {
-                                        return SizedBox.shrink();
+                                        return const SizedBox.shrink();
                                       }
+
                                       if (layananState is LayananError ||
                                           promoState is PromoError) {
+                                        // Error Widget
                                         return Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                             color: kBackground,
                                           ),
-                                          padding: const .all(16),
+                                          padding: const EdgeInsets.all(16),
                                           child: Column(
                                             children: [
                                               const SizedBox(height: 120),
                                               SizedBox(
                                                 child: ErrorHandler(
                                                   message: 'Ada yang salah',
-                                                  onRetry: refreshData,
+                                                  onRetry: _fetchData,
                                                 ),
                                               ),
                                               const SizedBox(height: 120),
@@ -156,21 +154,22 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         );
                                       }
+
+                                      // Success Widget
                                       return Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: kBackground,
                                         ),
-                                        padding: const .all(16),
+                                        padding: const EdgeInsets.all(16),
                                         child: Column(
-                                          crossAxisAlignment: .start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             const SizedBox(height: 120),
-                                            // promo yang bisa di scroll horizontal
-                                            HomePromoSection(),
+                                            const HomePromoSection(),
                                             const SizedBox(height: 24),
-                                            // layanan dalam gridview
-                                            HomeLayananSection(),
+                                            const HomeLayananSection(),
                                             const SizedBox(height: 120),
                                           ],
                                         ),
@@ -181,8 +180,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
+                          // Overlay widgets...
                           PoinKomisiOverlay(),
-                          MainSaldoCardCarousel(),
+                          CarouselSection(),
                         ],
                       ),
                     ),

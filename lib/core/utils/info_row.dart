@@ -15,7 +15,7 @@ Widget infoRow(
         flex: 4,
         child: Text(
           label,
-          style: TextStyle(color: kNeutral80, fontWeight: FontWeight.w400),
+          style: TextStyle(color: kNeutral80, fontWeight: .w400),
         ),
       ),
       const SizedBox(width: 8),
@@ -28,7 +28,7 @@ Widget infoRow(
           overflow: TextOverflow.ellipsis,
           maxLines: 4,
           style: TextStyle(
-            fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
+            fontWeight: isTotal ? .bold : .w600,
             fontSize: isTotal ? kSize16 : kSize14,
             color: isTotal ? color : kBlack,
           ),

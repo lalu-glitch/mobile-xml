@@ -9,7 +9,7 @@ class DownlineCard extends StatelessWidget {
       color: kWhite,
       elevation: 2.0,
       margin: const .only(bottom: 16.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(12.0)),
       child: Padding(
         padding: const .all(16.0),
         child: Column(
@@ -38,11 +38,7 @@ class DownlineCard extends StatelessWidget {
           children: [
             Text(
               'SMS0795632',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: kBlack,
-              ),
+              style: TextStyle(fontWeight: .bold, fontSize: 16, color: kBlack),
             ),
             SizedBox(height: 4.0),
             Text('Yeni', style: TextStyle(fontSize: 14, color: kGrey)),
@@ -53,11 +49,11 @@ class DownlineCard extends StatelessWidget {
           padding: const .symmetric(horizontal: 12.0, vertical: 6.0),
           decoration: BoxDecoration(
             color: kGreen.withAlpha(50),
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: .circular(8.0),
           ),
           child: const Text(
             'Aktif',
-            style: TextStyle(color: kGreen, fontWeight: FontWeight.w600),
+            style: TextStyle(color: kGreen, fontWeight: .w600),
           ),
         ),
       ],
@@ -101,7 +97,7 @@ class DownlineCard extends StatelessWidget {
             value,
             style: const TextStyle(
               fontSize: 14,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: kBlack,
             ),
             textAlign: TextAlign.end,

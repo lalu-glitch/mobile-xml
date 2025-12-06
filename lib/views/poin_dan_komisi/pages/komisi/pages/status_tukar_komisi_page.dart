@@ -20,7 +20,7 @@ class StatusTukarKomisiPage extends StatelessWidget {
                 margin: .fromLTRB(0, 50, 0, 0),
                 decoration: BoxDecoration(
                   color: kOrange,
-                  borderRadius: BorderRadius.circular(100),
+                  borderRadius: .circular(100),
                   boxShadow: [
                     BoxShadow(
                       color: kOrange.withAlpha(80),
@@ -39,7 +39,7 @@ class StatusTukarKomisiPage extends StatelessWidget {
                 style: TextStyle(
                   color: kOrange,
                   fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: .w600,
                 ),
               ),
 
@@ -48,7 +48,7 @@ class StatusTukarKomisiPage extends StatelessWidget {
                 style: TextStyle(
                   color: kBlack,
                   fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: .w600,
                 ),
               ),
               SizedBox(height: kSize8),
@@ -57,7 +57,7 @@ class StatusTukarKomisiPage extends StatelessWidget {
                 style: TextStyle(
                   color: kNeutral90,
                   fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: .w500,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -75,14 +75,14 @@ class StatusTukarKomisiPage extends StatelessWidget {
                       backgroundColor: kOrange,
                       padding: const .symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: .circular(16),
                       ),
                     ),
                     child: Text(
                       "Lanjut Transaksi",
                       style: TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: .w600,
                         color: kWhite,
                       ),
                     ),

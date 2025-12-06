@@ -61,7 +61,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: .end,
       children: [
         CustomTextField(
           controller: kodeResellerCtrl,
@@ -83,7 +83,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         GestureDetector(
           child: Text(
             'Lupa Kode Agen?',
-            style: TextStyle(color: kOrange, fontWeight: FontWeight.bold),
+            style: TextStyle(color: kOrange, fontWeight: .bold),
           ),
           onTap: () {
             Navigator.pushNamed(context, '/lupaKodeAgen');
@@ -109,7 +109,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                       text: 'syarat dan ketentuan',
                       style: TextStyle(
                         color: kOrange,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: .w500,
                         decoration: TextDecoration.underline,
                       ),
                       recognizer: TapGestureRecognizer()
@@ -152,9 +152,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: kOrange,
                 minimumSize: const Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: .circular(15)),
               ),
               child: isLoading
                   ? const Center(

@@ -27,7 +27,7 @@ class DataListHeader extends StatelessWidget {
           // Teks "Menampilkan 48 data"
           Text(
             'Menampilkan $totalData data',
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 14, fontWeight: .w600),
           ),
 
           // Dropdown Urutkan
@@ -35,7 +35,7 @@ class DataListHeader extends StatelessWidget {
             padding: const .symmetric(horizontal: 10),
             decoration: BoxDecoration(
               border: Border.all(color: kNeutral50),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: .circular(16),
             ),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(

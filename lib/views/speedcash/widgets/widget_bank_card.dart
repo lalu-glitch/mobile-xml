@@ -23,7 +23,7 @@ class BankCard extends StatelessWidget {
       child: Card(
         elevation: 0,
         shadowColor: kNeutral60,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: .circular(16)),
         color: kWhite,
         margin: const .only(top: 6, bottom: 6),
         child: Padding(
@@ -38,6 +38,8 @@ class BankCard extends StatelessWidget {
                     ? CachedNetworkImage(
                         imageUrl: imageUrl,
                         fit: BoxFit.contain,
+                        memCacheWidth: 150,
+                        memCacheHeight: 150,
                         placeholder: (context, url) =>
                             const Center(child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) =>
@@ -55,7 +57,7 @@ class BankCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 16, fontWeight: .w600),
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 4),

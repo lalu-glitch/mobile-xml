@@ -25,7 +25,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
   // simpen data sementara buat dipake di fungsi2 widget dibawahnya
   CekTransaksiModel? _cekTransaksiData;
 
-  // Konstanta untuk kode flow agar tidak pakai magic number
+  // Konstanta untuk kode flow
   static const int _flowOmni = 9;
 
   @override
@@ -62,7 +62,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Ambil data transaksi sekali saja di build
+    // Ambil data transaksi sekali aja di build
     final transaksi = context.read<TransaksiHelperCubit>().getData();
 
     return buildPopScope(
@@ -85,7 +85,12 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
               >(
                 listener: (context, state) {
                   if (state is WebSocketCekTransaksiError) {
-                    showErrorDialog(context, state.message);
+                    showErrorDialog(
+                      context,
+                      state.message,
+                      onPressed: () =>
+                          Navigator.pushReplacementNamed(context, '/'),
+                    );
                   }
                 },
                 builder: (context, state) {
@@ -100,7 +105,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
 
                     return SingleChildScrollView(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: .start,
                         children: [
                           _buildInfoCard(state.data, transaksi),
                           const SizedBox(height: 20),
@@ -137,14 +142,14 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 48.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: [
             // 1. Visual Anchor (Icon with soft background)
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: color.withAlpha(26),
-                shape: BoxShape.circle,
+                shape: .circle,
               ),
               child: Icon(icon, size: 48, color: color),
             ),
@@ -156,8 +161,8 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey[800], // Dark grey for readability
+                fontWeight: .w600,
+                color: kNeutral90, // Dark grey for readability
                 letterSpacing: 0.5,
               ),
             ),
@@ -187,7 +192,7 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
     return Card(
       color: kWhite,
       elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -215,13 +220,10 @@ class _CekTransaksiPageState extends BaseInput<CekTransaksiPage> {
         backgroundColor: kOrange,
         foregroundColor: Colors.white,
         minimumSize: const Size(double.infinity, 48),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: .circular(12)),
       ),
       onPressed: handleNextButtonPress,
-      child: const Text(
-        "Selanjutnya",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
+      child: const Text("Selanjutnya", style: TextStyle(fontWeight: .bold)),
     );
   }
 

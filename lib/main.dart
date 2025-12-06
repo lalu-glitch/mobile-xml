@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'data/services/auth_service.dart';
@@ -15,12 +14,12 @@ import 'views/auth/cubit/request_kode_agen_cubit.dart';
 import 'views/home/cubit/balance_cubit.dart';
 import 'views/home/cubit/layanan_cubit.dart';
 import 'views/home/cubit/promo_cubit.dart';
+import 'views/kyc/utils/cubit/kyc_helper_cubit.dart';
 import 'views/layanan/cubit/flow_cubit.dart';
 import 'core/routes/app_route.dart';
 import 'data/services/api_service.dart';
 import 'data/services/location_service.dart';
 import 'data/services/speedcash_api_service.dart';
-import 'viewmodels/speedcash/speedcash_viewmodel.dart';
 import 'views/input_nomor/utils/transaksi_helper_cubit.dart';
 import 'views/layanan/noprefix/cubit/provider_noprefix_cubit.dart';
 import 'views/layanan/prefix/cubit/provider_prefix_cubit.dart';
@@ -45,6 +44,8 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
   WidgetsFlutterBinding.ensureInitialized();
+  //idk if this code is necessary or not, but ima put it here.. just in case.
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 50 * 1024 * 1024;
   runApp(const XmlApp());
 }
 
@@ -191,6 +192,7 @@ class _XmlAppState extends State<XmlApp> {
           //helper
           BlocProvider(create: (context) => TransaksiHelperCubit()),
           BlocProvider(create: (context) => FlowCubit()),
+          BlocProvider(create: (context) => KYCHelperCubit()),
 
           //transaksi web socket
           BlocProvider(
@@ -223,26 +225,18 @@ class _XmlAppState extends State<XmlApp> {
                 RequestTopUpCubit(context.read<SpeedcashApiService>()),
           ),
         ],
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (context) =>
-                  SpeedcashVM(apiService: context.read<SpeedcashApiService>()),
-            ),
-          ],
-          child: MaterialApp(
-            title: "XML App",
-            theme: ThemeData(
-              textTheme: Theme.of(
-                context,
-              ).textTheme.apply(fontFamily: 'Gabarito'),
-              fontFamily: 'Gabarito',
-              useMaterial3: true,
-            ),
-            navigatorKey: navigatorKey,
-            initialRoute: '/',
-            routes: appRoutes,
+        child: MaterialApp(
+          title: "XML App",
+          theme: ThemeData(
+            textTheme: Theme.of(
+              context,
+            ).textTheme.apply(fontFamily: 'Gabarito'),
+            fontFamily: 'Gabarito',
+            useMaterial3: true,
           ),
+          navigatorKey: navigatorKey,
+          initialRoute: '/',
+          routes: appRoutes,
         ),
       ),
     );

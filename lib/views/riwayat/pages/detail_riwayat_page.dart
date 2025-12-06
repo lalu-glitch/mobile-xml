@@ -25,11 +25,7 @@ class DetailRiwayatPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Detail Transaksi',
-          style: TextStyle(
-            color: kBlack,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(color: kBlack, fontSize: 18, fontWeight: .w600),
         ),
         centerTitle: true,
         backgroundColor: kBackground,
@@ -46,7 +42,7 @@ class DetailRiwayatPage extends StatelessWidget {
           if (state is DetailRiwayatTransaksiError) {
             return Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 children: [
                   const Icon(Icons.error_outline, size: 48, color: kGrey),
                   const SizedBox(height: 16),
@@ -79,7 +75,7 @@ class DetailRiwayatPage extends StatelessWidget {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: kWhite,
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: .circular(20),
                             boxShadow: [
                               BoxShadow(
                                 color: kBlack.withAlpha(15),
@@ -97,7 +93,7 @@ class DetailRiwayatPage extends StatelessWidget {
                                 ),
                                 decoration: BoxDecoration(
                                   color: kWhite,
-                                  borderRadius: const BorderRadius.vertical(
+                                  borderRadius: const .vertical(
                                     top: Radius.circular(20),
                                   ),
                                   border: Border(
@@ -110,7 +106,7 @@ class DetailRiwayatPage extends StatelessWidget {
                                       padding: const EdgeInsets.all(12),
                                       decoration: BoxDecoration(
                                         color: statusColor.withAlpha(25),
-                                        shape: BoxShape.circle,
+                                        shape: .circle,
                                       ),
                                       child: Icon(
                                         statusIcon,
@@ -125,7 +121,7 @@ class DetailRiwayatPage extends StatelessWidget {
                                           : "Transaksi Gagal",
                                       style: TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                         color: statusColor,
                                       ),
                                     ),
@@ -137,7 +133,7 @@ class DetailRiwayatPage extends StatelessWidget {
                                       ),
                                       style: const TextStyle(
                                         fontSize: 28,
-                                        fontWeight: FontWeight.w800,
+                                        fontWeight: .w800,
                                         color: kBlack,
                                       ),
                                     ),
@@ -159,7 +155,7 @@ class DetailRiwayatPage extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(24),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: .start,
                                   children: [
                                     _buildSectionTitle("Detail Produk"),
                                     const SizedBox(height: 12),
@@ -207,9 +203,7 @@ class DetailRiwayatPage extends StatelessWidget {
                                         padding: const EdgeInsets.all(12),
                                         decoration: BoxDecoration(
                                           color: kYellow.withAlpha(25),
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
+                                          borderRadius: .circular(8),
                                           border: Border.all(color: kNeutral20),
                                         ),
                                         child: Text(
@@ -231,7 +225,7 @@ class DetailRiwayatPage extends StatelessWidget {
                         const SizedBox(height: 20),
                         // Branding Footer
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: .center,
                           children: [
                             Icon(
                               Icons.lock_outline,
@@ -264,11 +258,7 @@ class DetailRiwayatPage extends StatelessWidget {
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
-        color: kBlack,
-      ),
+      style: const TextStyle(fontSize: 14, fontWeight: .bold, color: kBlack),
     );
   }
 }

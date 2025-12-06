@@ -31,10 +31,7 @@ class UserProfileCard extends StatelessWidget {
     final data = state.data.data;
     return Container(
       padding: .symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(16),
-      ),
+      decoration: BoxDecoration(color: color, borderRadius: .circular(16)),
       child: Row(
         children: [
           Icon(
@@ -53,7 +50,7 @@ class UserProfileCard extends StatelessWidget {
                   style: TextStyle(
                     color: color == kOrange ? kWhite : kBlack,
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                   ),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -63,7 +60,7 @@ class UserProfileCard extends StatelessWidget {
                   style: TextStyle(
                     color: color == kOrange ? kWhite : kBlack,
                     fontSize: 12,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: .w400,
                   ),
                 ),
               ],
@@ -77,7 +74,7 @@ class UserProfileCard extends StatelessWidget {
               gradient: LinearGradient(
                 colors: [Color(0xFFf4b95a), Color(0xFFba770c)],
               ),
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: .circular(100),
             ),
             child: Row(
               children: const [
@@ -88,7 +85,7 @@ class UserProfileCard extends StatelessWidget {
                   style: TextStyle(
                     color: kWhite,
                     fontSize: 12,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: .w500,
                   ),
                 ),
               ],

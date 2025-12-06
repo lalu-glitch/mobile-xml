@@ -16,10 +16,7 @@ class DetailInfoAkun extends StatelessWidget {
     return Scaffold(
       backgroundColor: kBackground,
       appBar: AppBar(
-        title: const Text(
-          'Detail Akun',
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
+        title: const Text('Detail Akun', style: TextStyle(fontWeight: .w600)),
         backgroundColor: kOrange,
         foregroundColor: kWhite,
       ),
@@ -50,7 +47,7 @@ class DetailInfoAkun extends StatelessWidget {
                       padding: .symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                         color: kWhite,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: .circular(14),
                       ),
                       child: Column(
                         children: [
@@ -89,7 +86,7 @@ class DetailInfoAkun extends StatelessWidget {
                       padding: .symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                         color: kWhite,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: .circular(14),
                       ),
                       child: Column(
                         children: [
@@ -122,7 +119,7 @@ class DetailInfoAkun extends StatelessWidget {
                       padding: .symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                         color: kWhite,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: .circular(14),
                       ),
                       child: Column(
                         children: [

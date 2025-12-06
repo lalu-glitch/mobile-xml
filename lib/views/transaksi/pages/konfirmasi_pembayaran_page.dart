@@ -107,10 +107,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Metode Pembayaran",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: kSize14,
-                        ),
+                        style: TextStyle(fontWeight: .bold, fontSize: kSize14),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -147,9 +144,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
       PaymentMethodModel(nama: "SALDO", kodeDompet: "", saldoEwallet: saldo),
       ...eWallets.map(
         (ewallet) => PaymentMethodModel(
-          nama: ewallet.nama,
+          nama: ewallet.namaEwallet,
           kodeDompet: ewallet.kodeDompet,
-          saldoEwallet: ewallet.saldoEwallet,
+          saldoEwallet: ewallet.saldo,
         ),
       ),
     ];
@@ -178,7 +175,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
     return Card(
       color: kWhite,
       elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(children: buildDynamicInfoRows(infoFields)),
@@ -191,9 +188,9 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
     return Card(
       color: kWhite,
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(12)),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: .circular(12),
         onTap: () {
           setState(() => _selectedMethod = method.nama ?? '');
         },
@@ -204,10 +201,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             children: [
               Text(
                 method.nama ?? '-',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: kSize16,
-                ),
+                style: TextStyle(fontWeight: .bold, fontSize: kSize16),
               ),
               Row(
                 mainAxisSize: .min,
@@ -218,7 +212,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
                       child: Text(
                         CurrencyUtil.formatCurrency(method.saldoEwallet ?? 0),
                         textAlign: TextAlign.right,
-                        style: const TextStyle(fontWeight: FontWeight.w500),
+                        style: const TextStyle(fontWeight: .w500),
                       ),
                     ),
                   Icon(
@@ -248,9 +242,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
           style: ElevatedButton.styleFrom(
             backgroundColor: kOrange,
             padding: const .symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: .circular(16)),
             elevation: 5,
             shadowColor: Colors.orangeAccent.shade100,
           ),
@@ -272,9 +264,8 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
               showErrorDialog(context, msg);
               return;
             }
-
             // kalo pake metode Speedcash
-            if (selected.nama == 'SPEEDCASH') {
+            if (selected.kodeDompet == 'SP') {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -309,7 +300,7 @@ class _KonfirmasiPembayaranPageState extends State<KonfirmasiPembayaranPage> {
             "Selanjutnya",
             style: TextStyle(
               fontSize: kSize16,
-              fontWeight: FontWeight.w600,
+              fontWeight: .w600,
               color: kWhite,
             ),
           ),

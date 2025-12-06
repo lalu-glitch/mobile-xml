@@ -28,10 +28,7 @@ class TextTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-    );
+    return Text(text, style: TextStyle(fontSize: 18, fontWeight: .w600));
   }
 }
 
@@ -43,11 +40,7 @@ class TextSub extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
-        fontSize: 12,
-        color: kNeutral70,
-        fontWeight: FontWeight.w400,
-      ),
+      style: TextStyle(fontSize: 12, color: kNeutral70, fontWeight: .w400),
     );
   }
 }
@@ -60,11 +53,7 @@ class TextLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
-        fontSize: 12,
-        color: kNeutral70,
-        fontWeight: FontWeight.w400,
-      ),
+      style: TextStyle(fontSize: 12, color: kNeutral70, fontWeight: .w400),
     );
   }
 }
@@ -75,9 +64,6 @@ class TextBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-    );
+    return Text(text, style: TextStyle(fontSize: 14, fontWeight: .w500));
   }
 }

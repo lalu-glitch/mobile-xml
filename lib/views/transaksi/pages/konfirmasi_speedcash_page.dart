@@ -5,6 +5,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../core/utils/info_row.dart';
+import '../../../data/models/transaksi/transaksi_helper_model.dart';
 import '../../input_nomor/utils/transaksi_helper_cubit.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
 import '../cubit/transaksi_speedcash/konfirmasi_transaksi_speedcash_cubit.dart';
@@ -13,14 +14,23 @@ import '../cubit/transaksi_speedcash/pembayaran_transaksi_speedcash_cubit.dart';
 class KonfirmasiSpeedcashPage extends StatelessWidget {
   const KonfirmasiSpeedcashPage({super.key});
 
-  double _getTotalTransaksi(dynamic transaksi) {
-    final double baseTotal = transaksi.total ?? 0;
-    if (transaksi.isBebasNominal) {
-      final int nominalTambahan = transaksi.bebasNominalValue ?? 0;
-      final total = baseTotal + nominalTambahan;
-      return total;
+  double _getTotalTransaksi(TransaksiHelperModel transaksi) {
+    // Ambil nilai dasar dengan default 0.0 agar aman dari null
+    final double finalTotal = transaksi.finalTotal ?? 0.0;
+    final double fee = transaksi.fee ?? 0.0;
+    final double productPrice = transaksi.productPrice ?? 0.0;
+    final double bebasNominal = transaksi.bebasNominalValue ?? 0.0;
+
+    // Cek Tagihan
+    if (finalTotal > 0) {
+      return finalTotal + fee;
     }
-    return baseTotal;
+    // Cek Bebas Nominal
+    if (transaksi.isBebasNominal) {
+      return bebasNominal;
+    }
+    // Default
+    return productPrice;
   }
 
   @override
@@ -40,15 +50,14 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
       ),
       body: MultiBlocListener(
         listeners: [
-          // Listener untuk hasil konfirmasi -> panggil pembayaran
+          // Listener untuk hasil konfirmasi terus panggil pembayaran
           BlocListener<
             KonfirmasiTransaksiSpeedcashCubit,
             KonfirmasiTransaksiSpeedcashState
           >(
             listener: (context, state) {
               if (state is KonfirmasiTransaksiSpeedcashSuccess) {
-                final resp = state.data;
-                final originalRef = resp.originalPartnerReferenceNo;
+                final originalRef = state.data.originalPartnerReferenceNo;
                 context
                     .read<PembayaranTransaksiSpeedcashCubit>()
                     .pembayaranTransaksiSpeedcash(kodeReseller, originalRef);
@@ -58,7 +67,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
             },
           ),
 
-          // Listener untuk hasil pembayaran -> navigasi ke webview
+          // Listener untuk hasil pembayaran terus navigasi ke webview
           BlocListener<
             PembayaranTransaksiSpeedcashCubit,
             PembayaranTransaksiSpeedcashState
@@ -98,7 +107,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
 
   Widget _buildActionButton(
     BuildContext context,
-    dynamic transaksi,
+    TransaksiHelperModel transaksi,
     String kodeReseller,
   ) {
     // Ambil state kedua cubit untuk menentukan loading/disable button:
@@ -124,14 +133,22 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
                     kodeReseller,
                     transaksi.kodeProduk!,
                     transaksi.tujuan!,
-                    qty: 0,
-                    endUser: '',
+                    qty: transaksi.isBebasNominal
+                        ? (transaksi.bebasNominalValue)!.toInt()
+                        : 0,
+                    endUser: transaksi.isEndUser ? transaksi.endUserValue! : '',
+                    subProduk: '',
+
+                    ///TODO
+                    hargaSubProduk: 0,
+
+                    ///TODO
                   );
             },
       style: ElevatedButton.styleFrom(
         backgroundColor: kBlue,
         padding: const .symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: .circular(16)),
         elevation: 5,
         shadowColor: Colors.blueAccent.shade100,
       ),
@@ -145,7 +162,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
               "Selanjutnya",
               style: TextStyle(
                 fontSize: kSize16,
-                fontWeight: FontWeight.w600,
+                fontWeight: .w600,
                 color: kWhite,
               ),
             ),
@@ -158,7 +175,7 @@ class KonfirmasiSpeedcashPage extends StatelessWidget {
     return Card(
       color: kWhite,
       elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(12)),
       child: Padding(
         padding: const .all(16.0),
         child: Column(

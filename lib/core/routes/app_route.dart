@@ -10,6 +10,7 @@ import '../../views/input_nomor/pages/input_nomer_awal.dart';
 import '../../views/input_nomor/pages/input_nomer_mid.dart';
 import '../../views/input_nomor/pages/input_nomor_akhir.dart';
 import '../../views/jaringan_mitra/pages/jaringan_mitra_page.dart';
+import '../../views/kyc/pages/data_diri/isi_data_diri_onboarding_page.dart';
 import '../../views/onboarding/onboarding_screen.dart';
 import '../../views/poin_dan_komisi/pages/komisi/pages/status_tukar_komisi_page.dart';
 import '../../views/poin_dan_komisi/pages/komisi/pages/komisi_page.dart';
@@ -33,7 +34,7 @@ import '../../views/speedcash/pages/speedcash_register.dart';
 import '../../views/home/page/home_page.dart';
 import '../../views/transaksi/pages/konfirmasi_pembayaran_page.dart';
 import '../../views/settings/pages/settings_page.dart';
-import '../../views/shops/pages/shop_page.dart';
+import '../../views/toko/pages/shop_page.dart';
 import '../helper/auth_guard.dart';
 import '../../views/struk/pages/struk_page.dart';
 import '../../views/transaksi/pages/detail_transaksi_page.dart';
@@ -106,6 +107,7 @@ final Map<String, WidgetBuilder> appRoutes = {
 
   ///MENU SETTINGS
   '/jaringanMitra': (context) => authGuardWrapper(JaringanMitraPage()),
+  '/KYCPage': (context) => authGuardWrapper(IsiDataDiriOnboardingPage()),
 
   ///MISCELLANEOUS
   '/struk': (context) => authGuardWrapper(StrukPage(transaksi: null)),

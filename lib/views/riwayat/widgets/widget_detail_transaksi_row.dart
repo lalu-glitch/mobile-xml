@@ -25,7 +25,7 @@ class DetailRiwayatTransaksiRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Expanded(
             flex: 2,
@@ -48,7 +48,7 @@ class DetailRiwayatTransaksiRow extends StatelessWidget {
                     }
                   : null,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: .end,
                 children: [
                   Flexible(
                     child: Text(
@@ -56,9 +56,7 @@ class DetailRiwayatTransaksiRow extends StatelessWidget {
                       textAlign: TextAlign.right,
                       style: TextStyle(
                         color: isHighlighted ? kBlack : kBlack,
-                        fontWeight: isHighlighted
-                            ? FontWeight.w900
-                            : FontWeight.w600,
+                        fontWeight: isHighlighted ? .w900 : .w600,
                         fontSize: isHighlighted ? 15 : 14,
                         fontFamily: isHighlighted ? 'Monospace' : null,
                       ),

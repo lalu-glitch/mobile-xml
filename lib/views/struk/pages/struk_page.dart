@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printing/printing.dart';
-import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 
@@ -61,11 +61,7 @@ class _StrukPageState extends State<StrukPage> {
       appBar: AppBar(
         title: const Text(
           'Struk Transaksi',
-          style: TextStyle(
-            color: kBlack,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: kBlack, fontSize: 18, fontWeight: .bold),
         ),
         backgroundColor: kBackground,
         centerTitle: true,
@@ -85,7 +81,7 @@ class _StrukPageState extends State<StrukPage> {
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
                 decoration: BoxDecoration(
                   color: kWhite,
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: const .only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
                   ),
@@ -104,7 +100,7 @@ class _StrukPageState extends State<StrukPage> {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: kOrange.withAlpha(26),
-                        shape: BoxShape.circle,
+                        shape: .circle,
                       ),
                       child: const Icon(
                         Icons.storefront,
@@ -117,7 +113,7 @@ class _StrukPageState extends State<StrukPage> {
                       namaUser.toUpperCase(),
                       style: const TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         letterSpacing: 1.2,
                       ),
                       textAlign: TextAlign.center,
@@ -155,10 +151,7 @@ class _StrukPageState extends State<StrukPage> {
                       children: [
                         const Text(
                           "Total Bayar",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: TextStyle(fontSize: 16, fontWeight: .bold),
                         ),
                         SizedBox(
                           width: 160,
@@ -179,7 +172,7 @@ class _StrukPageState extends State<StrukPage> {
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: kYellow.withAlpha(25),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: .circular(8),
                           border: Border.all(color: kNeutral30),
                         ),
                         child: Text(
@@ -214,13 +207,13 @@ class _StrukPageState extends State<StrukPage> {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: isSuccess ? kGreen.withAlpha(26) : kRed.withAlpha(26),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: .circular(8),
       ),
       child: Text(
         trx?.keterangan ?? "PROSES",
         style: TextStyle(
           color: isSuccess ? kGreen : kRed,
-          fontWeight: FontWeight.bold,
+          fontWeight: .bold,
           fontSize: 12,
         ),
       ),

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
-import 'package:logger/logger.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/utils/dialog.dart';
 import '../../../data/services/speedcash_api_service.dart';
 import '../../../data/services/auth_service.dart';
-import '../../../viewmodels/speedcash/speedcash_viewmodel.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
+import '../cubit/speedcash_binding_cubit.dart';
 
 class SpeedcashBindingPage extends StatelessWidget {
   SpeedcashBindingPage({super.key});
@@ -16,118 +14,130 @@ class SpeedcashBindingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => SpeedcashVM(
-        apiService: SpeedcashApiService(
-          authService: AuthService(),
-          logger: Logger(),
-        ),
+    //scope provider aja
+    return BlocProvider(
+      create: (_) => SpeedcashBindingCubit(
+        SpeedcashApiService(authService: AuthService()),
       ),
-      child: Consumer<SpeedcashVM>(
-        builder: (context, vm, _) {
-          Future<void> bindSpeedcash() async {
-            final phone = _phoneCtrl.text.trim();
+      child: BlocListener<SpeedcashBindingCubit, SpeedcashBindingState>(
+        listener: (context, state) {
+          if (state is SpeedcashBindingError) {
+            showErrorDialog(context, state.message);
+          }
 
-            if (phone.isEmpty) {
-              showErrorDialog(context, 'Nomor HP tidak boleh kosong');
-              return;
-            }
-            final kodeReseller =
-                context.read<InfoAkunCubit>().state is InfoAkunLoaded
-                ? (context.read<InfoAkunCubit>().state as InfoAkunLoaded)
-                      .data
-                      .data
-                      .kodeReseller
-                : '';
-            await vm.speedcashBinding(kodeReseller, phone);
+          if (state is SpeedcashBindingSuccess) {
+            final data = state.data;
 
-            Logger().d("Result binding: ${vm.response}");
-
-            if (vm.response != null && vm.response!.redirectUrl != null) {
+            // Jika ada redirect URL → buka WebView
+            if (data.redirectUrl.isNotEmpty) {
               Navigator.pushNamed(
                 context,
                 '/webviewSpeedcash',
                 arguments: {
-                  'url': vm.response!.redirectUrl!,
+                  'url': data.redirectUrl,
                   'title': 'Binding Speedcash',
                 },
               );
-            } else if (vm.error != null) {
-              showErrorDialog(context, vm.error!);
             }
           }
+        },
+        child: Scaffold(
+          backgroundColor: kBackground,
+          appBar: AppBar(
+            title: const Text(
+              'Speedcash Binding',
+              style: TextStyle(color: kWhite, fontWeight: .bold),
+            ),
+            leading: BackButton(onPressed: () => Navigator.pop(context)),
+            backgroundColor: kOrange,
+            iconTheme: const IconThemeData(color: kWhite),
+          ),
+          body: Center(
+            child: SingleChildScrollView(
+              child: Card(
+                elevation: 1,
+                color: kWhite,
+                shape: RoundedRectangleBorder(borderRadius: .circular(10)),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: Padding(
+                  padding: const EdgeInsets.all(18),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Logo
+                      Image.asset(
+                        'assets/images/logo-speedcash.png',
+                        width: 256,
+                        height: 80,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(height: 24),
 
-          return PopScope(
-            canPop: true,
-            child: Scaffold(
-              backgroundColor: Colors.grey[100],
-              appBar: AppBar(
-                title: const Text(
-                  'Speedcash Binding',
-                  style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
-                ),
-                leading: BackButton(onPressed: () => Navigator.pop(context)),
-                backgroundColor: kOrange,
-                iconTheme: const IconThemeData(color: kWhite),
-              ),
-              body: Center(
-                child: SingleChildScrollView(
-                  child: Card(
-                    elevation: 1,
-                    color: kWhite,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    margin: const .symmetric(horizontal: 20),
-                    child: Padding(
-                      padding: const .all(18),
-                      child: Column(
-                        mainAxisSize: .min,
-                        children: [
-                          // Logo
-                          Image.asset(
-                            'assets/images/logo-speedcash.png',
-                            width: 256,
-                            height: 80,
-                            fit: BoxFit.contain,
+                      // Phone Input
+                      TextField(
+                        controller: _phoneCtrl,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          labelText: "Nomor HP",
+                          prefixIcon: const Icon(Icons.phone, color: kOrange),
+                          filled: true,
+                          fillColor: kOrange.withAlpha(25),
+                          border: OutlineInputBorder(
+                            borderRadius: .circular(16),
+                            borderSide: BorderSide.none,
                           ),
-                          const SizedBox(height: 24),
+                        ),
+                      ),
 
-                          // Phone
-                          TextField(
-                            controller: _phoneCtrl,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                              labelText: "Nomor HP",
-                              prefixIcon: const Icon(
-                                Icons.phone,
-                                color: kOrange,
-                              ),
-                              filled: true,
-                              fillColor: kOrange.withAlpha(25),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(16),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
+                      const SizedBox(height: 28),
 
-                          const SizedBox(height: 28),
+                      BlocBuilder<SpeedcashBindingCubit, SpeedcashBindingState>(
+                        builder: (context, state) {
+                          final isLoading = state is SpeedcashBindingLoading;
 
-                          // Button
-                          SizedBox(
+                          return SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: vm.isLoading ? null : bindSpeedcash,
+                              onPressed: isLoading
+                                  ? null
+                                  : () async {
+                                      final phone = _phoneCtrl.text.trim();
+
+                                      if (phone.isEmpty) {
+                                        showErrorDialog(
+                                          context,
+                                          'Nomor HP tidak boleh kosong',
+                                        );
+                                        return;
+                                      }
+
+                                      // ambil kode reseller dari InfoAkunCubit
+                                      final kodeReseller = switch (context
+                                          .read<InfoAkunCubit>()
+                                          .state) {
+                                        InfoAkunLoaded s =>
+                                          s.data.data.kodeReseller,
+                                        _ => '',
+                                      };
+
+                                      context
+                                          .read<SpeedcashBindingCubit>()
+                                          .speedcashBinding(
+                                            kodeReseller,
+                                            phone,
+                                          );
+                                    },
                               style: ElevatedButton.styleFrom(
-                                padding: const .symmetric(vertical: 16),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
+                                  borderRadius: .circular(16),
                                 ),
                                 backgroundColor: kOrange,
                                 elevation: 1,
                               ),
-                              child: vm.isLoading
+                              child: isLoading
                                   ? const SizedBox(
                                       width: 24,
                                       height: 24,
@@ -140,35 +150,35 @@ class SpeedcashBindingPage extends StatelessWidget {
                                       "Bind Speedcash",
                                       style: TextStyle(
                                         fontSize: kSize18,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: .w600,
                                         color: kWhite,
                                       ),
                                     ),
                             ),
-                          ),
-                          const SizedBox(height: 12),
-
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                '/speedcashRegisterPage',
-                              );
-                            },
-                            child: Text(
-                              "Belum punya akun ? Buat di sini.",
-                              style: TextStyle(color: kOrange),
-                            ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                    ),
+                      const SizedBox(height: 12),
+
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/speedcashRegisterPage',
+                          );
+                        },
+                        child: const Text(
+                          "Belum punya akun? Buat di sini.",
+                          style: TextStyle(color: kOrange),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

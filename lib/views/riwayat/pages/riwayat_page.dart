@@ -38,7 +38,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                   state.message,
                   style: TextStyle(
                     color: kNeutral60,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: .w400,
                     fontSize: 14,
                   ),
                 ),
@@ -105,7 +105,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           padding: const .symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: .circular(8),
                           ),
                           backgroundColor: kOrange,
                         ),
@@ -127,7 +127,7 @@ class RiwayatTransaksiPage extends StatelessWidget {
                                 "Lainnya",
                                 style: TextStyle(
                                   fontSize: kSize16,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: .w700,
                                   color: kWhite,
                                 ),
                               ),

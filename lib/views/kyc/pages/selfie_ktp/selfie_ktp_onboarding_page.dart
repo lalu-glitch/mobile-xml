@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+
+import '../../../../core/helper/constant_finals.dart';
+import '../../widgets/kyc_ktp_onboarding/widget_numbered_step.dart';
+import '../../widgets/widget_header_step.dart';
+import '../../widgets/widget_ktp_image_guide.dart';
+import '../../widgets/widget_kyc_action_button.dart';
+import '../kamera/selfie_kamera_page.dart';
+
+class FotoSelfieKTPOnboardingPage extends StatelessWidget {
+  const FotoSelfieKTPOnboardingPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: kWhite,
+      appBar: AppBar(
+        backgroundColor: kWhite,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: kBlack),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const .symmetric(horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: .start,
+                children: [
+                  const KYCHeader(
+                    step: "3 dari 4",
+                    title: "Foto Kartu Penduduk",
+                  ),
+
+                  const SizedBox(height: 32),
+                  const KTPImageGuideSection(
+                    imageValid: 'assets/images/kyc/selfie_valid.png',
+                    imageInvalid: 'assets/images/kyc/selfie_invalid.png',
+                  ),
+                  const SizedBox(height: 32),
+
+                  const KYCNumberStep(
+                    number: "1",
+                    text:
+                        "Pastikan wajah terlihat jelas dengan pencahayaan yang cukup",
+                  ),
+                  const SizedBox(height: 16),
+                  const KYCNumberStep(
+                    number: "2",
+                    text:
+                        "Pastikan E-KTP menghadap kamera dan tidak menutupi area wajah",
+                  ),
+                  const SizedBox(height: 16),
+                  const KYCNumberStep(
+                    number: "3",
+                    text:
+                        "Gunakan E-KTP asli (bukan fotokopi) dan pastikan tulisan terbaca jelas",
+                  ),
+                  const SizedBox(height: 100),
+                  SafeArea(
+                    child: KYCActionButton(
+                      title: 'Selanjutnya',
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const KTPCameraSelfiePage(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

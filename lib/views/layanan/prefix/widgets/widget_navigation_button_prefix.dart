@@ -49,13 +49,13 @@ class NavigationButtonPrefix extends StatelessWidget {
             color: kOrange,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Text(
                   "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
                   style: TextStyle(
                     color: kWhite,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     fontSize: kSize16,
                   ),
                 ),
@@ -63,9 +63,7 @@ class NavigationButtonPrefix extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kWhite,
                     foregroundColor: kOrange,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: .circular(12)),
                   ),
                   onPressed: () {
                     final bool navigateToBNEUPage =
@@ -85,7 +83,7 @@ class NavigationButtonPrefix extends StatelessWidget {
                   },
                   child: Text(
                     isLastPage ? "Selanjutnya" : "Selanjutnya",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: .bold),
                   ),
                 ),
               ],

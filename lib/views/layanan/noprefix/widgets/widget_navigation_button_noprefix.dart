@@ -34,7 +34,7 @@ class NavigationButtonNoPrefix extends StatelessWidget {
               "Total ${CurrencyUtil.formatCurrency(selectedPrice)}",
               style: TextStyle(
                 color: kWhite,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 fontSize: kSize16,
               ),
             ),
@@ -42,14 +42,12 @@ class NavigationButtonNoPrefix extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: kWhite,
                 foregroundColor: kOrange,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: .circular(12)),
               ),
               onPressed: onPressed,
               child: const Text(
                 "Selanjutnya",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: .bold),
               ),
             ),
           ],

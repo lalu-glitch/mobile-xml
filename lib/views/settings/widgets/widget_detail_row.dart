@@ -50,7 +50,7 @@ class DetailRow extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 14,
                 color: kBlack,
-                fontWeight: FontWeight.w500,
+                fontWeight: .w500,
               ),
             ),
             Spacer(),
@@ -63,7 +63,7 @@ class DetailRow extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 14,
                   color: kBlack,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: .w400,
                 ),
               ),
             ),

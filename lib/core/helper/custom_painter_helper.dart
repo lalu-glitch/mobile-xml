@@ -149,15 +149,13 @@ class DashedLineDivider extends StatelessWidget {
         const dashHeight = 1.0;
         final dashCount = (boxWidth / (2 * dashWidth)).floor();
         return Flex(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          direction: Axis.horizontal,
+          mainAxisAlignment: .spaceBetween,
+          direction: .horizontal,
           children: List.generate(dashCount, (_) {
             return SizedBox(
               width: dashWidth,
               height: dashHeight,
-              child: DecoratedBox(
-                decoration: BoxDecoration(color: Colors.grey[300]),
-              ),
+              child: DecoratedBox(decoration: BoxDecoration(color: kNeutral30)),
             );
           }),
         );
@@ -186,7 +184,7 @@ class InvertedCircleClipper extends CustomClipper<Path> {
     double x = 1;
 
     while (x < size.width) {
-      // Kita menggambar kurva dari titik saat ini (x) ke titik berikutnya (x + diameter)
+      // menggambar kurva dari titik saat ini (x) ke titik berikutnya (x + diameter)
       path.quadraticBezierTo(
         x + radius, // Control Point X: Tepat di tengah lubang
         size.height -

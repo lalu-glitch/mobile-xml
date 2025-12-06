@@ -13,10 +13,7 @@ class PoinExchangeTicket extends StatelessWidget {
       margin: .fromLTRB(16, 16, 16, 16),
       height: 600,
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: kWhite,
-        borderRadius: BorderRadius.circular(16),
-      ),
+      decoration: BoxDecoration(color: kWhite, borderRadius: .circular(16)),
       child: Column(
         children: [
           //top
@@ -111,10 +108,7 @@ class PoinExchangeTicket extends StatelessWidget {
                       const TextBody('Total Poin Ditukar'),
                       Text(
                         '120.000',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w400,
-                        ),
+                        style: TextStyle(fontSize: 24, fontWeight: .w400),
                       ),
                     ],
                   ),

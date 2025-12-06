@@ -51,9 +51,7 @@ class MultiSubKategoriPage extends StatelessWidget {
                   backgroundColor: kOrange,
                   foregroundColor: kWhite,
                   minimumSize: const Size(double.infinity, 48),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: .circular(12)),
                 ),
                 onPressed: () {
                   if (!isLastPage) {
@@ -69,7 +67,7 @@ class MultiSubKategoriPage extends StatelessWidget {
                 },
                 child: const Text(
                   "Selanjutnya",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: .bold),
                 ),
               ),
             ],

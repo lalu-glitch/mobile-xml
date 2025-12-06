@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'core/helper/constant_finals.dart';
 import 'views/home/page/home_page.dart';
 import 'views/riwayat/pages/riwayat_page.dart';
-import 'views/shops/pages/shop_page.dart';
+import 'views/toko/pages/shop_page.dart';
 import 'views/settings/pages/settings_page.dart';
 import 'core/helper/auth_guard.dart';
 

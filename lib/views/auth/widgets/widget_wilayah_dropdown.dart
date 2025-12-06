@@ -79,15 +79,15 @@ class WilayahDropdowns extends StatelessWidget {
         floatingLabelStyle: TextStyle(color: kOrange),
         contentPadding: const .symmetric(horizontal: 8, vertical: 12),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: .circular(10),
           borderSide: BorderSide(color: kOrangeAccent500),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: .circular(10),
           borderSide: BorderSide(color: kOrangeAccent500),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: .circular(10),
           borderSide: BorderSide(color: kOrangeAccent500, width: 2),
         ),
       ),
@@ -99,7 +99,7 @@ class WilayahDropdowns extends StatelessWidget {
                 e.nama,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontWeight: FontWeight.w500,
+                  fontWeight: .w500,
                   fontSize: 14,
                   letterSpacing: 0,
                 ),

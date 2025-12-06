@@ -167,9 +167,7 @@ class _DetailPrefixPageState extends State<DetailPrefixPage> {
                           child: ExpansionTile(
                             title: Text(
                               provider.namaProvider,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: const TextStyle(fontWeight: .bold),
                             ),
                             children: produkList.map<Widget>((produk) {
                               final bool isSelected =

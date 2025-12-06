@@ -56,7 +56,7 @@ class _FintechPulseLoaderState extends State<FintechPulseLoader>
             height: 60,
             decoration: BoxDecoration(
               color: widget.color,
-              shape: BoxShape.circle,
+              shape: .circle,
               boxShadow: [
                 BoxShadow(
                   color: widget.color.withAlpha(105),
@@ -81,7 +81,7 @@ class _FintechPulseLoaderState extends State<FintechPulseLoader>
           width: 60 + (value * 1400), // Mengembang dari 60 ke 120
           height: 60 + (value * 60),
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
+            shape: .circle,
             border: Border.all(
               color: widget.color.withAlpha((255 - value).toInt()), // Fade out
               width: 4 * (1.0 - value), // Menipis

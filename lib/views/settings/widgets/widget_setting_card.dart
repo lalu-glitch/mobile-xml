@@ -17,7 +17,7 @@ class SettingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: kWhite,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(12)),
       margin: const .only(bottom: 12),
       child: ListTile(
         leading: Icon(icons, color: kOrange),

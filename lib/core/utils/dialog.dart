@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 
 import '../helper/constant_finals.dart';
 
-Future<void> showErrorDialog(BuildContext context, String message) {
+Future<void> showErrorDialog(
+  BuildContext context,
+  String message, {
+  VoidCallback? onPressed, // Parameter opsional baru
+}) {
   return showDialog<void>(
     context: context,
     builder: (context) {
       return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: .circular(20)),
         insetPadding: const .symmetric(horizontal: 24),
         child: Padding(
           padding: const .all(20),
@@ -20,7 +24,7 @@ Future<void> showErrorDialog(BuildContext context, String message) {
               Container(
                 decoration: BoxDecoration(
                   color: kRed.withAlpha(25),
-                  shape: BoxShape.circle,
+                  shape: .circle,
                 ),
                 padding: const .all(16),
                 child: const Icon(Icons.error_outline, color: kRed, size: 48),
@@ -30,11 +34,7 @@ Future<void> showErrorDialog(BuildContext context, String message) {
               // Title
               const Text(
                 "Error",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: kRed,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: .bold, color: kRed),
               ),
               const SizedBox(height: 12),
 
@@ -52,12 +52,10 @@ Future<void> showErrorDialog(BuildContext context, String message) {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kRed,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: .circular(12)),
                     padding: const .symmetric(vertical: 12),
                   ),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: onPressed ?? () => Navigator.pop(context),
                   child: const Text(
                     "OK",
                     style: TextStyle(fontSize: 16, color: Colors.white),
@@ -89,13 +87,13 @@ class SuccessDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(16)),
       title: Column(
         children: [
           Container(
             padding: const .all(8),
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
+              shape: .circle,
               color: isSuccess ? kGreen : kRed,
             ),
             child: Icon(
@@ -107,10 +105,7 @@ class SuccessDialog extends StatelessWidget {
           const SizedBox(height: 25),
           Text(
             title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: kSupaBlack,
-            ),
+            style: const TextStyle(fontWeight: .bold, color: kSupaBlack),
           ),
         ],
       ),
@@ -130,14 +125,12 @@ class SuccessDialog extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: isSuccess ? kGreen : kRed,
               foregroundColor: kWhite,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: .circular(12)),
               padding: const .symmetric(vertical: 14),
             ),
             child: const Text(
               "OK",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+              style: TextStyle(fontWeight: .w600, fontSize: 16),
             ),
           ),
         ),
@@ -180,10 +173,7 @@ void showAppToast(BuildContext context, String message, ToastType type) {
     width: double.infinity,
     padding: const .symmetric(horizontal: 16, vertical: 12),
     margin: const .symmetric(horizontal: 12),
-    decoration: BoxDecoration(
-      color: bgColor,
-      borderRadius: BorderRadius.circular(12),
-    ),
+    decoration: BoxDecoration(color: bgColor, borderRadius: .circular(12)),
     child: Row(
       mainAxisSize: .min,
       children: [
@@ -211,9 +201,8 @@ Future<bool> showExitDialog(BuildContext context) async {
         context: context,
         builder: (context) {
           return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
+            backgroundColor: kWhite,
+            shape: RoundedRectangleBorder(borderRadius: .circular(20)),
             insetPadding: const .symmetric(horizontal: 24),
             child: Padding(
               padding: const .all(20),
@@ -224,7 +213,7 @@ Future<bool> showExitDialog(BuildContext context) async {
                   Container(
                     decoration: BoxDecoration(
                       color: kRed.withAlpha(25),
-                      shape: BoxShape.circle,
+                      shape: .circle,
                     ),
                     padding: const .all(16),
                     child: const Icon(Icons.exit_to_app, color: kRed, size: 48),
@@ -236,7 +225,7 @@ Future<bool> showExitDialog(BuildContext context) async {
                     "Keluar Aplikasi?",
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: kRed,
                     ),
                     textAlign: TextAlign.center,
@@ -259,7 +248,7 @@ Future<bool> showExitDialog(BuildContext context) async {
                           style: OutlinedButton.styleFrom(
                             padding: const .symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: .circular(12),
                             ),
                           ),
                           onPressed: () => Navigator.of(context).pop(false),
@@ -276,7 +265,7 @@ Future<bool> showExitDialog(BuildContext context) async {
                             backgroundColor: kRed,
                             padding: const .symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: .circular(12),
                             ),
                           ),
                           onPressed: () => exit(0),
@@ -308,9 +297,7 @@ Future<bool> showForceExitDialog(
           return PopScope(
             canPop: false,
             child: Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: .circular(20)),
               insetPadding: const .symmetric(horizontal: 24),
               child: Padding(
                 padding: const .all(20),
@@ -321,7 +308,7 @@ Future<bool> showForceExitDialog(
                     Container(
                       decoration: BoxDecoration(
                         color: kRed.withAlpha(25),
-                        shape: BoxShape.circle,
+                        shape: .circle,
                       ),
                       padding: const .all(16),
                       child: const Icon(
@@ -337,7 +324,7 @@ Future<bool> showForceExitDialog(
                       "Perhatian",
                       style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: kRed,
                       ),
                       textAlign: TextAlign.center,
@@ -360,7 +347,7 @@ Future<bool> showForceExitDialog(
                           backgroundColor: kRed,
                           padding: const .symmetric(vertical: 12),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: .circular(12),
                           ),
                         ),
                         onPressed: () {

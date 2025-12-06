@@ -14,11 +14,7 @@ class DetailTukarPoin extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Konfirmasi Tukar Poin',
-          style: TextStyle(
-            color: kWhite,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(color: kWhite, fontSize: 18, fontWeight: .w500),
         ),
         backgroundColor: kOrange,
         iconTheme: const IconThemeData(color: kWhite),

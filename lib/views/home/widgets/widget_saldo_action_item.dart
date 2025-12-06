@@ -21,10 +21,7 @@ class ActionItem extends StatelessWidget {
       children: [
         Container(
           padding: const .all(4),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(8),
-          ),
+          decoration: BoxDecoration(color: color, borderRadius: .circular(8)),
           child: Icon(icon, color: Colors.white, size: 24),
         ),
         const SizedBox(height: 8),
@@ -34,7 +31,7 @@ class ActionItem extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 10,
-              fontWeight: FontWeight.w400,
+              fontWeight: .w400,
               color: kNeutral90,
             ),
           ),

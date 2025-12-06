@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/helper/constant_finals.dart';
-import '../../../core/helper/dynamic_app_page.dart';
 import '../../../core/utils/shimmer.dart';
-import '../../layanan/cubit/flow_cubit.dart';
 import '../cubit/promo_cubit.dart';
+import 'widget_promo_card.dart';
 
 class HomePromoSection extends StatelessWidget {
   const HomePromoSection({super.key});
@@ -16,63 +13,38 @@ class HomePromoSection extends StatelessWidget {
     final cubit = context.read<PromoCubit>();
 
     return BlocBuilder<PromoCubit, PromoState>(
+      buildWhen: (previous, current) =>
+          current is PromoLoaded || current is PromoLoading,
       builder: (context, state) {
         if (state is PromoLoading) {
           return ShimmerBox.buildShimmerPromoList();
         }
         if (state is PromoLoaded) {
           return Column(
-            crossAxisAlignment: .start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Pasti Promo',
-                style: TextStyle(
-                  fontSize: kSize18,
-                  fontWeight: FontWeight.bold,
+              const Padding(
+                padding: .symmetric(horizontal: 16.0),
+                child: Text(
+                  'Pasti Promo',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 12),
               SizedBox(
                 height: 140,
                 child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
+                  scrollDirection: .horizontal,
                   itemCount: cubit.promoList.length,
                   itemBuilder: (context, i) {
-                    final item = cubit.promoList[i];
-                    return GestureDetector(
-                      onTap: () {
-                        final sequence = pageSequences[item.flow] ?? [];
-                        context.read<FlowCubit>().startFlow(item.flow!, item);
-                        final firstPage = sequence[0];
-                        Navigator.pushNamed(context, pageRoutes[firstPage]!);
-                      },
-                      child: Container(
-                        width: 260,
-                        margin: const .only(right: 24),
-                        decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(18),
-                          child: CachedNetworkImage(
-                            imageUrl: item.icon ?? '',
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) =>
-                                ShimmerBox.buildShimmerCardPromo(),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.image_not_supported),
-                          ),
-                        ),
-                      ),
-                    );
+                    return PromoCard(item: cubit.promoList[i]);
                   },
                 ),
               ),
             ],
           );
         }
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       },
     );
   }

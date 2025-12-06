@@ -2,33 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/shimmer.dart';
-import '../../../data/models/user/user_balance_model.dart';
+import '../../../data/models/user/ewallet_model.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../cubit/balance_cubit.dart';
-import 'widget_home_balance_carousel.dart';
+import 'widget_wallet_carousel.dart';
 
-class MainSaldoCardCarousel extends StatefulWidget {
-  const MainSaldoCardCarousel({super.key});
+class CarouselSection extends StatefulWidget {
+  const CarouselSection({super.key});
 
   @override
-  State<MainSaldoCardCarousel> createState() => _MainSaldoCardCarouselState();
+  State<CarouselSection> createState() => _CarouselSectionState();
 }
 
-class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
+class _CarouselSectionState extends State<CarouselSection> {
   late PageController _pageController;
-  int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(viewportFraction: 1);
-    _pageController.addListener(() {
-      if (_pageController.page != null) {
-        setState(() {
-          _currentPage = _pageController.page!.round();
-        });
-      }
-    });
   }
 
   @override
@@ -60,46 +52,30 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
                     controller: _pageController,
                     padEnds: false,
                     clipBehavior: Clip.none,
-                    // Item pertama adalah Saldo XML, sisanya dari ewallet
                     itemCount: itemCount,
                     itemBuilder: (context, index) {
-                      // Item pertama (index 0) adalah Saldo XML
-                      if (index == 0) {
+                      final ewalletCount = state.data.ewallet?.length ?? 0;
+                      // Tampilkan e-wallet terlebih dahulu
+                      if (index < ewalletCount) {
+                        final Ewallet ewallet = state.data.ewallet![index];
                         return Padding(
                           padding: const .symmetric(horizontal: 4),
-                          child: HomeBalanceCarousel(userBalance: state.data),
+                          child: WalletCarousel(
+                            userBalance: state.data,
+                            ewallet: ewallet,
+                          ),
                         );
                       }
 
-                      // Item selanjutnya adalah e-wallet
-                      final BalanceWallet ewallet =
-                          state.data.ewallet![index - 1];
+                      // Item terakhir selalu Saldo XML
                       return Padding(
                         padding: const .symmetric(horizontal: 4),
-                        child: HomeBalanceCarousel(
-                          userBalance: state.data,
-                          ewallet: ewallet,
-                        ),
+                        child: WalletCarousel(userBalance: state.data),
                       );
                     },
                   ),
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: .center,
-                  children: List.generate(itemCount, (index) {
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      margin: const .symmetric(horizontal: 4.0),
-                      height: 8.0,
-                      width: _currentPage == index ? 24.0 : 8.0,
-                      decoration: BoxDecoration(
-                        color: kOrange,
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                    );
-                  }),
-                ),
               ],
             ),
           );
@@ -119,11 +95,11 @@ class _MainSaldoCardCarouselState extends State<MainSaldoCardCarousel> {
       right: 0,
       child: Card(
         elevation: 20,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        shape: RoundedRectangleBorder(borderRadius: .circular(24)),
         color: kWhite,
         child: Padding(
           padding: const .symmetric(horizontal: 16, vertical: 16),
-          child: ShimmerBox.buildMainShimmerCard(),
+          child: ShimmerBox.dMainShimmerWallet(),
         ),
       ),
     );

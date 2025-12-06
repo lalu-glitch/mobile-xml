@@ -12,7 +12,7 @@ class SyaratDanKetentuan extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Syarat & Ketentuan',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: .bold),
         ),
         backgroundColor: kWhite,
         scrolledUnderElevation: 0.0,
@@ -24,7 +24,7 @@ class SyaratDanKetentuan extends StatelessWidget {
           children: [
             Text(
               'Diperbarui pada 02 Juli 2023',
-              style: TextStyle(color: kOrange, fontWeight: FontWeight.w600),
+              style: TextStyle(color: kOrange, fontWeight: .w600),
             ),
 
             const SizedBox(height: 8),
@@ -36,7 +36,7 @@ class SyaratDanKetentuan extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: kWhite,
                   border: Border.all(color: kLightGrey, width: 1.5),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: .circular(16),
                 ),
                 child: const Center(
                   widthFactor: double.infinity,
@@ -67,7 +67,7 @@ class SyaratDanKetentuan extends StatelessWidget {
                         foregroundColor: kBlack,
                         minimumSize: const Size(double.infinity, 48),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: .circular(12),
                         ),
                       ),
                       onPressed: () {
@@ -75,7 +75,7 @@ class SyaratDanKetentuan extends StatelessWidget {
                       },
                       child: const Text(
                         "Kembali",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontWeight: .bold),
                       ),
                     ),
                   ),
@@ -87,7 +87,7 @@ class SyaratDanKetentuan extends StatelessWidget {
                         foregroundColor: kWhite,
                         minimumSize: const Size(double.infinity, 48),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: .circular(12),
                         ),
                       ),
                       onPressed: () {
@@ -95,7 +95,7 @@ class SyaratDanKetentuan extends StatelessWidget {
                       },
                       child: const Text(
                         "Setuju",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontWeight: .bold),
                       ),
                     ),
                   ),

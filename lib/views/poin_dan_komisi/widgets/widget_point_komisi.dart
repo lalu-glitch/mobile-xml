@@ -17,7 +17,7 @@ class PillPoinKomisiWidget extends StatelessWidget {
       padding: .symmetric(vertical: 4, horizontal: 12),
       decoration: BoxDecoration(
         color: kWhite.withAlpha(100),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: .circular(20),
       ),
       child: Row(
         children: [
@@ -26,7 +26,7 @@ class PillPoinKomisiWidget extends StatelessWidget {
             height: 20,
             decoration: BoxDecoration(
               color: Colors.yellow,
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: .circular(100),
             ),
           ),
           SizedBox(width: 16),
@@ -39,7 +39,7 @@ class PillPoinKomisiWidget extends StatelessWidget {
                     title,
                     style: TextStyle(
                       fontSize: 12,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: kWhite,
                     ),
                   ),
@@ -47,7 +47,7 @@ class PillPoinKomisiWidget extends StatelessWidget {
                     nominal,
                     style: TextStyle(
                       fontSize: 12,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: .w500,
                       color: kWhite,
                     ),
                   ),

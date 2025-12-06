@@ -97,7 +97,7 @@ class _DetailNoPrefixPageState extends State<DetailNoPrefixPage> {
                     child: ExpansionTile(
                       title: Text(
                         provider.namaProvider,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: .bold),
                       ),
                       shape: const Border(),
                       children: [

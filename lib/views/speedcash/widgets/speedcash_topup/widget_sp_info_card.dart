@@ -24,7 +24,7 @@ class InfoCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         border: Border.all(color: kOrangeAccent300, width: 2),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: .circular(16),
       ),
       child: Column(
         children: [
@@ -86,7 +86,7 @@ class InfoCard extends StatelessWidget {
                 style: const TextStyle(
                   color: kBlack,
                   fontSize: 20,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -94,12 +94,12 @@ class InfoCard extends StatelessWidget {
             if (copy != null)
               InkWell(
                 onTap: copy,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: .circular(8),
                 child: Container(
                   padding: const .symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: kWhite,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: .circular(8),
                   ),
                   child: const Row(
                     children: [
@@ -107,10 +107,7 @@ class InfoCard extends StatelessWidget {
                       SizedBox(width: 6),
                       Text(
                         'Salin',
-                        style: TextStyle(
-                          color: kNeutral100,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: TextStyle(color: kNeutral100, fontWeight: .w600),
                       ),
                     ],
                   ),
