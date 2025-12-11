@@ -5,7 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../core/helper/error_handler.dart';
 import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/utils/shimmer.dart';
 import '../../../data/services/api_service.dart';
 import '../../downline/cubit/daftar_mitra_cubit.dart';
 import '../../downline/pages/daftar_mitra_page.dart';
@@ -194,7 +193,12 @@ class _SettingsPageState extends State<SettingsPage> {
         body: BlocBuilder<InfoAkunCubit, InfoAkunState>(
           builder: (context, state) {
             if (state is InfoAkunLoading) {
-              return ShimmerBox.buildShimmerSettings();
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: kOrange,
+                  strokeWidth: 3,
+                ),
+              );
             }
 
             if (state is InfoAkunLoaded) {

@@ -45,7 +45,7 @@ class SpeedcashRegisterPage extends StatelessWidget {
           }
         },
         child: Scaffold(
-          backgroundColor: Colors.grey[100],
+          backgroundColor: kBackground,
           appBar: AppBar(
             title: const Text(
               'Speedcash Register',

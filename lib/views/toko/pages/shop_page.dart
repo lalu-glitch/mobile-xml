@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
 import '../../../core/helper/error_handler.dart';
-import '../../../core/utils/shimmer.dart';
 import '../../home/cubit/layanan_cubit.dart';
 import '../helper/shop_controller.dart';
 import '../widgets/widget_shop_category_chips.dart';
@@ -40,7 +39,7 @@ class _ShopPageState extends State<ShopPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: kOrange,
-        iconTheme: const IconThemeData(color: kWhite), // const optimization
+        iconTheme: const IconThemeData(color: kWhite),
         title: isSearching
             ? TextField(
                 controller: searchController,
@@ -71,12 +70,8 @@ class _ShopPageState extends State<ShopPage> {
       body: BlocBuilder<LayananCubit, LayananState>(
         builder: (context, state) {
           if (state is LayananLoading) {
-            return Column(
-              children: [
-                ShimmerBox.buildShimmerChips(),
-                const Divider(color: kNeutral50, thickness: 4),
-                ShimmerBox.buildShimmerIcons(),
-              ],
+            return const Center(
+              child: CircularProgressIndicator(color: kOrange, strokeWidth: 5),
             );
           }
 
