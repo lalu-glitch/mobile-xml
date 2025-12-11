@@ -16,13 +16,6 @@ class DownlineCard extends StatelessWidget {
         color: kWhite,
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(color: kNeutral30, width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: kBlack.withAlpha(75),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
