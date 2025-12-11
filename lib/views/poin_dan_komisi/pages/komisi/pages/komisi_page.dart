@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:xmlapp/views/downline/cubit/list_mitra_cubit.dart';
 
 import '../../../../../core/helper/constant_finals.dart';
 import '../../../../../core/utils/bottom_sheet.dart';
+import '../../../../../data/services/api_service.dart';
 import '../widgets/komisi_card_widget.dart';
 import '../widgets/transaksi_downline_widget.dart';
 import '../widgets/tukar_komisi_widget.dart';
@@ -61,7 +64,11 @@ class KomisiPage extends StatelessWidget {
                                   // TAB 1: Tukar Komisi
                                   TukarKomisiTabPage(),
                                   // TAB 2: Transaksi Downline
-                                  TransaksiDownlineTabPage(),
+                                  BlocProvider(
+                                    create: (context) =>
+                                        ListMitraCubit(ApiService()),
+                                    child: TransaksiDownlineTabPage(),
+                                  ),
                                 ],
                               ),
                             ),

@@ -7,7 +7,9 @@ import '../../../core/utils/bottom_sheet.dart';
 import '../../../core/helper/constant_finals.dart';
 import '../../../data/services/api_service.dart';
 import '../../downline/cubit/daftar_mitra_cubit.dart';
+import '../../downline/cubit/list_mitra_cubit.dart';
 import '../../downline/pages/daftar_mitra_page.dart';
+import '../../downline/pages/jaringan_mitra_page.dart';
 import '../../home/cubit/balance_cubit.dart';
 import '../cubit/info_akun/info_akun_cubit.dart';
 import '../helper/menu_item.dart';
@@ -124,7 +126,17 @@ class _SettingsPageState extends State<SettingsPage> {
       MenuItem(
         imagePath: 'assets/icons/user-with-some-box-icon.png',
         title: 'List Jaringan',
-        onTap: () => Navigator.pushNamed(context, '/jaringanMitra'),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => ListMitraCubit(ApiService()),
+                child: JaringanMitraPage(),
+              ),
+            ),
+          );
+        },
       ),
       MenuItem(
         imagePath: 'assets/icons/user-list-icon.png',

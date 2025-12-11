@@ -5,8 +5,6 @@ import '../../views/auth/pages/otp_page.dart';
 import '../../views/auth/pages/auth_page.dart';
 import '../../initial_page.dart';
 import '../../views/auth/pages/SK_page.dart';
-import '../../views/downline/pages/daftar_mitra_page.dart';
-import '../../views/downline/pages/jaringan_mitra_page.dart';
 import '../../views/input_nomor/pages/input_bn_eu.dart';
 import '../../views/input_nomor/pages/input_nomer_awal.dart';
 import '../../views/input_nomor/pages/input_nomer_mid.dart';
@@ -107,8 +105,6 @@ final Map<String, WidgetBuilder> appRoutes = {
       authGuardWrapper(SpeedcashWebviewPage(url: '', title: '')),
 
   ///MENU SETTINGS
-  '/jaringanMitra': (context) => authGuardWrapper(JaringanMitraPage()),
-  '/daftarMitra': (context) => authGuardWrapper(DaftarMitraPage()),
   '/KYCPage': (context) => authGuardWrapper(IsiDataDiriOnboardingPage()),
 
   ///MISCELLANEOUS

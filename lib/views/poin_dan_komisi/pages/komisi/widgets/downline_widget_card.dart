@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:xmlapp/core/helper/currency.dart';
 
 import '../../../../../core/helper/constant_finals.dart';
+import '../../../../../data/models/mitra/mitra_model.dart';
 
 class DownlineCard extends StatelessWidget {
-  // Idealnya data di-pass melalui constructor tapi nanti
-  // final DownlineModel data;
+  final Mitra mitra;
 
-  const DownlineCard({super.key});
+  const DownlineCard({super.key, required this.mitra});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +33,9 @@ class DownlineCard extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,
-                  child: const Text(
-                    'Y', //nanti buat fungsi buat ambil inisial
-                    style: TextStyle(
+                  child: Text(
+                    mitra.initials,
+                    style: const TextStyle(
                       color: kOrange,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -47,9 +48,9 @@ class DownlineCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Yeni',
-                        style: TextStyle(
+                      Text(
+                        mitra.nama,
+                        style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
                           color: kNeutral90,
@@ -63,8 +64,8 @@ class DownlineCard extends StatelessWidget {
                           Icon(Icons.copy_rounded, size: 12, color: kNeutral60),
                           const SizedBox(width: 4),
                           Text(
-                            'SMS0795632',
-                            style: TextStyle(
+                            mitra.kode,
+                            style: const TextStyle(
                               fontSize: 12,
                               color: kNeutral60,
                               fontFamily: 'Monospace',
@@ -110,14 +111,14 @@ class DownlineCard extends StatelessWidget {
                     children: [
                       StatItem(
                         label: 'Sisa Saldo',
-                        value: 'Rp 10.020.864',
+                        value: CurrencyUtil.formatCurrency(mitra.saldo),
                         valueColor: kNeutral90,
                         isCurrency: true,
                       ),
                       const SizedBox(height: 16),
                       StatItem(
                         label: 'Upline',
-                        value: 'SMS0795632',
+                        value: mitra.kode,
                         valueColor: kNeutral90,
                       ),
                     ],
@@ -137,14 +138,14 @@ class DownlineCard extends StatelessWidget {
                     children: [
                       StatItem(
                         label: 'Trx Sukses',
-                        value: '500',
+                        value: mitra.trxSukses.toString(),
                         valueColor: kGreen,
                         isBold: true,
                       ),
                       const SizedBox(height: 16),
                       StatItem(
                         label: 'Trx Gagal',
-                        value: '3',
+                        value: mitra.trxGagal.toString(),
                         valueColor: kRed,
                         isBold: true,
                       ),

@@ -34,8 +34,6 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
             totalPages: current.totalPages,
           ),
         );
-      } else if (state is RiwayatTransaksiLoadingMore) {
-        return;
       } else {
         append = false;
       }
@@ -84,20 +82,16 @@ class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
   }
 
   Future<void> loadNextPage({int limit = 5}) async {
-    if (_isLoadingMore) return;
-    _isLoadingMore = true;
-
-    try {
-      if (state is RiwayatTransaksiSuccess) {
-        final current = state as RiwayatTransaksiSuccess;
+    if (state is RiwayatTransaksiSuccess) {
+      final current = state as RiwayatTransaksiSuccess;
+      if (current.currentPage < current.totalPages &&
+          state is! RiwayatTransaksiLoadingMore) {
         await loadRiwayat(
           page: current.currentPage + 1,
           limit: limit,
           append: true,
         );
       }
-    } finally {
-      _isLoadingMore = false;
     }
   }
 }
