@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import '../../core/helper/constant_finals.dart';
 import '../models/layanan/layanan_model.dart';
 import '../models/mitra/mitra_model.dart';
+import '../models/mitra/mitra_stats_model.dart';
 import '../models/produk/provider_kartu_model.dart';
 import '../models/transaksi/status_transaksi_model.dart';
 import '../models/transaksi/riwayat_transaksi_model.dart';
@@ -308,11 +309,30 @@ class ApiService {
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {"kode_reseller": kodeReseller},
       );
-      print('[data] $response');
       if (response.statusCode == 200) {
         return MitraModel.fromJson(response.data);
       } else {
         throw Exception("Gagal memuat mitra. Status: ${response.statusCode}");
+      }
+    } catch (e) {
+      throw "Gagal menghubungi server: $e";
+    }
+  }
+
+  Future<MitraStatsModel> fetchMitraStats(String kodeReseller) async {
+    try {
+      final deviceID = await loadDeviceId();
+      final response = await authService.dio.post(
+        'http://192.168.1.178:3009/api/v1/user/downline_stats',
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
+        data: {"kode": kodeReseller},
+      );
+      if (response.statusCode == 200) {
+        return MitraStatsModel.fromJson(response.data);
+      } else {
+        throw Exception(
+          "Gagal memuat mitra stats. Status: ${response.statusCode}",
+        );
       }
     } catch (e) {
       throw "Gagal menghubungi server: $e";

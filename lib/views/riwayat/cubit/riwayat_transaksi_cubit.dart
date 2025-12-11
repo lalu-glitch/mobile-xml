@@ -11,7 +11,6 @@ part 'riwayat_transaksi_state.dart';
 
 class RiwayatTransaksiCubit extends Cubit<RiwayatTransaksiState> {
   final ApiService apiService;
-  bool _isLoadingMore = false;
 
   RiwayatTransaksiCubit(this.apiService) : super(RiwayatTransaksiInitial());
 

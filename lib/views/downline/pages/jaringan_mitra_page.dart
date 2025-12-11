@@ -6,6 +6,7 @@ import '../../../core/helper/error_handler.dart';
 import '../../poin_dan_komisi/pages/komisi/widgets/downline_widget_card.dart';
 import '../../settings/cubit/info_akun/info_akun_cubit.dart';
 import '../cubit/list_mitra_cubit.dart';
+import '../cubit/mitra_stats_cubit.dart';
 import '../widgets/widget_sum_data_and_filter.dart';
 
 class JaringanMitraPage extends StatefulWidget {
@@ -40,8 +41,12 @@ class _JaringanMitraPageState extends State<JaringanMitraPage> {
     });
   }
 
-  void _fetchData() {
+  void _fetchDataListMitra() {
     context.read<ListMitraCubit>().fetchMitraList(_kodeReseller);
+  }
+
+  void _fetchDataStatsMitra() {
+    context.read<MitraStatsCubit>().loadMitraStats(_kodeReseller);
   }
 
   @override
@@ -54,14 +59,51 @@ class _JaringanMitraPageState extends State<JaringanMitraPage> {
         slivers: [
           _buildSliverAppBar(),
 
-          SliverToBoxAdapter(
-            child: MitraStatsHeader(activeCount: 43, blockedCount: 5),
+          BlocBuilder<MitraStatsCubit, MitraStatsState>(
+            builder: (context, state) {
+              if (state is MitraStatsInitial) {
+                _fetchDataStatsMitra();
+              }
+              if (state is MitraStatsLoading) {
+                return const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: kOrange,
+                        strokeWidth: 3,
+                      ),
+                    ),
+                  ),
+                );
+              }
+              if (state is MitraStatsLoaded) {
+                return SliverToBoxAdapter(
+                  child: MitraStatsHeader(
+                    activeCount: state.stats.downlineAktif,
+                    blockedCount: state.stats.downlineSuspend,
+                  ),
+                );
+              }
+              if (state is MitraStatsError) {
+                return SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ErrorHandler(
+                      message: "Ada yang salah!",
+                      onRetry: _fetchDataStatsMitra,
+                    ),
+                  ),
+                );
+              }
+              return const SliverToBoxAdapter(child: SizedBox.shrink());
+            },
           ),
 
           BlocBuilder<ListMitraCubit, ListMitraState>(
             builder: (context, state) {
               if (state is ListMitraInitial) {
-                _fetchData();
+                _fetchDataListMitra();
               }
               if (state is ListMitraLoading) {
                 return const SliverFillRemaining(
@@ -106,7 +148,7 @@ class _JaringanMitraPageState extends State<JaringanMitraPage> {
                     child: SizedBox(
                       child: ErrorHandler(
                         message: "Ada yang salah!",
-                        onRetry: _fetchData,
+                        onRetry: _fetchDataListMitra,
                       ),
                     ),
                   ),

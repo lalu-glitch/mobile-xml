@@ -8,6 +8,7 @@ import '../../../core/helper/constant_finals.dart';
 import '../../../data/services/api_service.dart';
 import '../../downline/cubit/daftar_mitra_cubit.dart';
 import '../../downline/cubit/list_mitra_cubit.dart';
+import '../../downline/cubit/mitra_stats_cubit.dart';
 import '../../downline/pages/daftar_mitra_page.dart';
 import '../../downline/pages/jaringan_mitra_page.dart';
 import '../../home/cubit/balance_cubit.dart';
@@ -130,8 +131,15 @@ class _SettingsPageState extends State<SettingsPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => BlocProvider(
-                create: (context) => ListMitraCubit(ApiService()),
+              builder: (context) => MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => ListMitraCubit(ApiService()),
+                  ),
+                  BlocProvider(
+                    create: (context) => MitraStatsCubit(ApiService()),
+                  ),
+                ],
                 child: JaringanMitraPage(),
               ),
             ),
