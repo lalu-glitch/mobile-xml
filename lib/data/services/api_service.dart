@@ -262,4 +262,41 @@ class ApiService {
       throw Exception(e.toString());
     }
   }
+
+  Future<String> daftarDownline(
+    String nama,
+    String alamat,
+    String nomor,
+    int markup,
+    String kodeReseller,
+  ) async {
+    try {
+      final deviceID = await loadDeviceId();
+      final response = await authService.dio.post(
+        'http://192.168.1.178:3009/api/v1/user/register_downline', //TODO [GANTI KE PRODUCTION]
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
+        data: {
+          "nama": nama,
+          "alamat": alamat,
+          "nomor": nomor,
+          "markup": markup,
+          "kode_reseller": kodeReseller,
+        },
+      );
+      log(response.data.toString());
+      if (response.statusCode == 200) {
+        final data = response.data;
+
+        if (data["success"] == true) {
+          return data["message"] ?? "Berhasil mendaftarkan mitra.";
+        } else {
+          throw data["message"] ?? "Gagal mendaftarkan mitra.";
+        }
+      } else {
+        throw "Server error: ${response.statusCode}";
+      }
+    } catch (error) {
+      throw "Gagal menghubungi server: $error";
+    }
+  }
 }
