@@ -5,11 +5,12 @@ import '../../views/auth/pages/otp_page.dart';
 import '../../views/auth/pages/auth_page.dart';
 import '../../initial_page.dart';
 import '../../views/auth/pages/SK_page.dart';
+import '../../views/downline/pages/daftar_mitra_page.dart';
+import '../../views/downline/pages/jaringan_mitra_page.dart';
 import '../../views/input_nomor/pages/input_bn_eu.dart';
 import '../../views/input_nomor/pages/input_nomer_awal.dart';
 import '../../views/input_nomor/pages/input_nomer_mid.dart';
 import '../../views/input_nomor/pages/input_nomor_akhir.dart';
-import '../../views/jaringan_mitra/pages/jaringan_mitra_page.dart';
 import '../../views/kyc/pages/data_diri/isi_data_diri_onboarding_page.dart';
 import '../../views/onboarding/onboarding_screen.dart';
 import '../../views/poin_dan_komisi/pages/komisi/pages/status_tukar_komisi_page.dart';
@@ -107,6 +108,7 @@ final Map<String, WidgetBuilder> appRoutes = {
 
   ///MENU SETTINGS
   '/jaringanMitra': (context) => authGuardWrapper(JaringanMitraPage()),
+  '/daftarMitra': (context) => authGuardWrapper(DaftarMitraPage()),
   '/KYCPage': (context) => authGuardWrapper(IsiDataDiriOnboardingPage()),
 
   ///MISCELLANEOUS
