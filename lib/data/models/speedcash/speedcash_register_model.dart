@@ -1,47 +1,52 @@
+//TODO [sesuaikan]
 class SpeedcashRegisterModel {
-  String requestId;
-  bool success;
-  String message;
-  String kodeReseller;
-  String nomor;
-  String type;
-  String redirectUrl;
-  DateTime expiresAt;
+  final String requestId;
+  final bool success;
+  final String message;
+  final String redirectUrl;
+  final int state;
+  final String service;
+  final String? kodeReseller;
+  final String? nomor;
+  final String? type;
 
   SpeedcashRegisterModel({
     required this.requestId,
     required this.success,
     required this.message,
-    required this.kodeReseller,
-    required this.nomor,
-    required this.type,
     required this.redirectUrl,
-    required this.expiresAt,
+    required this.state,
+    required this.service,
+    this.kodeReseller,
+    this.nomor,
+    this.type,
   });
 
-  factory SpeedcashRegisterModel.fromJson(Map<String, dynamic> json) =>
-      SpeedcashRegisterModel(
-        requestId: json["request_id"],
-        success: json["success"],
-        message: json["message"],
-        kodeReseller: json["kode_reseller"],
-        nomor: json["nomor"],
-        type: json["type"],
-        redirectUrl: json["redirect_url"],
-        expiresAt: DateTime.parse(json["expiresAt"]),
-      );
+  factory SpeedcashRegisterModel.fromJson(Map<String, dynamic> json) {
+    return SpeedcashRegisterModel(
+      requestId: json["request_id"] ?? "",
+      success: json["success"] ?? false,
+      message: json["message"] ?? "",
+      state: (json["state"] is int)
+          ? json["state"]
+          : int.tryParse(json["state"]?.toString() ?? "0") ?? 0,
+      service: json["service"] ?? "",
+      redirectUrl: json["redirectUrl"] ?? "",
+      kodeReseller: json["kode_reseller"],
+      nomor: json["nomor"],
+      type: json["type"],
+    );
+  }
 
-  //factory khusus error buat ngembaliin message errornya ke UI
+  // Factory error helper
   factory SpeedcashRegisterModel.error(String message) {
     return SpeedcashRegisterModel(
       requestId: "",
       success: false,
       message: message,
-      kodeReseller: "",
-      nomor: "",
-      type: "",
       redirectUrl: "",
-      expiresAt: DateTime.now(),
+      state: 0,
+      service: "",
     );
   }
 }

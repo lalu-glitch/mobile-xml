@@ -16,61 +16,21 @@ class DaftarMitraPage extends StatefulWidget {
 }
 
 class _DaftarMitraPageState extends State<DaftarMitraPage> {
-  // GlobalKey untuk validasi Form yang efisien
   final _formKey = GlobalKey<FormState>();
 
-  // Controllers
   final _namaController = TextEditingController();
   final _alamatController = TextEditingController();
   final _nomorController = TextEditingController();
   final _markupController = TextEditingController();
 
-  // FocusNodes untuk navigasi keyboard yang mulus (UX)
   final _alamatNode = FocusNode();
   final _nomorNode = FocusNode();
   final _markupNode = FocusNode();
 
   @override
-  void dispose() {
-    _namaController.dispose();
-    _alamatController.dispose();
-    _nomorController.dispose();
-    _markupController.dispose();
-    _alamatNode.dispose();
-    _nomorNode.dispose();
-    _markupNode.dispose();
-    super.dispose();
-  }
-
-  void _onSubmit() {
-    // 1. Validasi UI dulu sebelum panggil logic (Hemat resource)
-    if (!_formKey.currentState!.validate()) return;
-
-    // 2. Ambil data state terbaru langsung saat aksi (Lazy retrieval)
-    // Ini lebih aman daripada menyimpan string di state local yang bisa stale
-    final infoAkunState = context.read<InfoAkunCubit>().state;
-    final kodeReseller = switch (infoAkunState) {
-      InfoAkunLoaded s => s.data.data.kodeReseller,
-      _ => '',
-    };
-
-    // 3. Eksekusi Logic
-    context.read<DaftarMitraCubit>().daftarMitra(
-      nama: _namaController.text.trim(),
-      alamat: _alamatController.text.trim(),
-      nomor: _nomorController.text.trim(),
-      markup: int.tryParse(_markupController.text.trim()) ?? 0,
-      kodeReseller: kodeReseller,
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // Mengambil ukuran layar untuk scaling
-    final theme = Theme.of(context);
-
     return Scaffold(
-      backgroundColor: kBackground, // Background terang ala Fintech modern
+      backgroundColor: kBackground,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: kOrange,
@@ -103,17 +63,16 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
               ),
             );
           } else if (state is DaftarMitraSuccess) {
-            Navigator.pop(context); // Tutup Loading
-            Navigator.pop(context, true); // Kembali ke halaman sebelumnya
+            Navigator.pop(context);
+            Navigator.pop(context, true);
             showAppToast(context, state.responseMessage, ToastType.success);
           } else if (state is DaftarMitraError) {
-            Navigator.pop(context); // Tutup Loading
+            Navigator.pop(context);
             showAppToast(context, state.message, ToastType.error);
           }
         },
         child: SafeArea(
           child: SizedBox.expand(
-            // SingleChildScrollView + ClampingPhysics biar gak bounce berlebih
             child: SingleChildScrollView(
               physics: const ClampingScrollPhysics(),
               padding: const EdgeInsets.symmetric(
@@ -125,22 +84,20 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Header Text
-                    Text(
+                    const Text(
                       'Data Mitra',
-                      style: theme.textTheme.titleMedium?.copyWith(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: kBlack,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
+                    const Text(
                       'Lengkapi formulir di bawah ini untuk mendaftarkan mitra baru.',
-                      style: theme.textTheme.bodyMedium?.copyWith(color: kGrey),
+                      style: TextStyle(color: kGrey),
                     ),
                     const SizedBox(height: 24),
 
-                    // Field Nama
                     FintechInputField(
                       controller: _namaController,
                       label: 'Nama Lengkap',
@@ -154,14 +111,13 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Field Alamat
                     FintechInputField(
                       controller: _alamatController,
                       focusNode: _alamatNode,
                       label: 'Alamat Lengkap',
                       hint: 'Jl. Jendral Sudirman No. 1...',
                       icon: Icons.location_on_outlined,
-                      maxLines: 2, // Alamat butuh space lebih
+                      maxLines: 2,
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) =>
                           FocusScope.of(context).requestFocus(_nomorNode),
@@ -170,7 +126,6 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Field Nomor HP
                     FintechInputField(
                       controller: _nomorController,
                       focusNode: _nomorNode,
@@ -188,7 +143,6 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Field Markup
                     FintechInputField(
                       controller: _markupController,
                       focusNode: _markupNode,
@@ -204,10 +158,9 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
 
                     const SizedBox(height: 40),
 
-                    // Submit Button
                     SizedBox(
                       width: double.infinity,
-                      height: 52, // Tinggi standar tombol mobile
+                      height: 52,
                       child: ElevatedButton(
                         onPressed: _onSubmit,
                         style: ElevatedButton.styleFrom(
@@ -229,7 +182,7 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24), // Bottom padding
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
@@ -238,5 +191,33 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
         ),
       ),
     );
+  }
+
+  void _onSubmit() {
+    if (!_formKey.currentState!.validate()) return;
+    final infoAkunState = context.read<InfoAkunCubit>().state;
+    final kodeReseller = switch (infoAkunState) {
+      InfoAkunLoaded s => s.data.data.kodeReseller,
+      _ => '',
+    };
+    context.read<DaftarMitraCubit>().daftarMitra(
+      nama: _namaController.text.trim(),
+      alamat: _alamatController.text.trim(),
+      nomor: _nomorController.text.trim(),
+      markup: int.tryParse(_markupController.text.trim()) ?? 0,
+      kodeReseller: kodeReseller,
+    );
+  }
+
+  @override
+  void dispose() {
+    _namaController.dispose();
+    _alamatController.dispose();
+    _nomorController.dispose();
+    _markupController.dispose();
+    _alamatNode.dispose();
+    _nomorNode.dispose();
+    _markupNode.dispose();
+    super.dispose();
   }
 }

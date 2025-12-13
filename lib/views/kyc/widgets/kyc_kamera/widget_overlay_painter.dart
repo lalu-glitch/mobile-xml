@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/helper/constant_finals.dart';
+
 class KTPOverlayPainter extends CustomPainter {
   final Rect frameRect;
   KTPOverlayPainter({required this.frameRect});
@@ -12,7 +14,7 @@ class KTPOverlayPainter extends CustomPainter {
       const Radius.circular(12),
     );
 
-    final Paint bgPaint = Paint()..color = Colors.black.withOpacity(0.6);
+    final Paint bgPaint = Paint()..color = kBlack.withAlpha(150);
     final Path bgPath = Path()
       ..addRect(Rect.fromLTWH(0, 0, size.width, size.height));
     final Path cutoutPath = Path()..addRRect(frameRRect);

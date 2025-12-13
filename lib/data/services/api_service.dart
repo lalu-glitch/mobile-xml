@@ -275,7 +275,7 @@ class ApiService {
     try {
       final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
-        'http://192.168.1.178:3009/api/v1/user/register_downline', //TODO [GANTI KE PRODUCTION]
+        '$baseURL/user/register_downline',
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {
           "nama": nama,
@@ -285,19 +285,20 @@ class ApiService {
           "kode_reseller": kodeReseller,
         },
       );
+      log(response.data.toString());
       if (response.statusCode == 200) {
-        final data = response.data;
-
-        if (data["success"] == true) {
-          return data["message"] ?? "Berhasil mendaftarkan mitra.";
-        } else {
-          throw data["message"] ?? "Gagal mendaftarkan mitra.";
-        }
+        return response.data["message"];
       } else {
-        throw "Server error: ${response.statusCode}";
+        return "Gagal daftar: ${response.data["message"]}";
       }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
+          : e.message;
+      logger.e("DioException: $apiMessage");
+      throw Exception(apiMessage);
     } catch (e) {
-      throw "Gagal menghubungi server: $e";
+      throw "Gagal menghubungi server";
     }
   }
 
@@ -305,7 +306,7 @@ class ApiService {
     try {
       final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
-        'http://192.168.1.178:3009/api/v1/user/list_downline',
+        '$baseURL/user/list_downline',
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {"kode_reseller": kodeReseller},
       );
@@ -323,7 +324,7 @@ class ApiService {
     try {
       final deviceID = await loadDeviceId();
       final response = await authService.dio.post(
-        'http://192.168.1.178:3009/api/v1/user/downline_stats',
+        '$baseURL/user/downline_stats',
         options: Options(headers: {"x-device-id": "android-$deviceID"}),
         data: {"kode": kodeReseller},
       );

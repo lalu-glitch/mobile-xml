@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:xmlapp/core/utils/dialog.dart';
 
 import '../../../../core/helper/constant_finals.dart';
 import '../../../../core/helper/currency.dart';
@@ -13,6 +14,7 @@ class BankTransferDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = state.data;
+    final formattedNominal = CurrencyUtil.formatCurrency(data.nominal);
     return AlertDialog(
       backgroundColor: kBackground,
       content: SingleChildScrollView(
@@ -41,16 +43,17 @@ class BankTransferDialog extends StatelessWidget {
               footer: 'Atas nama: ${data.atasNama}',
               additional: {
                 'Nomor Rekening': data.rekening,
-                'Nominal transfer': CurrencyUtil.formatCurrency(
-                  double.tryParse(data.nominal.toString()) ?? 0,
-                ),
+                'Nominal transfer': formattedNominal,
               },
               onCopy: (val) {
                 if (val == data.rekening) {
                   Clipboard.setData(ClipboardData(text: val));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Nomor rekening disalin')),
+                  showAppToast(context, 'Rekening Disalin', ToastType.success);
+                } else if (val == formattedNominal) {
+                  Clipboard.setData(
+                    ClipboardData(text: data.nominal.toString()),
                   );
+                  showAppToast(context, 'Nominal Disalin', ToastType.success);
                 }
               },
             ),

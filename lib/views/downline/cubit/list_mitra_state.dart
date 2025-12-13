@@ -20,6 +20,15 @@ final class ListMitraLoaded extends ListMitraState {
   List<Object> get props => [mitraList];
 }
 
+final class ListMitraEmpty extends ListMitraState {
+  final String message;
+
+  const ListMitraEmpty(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
 final class ListMitraError extends ListMitraState {
   final String message;
 

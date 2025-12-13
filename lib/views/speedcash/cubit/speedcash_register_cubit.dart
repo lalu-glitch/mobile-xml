@@ -14,6 +14,7 @@ class SpeedcashRegisterCubit extends Cubit<SpeedcashRegisterState> {
     required String nama,
     required String phone,
     required String email,
+    required String kodeReseller,
   }) async {
     emit(SpeedcashRegisterLoading());
     try {
@@ -21,6 +22,7 @@ class SpeedcashRegisterCubit extends Cubit<SpeedcashRegisterState> {
         nama: nama,
         phone: phone,
         email: email,
+        kodeReseller: kodeReseller,
       );
       emit(SpeedcashRegisterSuccess(result));
     } catch (e) {

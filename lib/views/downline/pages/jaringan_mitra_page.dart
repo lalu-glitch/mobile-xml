@@ -86,15 +86,7 @@ class _JaringanMitraPageState extends State<JaringanMitraPage> {
                 );
               }
               if (state is MitraStatsError) {
-                return SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ErrorHandler(
-                      message: "Ada yang salah!",
-                      onRetry: _fetchDataStatsMitra,
-                    ),
-                  ),
-                );
+                return SliverToBoxAdapter(child: SizedBox.shrink());
               }
               return const SliverToBoxAdapter(child: SizedBox.shrink());
             },
@@ -139,6 +131,12 @@ class _JaringanMitraPageState extends State<JaringanMitraPage> {
                       ),
                     ),
                   ],
+                );
+              }
+              if (state is ListMitraEmpty) {
+                return SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(child: Text(state.message)),
                 );
               }
               if (state is ListMitraError) {

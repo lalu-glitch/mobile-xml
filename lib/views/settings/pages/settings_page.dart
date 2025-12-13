@@ -292,7 +292,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           //     Navigator.push(
                           //       context,
                           //       MaterialPageRoute(
-                          //         builder: (context) => UITestPage(),
+                          //         builder: (context) => SpeedCashTiketTopUp(),
                           //       ),
                           //     );
                           //   },

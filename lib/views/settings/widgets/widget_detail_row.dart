@@ -65,6 +65,7 @@ class DetailRow extends StatelessWidget {
                   color: kBlack,
                   fontWeight: .w400,
                 ),
+                maxLines: 15,
               ),
             ),
             isNavigate ? Icon(Icons.navigate_next_rounded) : SizedBox(),

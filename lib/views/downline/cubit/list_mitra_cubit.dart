@@ -14,7 +14,11 @@ class ListMitraCubit extends Cubit<ListMitraState> {
     emit(ListMitraLoading());
     try {
       final data = await apiService.fetchMitra(kodeReseller);
-      emit(ListMitraLoaded(data.data));
+      if (data.data.isEmpty) {
+        emit(ListMitraEmpty('List jaringan kosong'));
+      } else {
+        emit(ListMitraLoaded(data.data));
+      }
     } catch (e) {
       emit(ListMitraError(e.toString()));
     }

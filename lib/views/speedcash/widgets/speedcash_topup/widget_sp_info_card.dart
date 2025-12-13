@@ -21,7 +21,7 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      clipBehavior: Clip.antiAlias,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         border: Border.all(color: kOrangeAccent300, width: 2),
         borderRadius: .circular(16),
@@ -35,12 +35,7 @@ class InfoCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: .start,
               children: [
-                buildRow(
-                  context,
-                  title,
-                  value,
-                  onCopy != null ? () => onCopy!(value) : null,
-                ),
+                buildRow(context, title, value, null),
                 if (additional != null)
                   ...additional!.entries.map(
                     (e) => Padding(
