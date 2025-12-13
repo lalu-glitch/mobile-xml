@@ -23,10 +23,6 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
   final _nomorController = TextEditingController();
   final _markupController = TextEditingController();
 
-  final _alamatNode = FocusNode();
-  final _nomorNode = FocusNode();
-  final _markupNode = FocusNode();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +64,7 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
             showAppToast(context, state.responseMessage, ToastType.success);
           } else if (state is DaftarMitraError) {
             Navigator.pop(context);
+            Navigator.pop(context, true);
             showAppToast(context, state.message, ToastType.error);
           }
         },
@@ -104,8 +101,6 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
                       hint: 'Contoh: Elon Musk',
                       icon: Icons.person,
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).requestFocus(_alamatNode),
                       validator: (v) =>
                           v == null || v.isEmpty ? 'Nama wajib diisi' : null,
                     ),
@@ -113,14 +108,11 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
 
                     FintechInputField(
                       controller: _alamatController,
-                      focusNode: _alamatNode,
                       label: 'Alamat Lengkap',
                       hint: 'Jl. Jendral Sudirman No. 1...',
                       icon: Icons.location_on_outlined,
                       maxLines: 2,
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).requestFocus(_nomorNode),
                       validator: (v) =>
                           v == null || v.isEmpty ? 'Alamat wajib diisi' : null,
                     ),
@@ -128,15 +120,12 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
 
                     FintechInputField(
                       controller: _nomorController,
-                      focusNode: _nomorNode,
                       label: 'Nomor WhatsApp',
                       hint: '0812xxxx',
                       icon: Icons.phone_android_outlined,
                       keyboardType: TextInputType.phone,
                       textInputAction: TextInputAction.next,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).requestFocus(_markupNode),
                       validator: (v) => v == null || v.length < 10
                           ? 'Nomor tidak valid'
                           : null,
@@ -145,7 +134,6 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
 
                     FintechInputField(
                       controller: _markupController,
-                      focusNode: _markupNode,
                       label: 'Markup Harga',
                       hint: '0',
                       icon: Icons.price_change_outlined,
@@ -153,7 +141,6 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
                       textInputAction: TextInputAction.done,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       helperText: 'Selisih harga jual untuk mitra (Default: 0)',
-                      onFieldSubmitted: (_) => _onSubmit(),
                     ),
 
                     const SizedBox(height: 40),
@@ -176,7 +163,7 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
                           'Daftarkan Mitra',
                           style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .w500,
                             letterSpacing: 0.5,
                           ),
                         ),
@@ -215,9 +202,6 @@ class _DaftarMitraPageState extends State<DaftarMitraPage> {
     _alamatController.dispose();
     _nomorController.dispose();
     _markupController.dispose();
-    _alamatNode.dispose();
-    _nomorNode.dispose();
-    _markupNode.dispose();
     super.dispose();
   }
 }

@@ -265,7 +265,7 @@ class ApiService {
     }
   }
 
-  Future<String> daftarDownline(
+  Future<String> daftarMitra(
     String nama,
     String alamat,
     String nomor,
@@ -293,9 +293,9 @@ class ApiService {
       }
     } on DioException catch (e) {
       final apiMessage = e.response?.data is Map
-          ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
+          ? (e.response?.data ?? "Terjadi kesalahan server")
           : e.message;
-      logger.e("DioException: $apiMessage");
+      log("DioException: $apiMessage");
       throw Exception(apiMessage);
     } catch (e) {
       throw "Gagal menghubungi server";

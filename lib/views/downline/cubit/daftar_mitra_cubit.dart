@@ -19,7 +19,7 @@ class DaftarMitraCubit extends Cubit<DaftarMitraState> {
     emit(DaftarMitraLoading());
 
     try {
-      final message = await apiService.daftarDownline(
+      final message = await apiService.daftarMitra(
         nama,
         alamat,
         nomor,
