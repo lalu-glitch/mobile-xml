@@ -16,15 +16,12 @@ import '../models/speedcash/speedcash_request_topup_model.dart';
 import '../models/speedcash/speedcash_topup_guide_model.dart';
 import '../models/speedcash/speedcash_unbind_model.dart';
 import 'auth_service.dart';
-import 'package:logger/logger.dart';
 
 class SpeedcashApiService {
   final AuthService authService;
-  final Logger logger;
 
-  SpeedcashApiService({AuthService? authService, Logger? logger})
-    : authService = authService ?? AuthService(),
-      logger = logger ?? Logger();
+  SpeedcashApiService({AuthService? authService})
+    : authService = authService ?? AuthService();
 
   final String clientId = dotenv.env['CLIENT_ID_SPEEDCASH'] ?? '';
 
@@ -151,10 +148,10 @@ class SpeedcashApiService {
       final apiMessage = e.response?.data is Map
           ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
           : e.message;
-      logger.e("DioException: $apiMessage");
+      log("DioException: $apiMessage");
       throw Exception(apiMessage);
     } catch (e) {
-      logger.e("Exception: $e");
+      log("Exception: $e");
       throw Exception(e.toString());
     }
   }
