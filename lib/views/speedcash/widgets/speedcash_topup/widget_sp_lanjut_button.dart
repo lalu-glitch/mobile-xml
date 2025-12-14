@@ -6,8 +6,8 @@ import '../../../../core/helper/currency.dart';
 import '../../../../core/utils/dialog.dart';
 import '../../cubit/request_topup_cubit.dart';
 
-class ActionButton extends StatelessWidget {
-  const ActionButton({
+class ActionButtonSpeedcash extends StatelessWidget {
+  const ActionButtonSpeedcash({
     required this.controller,
     required this.minimumTopUp,
     required this.kodeReseller,

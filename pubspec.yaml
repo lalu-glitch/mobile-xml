@@ -13,13 +13,17 @@ dependencies:
   bloc: ^9.0.0
   cached_network_image: ^3.4.1
   camera: ^0.11.3
+  crypto: ^3.0.7
   cupertino_icons: ^1.0.8
   dio: ^5.9.0
   equatable: ^2.0.7
+  firebase_core: ^4.2.1
+  firebase_messaging: ^16.0.4
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
   flutter_dotenv: ^6.0.0
+  flutter_local_notifications: ^19.5.0
   flutter_native_contact_picker: ^0.0.10
   flutter_screenutil: ^5.9.3
   flutter_secure_storage: ^9.2.4
@@ -28,7 +32,6 @@ dependencies:
   google_fonts: ^6.3.1
   image_editor: ^1.6.0
   intl: ^0.20.2
-  logger: ^2.6.1
   path_provider: ^2.1.5
   permission_handler: ^12.0.1
   printing: ^5.12.0

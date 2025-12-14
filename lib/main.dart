@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
@@ -7,7 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'data/services/auth_service.dart';
+import 'data/services/notification_service.dart';
 import 'data/services/websocket_service.dart';
+import 'firebase_options.dart';
 import 'views/auth/cubit/login_cubit.dart';
 import 'views/auth/cubit/register_cubit.dart';
 import 'views/auth/cubit/request_kode_agen_cubit.dart';
@@ -44,8 +47,8 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
   WidgetsFlutterBinding.ensureInitialized();
-  //idk if this code is necessary or not, but ima put it here.. just in case.
-  PaintingBinding.instance.imageCache.maximumSizeBytes = 50 * 1024 * 1024;
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await NotificationService().init();
   runApp(const XmlApp());
 }
 

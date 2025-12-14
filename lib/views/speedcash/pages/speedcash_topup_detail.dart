@@ -9,7 +9,7 @@ import '../cubit/panduan_topup_cubit.dart';
 import '../cubit/request_topup_cubit.dart';
 import '../widgets/speedcash_topup/widget_sp_bank_section.dart';
 import '../widgets/speedcash_topup/widget_sp_bank_transfer_dialog.dart';
-import '../widgets/speedcash_topup/widget_sp_kanjut_button.dart';
+import '../widgets/speedcash_topup/widget_sp_lanjut_button.dart';
 import '../widgets/speedcash_topup/widget_sp_panduan.dart';
 import '../widgets/speedcash_topup/widget_sp_topup_header_section.dart';
 import '../widgets/speedcash_topup/widget_sp_va_section.dart';
@@ -113,7 +113,7 @@ class _SpeedcashTopUpState extends State<SpeedcashTopUp> {
             ),
           ),
           bottomNavigationBar: widget.isBank
-              ? ActionButton(
+              ? ActionButtonSpeedcash(
                   controller: controller,
                   minimumTopUp: widget.minimumTopUp,
                   kodeReseller: kodeReseller,

@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/helper/constant_finals.dart';
 import '../../../core/helper/currency.dart';
-import '../../../core/utils/shimmer.dart';
 import '../cubit/detail_riwayat_transaksi_cubit.dart';
 import '../widgets/widget_cetak_struk_button.dart';
 import '../widgets/widget_detail_transaksi_row.dart';
@@ -36,7 +35,9 @@ class DetailRiwayatPage extends StatelessWidget {
       body: BlocBuilder<DetailRiwayatTransaksiCubit, DetailRiwayatTransaksiState>(
         builder: (context, state) {
           if (state is DetailRiwayatTransaksiLoading) {
-            return ShimmerBox.buildShimmerRiwayatTransaksi();
+            return const Center(
+              child: CircularProgressIndicator(color: kOrange, strokeWidth: 5),
+            );
           }
 
           if (state is DetailRiwayatTransaksiError) {

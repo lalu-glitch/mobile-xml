@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
+import '../../../../core/helper/constant_finals.dart';
 import '../data_diri/isi_data_diri_page.dart';
 import 'selfie_ktp_onboarding_page.dart';
 
@@ -12,16 +13,16 @@ class KTPSelfieVerifyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kWhite,
       appBar: AppBar(
         title: const Text(
           'Verifikasi KTP',
-          style: TextStyle(color: Colors.black, fontWeight: .bold),
+          style: TextStyle(color: kBlack, fontWeight: .bold),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: kWhite,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: kBlack),
           onPressed: () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -41,7 +42,7 @@ class KTPSelfieVerifyPage extends StatelessWidget {
                   children: [
                     const Text(
                       "Pastikan foto KTP terlihat jelas",
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                      style: TextStyle(fontSize: 16, color: kNeutral50),
                     ),
                     const SizedBox(height: 24),
 
@@ -50,10 +51,10 @@ class KTPSelfieVerifyPage extends StatelessWidget {
                       constraints: const BoxConstraints(maxHeight: 300),
                       decoration: BoxDecoration(
                         borderRadius: .circular(12),
-                        border: Border.all(color: Colors.grey.shade300),
+                        border: Border.all(color: kNeutral40),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: kBlack.withAlpha(26),
                             blurRadius: 10,
                             offset: const Offset(0, 5),
                           ),
@@ -86,15 +87,12 @@ class KTPSelfieVerifyPage extends StatelessWidget {
                     ), // Foto Ulang
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      side: const BorderSide(color: Color(0xFFFE7F04)),
+                      side: const BorderSide(color: kOrange),
                       shape: RoundedRectangleBorder(borderRadius: .circular(8)),
                     ),
                     child: const Text(
                       "Foto Ulang",
-                      style: TextStyle(
-                        color: Color(0xFFFE7F04),
-                        fontWeight: .bold,
-                      ),
+                      style: TextStyle(color: kOrange, fontWeight: .bold),
                     ),
                   ),
                 ),
@@ -112,14 +110,14 @@ class KTPSelfieVerifyPage extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFE7F04),
+                      backgroundColor: kOrange,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(borderRadius: .circular(8)),
                       elevation: 0,
                     ),
                     child: const Text(
                       "Gunakan Foto",
-                      style: TextStyle(color: Colors.white, fontWeight: .bold),
+                      style: TextStyle(color: kWhite, fontWeight: .bold),
                     ),
                   ),
                 ),

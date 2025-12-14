@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helper/constant_finals.dart';
-import '../../../core/utils/shimmer.dart';
 import '../../../data/models/transaksi/riwayat_transaksi_model.dart';
 
 import '../cubit/riwayat_transaksi_cubit.dart';
@@ -25,11 +24,21 @@ class RiwayatTransaksiPage extends StatelessWidget {
           builder: (context, state) {
             if (state is RiwayatTransaksiInitial) {
               context.read<RiwayatTransaksiCubit>().loadRiwayat();
-              return ShimmerBox.buildShimmerRiwayatTransaksi();
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: kOrange,
+                  strokeWidth: 3,
+                ),
+              );
             }
 
             if (state is RiwayatTransaksiLoading) {
-              return ShimmerBox.buildShimmerRiwayatTransaksi();
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: kOrange,
+                  strokeWidth: 3,
+                ),
+              );
             }
 
             if (state is RiwayatTransaksiError) {

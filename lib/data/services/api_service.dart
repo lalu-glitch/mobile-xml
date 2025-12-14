@@ -4,6 +4,8 @@ import 'package:android_id/android_id.dart';
 import 'package:dio/dio.dart';
 import '../../core/helper/constant_finals.dart';
 import '../models/layanan/layanan_model.dart';
+import '../models/mitra/mitra_model.dart';
+import '../models/mitra/mitra_stats_model.dart';
 import '../models/produk/provider_kartu_model.dart';
 import '../models/transaksi/status_transaksi_model.dart';
 import '../models/transaksi/riwayat_transaksi_model.dart';
@@ -11,15 +13,12 @@ import '../models/user/edit_info_akun_model.dart';
 import '../models/user/info_akun_model.dart';
 import '../models/user/user_balance_model.dart';
 import 'auth_service.dart';
-import 'package:logger/logger.dart';
 
 class ApiService {
   final AuthService authService;
-  final Logger logger;
 
-  ApiService({AuthService? authService, Logger? logger})
-    : authService = authService ?? AuthService(),
-      logger = logger ?? Logger();
+  ApiService({AuthService? authService})
+    : authService = authService ?? AuthService();
 
   Future<String> loadDeviceId() async {
     try {
@@ -199,10 +198,10 @@ class ApiService {
       final apiMessage = e.response?.data is Map
           ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
           : e.message;
-      logger.e("DioException: $apiMessage");
+      log("DioException: $apiMessage");
       throw Exception(apiMessage);
     } catch (e) {
-      logger.e("Exception: $e");
+      log("Exception: $e");
       throw Exception(e.toString());
     }
   }
@@ -228,10 +227,10 @@ class ApiService {
       final apiMessage = e.response?.data is Map
           ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
           : e.message;
-      logger.e("DioException: $apiMessage");
+      log("DioException: $apiMessage");
       throw Exception(apiMessage);
     } catch (e) {
-      logger.e("Exception: $e");
+      log("Exception: $e");
       throw Exception(e.toString());
     }
   }
@@ -255,11 +254,85 @@ class ApiService {
       final apiMessage = e.response?.data is Map
           ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
           : e.message;
-      logger.e("DioException: $apiMessage");
+      log("DioException: $apiMessage");
       throw Exception(apiMessage);
     } catch (e) {
-      logger.e("Exception: $e");
+      log("Exception: $e");
       throw Exception(e.toString());
+    }
+  }
+
+  Future<String> daftarMitra(
+    String nama,
+    String alamat,
+    String nomor,
+    int markup,
+    String kodeReseller,
+  ) async {
+    try {
+      final deviceID = await loadDeviceId();
+      final response = await authService.dio.post(
+        '$baseURL/user/register_downline',
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
+        data: {
+          "nama": nama,
+          "alamat": alamat,
+          "nomor": nomor,
+          "markup": markup,
+          "kode_reseller": kodeReseller,
+        },
+      );
+      if (response.statusCode == 200) {
+        return response.data["message"];
+      } else {
+        return "Gagal daftar: ${response.data["message"]}";
+      }
+    } on DioException catch (e) {
+      final apiMessage = e.response?.data is Map
+          ? (e.response?.data ?? "Terjadi kesalahan server")
+          : e.message;
+      log("DioException: $apiMessage");
+      throw Exception(apiMessage);
+    } catch (e) {
+      throw "Gagal menghubungi server";
+    }
+  }
+
+  Future<MitraModel> fetchMitra(String kodeReseller) async {
+    try {
+      final deviceID = await loadDeviceId();
+      final response = await authService.dio.post(
+        '$baseURL/user/list_downline',
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
+        data: {"kode_reseller": kodeReseller},
+      );
+      if (response.statusCode == 200) {
+        return MitraModel.fromJson(response.data);
+      } else {
+        throw Exception("Gagal memuat mitra. Status: ${response.statusCode}");
+      }
+    } catch (e) {
+      throw "Gagal menghubungi server: $e";
+    }
+  }
+
+  Future<MitraStatsModel> fetchMitraStats(String kodeReseller) async {
+    try {
+      final deviceID = await loadDeviceId();
+      final response = await authService.dio.post(
+        '$baseURL/user/downline_stats',
+        options: Options(headers: {"x-device-id": "android-$deviceID"}),
+        data: {"kode": kodeReseller},
+      );
+      if (response.statusCode == 200) {
+        return MitraStatsModel.fromJson(response.data);
+      } else {
+        throw Exception(
+          "Gagal memuat mitra stats. Status: ${response.statusCode}",
+        );
+      }
+    } catch (e) {
+      throw "Gagal menghubungi server: $e";
     }
   }
 }

@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:crypto/crypto.dart' as crypto;
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import '../../core/helper/constant_finals.dart';
+import '../../core/helper/date_extension.dart';
 import '../models/speedcash/speedcash_binding_model.dart';
 import '../models/speedcash/speedcash_konfirmasi_transaksi_model.dart';
 import '../models/speedcash/speedcash_list_bank_model.dart';
@@ -13,34 +16,63 @@ import '../models/speedcash/speedcash_request_topup_model.dart';
 import '../models/speedcash/speedcash_topup_guide_model.dart';
 import '../models/speedcash/speedcash_unbind_model.dart';
 import 'auth_service.dart';
-import 'package:logger/logger.dart';
 
 class SpeedcashApiService {
   final AuthService authService;
-  final Logger logger;
 
-  SpeedcashApiService({AuthService? authService, Logger? logger})
-    : authService = authService ?? AuthService(),
-      logger = logger ?? Logger();
+  SpeedcashApiService({AuthService? authService})
+    : authService = authService ?? AuthService();
 
-  final String _basicAuthSpeedcashHeader =
-      "Basic ${base64Encode(utf8.encode("${dotenv.env['BASIC_USER_SPEEDCASH']}:${dotenv.env['BASIC_PASS_SPEEDCASH']}"))}";
+  final String clientId = dotenv.env['CLIENT_ID_SPEEDCASH'] ?? '';
+
+  String createSign({
+    required String httpMethod,
+    required String endpoint,
+    required String timestamp,
+  }) {
+    final stringToSign = '$httpMethod:$endpoint:$timestamp';
+    final key = utf8.encode(clientId);
+    final bytes = utf8.encode(stringToSign);
+    final hmac = crypto.Hmac(crypto.sha512, key);
+    final digest = hmac.convert(bytes);
+    return base64.encode(digest.bytes);
+  }
+
+  Map<String, String> createHeaders(String endPoint, String method) {
+    final timeStamp = DateTime.now();
+    final formatted = timeStamp.toIso8601WithOffset();
+
+    final token = createSign(
+      httpMethod: method,
+      endpoint: endPoint,
+      timestamp: formatted,
+    );
+
+    return {
+      'X-TIMESTAMP': formatted,
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+  }
 
   Future<SpeedcashRegisterModel> speedcashRegister({
     required String nama,
     required String phone,
     required String email,
+    required String kodeReseller,
   }) async {
     try {
       final response = await authService.dio.post(
         "$baseURLIntegration/speedcash/create_account",
         options: Options(
-          headers: {
-            "Authorization": _basicAuthSpeedcashHeader,
-            "Content-Type": "application/json",
-          },
+          headers: createHeaders('/api/speedcash/create_account', 'POST'),
         ),
-        data: {"nama": nama, "phone": phone, "email": email},
+        data: {
+          "nama": nama,
+          "phone": phone,
+          "email": email,
+          "kode_reseller": kodeReseller,
+        },
       );
       if (response.statusCode == 200) {
         return SpeedcashRegisterModel.fromJson(response.data);
@@ -51,11 +83,10 @@ class SpeedcashApiService {
       }
     } on DioException catch (e) {
       final data = e.response?.data;
-
       final msg = (data is Map<String, dynamic>)
           ? data['message'] ?? "Terjadi kesalahan server"
           : e.message ?? "Koneksi bermasalah";
-
+      log("DioException: $msg");
       return SpeedcashRegisterModel.error(msg);
     } catch (e) {
       return SpeedcashRegisterModel.error(e.toString());
@@ -70,10 +101,7 @@ class SpeedcashApiService {
       final response = await authService.dio.post(
         "$baseURLIntegration/speedcash/bind_account",
         options: Options(
-          headers: {
-            "Authorization": _basicAuthSpeedcashHeader,
-            "Content-Type": "application/json",
-          },
+          headers: createHeaders('/api/speedcash/bind_account', 'POST'),
         ),
         data: {"kode_reseller": kodeReseller, "phone": phone},
       );
@@ -91,6 +119,7 @@ class SpeedcashApiService {
       final msg = (data is Map<String, dynamic>)
           ? data['message'] ?? "Terjadi kesalahan server"
           : e.message ?? "Koneksi bermasalah";
+      log("DioException: $msg");
       return SpeedcashBindingModel.error(msg);
     } catch (e) {
       return SpeedcashBindingModel.error(e.toString());
@@ -102,10 +131,7 @@ class SpeedcashApiService {
       final response = await authService.dio.post(
         "$baseURLIntegration/speedcash/unbind_account",
         options: Options(
-          headers: {
-            "Authorization": _basicAuthSpeedcashHeader,
-            "Content-Type": "application/json",
-          },
+          headers: createHeaders('/api/speedcash/unbind_account', 'POST'),
         ),
         data: {"kode_reseller": kodeReseller},
       );
@@ -122,10 +148,10 @@ class SpeedcashApiService {
       final apiMessage = e.response?.data is Map
           ? (e.response?.data["message"] ?? "Terjadi kesalahan server")
           : e.message;
-      logger.e("DioException: $apiMessage");
+      log("DioException: $apiMessage");
       throw Exception(apiMessage);
     } catch (e) {
-      logger.e("Exception: $e");
+      log("Exception: $e");
       throw Exception(e.toString());
     }
   }
@@ -135,10 +161,10 @@ class SpeedcashApiService {
       final response = await authService.dio.get(
         '$baseURLIntegration/speedcash/list-bank/$kodeReseller',
         options: Options(
-          headers: {
-            "Authorization": _basicAuthSpeedcashHeader,
-            "Content-Type": "application/json",
-          },
+          headers: createHeaders(
+            '/api/speedcash/list-bank/$kodeReseller',
+            'GET',
+          ),
         ),
       );
       if (response.statusCode == 200) {
@@ -165,10 +191,10 @@ class SpeedcashApiService {
       final response = await authService.dio.get(
         '$baseURLIntegration/speedcash/guide-topup?kode_reseller=$kodeReseller&bank=$bank',
         options: Options(
-          headers: {
-            "Authorization": _basicAuthSpeedcashHeader,
-            "Content-Type": "application/json",
-          },
+          headers: createHeaders(
+            '/api/speedcash/guide-topup?kode_reseller=$kodeReseller&bank=$bank',
+            'GET',
+          ),
         ),
       );
       if (response.statusCode == 200) {
@@ -197,10 +223,7 @@ class SpeedcashApiService {
       final response = await authService.dio.post(
         '$baseURLIntegration/speedcash/request-topup',
         options: Options(
-          headers: {
-            "Authorization": _basicAuthSpeedcashHeader,
-            "Content-Type": "application/json",
-          },
+          headers: createHeaders('/api/speedcash/request-topup', 'POST'),
         ),
         data: {"kode_reseller": kodeReseller, "nominal": nominal, "bank": bank},
       );
@@ -234,10 +257,7 @@ class SpeedcashApiService {
       final response = await authService.dio.post(
         '$baseURLIntegration/speedcash/confirm',
         options: Options(
-          headers: {
-            "Authorization": _basicAuthSpeedcashHeader,
-            "Content-Type": "application/json",
-          },
+          headers: createHeaders('/api/speedcash/confirm', 'POST'),
         ),
         data: {
           "kode_reseller": kodeReseller,
@@ -249,7 +269,6 @@ class SpeedcashApiService {
           "harga_sub_produk": hargaSubProduk,
         },
       );
-      log('[SPEEDCASH]: ${response.statusCode}');
       if (response.statusCode == 200) {
         return SpeedcashKonfirmasiTransaksiModel.fromJson(response.data);
       } else {
@@ -274,10 +293,7 @@ class SpeedcashApiService {
       final response = await authService.dio.post(
         '$baseURLIntegration/speedcash/payment',
         options: Options(
-          headers: {
-            "Authorization": _basicAuthSpeedcashHeader,
-            "Content-Type": "application/json",
-          },
+          headers: createHeaders('/api/speedcash/payment', 'POST'),
         ),
         data: {
           "kode_reseller": kodeReseller,

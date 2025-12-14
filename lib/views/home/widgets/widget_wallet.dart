@@ -223,19 +223,16 @@ class _ModernWalletCardState extends State<ModernWalletCard> {
 
   // 3. Bottom Area
   Widget _buildBottomArea() {
-    if (!widget.isConnected && !widget.isXmlWallet) {
-      return _buildConnectButton();
-    }
-    if (!widget.isConnected) {
-      return _buildXmlStatusBadge();
-    }
     if (widget.isXmlWallet) {
       return _buildXmlStatusBadge();
     }
-    return _buildActionMenu();
+    // Priority 2: Jika Bind == 1 (isConnected == true), tampilkan Menu Aksi
+    if (widget.isConnected) {
+      return _buildActionMenu();
+    }
+    // Priority 3: Jika Bind == 0 (isConnected == false), tampilkan Tombol Connect
+    return _buildConnectButton();
   }
-
-  // --- Opsi Tampilan Bawah ---
 
   // Opsi A: Tombol Hubungkan Akun
   Widget _buildConnectButton() {
